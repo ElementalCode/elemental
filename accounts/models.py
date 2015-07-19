@@ -55,7 +55,7 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
 		max_length=255,
 		unique=True,
 	)
-	is_staff = models.BooleanField(default=False)
+	# is_staff = models.BooleanField(default=False)
 	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 	projects = models.ManyToManyField(Project, null=True, blank=True,
 										   through='ProjectOwnership')
