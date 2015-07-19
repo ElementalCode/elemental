@@ -16,7 +16,7 @@ import dj_database_url
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(__file__))
 
-settings.AUTH_USER_MODEL = 'accounts.ElementalUser'
+AUTH_USER_MODEL = 'accounts.ElementalUser'
 
 
 # Quick-start development settings - unsuitable for production
