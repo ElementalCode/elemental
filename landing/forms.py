@@ -10,7 +10,7 @@ class LoginForm(forms.Form):
                                widget=forms.PasswordInput)
 
 
-class SignUpForm(forms.ModelForm):
+class SignupForm(forms.ModelForm):
     password = forms.CharField(label="Password",
                                widget=forms.PasswordInput)
 
