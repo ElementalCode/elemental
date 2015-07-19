@@ -61,7 +61,7 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
                     'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
-    projects = models.ManyToManyField(Organization, blank=True,
+    projects = models.ManyToManyField(Project, blank=True,
                                       through='ProjectOwnership')
 
     objects = ElementalUserManager()
