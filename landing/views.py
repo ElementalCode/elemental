@@ -16,6 +16,7 @@ from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
 from .forms import LoginForm, SignupForm
+from accounts.models import ElementalUser
 
 
 class Index(FormView):
@@ -56,7 +57,11 @@ class SignUp(FormView):
     def form_valid(self, form):
         super(SignUp, self).form_valid(form)
         form.save()
+        print form.cleaned_data.get('email')
+        print form.cleaned_data.get('password')
+        print 
         user = authenticate(username=form.cleaned_data.get('email'),
                             password=form.cleaned_data.get('password'))
+        print ElementalUser.objects.all()
         login(self.request, user)
         return redirect(reverse('profile'))
