@@ -5,6 +5,8 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
+from projects.models import Project
+
 class ElementalUserManager(BaseUserManager):
 
     def _create_user(self, email, password,
