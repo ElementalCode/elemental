@@ -21,12 +21,12 @@ class ProjectOwnership(models.Model):
 	# 	return '{0} - {1}'.format(self.user, self.project)
 
 
-# class ElementalUser(AbstractBaseUser, PermissionsMixin):
-# 	email = models.EmailField(
-# 		verbose_name='email address',
-# 		max_length=255,
-# 		unique=True,
-# 	)
-# 	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-# 	# projects = models.ManyToManyField(Project, null=True, blank=True,
-# 	# 									   through='ProjectOwnership')
+class ElementalUser(AbstractBaseUser, PermissionsMixin):
+	email = models.EmailField(
+		verbose_name='email address',
+		max_length=255,
+		unique=True,
+	)
+	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+	# projects = models.ManyToManyField(Project, null=True, blank=True,
+	# 									   through='ProjectOwnership')
