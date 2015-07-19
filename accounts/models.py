@@ -55,10 +55,16 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
 		max_length=255,
 		unique=True,
 	)
-	is_staff = models.BooleanField(default=False)
 	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 	projects = models.ManyToManyField(Project, null=True, blank=True,
 										   through='ProjectOwnership')
+
+	### Redefine the basic fields that would normally be defined in User ###
+    username = models.CharField(unique=True, max_length=20, validators=[alphanumeric])
+    first_name = models.CharField(max_length=30, null=True, blank=True)
+    last_name = models.CharField(max_length=50, null=True, blank=True)
+    is_active = models.BooleanField(default=True, null=False)
+    is_staff = models.BooleanField(default=False, null=False)
 
 	objects = ElementalUserManager()
 	REQUIRED_FIELDS = []
