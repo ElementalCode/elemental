@@ -16,11 +16,9 @@ from projects.models import Project
 class ProjectOwnership(models.Model):
 	user = models.ForeignKey('ElementalUser')
 	project = models.ForeignKey(Project)
-	state = models.CharField(choices=STATES, default='pending', max_length=25)
 
 	def __unicode__(self):
-		return '{0} - {1} - {2}'.format(self.user, self.organization,
-										self.state)
+		return '{0} - {1}'.format(self.user, self.project)
 
 
 class ElementalUser(AbstractBaseUser, PermissionsMixin):
