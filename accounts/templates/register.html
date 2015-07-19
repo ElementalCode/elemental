@@ -5,8 +5,11 @@
 	register
         <form method='POST'>
             {% csrf_token %}
+            email
         	{{ form.email }}
+            pass
             {{ form.password1 }}
+            checkpass
             {{ form.password2 }}
             <button>look i'm a button</button>
         </form>
