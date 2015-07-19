@@ -49,14 +49,14 @@ from django.utils.translation import ugettext_lazy as _
 #                                  **extra_fields)
 
 
-class ElementalUser(AbstractBaseUser, PermissionsMixin):
-	email = models.EmailField(
-		verbose_name='email address',
-		max_length=255,
-		unique=True,
-	)
-	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-	# projects = models.ManyToManyField(Project, null=True, blank=True,
-	# 									   through='ProjectOwnership')
+# class ElementalUser(AbstractBaseUser, PermissionsMixin):
+# 	email = models.EmailField(
+# 		verbose_name='email address',
+# 		max_length=255,
+# 		unique=True,
+# 	)
+# 	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
+# 	# projects = models.ManyToManyField(Project, null=True, blank=True,
+# 	# 									   through='ProjectOwnership')
 
-	USERNAME_FIELD = 'email'
+# 	USERNAME_FIELD = 'email'
