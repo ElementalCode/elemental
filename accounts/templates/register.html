@@ -5,7 +5,9 @@
 	register
         <form method='POST'>
             {% csrf_token %}
-        	{{ form.as_p }}
+        	{{ form.email }}
+            {{ form.password1 }}
+            {{ form.password2 }}
             <button>look i'm a button</button>
         </form>
 {% endblock %}
