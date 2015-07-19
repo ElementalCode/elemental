@@ -50,7 +50,6 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
     is_staff = models.BooleanField(default=False, null=False)
 
     ### Our own fields ###
-    profile_image = models.ImageField(upload_to="uploads", blank=False, null=False, default="/static/images/defaultuserimage.png")
     user_bio = models.CharField(max_length=600, blank=True)
 
     objects = AuthUserManager()
