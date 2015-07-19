@@ -48,6 +48,11 @@ class SignUp(FormView):
     form_class = SignupForm
     success_url = '/'
 
+    def get(self, request):
+        if request.user.is_authenticated():
+            return redirect(reverse('index'))
+        return super(SignUp, self).get(request)
+
     def form_valid(self, form):
         super(SignUp, self).form_valid(form)
         form.save()
