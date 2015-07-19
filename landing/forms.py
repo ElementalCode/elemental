@@ -17,7 +17,7 @@ class SignupForm(UserCreationForm):
 
     class Meta:
         model = ElementalUser
-        fields = ("username", "email", "password1", "password2")
+        fields = ("email", "password1", "password2")
 
     def save(self, commit=True):
         user = super(SignupForm, self).save(commit=False)
