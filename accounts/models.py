@@ -10,15 +10,15 @@ from django.db import models
 from django.utils import timezone
 from django.utils.translation import ugettext_lazy as _
 
-# from projects.models import Project
+from projects.models import Project
 
 
-# class ProjectOwnership(models.Model):
-# 	user = models.ForeignKey('ElementalUser')
-# 	project = models.ForeignKey(Project)
+class ProjectOwnership(models.Model):
+	user = models.ForeignKey('ElementalUser')
+	project = models.ForeignKey(Project)
 
-# 	def __unicode__(self):
-# 		return '{0} - {1}'.format(self.user, self.project)
+	def __unicode__(self):
+		return '{0} - {1}'.format(self.user, self.project)
 
 
 class ElementalUserManager(BaseUserManager):
@@ -56,8 +56,8 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
 		unique=True,
 	)
 	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-	# projects = models.ManyToManyField(Project, null=True, blank=True,
-	# 									   through='ProjectOwnership')
+	projects = models.ManyToManyField(Project, null=True, blank=True,
+										   through='ProjectOwnership')
 
 	objects = ElementalUserManager()
 	REQUIRED_FIELDS = []
