@@ -28,6 +28,7 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
+AUTH_USER_MODEL = 'accounts.models.ElementalUser'
 
 # Application definition
 
