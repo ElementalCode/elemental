@@ -4,6 +4,7 @@
 {% block content %}
 	things work?
     <form method='POST'>
+        {% csrf_token %}
     	{{ form.as_p }}
         <button>look i'm a button</button>
     </form>
