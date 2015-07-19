@@ -6,7 +6,7 @@ from django.core.mail import send_mail
 
 
 class Project(models.Model):
-	name = models.CharField(_('name'), max_length=50, blank=True)
+    name = models.CharField(_('name'), max_length=50, blank=True)
 
-	def __unicode__(self):
+    def __unicode__(self):
         return self.name
