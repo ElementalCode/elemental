@@ -21,6 +21,7 @@ from .forms import LoginForm
 class Index(FormView):
     template_name = 'index.html'
     form_class = LoginForm
+    success_url = reverse_lazy('index')
     
     def form_valid(self, form):
         super(Index, self).form_valid(form)
