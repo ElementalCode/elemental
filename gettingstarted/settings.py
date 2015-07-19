@@ -28,7 +28,6 @@ DEBUG = True
 
 TEMPLATE_DEBUG = True
 
-AUTH_USER_MODEL = 'accounts.ElementalUser'
 
 # Application definition
 
@@ -39,9 +38,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'hello',
-    'accounts',
-    'projects',
+    'hello'
 )
 
 MIDDLEWARE_CLASSES = (
