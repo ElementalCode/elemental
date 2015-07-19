@@ -19,7 +19,7 @@ class SignupForm(forms.ModelForm):
         fields = ['email', 'password', ]
 
     def __init__(self, *args, **kwargs):
-        super(SignUpForm, self).__init__(*args, **kwargs)
+        super(SignupForm, self).__init__(*args, **kwargs)
 
         for key in self.fields:
             self.fields[key].required = True
@@ -32,7 +32,7 @@ class SignupForm(forms.ModelForm):
 
     def save(self):
         with transaction.atomic():
-            obj = super(SignUpForm, self).save(commit=False)
+            obj = super(SignupForm, self).save(commit=False)
             obj.save()
             return obj
         return None
