@@ -57,13 +57,8 @@ class SignUp(FormView):
     def form_valid(self, form):
         super(SignUp, self).form_valid(form)
         form.save()
-        print form.cleaned_data.get('email')
-        print form.cleaned_data.get('password1')
         user = authenticate(username=form.cleaned_data.get('email'),
                             password=form.cleaned_data.get('password1'))
-        print user
-        print ElementalUser.objects.all()
-        print user in ElementalUser.objects.all()
         login(self.request, user)
         return redirect(reverse('profile'))
 
