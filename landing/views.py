@@ -56,7 +56,7 @@ class SignUp(FormView):
     def form_valid(self, form):
         super(SignUp, self).form_valid(form)
         form.save()
-        user = authenticate(email=form.cleaned_data.get('email'),
+        user = authenticate(username=form.cleaned_data.get('email'),
                             password=form.cleaned_data.get('password'))
         login(self.request, user)
         return redirect(reverse('profile'))
