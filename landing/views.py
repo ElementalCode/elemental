@@ -66,3 +66,9 @@ class SignUp(FormView):
         print user in ElementalUser.objects.all()
         login(self.request, user)
         return redirect(reverse('profile'))
+
+
+class Logout(View):
+    def get(self, request, *args, **kwargs):
+        logout(request)
+        return redirect('/')
