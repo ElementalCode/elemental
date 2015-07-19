@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+	register
+        <form method='POST'>
+            {% csrf_token %}
+        	{{ form.as_p }}
+            <button>look i'm a button</button>
+        </form>
+    {% endif %}
+{% endblock %}

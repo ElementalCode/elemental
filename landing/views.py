@@ -15,7 +15,7 @@ from django.views.generic.base import View
 from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
-from .forms import LoginForm
+from .forms import LoginForm, SignupForm
 
 
 class Index(FormView):
@@ -41,3 +41,17 @@ class Index(FormView):
             form.errors['non_field_errors'] = ['Invalid login']
             return render(self.request, 'index.html',
                           {'form': form})
+
+
+class SignUp(FormView):
+    template_name = 'register.html'
+    form_class = SignupForm
+    success_url = '/'
+
+    def form_valid(self, form):
+        super(SignUp, self).form_valid(form)
+        form.save()
+        user = authenticate(email=form.cleaned_data.get('email'),
+                            password=form.cleaned_data.get('password'))
+        login(self.request, user)
+        return redirect(reverse('profile'))
