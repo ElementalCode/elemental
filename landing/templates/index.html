@@ -3,9 +3,13 @@
 
 {% block content %}
 	things work?
-    <form method='POST'>
-        {% csrf_token %}
-    	{{ form.as_p }}
-        <button>look i'm a button</button>
-    </form>
+    {% if request.user.is_authenticated %}
+        hi
+    {% else %}
+        <form method='POST'>
+            {% csrf_token %}
+        	{{ form.as_p }}
+            <button>look i'm a button</button>
+        </form>
+    {% endif %}
 {% endblock %}
