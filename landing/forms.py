@@ -1,6 +1,7 @@
 from django import forms
 from django.db import transaction
 from django.core.exceptions import ValidationError
+from django.contrib.auth.forms import UserCreationForm
 
 from accounts.models import ElementalUser
 
@@ -11,29 +12,16 @@ class LoginForm(forms.Form):
                                widget=forms.PasswordInput)
 
 
-class SignupForm(forms.ModelForm):
-    password = forms.CharField(label="Password",
-                               widget=forms.PasswordInput)
+class SignupForm(UserCreationForm):
+    email = forms.EmailField(required=True)
 
     class Meta:
-        model = ElementalUser
-        fields = ['email', 'password', ]
+        model = User
+        fields = ("email", "password")
 
-    def __init__(self, *args, **kwargs):
-        super(SignupForm, self).__init__(*args, **kwargs)
-
-        for key in self.fields:
-            self.fields[key].required = True
-
-    def clean_password(self):
-        password = self.cleaned_data.get('password')
-        if len(password) < 8:
-            raise ValidationError('Password is too short')
-        return password
-
-    def save(self):
-        with transaction.atomic():
-            obj = super(SignupForm, self).save(commit=False)
-            obj.save()
-            return obj
-        return None
+    def save(self, commit=True):
+        user = super(UserCreateForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        if commit:
+            user.save()
+        return user
