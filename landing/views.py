@@ -15,12 +15,14 @@ from django.views.generic.base import View
 from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
+from .forms import LoginForm
+
 
 class Index(FormView):
-	template_name = 'index.html'
-	form_class = LoginForm
-	
-	def form_valid(self, form):
+    template_name = 'index.html'
+    form_class = LoginForm
+    
+    def form_valid(self, form):
         super(Login, self).form_valid(form)
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
