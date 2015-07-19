@@ -56,7 +56,7 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
 		unique=True,
 	)
 	date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-	projects = models.ManyToManyField(Project, null=True, blank=True,
+	projects = models.ManyToManyField(Project, blank=True,
 										   through='ProjectOwnership')
 
 	### Redefine the basic fields that would normally be defined in User ###
