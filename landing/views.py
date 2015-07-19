@@ -23,7 +23,7 @@ class Index(FormView):
     form_class = LoginForm
     
     def form_valid(self, form):
-        super(Login, self).form_valid(form)
+        super(Index, self).form_valid(form)
         email = form.cleaned_data['email']
         password = form.cleaned_data['password']
         user = authenticate(username=email, password=password)
@@ -31,7 +31,7 @@ class Index(FormView):
         if user is not None:
             if user.is_active:
                 login(self.request, user)
-                return super(Login, self).form_valid(form)
+                return super(Index, self).form_valid(form)
             else:
                 form.errors['non_field_errors'] = ['Your account is not active.']
                 return render(self.request, 'index.html',
