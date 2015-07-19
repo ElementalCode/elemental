@@ -59,9 +59,10 @@ class SignUp(FormView):
         form.save()
         print form.cleaned_data.get('email')
         print form.cleaned_data.get('password')
-        print 
         user = authenticate(username=form.cleaned_data.get('email'),
                             password=form.cleaned_data.get('password'))
+        print user
         print ElementalUser.objects.all()
+        print user in ElementalUser.objects.all()
         login(self.request, user)
         return redirect(reverse('profile'))
