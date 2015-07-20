@@ -23,5 +23,5 @@ class ProfileView(TemplateView):
 
 	def get_context_data(self, **kwargs):
 		context = super(ProfileView, self).get_context_data(**kwargs)
-		context['user'] = ElementalUser.objects.get(id=self.kwargs['pk'])
+		context['user'] = ElementalUser.objects.get(username=self.kwargs['username'])
 		return context

@@ -8,7 +8,7 @@ from accounts.views import ProfileView
 
 urlpatterns = patterns('',
     url(r'^$', Index.as_view(), name='index'),
-    url(r'^users/(?P<pk>\d+)/?$', ProfileView.as_view(), name='profile'),
+    url(r'^users/(?P<username>\w+)/?$', ProfileView.as_view(), name='profile'),
     url(r'^register/?$', SignUp.as_view(), name='register'),
     url(r'^logout/?$', Logout.as_view(), name='logout'),
     url(r'^admin/?', include(admin.site.urls)),
