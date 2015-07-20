@@ -3,6 +3,7 @@ from django.utils import timezone
 from django.utils.http import urlquote
 from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
+from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
 from projects.models import Project
@@ -44,13 +45,11 @@ class ProjectOwnership(models.Model):
 
 
 class ElementalUser(AbstractBaseUser, PermissionsMixin):
-    """
-    A fully featured User model with admin-compliant permissions that uses
-    a full-length email field as the username.
+    alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', message='Only alphanumeric characters are allowed.')
 
-    Email and password are required. Other fields are optional.
-    """
-    email = models.EmailField(_('email address'), max_length=254, unique=True)
+    username = models.CharField(unique=True, max_length=20, validators=[alphanumeric])
+
+    email = models.EmailField(_('email address'), max_length=254, blank=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
     last_name = models.CharField(_('last name'), max_length=30, blank=True)
     is_staff = models.BooleanField(_('staff status'), default=False,
@@ -66,15 +65,12 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
 
     objects = ElementalUserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
-
-    def get_absolute_url(self):
-        return "/users/%s/" % urlquote(self.email)
 
     def get_full_name(self):
         """
