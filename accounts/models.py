@@ -47,7 +47,7 @@ class ProjectOwnership(models.Model):
 class ElementalUser(AbstractBaseUser, PermissionsMixin):
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', message='Only alphanumeric characters are allowed.')
 
-    # username = models.CharField(unique=True, max_length=20, validators=[alphanumeric])
+    username = models.CharField(blank=True, max_length=20, validators=[alphanumeric])
 
     email = models.EmailField(_('email address'), max_length=254, blank=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
