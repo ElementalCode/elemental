@@ -10,16 +10,13 @@ from projects.models import Project
 
 class ElementalUserManager(BaseUserManager):
 
-    def _create_user(self, email, password,
+    def _create_user(self, username, password,
                      is_staff, is_superuser, **extra_fields):
-        """
-        Creates and saves a User with the given email and password.
-        """
         now = timezone.now()
-        if not email:
-            raise ValueError('The given email must be set')
-        email = self.normalize_email(email)
-        user = self.model(email=email,
+        if not username:
+            raise ValueError('The given username must be set')
+        username = self.normalize_username(username)
+        user = self.model(username=username,
                           is_staff=is_staff, is_active=True,
                           is_superuser=is_superuser, last_login=now,
                           date_joined=now, **extra_fields)
@@ -27,12 +24,12 @@ class ElementalUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-    def create_user(self, email, password=None, **extra_fields):
-        return self._create_user(email, password, False, False,
+    def create_user(self, username, password=None, **extra_fields):
+        return self._create_user(username, password, False, False,
                                  **extra_fields)
 
-    def create_superuser(self, email, password, **extra_fields):
-        return self._create_user(email, password, True, True,
+    def create_superuser(self, username, password, **extra_fields):
+        return self._create_user(username, password, True, True,
                                  **extra_fields)
 
 
