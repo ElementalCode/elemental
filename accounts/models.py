@@ -15,7 +15,6 @@ class ElementalUserManager(BaseUserManager):
         now = timezone.now()
         if not username:
             raise ValueError('The given username must be set')
-        username = self.normalize_username(username)
         user = self.model(username=username,
                           is_staff=is_staff, is_active=True,
                           is_superuser=is_superuser, last_login=now,
