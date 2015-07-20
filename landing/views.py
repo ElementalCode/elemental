@@ -60,7 +60,7 @@ class SignUp(FormView):
         user = authenticate(username=form.cleaned_data.get('username'),
                             password=form.cleaned_data.get('password1'))
         login(self.request, user)
-        return redirect(reverse('profile'))
+        return redirect(reverse('index'))
 
 
 class Logout(View):
