@@ -7,21 +7,21 @@ from accounts.models import ElementalUser
 
 
 class LoginForm(forms.Form):
-    username = forms.CharField(label='Username')
+    email = forms.CharField(label='email')
     password = forms.CharField(label="Password", 
                                widget=forms.PasswordInput)
 
 
 class SignupForm(UserCreationForm):
-    username = forms.CharField(required=True)
+    email = forms.CharField(required=True)
 
     class Meta:
         model = ElementalUser
-        fields = ("username", "password1", "password2")
+        fields = ("email", "password1", "password2")
 
     def save(self, commit=True):
         user = super(SignupForm, self).save(commit=False)
-        user.username = self.cleaned_data["username"]
+        user.email = self.cleaned_data["email"]
         if commit:
             user.save()
         return user

@@ -26,9 +26,9 @@ class Index(FormView):
     
     def form_valid(self, form):
         super(Index, self).form_valid(form)
-        username = form.cleaned_data['username']
+        email = form.cleaned_data['email']
         password = form.cleaned_data['password']
-        user = authenticate(username=username, password=password)
+        user = authenticate(username=email, password=password)
 
         if user is not None:
             if user.is_active:
@@ -57,7 +57,7 @@ class SignUp(FormView):
     def form_valid(self, form):
         super(SignUp, self).form_valid(form)
         form.save()
-        user = authenticate(username=form.cleaned_data.get('username'),
+        user = authenticate(username=form.cleaned_data.get('email'),
                             password=form.cleaned_data.get('password1'))
         login(self.request, user)
         return redirect(reverse('profile'))
