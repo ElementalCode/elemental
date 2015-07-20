@@ -65,7 +65,7 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
 
     objects = ElementalUserManager()
 
-    USERNAME_FIELD = 'email'
+    USERNAME_FIELD = 'username'
     REQUIRED_FIELDS = []
 
     class Meta:
