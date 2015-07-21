@@ -47,6 +47,8 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
                     'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
+    test_prop = models.BooleanField(default=False)
+
     objects = ElementalUserManager()
 
     USERNAME_FIELD = 'username'
