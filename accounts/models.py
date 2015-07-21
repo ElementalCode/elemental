@@ -6,7 +6,6 @@ from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 
-from projects.models import Project
 
 class ElementalUserManager(BaseUserManager):
 
