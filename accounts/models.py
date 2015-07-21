@@ -32,14 +32,6 @@ class ElementalUserManager(BaseUserManager):
                                  **extra_fields)
 
 
-class ProjectOwnership(models.Model):
-    user = models.ForeignKey('ElementalUser')
-    project = models.ForeignKey(Project)
-
-    def __unicode__(self):
-        return '{0} - {1}'.format(self.user, self.project)
-
-
 class ElementalUser(AbstractBaseUser, PermissionsMixin):
     alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', message='Only alphanumeric characters are allowed.')
 
@@ -55,9 +47,6 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
         help_text=_('Designates whether this user should be treated as '
                     'active. Unselect this instead of deleting accounts.'))
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
-
-    projects = models.ManyToManyField(Project, blank=True,
-                                      through='ProjectOwnership')
 
     objects = ElementalUserManager()
 
