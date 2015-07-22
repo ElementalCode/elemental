@@ -53,8 +53,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'landing',
-    'accounts',
-    'projects',
+    'apps.accounts',
+    'apps.projects',
 )
 
 MIDDLEWARE_CLASSES = (
@@ -68,7 +68,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.security.SecurityMiddleware',
 )
 
-ROOT_URLCONF = 'gettingstarted.urls'
+ROOT_URLCONF = 'urls'
 
 TEMPLATES = [
     {

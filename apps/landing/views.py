@@ -16,7 +16,7 @@ from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
 from .forms import LoginForm, SignupForm
-from accounts.models import ElementalUser
+from apps.accounts.models import ElementalUser
 
 
 class Index(FormView):

@@ -3,8 +3,8 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from landing.views import Index, SignUp, Logout
-from accounts.views import ProfileView
+from apps.landing.views import Index, SignUp, Logout
+from apps.accounts.views import ProfileView
 
 urlpatterns = patterns('',
     url(r'^$', Index.as_view(), name='index'),

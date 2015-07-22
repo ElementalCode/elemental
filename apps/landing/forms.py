@@ -3,7 +3,7 @@ from django.db import transaction
 from django.core.exceptions import ValidationError
 from django.contrib.auth.forms import UserCreationForm
 
-from accounts.models import ElementalUser
+from apps.accounts.models import ElementalUser
 
 
 class LoginForm(forms.Form):

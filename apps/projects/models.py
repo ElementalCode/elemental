@@ -5,7 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 
 
-from accounts.models import ElementalUser
+from apps.accounts.models import ElementalUser
 
 class Project(models.Model):
     name = models.CharField(_('name'), max_length=50, blank=True)
