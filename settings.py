@@ -52,7 +52,7 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'landing',
+    'apps.landing',
     'apps.accounts',
     'apps.projects',
 )
