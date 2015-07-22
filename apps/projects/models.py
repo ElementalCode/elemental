@@ -10,7 +10,7 @@ from apps.accounts.models import ElementalUser
 class Project(models.Model):
     name = models.CharField(_('name'), max_length=50, blank=True)
     user = models.ForeignKey(ElementalUser)
-	# shared = models.BooleanField(default=False)
+    shared = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name
