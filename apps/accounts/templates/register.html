@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+	register
+        <form method='POST'>
+            {% csrf_token %}
+            username
+        	{{ form.username }}
+            pass
+            {{ form.password1 }}
+            checkpass
+            {{ form.password2 }}
+            <button>look i'm a button</button>
+        </form>
+{% endblock %}

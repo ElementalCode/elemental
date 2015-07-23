@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+	things work?
+    {% if request.user.is_authenticated %}
+        hi
+    {% else %}
+        <form method='POST'>
+            {% csrf_token %}
+            username
+        	{{ form.username }}
+            password
+            {{ form.password }}
+            <button>look i'm a button</button>
+        </form>
+    {% endif %}
+{% endblock %}
