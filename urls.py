@@ -13,4 +13,6 @@ urlpatterns = patterns('',
     url(r'^(?i)logout/?$', Logout.as_view(), name='logout'),
     url(r'^(?i)admin/?', include(admin.site.urls)),
     url(r'^(?i)terms-of-service/?$', TermsOfService.as_view(), name='terms'),
+
+    url(r'^(?i)projects/', include('apps.projects.urls', namespace='projects')),
 )
