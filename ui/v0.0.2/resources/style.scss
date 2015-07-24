@@ -1,0 +1,374 @@
+/* THIS CODE IS UGLY (don't use it as a style guide)
+   Things need shifting around and such for this code to make much sense at all. If anyone is willing to that, it would very much appreciated. */
+
+$nav_grad_top: #2ecc71;
+$nav_grad_bottom: #27ae60;
+
+$borders_color: #1D1E1A;
+$right_background: #323232;
+$top_bar_text_shadow: rgba(0,0,0,0.5);
+
+$menu_drop_back: #1D1E1A;
+$menu_drop_hover: #3D7555;
+$menu_drop_text: #eee;
+
+@mixin prefix($property, $value, $vendors: webkit moz ms o) {
+      @if $vendors {
+        @each $vendor in $vendors {
+          #{"-" + $vendor + "-" + $property}: #{$value};
+        }
+      }
+      #{$property}: #{$value};
+}
+
+/* EXAMPLE 
+Sass:
+.element {
+  @include prefix(transform, rotate(42deg));
+}
+Ouput:
+.element {
+  -webkit-transform: rotate(42deg);
+  -moz-transform: rotate(42deg);
+  -ms-transform: rotate(42deg);
+  -o-transform: rotate(42deg);
+  transform: rotate(42deg);
+}
+*/
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
+
+body {
+  margin:0px;
+  overflow:hidden;
+}
+html, body{
+  height:100%;
+}
+.topBar {
+  /* Monster Gradient: */
+  background: $nav_grad_top; /* Old browsers */
+  background: -moz-linear-gradient(top,  $nav_grad_top 0%, $nav_grad_bottom 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,$nav_grad_top), color-stop(100%,$nav_grad_bottom)); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  $nav_grad_top 0%,$nav_grad_bottom 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  $nav_grad_top 0%,$nav_grad_bottom 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  $nav_grad_top 0%,$nav_grad_bottom 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  $nav_grad_top 0%,$nav_grad_bottom 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ce3723', endColorstr='#b12715',GradientType=0 ); /* IE6-9 */
+
+  
+  color:#efefef;
+  border-bottom:1px solid $borders_color;
+  box-shadow:inset 0px -3px 3px rgba(0,0,0,0.05),
+             inset 0px -2px 2px rgba(0,0,0,0.1),
+             inset 0px -1px 1px rgba(0,0,0,0.2),
+             inset 0px 3px 3px rgba(200,255,200,0.05),
+             inset 0px 2px 2px rgba(200,255,200,0.1),
+             inset 0px 1px 1px rgba(200,255,200,0.2);
+  
+  padding:10px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+.left {
+  display:inline-block;
+}
+.logo {
+  font-weight:bold;
+  font-size:20px;
+  vertical-align:middle;
+  color:white;
+  text-shadow:0px 1px 1px $top_bar_text_shadow;
+}
+.menus {
+  display:inline-block;
+  vertical-align:middle;
+  margin-left:30px;
+}
+.menu {
+  position:relative;
+  top:1px;
+  display:inline-block;
+  margin-right:20px;
+}
+.menuTitle:hover + .menuContents, .menuContents:hover {
+  display:block;
+}
+.menuTitle {
+  position:relative;
+  z-index:999;
+  cursor:default;
+  text-shadow:0px 1px 1px rgba(130,24,13, 0.5);
+}
+.menuContents {
+  position:absolute;
+  top:36px;
+  left:-3px;
+  background:$menu_drop_back;
+  list-style:none;
+  margin:0px;
+  padding:0px;
+  border-radius:2px;
+  width:145px;
+  z-index:5;
+  
+  display:none;
+}
+.menuContents:before {
+  content:' ';
+  display:block;
+  width:0px;
+  height:0px;
+  box-sizing: border-box;
+  border:10px solid transparent;
+  border-bottom-color:$menu_drop_back;
+  position:absolute;
+  top:-20px;
+  left:5px;
+  z-index:-8;
+}
+.menuContents:after {
+  content:' ';
+  display:block;
+  width: 120%; /* For older browsers */
+  height: 130%;
+  width: calc(100% + 20px);
+  height:calc(100% + 40px);
+  position:absolute;
+  top:-30px;
+  left:-10px;
+  z-index:-1;
+}
+
+.menuContents li {
+  padding:10px 20px;
+  cursor:pointer;
+  color:$menu_drop_text;
+}
+.menuContents li:first-of-type {
+  border-top-left-radius:2px;
+  border-top-right-radius:2px;
+}
+.menuContents li:last-of-type {
+  border-bottom-left-radius:2px;
+  border-bottom-right-radius:2px;
+}
+.menuContents li:hover {
+  background:$menu_drop_hover;
+}
+.mainArea {
+  height:calc(100% - 45px);
+  display:flex;
+  align-content:stretch;
+}
+.pagePreview {
+  height:100%;
+  max-width:100%;
+  box-sizing: border-box;
+  border-right:4px solid $borders_color;
+  flex: 0 0 400px;
+  overflow-x:hidden;
+}
+.previewBody {
+  background:white;
+  width:100%;
+  height:100%;
+}
+.rightSide {
+  background:$right_background;
+  //background-image:url(https://lh5.googleusercontent.com/E3Hn0fuUQ8u134YoLtAAOqXhpZiI216arRzPrBbEHAAoxfYTyQO-kickq0-d2qsfheM0WA=w1342-h523);
+  height:100%;
+  width:100%;
+  flex-grow:1;
+  flex-shrink:1;
+  
+  .upperArea {
+    width:100%;
+    height:200px;
+    display:flex;
+    border-bottom:2px solid $borders_color;
+  }
+}
+.upperArea .paletteSelect {
+  background:$right_background;
+  flex: 0 0 250px;
+  padding:20px;
+  overflow-y:auto;
+  border-right:2px solid $borders_color;
+}
+.upperArea .allBlocks {
+  background:$right_background;
+  height:100%;
+  width:100%;
+  overflow-x:hidden;
+  overflow-y:auto;
+  
+  position:relative; /* For child positioning (absolute) */
+}
+
+.paletteColumn {
+  width:83px;
+  margin:0px 15px;
+  padding:0px;
+  text-align:left;
+  display:inline-block;
+  position:relative;
+  left:-3px;
+  .paletteOptionWrap:last-of-type {
+    margin-bottom:0px;
+  }
+}
+.paletteOptionWrap {
+  display:inline-block;
+  
+  border:1px solid #B3B3B3;
+  box-shadow:0 1px 2px rgba(0, 0, 0, 0.08);
+  
+  /* Massive gradient code: */
+  background: rgb(255,255,255); /* Old browsers */
+  background: -moz-linear-gradient(top, rgba(255,255,255,1) 0%, rgba(230,230,230,1) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(255,255,255,1)), color-stop(100%,rgba(230,230,230,1))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(230,230,230,1) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(230,230,230,1) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top, rgba(255,255,255,1) 0%,rgba(230,230,230,1) 100%); /* IE10+ */
+  background: linear-gradient(to bottom, rgba(255,255,255,1) 0%,rgba(230,230,230,1) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e6e6e6',GradientType=0 ); /* IE6-9 */
+  
+  transition:box-shadow 0.1s ease-out;
+  border-radius:999px;
+  padding:3px 12px;
+  font-family: 'Source Sans Pro', sans-serif;
+  cursor:pointer;
+  width:100%;
+  margin-bottom:15px;
+  position:relative;
+  
+  input[type=radio] {
+    display:none;
+  }
+}
+.paletteColorIndicator {
+  display:block;
+  width:20px;
+  height:26px;
+  background:rgb(222,42,51);
+  position:absolute;
+  top:0px;
+  right:0px;
+  border-radius:0px 999px 999px 0px;
+}
+.paletteColorIndicator:after {
+  content:' ';
+  display:block;
+  width:20px;
+  height:26px;
+  
+  background: -moz-linear-gradient(top,  rgba(0,0,0,0) 0%, rgba(0,0,0,0.12) 100%); /* FF3.6+ */
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,rgba(0,0,0,0)), color-stop(100%,rgba(0,0,0,0.12))); /* Chrome,Safari4+ */
+  background: -webkit-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.12) 100%); /* Chrome10+,Safari5.1+ */
+  background: -o-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.12) 100%); /* Opera 11.10+ */
+  background: -ms-linear-gradient(top,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.12) 100%); /* IE10+ */
+  background: linear-gradient(to bottom,  rgba(0,0,0,0) 0%,rgba(0,0,0,0.12) 100%); /* W3C */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#1f000000',GradientType=0 ); /* IE6-9 */
+
+
+  position:absolute;
+  top:0px;
+  right:0px;
+  border-radius:0px 999px 999px 0px;
+}
+.paletteOptionWrap:hover {
+  box-shadow:0 1px 2px rgba(0, 0, 0, 0);
+}
+
+#searchBar {
+  position:absolute;
+  top:0px;
+  right:10px;
+  border-radius:0px 0px 5px 5px;
+  border:1px solid $borders_color;
+  border-top:none;
+  outline:none;
+  padding:8px 10px 8px 26px;
+  background-image:url(https://cdn.scratch.mit.edu/scratchr2/static/__87c8959d9c6fe17d8096b483c05be220__/images/nav-search-glass.png);
+  background-repeat:no-repeat;
+  background-position:7px 9px;
+}
+
+
+.farRight {
+  float:right;
+  padding-right:40px;
+  position:relative;
+  top:3px;
+  text-shadow:0px 1px 1px $top_bar_text_shadow;
+}
+
+.fancyCheck {
+	width: 20px;	
+	margin: 20px auto;
+	position: relative;
+  display:none;
+}
+
+.fancyCheck + label {
+	cursor: pointer;
+	position: absolute;
+	width: 20px;
+	height: 20px;
+	top: 0px;
+  right:10px;
+	border-radius: 4px;
+  margin-left:10px;
+
+	-webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	-moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0,0,0,0.5);
+	background: #fcfff4;
+
+	background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );
+}
+
+.fancyCheck + label:after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+	filter: alpha(opacity=0);
+	opacity: 0;
+	content: '';
+	position: absolute;
+	width: 9px;
+	height: 5px;
+	background: transparent;
+	top: 4px;
+	left: 4px;
+	border: 3px solid #333;
+	border-top: none;
+	border-right: none;
+
+	-webkit-transform: rotate(-45deg);
+	-moz-transform: rotate(-45deg);
+	-o-transform: rotate(-45deg);
+	-ms-transform: rotate(-45deg);
+	transform: rotate(-45deg);
+}
+
+.fancyCheck + label:hover::after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
+	filter: alpha(opacity=30);
+	opacity: 0.5;
+}
+
+.fancyCheck:checked + label:after {
+	-ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
+	filter: alpha(opacity=100);
+	opacity: 1;
+}
+
+@media (max-width:450px) {
+  .advanceWrap {
+    display:none;
+  }
+}
