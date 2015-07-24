@@ -3,4 +3,9 @@
 
 {% block content %}
 	{{ user.username }}
+	{% if projects %}
+		{% for project in projects %}
+			{{ project }}
+		{% endfor %}
+	{% endif %}
 {% endblock %}

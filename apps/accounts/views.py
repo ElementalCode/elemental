@@ -17,6 +17,7 @@ from django.views.generic.edit import (FormView, UpdateView, CreateView,
 
 
 from .models import ElementalUser
+from apps.projects.models import Project
 
 class ProfileView(TemplateView):
 	template_name = 'profile.html'
@@ -24,4 +25,8 @@ class ProfileView(TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super(ProfileView, self).get_context_data(**kwargs)
 		context['user'] = ElementalUser.objects.get(username__iexact=self.kwargs['username'])
+		if context['user'].can_share_projects:
+			context['projects'] = Project.objects.filter(user=context['user'])
+		else:
+			context['projects'] = False
 		return context
