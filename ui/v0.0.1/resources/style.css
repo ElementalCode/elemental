@@ -1,0 +1,194 @@
+/* Compiled from SCSS */
+
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
+body {
+  margin: 0px;
+  overflow: hidden;
+}
+
+html, body {
+  height: 100%;
+}
+
+.topBar {
+  background: #aaa;
+  padding: 10px;
+  font-family: 'Source Sans Pro', sans-serif;
+}
+
+.left {
+  display: inline-block;
+}
+
+.logo {
+  font-weight: bold;
+  font-size: 20px;
+  vertical-align: middle;
+}
+
+.menus {
+  display: inline-block;
+  vertical-align: middle;
+  margin-left: 30px;
+}
+
+.menu {
+  position: relative;
+  top: 1px;
+  display: inline-block;
+  margin-right: 20px;
+}
+
+.menuTitle:hover + .menuContents, .menuContents:hover {
+  display: block;
+}
+
+.menuTitle {
+  position: relative;
+  z-index: 999;
+  cursor: default;
+}
+
+.menuContents {
+  position: absolute;
+  top: 36px;
+  left: -3px;
+  background: #888;
+  list-style: none;
+  margin: 0px;
+  padding: 0px;
+  border-radius: 2px;
+  width: 145px;
+  z-index: 5;
+  display: none;
+}
+
+.menuContents:before {
+  content: ' ';
+  display: block;
+  width: 0px;
+  height: 0px;
+  box-sizing: border-box;
+  border: 10px solid transparent;
+  border-bottom-color: #888;
+  position: absolute;
+  top: -20px;
+  left: 5px;
+  z-index: -8;
+}
+
+.menuContents:after {
+  content: ' ';
+  display: block;
+  width: 120%;
+  /* For older browsers */
+  height: 130%;
+  width: calc(100% + 20px);
+  height: calc(100% + 40px);
+  position: absolute;
+  top: -30px;
+  left: -10px;
+  z-index: -1;
+}
+
+.menuContents li {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.menuContents li:hover {
+  background: #ddd;
+}
+
+.mainArea {
+  height: calc(100% - 45px);
+  display: flex;
+  align-content: stretch;
+}
+
+.pagePreview {
+  height: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border-right: 4px solid #333;
+  flex: 0 0 400px;
+  overflow-x: hidden;
+}
+
+.previewBody {
+  background: white;
+  width: 100%;
+  height: 100%;
+}
+
+.rightSide {
+  background: #ddd;
+  height: 100%;
+  width: 100%;
+  flex-grow: 1;
+  flex-shrink: 1;
+}
+.rightSide .upperArea {
+  background: #bbb;
+  width: 100%;
+  height: 200px;
+  display: flex;
+  border-bottom: 2px solid #333;
+}
+
+.upperArea .paletteSelect {
+  background: #ddd;
+  flex: 0 0 250px;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.upperArea .allBlocks {
+  background: #777;
+  height: 100%;
+  width: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
+  position: relative;
+  /* For child positioning (absolute) */
+}
+
+.paletteColumn {
+  width: 83px;
+  margin: 0px 15px;
+  padding: 0px;
+  text-align: left;
+  display: inline-block;
+  position: relative;
+  left: -3px;
+}
+.paletteColumn .paletteOptionWrap:last-of-type {
+  margin-bottom: 0px;
+}
+
+.paletteOptionWrap {
+  display: inline-block;
+  background: #777;
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-family: 'Source Sans Pro', sans-serif;
+  cursor: pointer;
+  width: 100%;
+  margin-bottom: 15px;
+}
+.paletteOptionWrap input[type=radio] {
+  display: none;
+}
+
+#searchBar {
+  position: absolute;
+  top: 0px;
+  right: 10px;
+  border-radius: 0px 0px 5px 5px;
+  border: none;
+  outline: none;
+  padding: 8px 10px 8px 26px;
+  background-image: url(https://cdn.scratch.mit.edu/scratchr2/static/__87c8959d9c6fe17d8096b483c05be220__/images/nav-search-glass.png);
+  background-repeat: no-repeat;
+  background-position: 7px 9px;
+}
