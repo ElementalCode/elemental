@@ -12,6 +12,30 @@ $menu_drop_back: #1D1E1A;
 $menu_drop_hover: #3D7555;
 $menu_drop_text: #eee;
 
+@mixin prefix($property, $value, $vendors: webkit moz ms o) {
+      @if $vendors {
+        @each $vendor in $vendors {
+          #{"-" + $vendor + "-" + $property}: #{$value};
+        }
+      }
+      #{$property}: #{$value};
+}
+
+/* EXAMPLE 
+Sass:
+.element {
+  @include prefix(transform, rotate(42deg));
+}
+Ouput:
+.element {
+  -webkit-transform: rotate(42deg);
+  -moz-transform: rotate(42deg);
+  -ms-transform: rotate(42deg);
+  -o-transform: rotate(42deg);
+  transform: rotate(42deg);
+}
+*/
+
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
 
 body {
