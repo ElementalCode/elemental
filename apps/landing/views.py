@@ -43,6 +43,9 @@ class Index(FormView):
             return render(self.request, 'index.html',
                           {'form': form})
 
+class TermsOfService(TemplateView):
+    template_name = 'terms_of_service.html'
+
 
 class SignUp(FormView):
     template_name = 'register.html'
