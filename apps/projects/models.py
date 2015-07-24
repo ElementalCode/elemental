@@ -14,3 +14,8 @@ class Project(models.Model):
 
     def __unicode__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        if not self.user.can_share_projects:
+            self.shared = False
+        super(Project, self).save(*args, **kwargs)
