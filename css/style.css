@@ -263,7 +263,8 @@ html, body {
   border-top: none;
   outline: none;
   padding: 8px 10px 8px 26px;
-  background: url(https://cdn.scratch.mit.edu/scratchr2/static/__87c8959d9c6fe17d8096b483c05be220__/images/nav-search-glass.png) no-repeat 7px 9px; }
+  background: url(https://cdn.scratch.mit.edu/scratchr2/static/__87c8959d9c6fe17d8096b483c05be220__/images/nav-search-glass.png) no-repeat 7px 9px;
+  background-color: #fff; }
 
 .farRight {
   float: right;
