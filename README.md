@@ -33,6 +33,7 @@ The goal of Elemental is to act as a bridge between [Scratch](http://scratch.mit
         * Assets will also be saving in the project zip
         * Directory structure will be respected in the zip files. (The sprite pane in scratch is a directory viewer)
     * Running
+        * Webpages will be complied from json to their respected file types (html,css and js)
         * Webpages will be shown in a sandboxed iframe in the stage pane
 
 ### Dev Notes
