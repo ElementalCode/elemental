@@ -12,6 +12,10 @@
 /* THIS CODE IS UGLY (don't use it as a style guide)
    Things need shifting around and such for this code to make much sense at all. If anyone is willing to that, it would very much appreciated. */
 
+*{
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
   overflow: hidden;
@@ -37,13 +41,13 @@ html, body {
 }
 
 .paletteColumn {
-  width: 83px;
-  margin: 0 15px;
-  padding: 0;
+  width: 50%;
+  margin: 0;
+  padding: 5px;
   text-align: left;
-  display: inline-block;
+  display: block;
+  float: left;
   position: relative;
-  left: -3px;
   .paletteOptionWrap:last-of-type {
     margin-bottom: 0;
   }
@@ -71,7 +75,7 @@ html, body {
   font-family: 'Source Sans Pro', sans-serif;
   cursor: pointer;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   position: relative;
 
   input[type=radio] {

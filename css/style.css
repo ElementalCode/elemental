@@ -138,7 +138,7 @@ Ouput:
     .rightSide .upperArea .paletteSelect {
       background: #323232;
       flex: 0 0 250px;
-      padding: 20px;
+      padding: 0;
       overflow-y: auto;
       border-right: 2px solid #1d1e1a; }
     .rightSide .upperArea .allBlocks {
@@ -154,6 +154,9 @@ Ouput:
 
 /* THIS CODE IS UGLY (don't use it as a style guide)
    Things need shifting around and such for this code to make much sense at all. If anyone is willing to that, it would very much appreciated. */
+* {
+  box-sizing: border-box; }
+
 body {
   margin: 0;
   overflow: hidden; }
@@ -175,13 +178,13 @@ html, body {
   height: 100%; }
 
 .paletteColumn {
-  width: 83px;
-  margin: 0 15px;
-  padding: 0;
+  width: 50%;
+  margin: 0;
+  padding: 5px;
   text-align: left;
-  display: inline-block;
-  position: relative;
-  left: -3px; }
+  display: block;
+  float: left;
+  position: relative; }
   .paletteColumn .paletteOptionWrap:last-of-type {
     margin-bottom: 0; }
 
@@ -212,7 +215,7 @@ html, body {
   font-family: 'Source Sans Pro', sans-serif;
   cursor: pointer;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 10px;
   position: relative; }
   .paletteOptionWrap input[type=radio] {
     display: none; }
