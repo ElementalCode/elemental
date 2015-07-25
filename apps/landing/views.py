@@ -43,6 +43,17 @@ class Index(FormView):
             return render(self.request, 'index.html',
                           {'form': form})
 
+
+class BanPage(TemplateView):
+    template_name = 'banned.html'
+
+    def get(self, request):
+        if self.user and not self.user.banned: # if user is logged in and is not banned
+            return redirect(reverse('index'))
+        else: # user logged and banned
+            return render(request, 'banned.html')
+
+
 class TermsOfService(TemplateView):
     template_name = 'terms_of_service.html'
 

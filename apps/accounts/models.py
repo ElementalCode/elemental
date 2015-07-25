@@ -5,6 +5,7 @@ from django.utils.translation import ugettext_lazy as _
 from django.core.mail import send_mail
 from django.core.validators import RegexValidator
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
+from django.contrib.auth.hashers import is_password_usable
 
 
 class ElementalUserManager(BaseUserManager):
@@ -58,6 +59,11 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
     class Meta:
         verbose_name = _('user')
         verbose_name_plural = _('users')
+
+    def save(self, *args, **kwargs):
+        if not is_password_usable(self.password):
+            self.set_password(self.password)
+        return super(ElementalUser, self).save(*args, **kwargs)
 
     def get_full_name(self):
         """
