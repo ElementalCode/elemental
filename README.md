@@ -19,7 +19,7 @@ does things
 other things
 
 ### BookOwl
-weird things
+Front-end, research, NOT weird things
 
 ### TheInitializer
 cool things
