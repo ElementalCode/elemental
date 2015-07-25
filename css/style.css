@@ -1,6 +1,11 @@
-/* THIS CODE IS UGLY (don't use it as a style guide)
-   Things need shifting around and such for this code to make much sense at all. If anyone is willing to that, it would very much appreciated. */
-/* EXAMPLE 
+/* Font Imports
+-------------------------------------------------------*/
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
+/* SCSS Imports
+-------------------------------------------------------*/
+/* Colour schemes
+-------------------------------------------------------*/
+/* EXAMPLE
 Sass:
 .element {
   @include prefix(transform, rotate(42deg));
@@ -14,14 +19,6 @@ Ouput:
   transform: rotate(42deg);
 }
 */
-@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
-body {
-  margin: 0px;
-  overflow: hidden; }
-
-html, body {
-  height: 100%; }
-
 .topBar {
   /* Monster Gradient: */
   background: #2ecc71;
@@ -38,116 +35,94 @@ html, body {
   /* IE10+ */
   background: linear-gradient(to bottom, #2ecc71 0%, #27ae60 100%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ce3723', endColorstr='#b12715',GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ce3723', endColorstr='#b12715', GradientType=0);
   /* IE6-9 */
   color: #efefef;
-  border-bottom: 1px solid #1D1E1A;
-  box-shadow: inset 0px -3px 3px rgba(0, 0, 0, 0.05), inset 0px -2px 2px rgba(0, 0, 0, 0.1), inset 0px -1px 1px rgba(0, 0, 0, 0.2), inset 0px 3px 3px rgba(200, 255, 200, 0.05), inset 0px 2px 2px rgba(200, 255, 200, 0.1), inset 0px 1px 1px rgba(200, 255, 200, 0.2);
+  border-bottom: 1px solid #1d1e1a;
+  box-shadow: inset 0px -3px 3px rgba(0, 0, 0, 0.05), inset 0 -2px 2px rgba(0, 0, 0, 0.1), inset 0 -1px 1px rgba(0, 0, 0, 0.2), inset 0 3px 3px rgba(200, 255, 200, 0.05), inset 0 2px 2px rgba(200, 255, 200, 0.1), inset 0 1px 1px rgba(200, 255, 200, 0.2);
   padding: 10px;
   font-family: 'Source Sans Pro', sans-serif; }
-
-.left {
-  display: inline-block; }
-
-.logo {
-  font-weight: bold;
-  font-size: 20px;
-  vertical-align: middle;
-  color: white;
-  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5); }
-
-.menus {
-  display: inline-block;
-  vertical-align: middle;
-  margin-left: 30px; }
-
-.menu {
-  position: relative;
-  top: 1px;
-  display: inline-block;
-  margin-right: 20px; }
-
-.menuTitle:hover + .menuContents, .menuContents:hover {
-  display: block; }
-
-.menuTitle {
-  position: relative;
-  z-index: 999;
-  cursor: default;
-  text-shadow: 0px 1px 1px rgba(130, 24, 13, 0.5); }
-
-.menuContents {
-  position: absolute;
-  top: 36px;
-  left: -3px;
-  background: #1D1E1A;
-  list-style: none;
-  margin: 0px;
-  padding: 0px;
-  border-radius: 2px;
-  width: 145px;
-  z-index: 5;
-  display: none; }
-
-.menuContents:before {
-  content: ' ';
-  display: block;
-  width: 0px;
-  height: 0px;
-  box-sizing: border-box;
-  border: 10px solid transparent;
-  border-bottom-color: #1D1E1A;
-  position: absolute;
-  top: -20px;
-  left: 5px;
-  z-index: -8; }
-
-.menuContents:after {
-  content: ' ';
-  display: block;
-  width: 120%;
-  /* For older browsers */
-  height: 130%;
-  width: calc(100% + 20px);
-  height: calc(100% + 40px);
-  position: absolute;
-  top: -30px;
-  left: -10px;
-  z-index: -1; }
-
-.menuContents li {
-  padding: 10px 20px;
-  cursor: pointer;
-  color: #eee; }
-
-.menuContents li:first-of-type {
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px; }
-
-.menuContents li:last-of-type {
-  border-bottom-left-radius: 2px;
-  border-bottom-right-radius: 2px; }
-
-.menuContents li:hover {
-  background: #3D7555; }
+  .topBar .left {
+    display: inline-block; }
+  .topBar .logo {
+    font-weight: bold;
+    font-size: 20px;
+    vertical-align: middle;
+    color: white;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5); }
+  .topBar .menus {
+    display: inline-block;
+    vertical-align: middle;
+    margin-left: 30px; }
+  .topBar .menuTitle {
+    position: relative;
+    z-index: 999;
+    cursor: default;
+    text-shadow: 0 1px 1px rgba(130, 24, 13, 0.5); }
+  .topBar .menu {
+    position: relative;
+    top: 1px;
+    display: inline-block;
+    margin-right: 20px; }
+    .topBar .menu .menuContents {
+      position: absolute;
+      top: 36px;
+      left: -3px;
+      background: #1d1e1a;
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      border-radius: 2px;
+      width: 145px;
+      z-index: 5;
+      display: none; }
+  .topBar .menuTitle:hover + .menuContents, .topBar .menuContents:hover {
+    display: block; }
+  .topBar .menuContents:before {
+    content: ' ';
+    display: block;
+    width: 0;
+    height: 0;
+    box-sizing: border-box;
+    border: 10px solid transparent;
+    border-bottom-color: #1d1e1a;
+    position: absolute;
+    top: -20px;
+    left: 5px;
+    z-index: -8; }
+  .topBar .menuContents:after {
+    content: ' ';
+    display: block;
+    /*noinspection CssOverwrittenProperties*/
+    width: 120%;
+    /* For older browsers */
+    /*noinspection CssOverwrittenProperties*/
+    height: 130%;
+    /*noinspection CssOverwrittenProperties*/
+    width: calc(100% + 20px);
+    /*noinspection CssOverwrittenProperties*/
+    height: calc(100% + 40px);
+    position: absolute;
+    top: -30px;
+    left: -10px;
+    z-index: -1; }
+  .topBar .menuContents li {
+    padding: 10px 20px;
+    cursor: pointer;
+    color: #eeeeee; }
+  .topBar .menuContents li:first-of-type {
+    border-top-left-radius: 2px;
+    border-top-right-radius: 2px; }
+  .topBar .menuContents li:last-of-type {
+    border-bottom-left-radius: 2px;
+    border-bottom-right-radius: 2px; }
+  .topBar .menuContents li:hover {
+    background: #3d7555; }
 
 .mainArea {
   height: calc(100% - 45px);
   display: flex;
   align-content: stretch; }
-
-.pagePreview {
-  height: 100%;
-  max-width: 100%;
-  box-sizing: border-box;
-  border-right: 4px solid #1D1E1A;
-  flex: 0 0 400px;
-  overflow-x: hidden; }
-
-.previewBody {
-  background: white;
-  width: 100%;
-  height: 100%; }
 
 .rightSide {
   background: #323232;
@@ -159,34 +134,56 @@ html, body {
     width: 100%;
     height: 200px;
     display: flex;
-    border-bottom: 2px solid #1D1E1A; }
+    border-bottom: 2px solid #1d1e1a; }
+    .rightSide .upperArea .paletteSelect {
+      background: #323232;
+      flex: 0 0 250px;
+      padding: 20px;
+      overflow-y: auto;
+      border-right: 2px solid #1d1e1a; }
+    .rightSide .upperArea .allBlocks {
+      background: #323232;
+      height: 100%;
+      width: 100%;
+      overflow-x: hidden;
+      overflow-y: auto;
+      position: relative;
+      /* For child positioning (absolute) */ }
+  .rightSide .lowerArea {
+    height: calc(100% - 200px); }
 
-.upperArea .paletteSelect {
-  background: #323232;
-  flex: 0 0 250px;
-  padding: 20px;
-  overflow-y: auto;
-  border-right: 2px solid #1D1E1A; }
+/* THIS CODE IS UGLY (don't use it as a style guide)
+   Things need shifting around and such for this code to make much sense at all. If anyone is willing to that, it would very much appreciated. */
+body {
+  margin: 0;
+  overflow: hidden; }
 
-.upperArea .allBlocks {
-  background: #323232;
+html, body {
+  height: 100%; }
+
+.pagePreview {
   height: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  border-right: 4px solid #1d1e1a;
+  flex: 0 0 400px;
+  overflow-x: hidden; }
+
+.previewBody {
+  background: white;
   width: 100%;
-  overflow-x: hidden;
-  overflow-y: auto;
-  position: relative;
-  /* For child positioning (absolute) */ }
+  height: 100%; }
 
 .paletteColumn {
   width: 83px;
-  margin: 0px 15px;
-  padding: 0px;
+  margin: 0 15px;
+  padding: 0;
   text-align: left;
   display: inline-block;
   position: relative;
   left: -3px; }
   .paletteColumn .paletteOptionWrap:last-of-type {
-    margin-bottom: 0px; }
+    margin-bottom: 0; }
 
 .paletteOptionWrap {
   display: inline-block;
@@ -207,7 +204,7 @@ html, body {
   /* IE10+ */
   background: linear-gradient(to bottom, white 0%, #e6e6e6 100%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#ffffff', endColorstr='#e6e6e6',GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffff', endColorstr='#e6e6e6', GradientType=0);
   /* IE6-9 */
   transition: box-shadow 0.1s ease-out;
   border-radius: 999px;
@@ -226,56 +223,54 @@ html, body {
   height: 26px;
   background: #de2a33;
   position: absolute;
-  top: 0px;
-  right: 0px;
-  border-radius: 0px 999px 999px 0px; }
+  top: 0;
+  right: 0;
+  border-radius: 0 999px 999px 0; }
 
 .paletteColorIndicator:after {
   content: ' ';
   display: block;
   width: 20px;
   height: 26px;
-  background: -moz-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.12) 100%);
+  background: -moz-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.12) 100%);
   /* FF3.6+ */
-  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, transparent), color-stop(100%, rgba(0, 0, 0, 0.12)));
+  background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, rgba(0, 0, 0, 0)), color-stop(100%, rgba(0, 0, 0, 0.12)));
   /* Chrome,Safari4+ */
-  background: -webkit-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.12) 100%);
+  background: -webkit-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.12) 100%);
   /* Chrome10+,Safari5.1+ */
-  background: -o-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.12) 100%);
+  background: -o-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.12) 100%);
   /* Opera 11.10+ */
-  background: -ms-linear-gradient(top, transparent 0%, rgba(0, 0, 0, 0.12) 100%);
+  background: -ms-linear-gradient(top, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.12) 100%);
   /* IE10+ */
-  background: linear-gradient(to bottom, transparent 0%, rgba(0, 0, 0, 0.12) 100%);
+  background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.12) 100%);
   /* W3C */
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#1f000000',GradientType=0 );
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#00000000', endColorstr='#1f000000', GradientType=0);
   /* IE6-9 */
   position: absolute;
-  top: 0px;
-  right: 0px;
-  border-radius: 0px 999px 999px 0px; }
+  top: 0;
+  right: 0;
+  border-radius: 0 999px 999px 0; }
 
 .paletteOptionWrap:hover {
-  box-shadow: 0 1px 2px transparent; }
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0); }
 
 #searchBar {
   position: absolute;
-  top: 0px;
+  top: 0;
   right: 10px;
-  border-radius: 0px 0px 5px 5px;
-  border: 1px solid #1D1E1A;
+  border-radius: 0 0 5px 5px;
+  border: 1px solid #1d1e1a;
   border-top: none;
   outline: none;
   padding: 8px 10px 8px 26px;
-  background-image: url(https://cdn.scratch.mit.edu/scratchr2/static/__87c8959d9c6fe17d8096b483c05be220__/images/nav-search-glass.png);
-  background-repeat: no-repeat;
-  background-position: 7px 9px; }
+  background: url(https://cdn.scratch.mit.edu/scratchr2/static/__87c8959d9c6fe17d8096b483c05be220__/images/nav-search-glass.png) no-repeat 7px 9px; }
 
 .farRight {
   float: right;
   padding-right: 40px;
   position: relative;
   top: 3px;
-  text-shadow: 0px 1px 1px rgba(0, 0, 0, 0.5); }
+  text-shadow: 0 1px 1px rgba(0, 0, 0, 0.5); }
 
 .fancyCheck {
   width: 20px;
@@ -288,20 +283,20 @@ html, body {
   position: absolute;
   width: 20px;
   height: 20px;
-  top: 0px;
+  top: 0;
   right: 10px;
   border-radius: 4px;
   margin-left: 10px;
-  -webkit-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
-  -moz-box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
-  box-shadow: inset 0px 1px 1px white, 0px 1px 3px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: inset 0 1px 1px white, 0 1px 3px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: inset 0 1px 1px white, 0 1px 3px rgba(0, 0, 0, 0.5);
+  box-shadow: inset 0 1px 1px white, 0 1px 3px rgba(0, 0, 0, 0.5);
   background: #fcfff4;
   background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
   background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 ); }
+  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfff4', endColorstr='#b3bead', GradientType=0); }
 
 .fancyCheck + label:after {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
@@ -336,5 +331,3 @@ html, body {
 @media (max-width: 450px) {
   .advanceWrap {
     display: none; } }
-
-/*# sourceMappingURL=style.css.map */
