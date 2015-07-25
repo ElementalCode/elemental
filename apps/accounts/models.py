@@ -32,7 +32,7 @@ class ElementalUserManager(BaseUserManager):
 
 
 class ElementalUser(AbstractBaseUser, PermissionsMixin):
-    alphanumeric = RegexValidator(r'^[0-9a-zA-Z]*$', message='Only alphanumeric characters are allowed.')
+    alphanumeric = RegexValidator(r'^[a-zA-Z0-9-_]+$', message='Only alphanumeric characters are allowed.')
 
     username = models.CharField(unique=True, max_length=20, validators=[alphanumeric])
 
