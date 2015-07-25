@@ -18,8 +18,9 @@ from django.views.generic.edit import (FormView, UpdateView, CreateView,
 
 from .models import ElementalUser
 from apps.projects.models import Project
+from .mixins import UnbannedUserMixin
 
-class ProfileView(TemplateView):
+class ProfileView(UnbannedUserMixin, TemplateView):
 	template_name = 'profile.html'
 
 	def get_context_data(self, **kwargs):
