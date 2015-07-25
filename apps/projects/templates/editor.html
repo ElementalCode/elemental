@@ -1,11 +1,13 @@
+{% load staticfiles %}
+
 <!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
     <title>UI v0.0.1 | Elemental</title>
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href='{%static "css/style.css" %}'>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/interact.js/1.2.4/interact.min.js"></script>
-    <script src="js/script.js"></script>
+    <script src='{% static "js/script.js" %}'></script>
   </head>
   <body>
     <div class="topBar">
