@@ -1,5 +1,8 @@
 ![image](https://cloud.githubusercontent.com/assets/5458180/8791470/4f758e90-2f29-11e5-8f29-98886c74cb52.png)
 
+**Frontend Demo:** http://elementalcode.github.io/Elemental/  
+**Backend Demo:** http://elementalcode.herokuapp.com/
+
 A drag and drop block-based coding environment for front-end web technologies.
 
 Scratch Forums topic: https://scratch.mit.edu/discuss/topic/134554/
