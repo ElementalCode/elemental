@@ -15,6 +15,8 @@ from django.views.generic.base import View
 from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
+from apps.accounts.mixins import UnbannedUserMixin
 
-class ProjectEdit(TemplateView):
+
+class ProjectEdit(UnbannedUserMixin, TemplateView):
 	template_name = 'editor.html'
