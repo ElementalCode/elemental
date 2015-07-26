@@ -27,7 +27,7 @@ class ProfileView(UnbannedUserMixin, TemplateView):
 		context = super(ProfileView, self).get_context_data(**kwargs)
 		context['user'] = ElementalUser.objects.get(username__iexact=self.kwargs['username'])
 		if context['user'].can_share_projects:
-			context['projects'] = Project.objects.filter(user=context['user'])
+			context['projects'] = Project.objects.filter(user=context['user'], shared=True)
 		else:
 			context['projects'] = False
 		return context
