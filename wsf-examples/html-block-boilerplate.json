@@ -1,0 +1,17 @@
+{
+    position: {
+        _comment: "Only used when not inside a script!",
+        x: "number here instead of string",
+        y: "number here inst.. oh just read the above text"
+    },
+    blockType: "span or div or whatever you want",
+    inputs: {
+        textOrWhatever: "I think you get the idea here",
+    },
+    attributes: [
+        ["width", 400],
+    ],
+    content: [
+        "blocks here only if it's a C block and not a br tag or something"
+    ]
+}

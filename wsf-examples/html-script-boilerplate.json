@@ -1,0 +1,12 @@
+{
+    position: {
+        x: "number here instead of string",
+        y: "number here inst.. oh just read the above text"
+    },
+    head: [
+        "blocks here"
+    ],
+    body: [
+        "more blocks"
+    ]
+}
