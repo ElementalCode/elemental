@@ -26,8 +26,14 @@ class ProfileView(UnbannedUserMixin, TemplateView):
 	def get_context_data(self, **kwargs):
 		context = super(ProfileView, self).get_context_data(**kwargs)
 		context['user'] = ElementalUser.objects.get(username__iexact=self.kwargs['username'])
-		if context['user'].can_share_projects:
-			context['projects'] = Project.objects.filter(user=context['user'])
+		if len(self.request.user.groups.all()[0].name) > 0:
+			auth_group = request.user.groupa.all()[0].name
+
+		# just a little failsafe in case of broken things...
+		allowed_groups = ('admin', 'moderator', )
+		if context['user'].can_share_projects or request.user.is_superuser or auth_group in allowed_groups:
+			context['projects'] = Project.objects.filter(user=context['user'], shared=True)
 		else:
 			context['projects'] = False
+		
 		return context

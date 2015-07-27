@@ -63,6 +63,14 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
     def save(self, *args, **kwargs):
         if not is_password_usable(self.password):
             self.set_password(self.password)
+        super(ElementalUser, self).save(*args, **kwargs)
+        if len(self.groups.all()) > 0:
+            auth_group = self.groups.all()[0].name
+        else:
+            auth_group = None
+        allowed_groups = ('admin', 'moderator', )
+        if self.is_superuser or auth_group in allowed_groups:
+            self.can_share_projects = True
         return super(ElementalUser, self).save(*args, **kwargs)
 
     def get_full_name(self):
