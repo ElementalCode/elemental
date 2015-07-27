@@ -25,4 +25,7 @@ urlpatterns = patterns('',
 
     # Some specific stuff...
     url(r'^(?i)accounts/settings/?$', UserSettings.as_view(), name='user-settings'),
+
+    # REST stuff
+    url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 )
