@@ -1,17 +1,45 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block extra_scripts %}
+{% block morescripts %}
+    <script src='{% static "js/htmlparser.js" %}'></script>
+    <script src='{% static "js/htmljson.js" %}'></script>
     <script src='{% static "js/cssjson.js" %}'></script>
-    <script src='{% static "js/node_modules/htmlparser/lib/htmlparser.min.js" %}'></script>
     <script>
-        var handler = new Tautologistics.NodeHtmlParser.DefaultHandler(function (error, dom) {
-            console.log('done')
-        });
-        var parser = new Tautologistics.NodeHtmlParser.Parser(handler);
-        console.log(document.body)
-        parser.parseComplete(document.body.innerHTML);
-        alert(JSON.stringify(handler.dom, null, 2));
+
+        var originalJSON = {
+          tag: 'div',
+          attr: {
+            id: '1',
+            class: ['foo']
+          },
+          child: [{
+            tag: 'h2',
+            text: 'sample text with <code>inline tag</code>'
+          },{
+            tag: 'pre',
+            attr: {
+              id: 'demo',
+              class: ['foo', 'bar']
+            }
+          },{
+            tag: 'pre',
+            attr: {
+              id: 'output',
+              class: ['goo']
+            }
+          },{
+            tag: 'input',
+            attr: {
+              id: 'execute',
+              type: 'button',
+              value: 'execute'
+            }
+          }]
+        };
+        newHTML = json2html(originalJSON);
+        console.log(newHTML);
+        
 
         var original = {
           "children": {
