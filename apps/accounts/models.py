@@ -63,6 +63,7 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
     def save(self, *args, **kwargs):
         if not is_password_usable(self.password):
             self.set_password(self.password)
+        super(ElementalUser, self).save(*args, **kwargs)
         if len(self.groups.all()) > 0:
             auth_group = self.groups.all()[0].name
         else:
