@@ -21,7 +21,7 @@ from apps.projects.models import Project
 
 from .forms import UserSettingsForm
 
-from .mixins import UnbannedUserMixin
+from .mixins import UnbannedUserMixin, LoggedInRequiredMixin
 
 class ProfileView(UnbannedUserMixin, TemplateView):
     template_name = 'profile.html'
@@ -41,7 +41,7 @@ class ProfileView(UnbannedUserMixin, TemplateView):
         
         return context
 
-class UserSettings(UnbannedUserMixin, FormView):
+class UserSettings(LoggedInRequiredMixin, UnbannedUserMixin, FormView):
     template_name = 'user_settings.html'
     form_class = UserSettingsForm
     success_url = reverse_lazy('user-settings')
@@ -52,7 +52,9 @@ class UserSettings(UnbannedUserMixin, FormView):
         return kwargs
 
     def form_valid(self, form):
+        print self.request.user.email
         self.request.user.email = form.cleaned_data.get('email')
+        self.request.user.save()
         if form.cleaned_data.get('password1') != '':
             self.request.user.password = form.cleaned_data.get('password1')
         self.request.user.save()
