@@ -1,53 +1,61 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
-{% block morescripts %}
+{% block extra_scripts %}
     <script src='{% static "js/cssjson.js" %}'></script>
+    <script src='{% static "js/node_modules/htmlparser/lib/htmlparser.min.js" %}'></script>
     <script>
+        var handler = new Tautologistics.NodeHtmlParser.DefaultHandler(function (error, dom) {
+            console.log('done')
+        });
+        var parser = new Tautologistics.NodeHtmlParser.Parser(handler);
+        console.log(document.body)
+        parser.parseComplete(document.body.innerHTML);
+        alert(JSON.stringify(handler.dom, null, 2));
+
         var original = {
+          "children": {
+            "@media (max-width: 800px)": {
               "children": {
-                "@media (max-width: 800px)": {
-                  "children": {
-                    "#main #comments": {
-                      "children": {},
-                      "attributes": {
-                        "margin": "0px",
-                        "width": "auto",
-                        "background": "red"
-                      }
-                    },
-                    "#main #buttons": {
-                      "children": {},
-                      "attributes": {
-                        "padding": "5px 10px",
-                        "color": "blue"
-                      }
-                    }
-                  },
-                  "attributes": {}
-                },
-                "#main #content": {
+                "#main #comments": {
                   "children": {},
                   "attributes": {
-                    "margin": "0 7.6%",
-                    "width": "auto"
+                    "margin": "0px",
+                    "width": "auto",
+                    "background": "red"
                   }
                 },
-                "#nav-below": {
+                "#main #buttons": {
                   "children": {},
                   "attributes": {
-                    "border-bottom": "1px solid #ddd",
-                    "margin-bottom": "1.625em",
-                    "background-image": "url(http://www.example.com/images/im.jpg)"
+                    "padding": "5px 10px",
+                    "color": "blue"
                   }
                 }
               },
               "attributes": {}
-            };
+            },
+            "#main #content": {
+              "children": {},
+              "attributes": {
+                "margin": "0 7.6%",
+                "width": "auto"
+              }
+            },
+            "#nav-below": {
+              "children": {},
+              "attributes": {
+                "border-bottom": "1px solid #ddd",
+                "margin-bottom": "1.625em",
+                "background-image": "url(http://www.example.com/images/im.jpg)"
+              }
+            }
+          },
+          "attributes": {}
+        };
+
         var css = CSSJSON.toCSS(original);
-        console.log(css);
         var json = CSSJSON.toJSON(css);
-        console.log(json);
     </script>
 {% endblock %}
 
