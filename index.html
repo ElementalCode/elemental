@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="css/style.css"/>
+    <title></title>
+</head>
+<body>
+<div id="scripting-area" unselectable="on">
+
+    <ul class="script">
+        <li class="block hat">On Request</li>
+        <li class="block">This is a block</li>
+        <li class="block c">html</li>
+        <li>
+            <ul class="c-loop">
+                <li class="block c">header</li>
+                <li>
+                    <ul class="c-loop">
+                        <li class="block">This is another block</li>
+                        <li class="block">This is another block</li>
+                        <li class="block">This is another block</li>
+                    </ul>
+                </li>
+                <li class="block c end">/header</li>
+                <li class="block c">body</li>
+                <li>
+                    <ul class="c-loop">
+                        <li class="block">This is another block</li>
+                        <li class="block">This is another block</li>
+                        <li class="block c">div</li>
+                        <li>
+                            <ul class="c-loop">
+                                <li class="block">This is a block</li>
+                                <li class="block">This is another block</li>
+                                <li class="block">This is another block</li>
+                            </ul>
+                        </li>
+                        <li class="block c end">/div</li>
+                    </ul>
+                </li>
+                <li class="block c end">/body</li>
+            </ul>
+        </li>
+        <li class="block c end">/html</li>
+    </ul>
+
+</div>
+<!--<script src="https://code.jquery.com/jquery-git2.min.js"></script>-->
+<script src="javascripts/lib.js"></script>
+<script src="javascripts/blockLib.js"></script>
+<script src="javascripts/nojQuery.js"></script>
+</body>
+</html>
