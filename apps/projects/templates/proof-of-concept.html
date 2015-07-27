@@ -43,6 +43,13 @@
         };
         newHTML = json2html(originalJSON);
         console.log(newHTML);
+        window.onload = function() {
+            var ifrm = document.getElementById('testframe');
+            ifrm = (ifrm.contentWindow) ? ifrm.contentWindow : (ifrm.contentDocument.document) ? ifrm.contentDocument.document : ifrm.contentDocument;
+            ifrm.document.open();
+            ifrm.document.write(newHTML);
+            ifrm.document.close();
+        }
         
 
         var original = {
@@ -93,4 +100,5 @@
 
 {% block content %}
 	POC pages
+    <iframe id='testframe'>test</iframe>
 {% endblock %}
