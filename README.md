@@ -29,11 +29,11 @@ The goal of Elemental is to act as a bridge between [Scratch](http://scratch.mit
     * Saving
         * html, css and js will be converted to json to allow easy saving of script data and location of scripts on the workspace
         * files will be compressed into a .zip file for saving
-        * html, css and js wills will be named example.html.json, example.css.json and exmaple.js.json to easily identify the file type
-        * Assets will also be saving in the project zip
+        * html, css and js will be named example.html.json, example.css.json and exmaple.js.json to easily identify the file type
+        * Assets will also be saved in the project zip
         * Directory structure will be respected in the zip files. (The sprite pane in scratch is a directory viewer)
     * Running
-        * Webpages will be complied from json to their respected file types (html,css and js)
+        * Webpages will be compiled from json to their respected file types (html, css, and js)
         * Webpages will be shown in a sandboxed iframe in the stage pane
 
 ### Dev Notes
