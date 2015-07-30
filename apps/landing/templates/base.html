@@ -2,10 +2,13 @@
 <html>
 <head>
   <title>ElementalCode</title>
+  {% block morescripts %}{% endblock morescripts %}
 </head>
 <body>
 
+{% include "includes/navbar.html" %}
 {% block content %}{% endblock %}
 
+{% block extra_scripts %}{% endblock extra_scripts %}
 </body>
 </html>

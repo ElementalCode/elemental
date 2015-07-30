@@ -18,22 +18,44 @@ from django.views.generic.edit import (FormView, UpdateView, CreateView,
 
 from .models import ElementalUser
 from apps.projects.models import Project
-from .mixins import UnbannedUserMixin
+
+from .forms import UserSettingsForm
+
+from .mixins import UnbannedUserMixin, LoggedInRequiredMixin
 
 class ProfileView(UnbannedUserMixin, TemplateView):
-	template_name = 'profile.html'
+    template_name = 'profile.html'
 
-	def get_context_data(self, **kwargs):
-		context = super(ProfileView, self).get_context_data(**kwargs)
-		context['user'] = ElementalUser.objects.get(username__iexact=self.kwargs['username'])
-		if len(self.request.user.groups.all()[0].name) > 0:
-			auth_group = request.user.groupa.all()[0].name
+    def get_context_data(self, **kwargs):
+        context = super(ProfileView, self).get_context_data(**kwargs)
+        context['user'] = ElementalUser.objects.get(username__iexact=self.kwargs['username'])
+        if len(self.request.user.groups.all()[0].name) > 0:
+            auth_group = request.user.groupa.all()[0].name
 
-		# just a little failsafe in case of broken things...
-		allowed_groups = ('admin', 'moderator', )
-		if context['user'].can_share_projects or request.user.is_superuser or auth_group in allowed_groups:
-			context['projects'] = Project.objects.filter(user=context['user'], shared=True)
-		else:
-			context['projects'] = False
-		
-		return context
+        # just a little failsafe in case of broken things...
+        allowed_groups = ('admin', 'moderator', )
+        if context['user'].can_share_projects or request.user.is_superuser or auth_group in allowed_groups:
+            context['projects'] = Project.objects.filter(user=context['user'], shared=True)
+        else:
+            context['projects'] = False
+        
+        return context
+
+class UserSettings(LoggedInRequiredMixin, UnbannedUserMixin, FormView):
+    template_name = 'user_settings.html'
+    form_class = UserSettingsForm
+    success_url = reverse_lazy('user-settings')
+
+    def get_form_kwargs(self):
+        kwargs = super(UserSettings, self).get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+
+    def form_valid(self, form):
+        print self.request.user.email
+        self.request.user.email = form.cleaned_data.get('email')
+        self.request.user.save()
+        if form.cleaned_data.get('password1') != '':
+            self.request.user.password = form.cleaned_data.get('password1')
+        self.request.user.save()
+        return super(UserSettings, self).form_valid(form)
