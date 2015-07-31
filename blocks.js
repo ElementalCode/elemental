@@ -3,6 +3,7 @@ var selected = null, // Object of the element to be moved
     x_elem = 0, y_elem = 0; // Stores top, left values (edge) of the element
 
 var SNAP_CLASSES = '.stack, .c-header, .c-footer, .hat';
+var MIN_DISTANCE = 25;
 
 function isDescendant(parent, child) {
      var node = child.parentNode;
@@ -40,7 +41,7 @@ function closestElem(elem, offset, initial) { //elem is nodelist, offset is own 
         dx = elOffset.left - x;
         dy = elOffset.bottom - y;
         distance = Math.sqrt((dx*dx) + (dy*dy)); //dist to each corner
-        if (initial != item && !isDescendant(initial, item) && (minDistance === undefined || distance < minDistance)) {
+        if (distance <= MIN_DISTANCE && initial != item && !isDescendant(initial, item) && (minDistance === undefined || distance < minDistance)) {
             minDistance = distance;
             el = item;
         }
@@ -110,14 +111,17 @@ function _move_elem(e) {
                     item.classList.remove('drop-area');
                 }
             });
-            closestElem(
+            var el = closestElem(
                 $(SNAP_CLASSES),
                 {
                     y: getOffset(selected).top,
                     x: getOffset(selected).left
                 },
                 selected
-            ).classList.add('drop-area');
+            )
+            if (el !== null) {
+                el.classList.add('drop-area');
+            }
         //}
         selected.style.left = (x_pos - x_elem) + 'px';
         selected.style.top = (y_pos - y_elem) + 'px';
@@ -139,16 +143,18 @@ function _destroy() {
         },
         selected
     )
-    if (topEl.classList.contains('stack') || topEl.classList.contains('hat')) {
-        selected.removeAttribute('style');
-        topEl.parentNode.insertBefore(selected, topEl.nextElementSibling);   
-    } else if (topEl.classList.contains('c-header')) {
-        selected.removeAttribute('style');
-        topEl.nextElementSibling.insertBefore(selected, topEl.nextElementSibling.firstElementChild);
-    } else if (topEl.classList.contains('c-footer')) {
-        selected.removeAttribute('style');
-        console.log(topEl.parentNode.nextElementSibling);
-        topEl.parentNode.parentNode.insertBefore(selected, topEl.parentNode.nextElementSibling);
+    if (topEl !== null) {
+        if (topEl.classList.contains('stack') || topEl.classList.contains('hat')) {
+            selected.removeAttribute('style');
+            topEl.parentNode.insertBefore(selected, topEl.nextElementSibling);   
+        } else if (topEl.classList.contains('c-header')) {
+            selected.removeAttribute('style');
+            topEl.nextElementSibling.insertBefore(selected, topEl.nextElementSibling.firstElementChild);
+        } else if (topEl.classList.contains('c-footer')) {
+            selected.removeAttribute('style');
+            console.log(topEl.parentNode.nextElementSibling);
+            topEl.parentNode.parentNode.insertBefore(selected, topEl.parentNode.nextElementSibling);
+        }
     }
     selected.style['z-index'] = 1;
     selected = null;
