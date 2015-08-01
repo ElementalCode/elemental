@@ -83,20 +83,20 @@ function getOffset( elem ) {
 // Will be called when user starts dragging an element
 function _drag_init(elem) {
     // Store the object of the element which needs to be moved
+    var wrapper = document.createElement("ul");
+    wrapper.classList.add('draggy');
+    document.body.insertBefore(wrapper, document.body.firstChild);
     selected = elem;
     var curX = getOffset(elem).left;
     var curY = getOffset(elem).top;
-    elem.parentElement.removeChild(elem);
-    document.body.insertBefore(elem, document.body.firstChild);
-    elem.style.position = 'absolute';
-    elem.style.left = curX + 'px';
-    elem.style['z-index'] = 9999;
-    if (elem.className == 'stack') {
-        elem.style.top =  curY + 'px';
-    } else {
-        elem.style.top =  curY - 30 + 'px';
+    var childs = Array.prototype.slice.call(elem.parentElement.children);
+    for(var i = childs.indexOf(elem); i < childs.length; i++) {
+        childs[i].removeAttribute('style');
+        wrapper.appendChild(childs[i]);
     }
-    selected = elem;
+    wrapper.style.top =  curY - 30 + 'px';
+    wrapper.style.left = curX - 30 + 'px';
+    selected = wrapper;
     x_elem = x_pos - selected.offsetLeft;
     y_elem = y_pos - selected.offsetTop;
 }
@@ -142,21 +142,24 @@ function _destroy() {
             x: getOffset(selected).left
         },
         selected
-    )
+    );
     if (topEl !== null) {
-        if (topEl.classList.contains('stack') || topEl.classList.contains('hat')) {
-            selected.removeAttribute('style');
-            topEl.parentNode.insertBefore(selected, topEl.nextElementSibling);   
-        } else if (topEl.classList.contains('c-header')) {
-            selected.removeAttribute('style');
-            topEl.nextElementSibling.insertBefore(selected, topEl.nextElementSibling.firstElementChild);
-        } else if (topEl.classList.contains('c-footer')) {
-            selected.removeAttribute('style');
-            console.log(topEl.parentNode.nextElementSibling);
-            topEl.parentNode.parentNode.insertBefore(selected, topEl.parentNode.nextElementSibling);
+        for(var i = selected.children.length - 1; i >= 0; i--) {
+            // for ome reason for/in desn't work here;
+            var elem = selected.children[i];
+            if (topEl.classList.contains('stack') || topEl.classList.contains('hat')) {
+                elem.removeAttribute('style');
+                topEl.parentNode.insertBefore(elem, topEl.nextElementSibling);   
+            } else if (topEl.classList.contains('c-header')) {
+                elem.removeAttribute('style');
+                topEl.nextElementSibling.insertBefore(elem, topEl.nextElementSibling.firstElementChild);
+            } else if (topEl.classList.contains('c-footer')) {
+                elem.removeAttribute('style');
+                topEl.parentNode.parentNode.insertBefore(elem, topEl.parentNode.nextElementSibling);
+            }
         }
+        selected.parentNode.removeChild(selected);
     }
-    selected.style['z-index'] = 1;
     selected = null;
 }
 
