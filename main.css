@@ -97,3 +97,6 @@
 .drop-area {
     border-bottom: 5px solid white;   
 }
+.c-wrapper.zebra > li, .c-wrapper.zebra > ul {
+    background:#F45D5D;
+}

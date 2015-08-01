@@ -195,6 +195,7 @@ function draggy(e) {
         }
         _drag_init(this, ev);
         ev.stopPropagation();
+        setZebra();
         return false;
     });
     
@@ -203,4 +204,28 @@ function draggy(e) {
 
 draggy('.c-wrapper');
 draggy('.stack');
-$('body').on('mouseup', _destroy);
+$('body').on('mouseup', function() {
+    _destroy();
+    setZebra();
+});
+setZebra();
+
+// zebra stuff
+
+
+function zebra(parent, nestcount) {
+    var children = parent.children;
+    for (var i = 0; i < children.length; i++) {
+        if(children[i].className.indexOf('c-wrapper') != -1) {
+            children[i].classList.remove('zebra')
+            if((nestcount % 2) == 1) {children[i].classList.add('zebra');}
+            zebra(children[i].children[1], nestcount + 1);
+        }
+    }
+}
+
+function setZebra() {
+    for(i = 0; i < document.querySelectorAll('.script, .draggy').length; i++) {
+        zebra(document.querySelectorAll('.script, .draggy')[i], 0);
+    }
+}
