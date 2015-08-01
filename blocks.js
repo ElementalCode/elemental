@@ -94,11 +94,11 @@ function _drag_init(elem, ev) {
         childs[i].removeAttribute('style');
         wrapper.appendChild(childs[i]);
     }
-    var test1 = ev.pageY - getOffset(elem).top;
-    var test2 = ev.pageX - getOffset(elem).left;
-    console.log(ev.pageY, getOffset(elem).top);
-    wrapper.style.top =  ev.pageY + 'px';
-    wrapper.style.left = ev.pageX + 'px';
+    var relativeX = ev.pageY - curY;
+    var relativeY = ev.pageX - curX;
+    console.log(ev.pageY - curY);
+    wrapper.style.top =  ev.pageY - relativeX + 'px';
+    wrapper.style.left = ev.pageX - relativeY + 'px';
     selected = wrapper;
     x_elem = x_pos - selected.offsetLeft;
     y_elem = y_pos - selected.offsetTop;
@@ -189,7 +189,6 @@ function $(e) {
 
 function draggy(e) {
     $(e).on('mousedown', function(ev) {
-        console.log(ev);
         if (ev.target.className =='script-input') {
             ev.stopPropagation();
             return;

@@ -17,6 +17,8 @@
 .draggy {
     position:absolute;
     z-index: 999;
+    padding: 0;
+    margin: 0;
 }
 .script-input {
     font-family:'Source Code Pro';
