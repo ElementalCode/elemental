@@ -81,7 +81,7 @@ function getOffset( elem ) {
 }
 
 // Will be called when user starts dragging an element
-function _drag_init(elem) {
+function _drag_init(elem, ev) {
     // Store the object of the element which needs to be moved
     var wrapper = document.createElement("ul");
     wrapper.classList.add('draggy');
@@ -94,8 +94,11 @@ function _drag_init(elem) {
         childs[i].removeAttribute('style');
         wrapper.appendChild(childs[i]);
     }
-    wrapper.style.top =  curY - 30 + 'px';
-    wrapper.style.left = curX - 30 + 'px';
+    var test1 = ev.pageY - getOffset(elem).top;
+    var test2 = ev.pageX - getOffset(elem).left;
+    console.log(ev.pageY, getOffset(elem).top);
+    wrapper.style.top =  ev.pageY + 'px';
+    wrapper.style.left = ev.pageX + 'px';
     selected = wrapper;
     x_elem = x_pos - selected.offsetLeft;
     y_elem = y_pos - selected.offsetTop;
@@ -185,13 +188,14 @@ function $(e) {
 }
 
 function draggy(e) {
-    $(e).on('mousedown', function(e) {
-        if (e.target.className =='script-input') {
-            e.stopPropagation();
+    $(e).on('mousedown', function(ev) {
+        console.log(ev);
+        if (ev.target.className =='script-input') {
+            ev.stopPropagation();
             return;
         }
-        _drag_init(this);
-        e.stopPropagation();
+        _drag_init(this, ev);
+        ev.stopPropagation();
         return false;
     });
     
