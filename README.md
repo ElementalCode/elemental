@@ -19,13 +19,14 @@ does things
 other things
 
 ### BookOwl
-Front-end, research, NOT weird things
+weird things
 
 ### TheInitializer
 cool things
 
 ### someone else here?
 no things
+
 =======
 
 ### Dev Notes
