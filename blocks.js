@@ -3,7 +3,7 @@ var selected = null, // Object of the element to be moved
     x_elem = 0, y_elem = 0; // Stores top, left values (edge) of the element
 
 var SNAP_CLASSES = '.stack, .c-header, .c-footer, .hat';
-var MIN_DISTANCE = 25;
+var MIN_DISTANCE = 75;
 
 function isDescendant(parent, child) {
      var node = child.parentNode;
