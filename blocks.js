@@ -199,11 +199,12 @@ function draggy(e) {
         return false;
     });
     
-    $(e).on('mousemove', _move_elem);
+    // $(e).on('mousemove', _move_elem);
 }
 
 draggy('.c-wrapper');
 draggy('.stack');
+$('body').on('mousemove', _move_elem);
 $('body').on('mouseup', function() {
     _destroy();
     setZebra();
