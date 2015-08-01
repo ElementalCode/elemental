@@ -1,0 +1,102 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
+ body {
+    background-color: gray;
+}
+* {
+    font-family:'Source Code Pro';
+    color:white;
+    white-space: nowrap;
+    /* Don't let text to "wrap" to a new line (blocks would look ugly that way) */
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */
+    
+    cursor: default;
+}
+.draggy {
+    position:absolute;
+    z-index: 999;
+    padding: 0;
+    margin: 0;
+}
+.script-input {
+    font-family:'Source Code Pro';
+    padding:0 5px;
+    min-width: 25px;
+    border-radius:999px;
+    border:none;
+    outline:none;
+    background-color:white;
+    color: black;
+    display: inline-block;
+    text-align: center;
+}
+.hat {
+    display:table;
+    /* Using "block" would result in 100% width, and "inline-block" would result in everything on same line */
+    background:#C6E44D;
+    padding:10px;
+    position:relative;
+    border-radius:0px 5px 5px 5px;
+}
+.hat:after {
+    background:#C6E44D;
+    display:block;
+    content:' ';
+    width:80%;
+    height:80%;
+    position:absolute;
+    top:-35%;
+    left:0px;
+    border-radius:50%;
+    z-index:-999;
+}
+.stack {
+    display:table;
+    background:#914DE4;
+    padding:10px;
+    position:relative;
+    border-radius:5px;
+    border-left: 1px solid #A9A9A9;
+}
+.c-wrapper {
+    padding:0px;
+    display:table;
+    border-left: 1px solid #A9A9A9;
+}
+.c-header, .c-footer {
+    display:table;
+    background:#E44D4D;
+    padding:10px;
+    position:relative;
+    border-radius:5px;
+    min-width:40px;
+    min-height:20px;
+}
+.c-content {
+    background:#E44D4D;
+    padding:3px 0px 3px 25px;
+    margin:-3px 0px -3px 0px;
+    width:4px;
+    overflow-x: visible;
+    min-height: 40px;
+}
+.c-content:empty:after {
+    width:0px;
+    height:40px;
+    content:' ';
+    display:block;
+}
+.c-header {
+    border-top: 1px solid #A9A9A9;
+}
+.c-footer {
+    border-bottom: 1px solid #A9A9A9;
+}
+.drop-area {
+    border-bottom: 5px solid white;   
+}
+.c-wrapper.zebra > li, .c-wrapper.zebra > ul {
+    background:#F45D5D;
+}
