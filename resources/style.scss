@@ -21,6 +21,12 @@ html, body {
 	height: 100%;
 }
 
+.scriptingArea {
+	min-height: 100%;
+	min-width: 100%;
+	overflow: scroll;
+}
+
 .topBar {
 	/* Monster Gradient: */
 	background: $nav_grad_top;

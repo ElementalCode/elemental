@@ -2,15 +2,16 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>UI v0.0.1 | Elemental</title>
+    <title>UI v0.0.3 | Elemental</title>
     <link rel="stylesheet" href="resources/style.css">
+    <link rel="stylesheet" href="resources/blocks.css">
     <script src="resources/interact.min.js"></script>
     <script src="resources/script.js"></script>
   </head>
   <body>
-    <div class="topBar">
+   <div class="topBar">
       <div class="left">
-        <span class="logo">Elemental</span>
+        <span class="logo">Elemental </span>
       </div>
       <div class="menus right">
         <div class="menu" id="fileMenu">
@@ -72,12 +73,12 @@
                   <input type="radio" name="palette" value="p4" id="p4" />
                   Palette 4<span class="paletteColorIndicator" style="background:#4D75E4"></span>
                 </label>
+              </div>
+              <div class="paletteColumn">
                 <label class="paletteOptionWrap" for="p5">
                   <input type="radio" name="palette" value="p5" id="p5" />
                   Palette 5<span class="paletteColorIndicator" style="background:#4DD2E4"></span>
                 </label>
-              </div>
-              <div class="paletteColumn">
                 <label class="paletteOptionWrap" for="p6">
                   <input type="radio" name="palette" value="p6" id="p6" />
                   Palette 6<span class="paletteColorIndicator" style="background:#4DE48C"></span>
@@ -90,14 +91,6 @@
                   <input type="radio" name="palette" value="p8" id="p8" />
                   Palette 8<span class="paletteColorIndicator" style="background:#C6E44D"></span>
                 </label>
-                <label class="paletteOptionWrap" for="p9">
-                  <input type="radio" name="palette" value="p9" id="p9" />
-                  Palette 9<span class="paletteColorIndicator" style="background:#E4BC4D"></span>
-                </label>
-                <label class="paletteOptionWrap" for="p10">
-                  <input type="radio" name="palette" value="p10" id="p10" />
-                  Palette 10<span class="paletteColorIndicator" style="background:#E4874D"></span>
-                </label>
               </div>
             </form>
           </div>
@@ -105,10 +98,47 @@
             <div class="search">
               <input type="text" id="searchBar" placeholder="Search for a block..."/>
             </div>
+            <div class="blockArea">
+              <div class="block"></div>
+              <div class="block small"></div>
+              <div class="block"></div>
+              <div class="block large"></div>
+              <div class="block large"></div>
+              <div class="block small"></div>
+              <div class="block"></div>
+              <div class="block"></div>
+              <div class="block small"></div>
+              <div class="block"></div>
+              <div class="block"></div>
+              <div class="block large"></div>
+              <div class="block small"></div>
+              <div class="block large"></div>
+              <div class="block small"></div>
+              <div class="block"></div>
+            </div>
           </div>
         </div>
-        <div class="lowerArea"></div>
+        <div class="scriptingArea">
+          <ul class="script">
+            <li class="hat">&lt;!DOCTYPE html&gt;</li>
+            <li class="stack">&lt;img src="<span contenteditable='true' class="script-input">breadfish.gif</span>"&gt;</li>
+            <ul class="c-wrapper">
+                <li class="c-header">&lt;body&gt;</li>
+                <ul class="c-content">
+                    <li class="stack">&lt;img src="<span contenteditable='true' class="script-input" value="bring-back-breadfish.gif"></span>"&gt;</li>
+                    <li class="stack">&lt;img src="<span contenteditable='true' class="script-input" value="bring-back-breadfish.gif"></span>"&gt;</li>
+                    <ul class="c-wrapper">
+                        <li class="c-header">c-block 2</li>
+                        <ul class="c-content"></ul>
+                        <li class="c-footer"></li>
+                    </ul>
+                </ul>
+                <li class="c-footer">&lt;/body&gt;</li>
+            </ul>
+          </ul>
+        </div>
       </div>
     </div>
+  <script src='resources/blocks.js'></script>
   </body>
 </html>
