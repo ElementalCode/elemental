@@ -55,7 +55,7 @@ body {
   top: -45%;
   left: 0px;
   border-radius: 50%;
-  z-index: -999; }
+  z-index: -1; }
 
 .stack {
   display: table;
@@ -230,9 +230,6 @@ html, body {
   width: 100%; }
 
 .rightSide {
-  /* This is really weird, but it works... https://css-tricks.com/tinted-images-multiple-backgrounds/ */
-  background: url("./img/diagonalTexture.png");
-  background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("./img/diagonalTexture.png");
   flex-grow: 1;
   flex-shrink: 1;
   height: 100%;
