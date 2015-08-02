@@ -134,7 +134,7 @@ function _move_elem(e) {
 }
 
 // Destroy the object when we are done
-function _destroy() {
+function _destroy(ev) {
     $(SNAP_CLASSES).each(function(item) {
        if (item.classList.contains('drop-area')) {
            item.classList.remove('drop-area');
@@ -164,6 +164,13 @@ function _destroy() {
             }
         }
         selected.parentNode.removeChild(selected);
+    } else {
+        if (ev.pageY - getOffset(SCRIPTING_AREA).top < 0) {
+            selected.style.top = 0;
+        }
+        if (ev.pageX - getOffset(SCRIPTING_AREA).left < 0) {
+            selected.style.left = 0;
+        }
     }
     selected = null;
 }
@@ -207,8 +214,8 @@ function draggy(e) {
 draggy('.c-wrapper');
 draggy('.stack');
 $('body').on('mousemove', _move_elem);
-$('body').on('mouseup', function() {
-    _destroy();
+$('body').on('mouseup', function(ev) {
+    _destroy(ev);
     setZebra();
 });
 setZebra();
