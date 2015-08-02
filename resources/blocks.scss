@@ -1,6 +1,10 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
 
-.scriptingArea *,
+body {
+    background-color: gray;
+}
+
+.scriptingArea,
 .draggy {
     font-family:'Source Code Pro';
     color:white;
@@ -13,7 +17,6 @@
     
     cursor: default;
 }
-
 .draggy {
     position:absolute;
     z-index: 999;
@@ -36,7 +39,7 @@
     display:table;
     /* Using "block" would result in 100% width, and "inline-block" would result in everything on same line */
     background:#C6E44D;
-    padding:10px;
+    padding:5px 10px;
     position:relative;
     border-radius:0px 5px 5px 5px;
 }
@@ -45,9 +48,9 @@
     display:block;
     content:' ';
     width:80%;
-    height:80%;
+    height:100%;
     position:absolute;
-    top:-35%;
+    top:-45%;
     left:0px;
     border-radius:50%;
     z-index:-999;
@@ -55,7 +58,7 @@
 .stack {
     display:table;
     background:#914DE4;
-    padding:10px;
+    padding:5px 10px;
     position:relative;
     border-radius:5px;
     border-left: 1px solid #A9A9A9;
@@ -68,11 +71,11 @@
 .c-header, .c-footer {
     display:table;
     background:#E44D4D;
-    padding:10px;
+    padding:5px 10px;
     position:relative;
     border-radius:5px;
     min-width:40px;
-    min-height:20px;
+    min-height:18px;
 }
 .c-content {
     background:#E44D4D;
@@ -80,13 +83,7 @@
     margin:-3px 0px -3px 0px;
     width:4px;
     overflow-x: visible;
-    min-height: 40px;
-}
-.c-content:empty:after {
-    width:0px;
-    height:40px;
-    content:' ';
-    display:block;
+    min-height: 30px;
 }
 .c-header {
     border-top: 1px solid #A9A9A9;
