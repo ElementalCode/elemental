@@ -4,6 +4,7 @@ var selected = null, // Object of the element to be moved
 
 var SNAP_CLASSES = '.stack, .c-header, .c-footer, .hat';
 var MIN_DISTANCE = 75;
+var SCRIPTING_AREA = $('.scriptingArea')[0];
 
 function isDescendant(parent, child) {
      var node = child.parentNode;
@@ -82,23 +83,24 @@ function getOffset( elem ) {
 
 // Will be called when user starts dragging an element
 function _drag_init(elem, ev) {
+    var relativeX = ev.pageX - getOffset(elem).left;
+    var relativeY = ev.pageY - getOffset(elem).top;
     // Store the object of the element which needs to be moved
     var wrapper = document.createElement("ul");
     wrapper.classList.add('draggy');
-    document.body.insertBefore(wrapper, document.body.firstChild);
+    SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
     selected = elem;
-    var curX = getOffset(elem).left;
-    var curY = getOffset(elem).top;
+    //var curX = getOffset(elem).left;
+    //var curY = getOffset(elem).top;
+    var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
+        curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
     var childs = Array.prototype.slice.call(elem.parentElement.children);
     for(var i = childs.indexOf(elem); i < childs.length; i++) {
         childs[i].removeAttribute('style');
         wrapper.appendChild(childs[i]);
     }
-    var relativeX = ev.pageY - curY;
-    var relativeY = ev.pageX - curX;
-    console.log(ev.pageY - curY);
-    wrapper.style.top =  ev.pageY - relativeX + 'px';
-    wrapper.style.left = ev.pageX - relativeY + 'px';
+    wrapper.style.left = curX - relativeX + 'px';
+    wrapper.style.top = curY - relativeY + 'px';
     selected = wrapper;
     x_elem = x_pos - selected.offsetLeft;
     y_elem = y_pos - selected.offsetTop;

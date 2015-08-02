@@ -9,7 +9,8 @@ html, body {
 .scriptingArea {
   min-height: 100%;
   min-width: 100%;
-  overflow: scroll; }
+  overflow: scroll;
+  position: relative; }
 
 .topBar {
   /* Monster Gradient: */
