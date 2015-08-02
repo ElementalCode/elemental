@@ -108,8 +108,8 @@ function _drag_init(elem, ev) {
 
 // Will be called when user dragging an element
 function _move_elem(e) {
-    x_pos = document.all ? window.event.clientX : e.pageX;
-    y_pos = document.all ? window.event.clientY : e.pageY;
+    x_pos = document.all ? window.event.clientX : e.pageX + SCRIPTING_AREA.scrollLeft;
+    y_pos = document.all ? window.event.clientY : e.pageY + SCRIPTING_AREA.scrollTop;
     if (selected !== null) {
             $(SNAP_CLASSES).each(function(item) {
                 if (item.classList.contains('drop-area')) {
