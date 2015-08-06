@@ -3,9 +3,9 @@
   <head>
     <meta charset="utf-8">
     <title>UI v0.0.3 | Elemental</title>
-    <link rel="stylesheet" href="resources/style.css">
-    <script src="resources/interact.min.js"></script>
-    <script src="resources/script.js"></script>
+    <link rel="stylesheet" href="resources/css/style.css">
+    <script src="resources/js/interact.min.js"></script>
+    <script src="resources/js/script.js"></script>
   </head>
   <body>
    <div class="topBar">
@@ -121,15 +121,17 @@
           <!-- some test stuff... -->
           <ul class="script">
             <li class="hat">&lt;!DOCTYPE html&gt;</li>
-            <li class="stack">&lt;img src="<span contenteditable='true' class="script-input">breadfish.gif</span>"&gt;</li>
-            <ul class="c-wrapper">
+            <li class="stack e-img">&lt;img src="<span contenteditable='true' class="script-input">breadfish.gif</span>"&gt;</li>
+            <ul class="c-wrapper e-body">
                 <li class="c-header">&lt;body&gt;</li>
                 <ul class="c-content">
-                    <li class="stack">&lt;img src="<span contenteditable='true' class="script-input" value="bring-back-breadfish.gif"></span>"&gt;</li>
-                    <li class="stack">&lt;img src="<span contenteditable='true' class="script-input" value="bring-back-breadfish.gif"></span>"&gt;</li>
-                    <ul class="c-wrapper">
-                        <li class="c-header">c-block 2</li>
-                        <ul class="c-content"></ul>
+                    <li class="stack e-img">&lt;img src="<span contenteditable='true' class="script-input" value="bring-back-breadfish.gif"></span>"&gt;</li>
+                    <li class="stack e-img">&lt;img src="<span contenteditable='true' class="script-input" value="bring-back-breadfish.gif"></span>"&gt;</li>
+                    <ul class="c-wrapper e-div">
+                        <li class="c-header">div</li>
+                        <ul class="c-content">
+                          <li class='stack e-text'><span contenteditable='true' class="script-input">breadfish.gif</span></li>
+                        </ul>
                         <li class="c-footer"></li>
                     </ul>
                 </ul>
@@ -139,6 +141,7 @@
         </div>
       </div>
     </div>
-  <script src='resources/blocks.js'></script>
+  <script src='resources/js/blocks.js'></script>
+  <script src='resources/js/block2json.js'></script>
   </body>
 </html>
