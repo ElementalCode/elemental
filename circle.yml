@@ -3,4 +3,4 @@ deployment:
     branch: master
     commands:
         - git push git@heroku.com:elementalcode.git $CIRCLE_SHA1:master
-        - heroku run python manage.py migrate
+        - heroku run python manage.py migrate --app elementalcode
