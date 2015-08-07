@@ -41,7 +41,7 @@ body {
     background:#C6E44D;
     padding:5px 10px;
     position:relative;
-    border-radius:0px 5px 5px 5px;
+    border-radius:0px 5px 5px 0px;
 }
 .hat:after {
     background:#C6E44D;
@@ -68,7 +68,8 @@ body {
     border-top-left-radius: 0px;
 }
 .stack:not(:last-child),
-.c-wrapper:not(:first-child) > .c-header {  // not 100% sure if this works
+.c-wrapper:not(:first-child) > .c-header,
+.c-wrapper:not(:last-child) > .c-footer {  // not 100% sure if this works 100% of the time
     border-bottom-left-radius: 0px;
 }
 .c-wrapper {
