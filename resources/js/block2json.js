@@ -140,7 +140,14 @@ for (var i = 0; i < directChildren.length; i++) {
 	}
 }
 jsonFormat.child = blocks;
-previewElement.innerHTML = json2html(jsonFormat);
+
+var parsedHtml = json2html(jsonFormat);
+
+var previewWindow = previewElement;
+previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
+previewWindow.document.open();
+previewWindow.document.write(parsedHtml);
+previewWindow.document.close();
 // example:
 //
 // var json = {
