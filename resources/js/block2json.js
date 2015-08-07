@@ -56,7 +56,7 @@ function getAttrNames(classes) {
 	return names;
 }
 
-function getAttrs(element) {
+function getSingleAttrs(element) {
 	// get attributes from element
 	var attrs = {};
 	var attrElems = toArr(element.children);
@@ -65,6 +65,10 @@ function getAttrs(element) {
 		attrs[attr] = attrElems[i].innerText;
 	}
 	return attrs;
+}
+
+function getWrapperAttrs(element) {
+	//for later...
 }
 
 function getText(elem) {
@@ -88,7 +92,7 @@ function traverseTree(parentNode) {
 			var elType = getElType(directChildren[i]);
 			pushedArr.push({
 				tag: elType,
-				attr: getAttrs(directChildren[i])
+				attr: getSingleAttrs(directChildren[i])
 			});
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
 			var elType = getElType(directChildren[i]);
@@ -124,7 +128,7 @@ for (var i = 0; i < directChildren.length; i++) {
 		var elType = getElType(directChildren[i]);
 		blocks.push({
 			tag: elType,
-			attr: getAttrs(directChildren[i])
+			attr: getSingleAttrs(directChildren[i])
 		});
 	} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
 		var elType = getElType(directChildren[i]);
