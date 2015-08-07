@@ -48,44 +48,54 @@ function getElType(node) {
 function traverseTree(parentNode) {
 	parentNode = parentNode.children[1];
 	var directChildren = toArr(parentNode.children);
+	var pushedArr = [];
 	for (var i = 0; i < directChildren.length; i++) {
 		if (includesArrItem(directChildren[i].className, stackElements)) {
 			var elType = getElType(directChildren[i]);
 			console.log(elType);
+			pushedArr.push({tag: elType});
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
 			var elType = getElType(directChildren[i]);
 			console.log(elType);
-			traverseTree(directChildren[i]);
+			pushedArr.push({tag: elType, child: traverseTree(directChildren[i])});
 			console.log('exit tree');
 		}
 	}
+	return pushedArr;
 }
 
 var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
-var blocks = {
-	tag: 'div',
+
+var directChildren = toArr(script.children);
+directChildren.shift();
+
+var jsonFormat = {
+	tag: 'body',
 	attr: {},
 	child: [],
 };
-var directChildren = toArr(script.children);
-directChildren.shift();
+var blocks = [];
+
 var stackElements = ['e-img', 'e-text', ];
 var wrapperElements = ['e-div', 'e-body', ];
+
 for (var i = 0; i < directChildren.length; i++) {
 	if (includesArrItem(directChildren[i].className, stackElements)) {
 		var elType = getElType(directChildren[i]);
 		console.log(elType);
+		blocks.push({tag: elType});
 	} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
 		var elType = getElType(directChildren[i]);
 		console.log(elType);
-		traverseTree(directChildren[i]);
+		blocks.push({tag: elType, child: traverseTree(directChildren[i])});
 		console.log('exit tree');
 	}
 }
+jsonFormat.child = blocks;
 // example:
 //
 // var json = {
-//   tag: 'div',
+//   tag: 'body',
 //   attr: {
 //     id: '1',
 //     class: ['foo']
