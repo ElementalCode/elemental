@@ -60,13 +60,23 @@ function getAttrs(element) {
 	// get attributes from element
 	var attrs = {};
 	var attrElems = toArr(element.children);
-	console.log(attrElems);
 	for (var i = 0; i < attrElems.length; i++) {
 		var attr = getAttrNames(attrElems[i].className);
-		console.log(attr);
 		attrs[attr] = attrElems[i].innerText;
 	}
 	return attrs;
+}
+
+function getText(elem) {
+	var text = '';
+	var childNodes = toArr(elem.children);
+	for (var i = 0; i < childNodes.length; i++) {
+		console.log(childNodes[i]);
+		if (childNodes[i].classList.contains(textInput)) {
+			text += childNodes[i].children[0].innerText;
+		}
+	}
+	return text;
 }
 
 function traverseTree(parentNode) {
@@ -74,17 +84,18 @@ function traverseTree(parentNode) {
 	var directChildren = toArr(parentNode.children);
 	var pushedArr = [];
 	for (var i = 0; i < directChildren.length; i++) {
-		if (includesArrItem(directChildren[i].className, stackElements)) {  //check here if it's a text element or something like an image
+		if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
 			var elType = getElType(directChildren[i]);
 			pushedArr.push({
 				tag: elType,
 				attr: getAttrs(directChildren[i])
 			});
-		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
+		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
 			var elType = getElType(directChildren[i]);
 			pushedArr.push({
 				tag: elType,
-				child: traverseTree(directChildren[i])
+				child: traverseTree(directChildren[i]),
+				text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
 			});
 		}
 	}
@@ -103,10 +114,10 @@ var jsonFormat = {
 };
 var blocks = [];
 
-var stackElements = ['e-img', 'e-text', ];
+var stackElements = ['e-img', ];
 var attrNames = ['src', 'class', 'id', ]; //add attrs
 var wrapperElements = ['e-div', 'e-body', ];
-var textInput = 'text';
+var textInput = 'e-text';
 
 for (var i = 0; i < directChildren.length; i++) {
 	if (includesArrItem(directChildren[i].className, stackElements)) {
