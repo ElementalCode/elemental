@@ -45,12 +45,17 @@ function getElType(node) {
 	return type;
 }
 
+function getAttrs(element) {
+	// get attributes from element
+	var attrs = {};
+}
+
 function traverseTree(parentNode) {
 	parentNode = parentNode.children[1];
 	var directChildren = toArr(parentNode.children);
 	var pushedArr = [];
 	for (var i = 0; i < directChildren.length; i++) {
-		if (includesArrItem(directChildren[i].className, stackElements)) {
+		if (includesArrItem(directChildren[i].className, stackElements)) {  //check here if it's a text element or something like an image
 			var elType = getElType(directChildren[i]);
 			pushedArr.push({tag: elType});
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
@@ -74,6 +79,7 @@ var jsonFormat = {
 var blocks = [];
 
 var stackElements = ['e-img', 'e-text', ];
+var attrNames = ['src', 'class', 'id', ]; //add attrs
 var wrapperElements = ['e-div', 'e-body', ];
 
 for (var i = 0; i < directChildren.length; i++) {
