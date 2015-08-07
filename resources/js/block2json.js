@@ -45,9 +45,28 @@ function getElType(node) {
 	return type;
 }
 
+function getAttrNames(classes) {
+	var classList = classes.split(' ');
+	var names = [];
+	for (var i = 0; i < classList.length; i++) {
+		if (attrNames.indexOf(classList[i]) > -1) {
+			names.push(classList[i]);
+		}
+	}
+	return names;
+}
+
 function getAttrs(element) {
 	// get attributes from element
 	var attrs = {};
+	var attrElems = toArr(element.children);
+	console.log(attrElems);
+	for (var i = 0; i < attrElems.length; i++) {
+		var attr = getAttrNames(attrElems[i].className);
+		console.log(attr);
+		attrs[attr] = attrElems[i].innerText;
+	}
+	return attrs;
 }
 
 function traverseTree(parentNode) {
@@ -57,10 +76,16 @@ function traverseTree(parentNode) {
 	for (var i = 0; i < directChildren.length; i++) {
 		if (includesArrItem(directChildren[i].className, stackElements)) {  //check here if it's a text element or something like an image
 			var elType = getElType(directChildren[i]);
-			pushedArr.push({tag: elType});
+			pushedArr.push({
+				tag: elType,
+				attr: getAttrs(directChildren[i])
+			});
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
 			var elType = getElType(directChildren[i]);
-			pushedArr.push({tag: elType, child: traverseTree(directChildren[i])});
+			pushedArr.push({
+				tag: elType,
+				child: traverseTree(directChildren[i])
+			});
 		}
 	}
 	return pushedArr;  //recursively get children of blocks
@@ -81,14 +106,21 @@ var blocks = [];
 var stackElements = ['e-img', 'e-text', ];
 var attrNames = ['src', 'class', 'id', ]; //add attrs
 var wrapperElements = ['e-div', 'e-body', ];
+var textInput = 'text';
 
 for (var i = 0; i < directChildren.length; i++) {
 	if (includesArrItem(directChildren[i].className, stackElements)) {
 		var elType = getElType(directChildren[i]);
-		blocks.push({tag: elType});
+		blocks.push({
+			tag: elType,
+			attr: getAttrs(directChildren[i])
+		});
 	} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
 		var elType = getElType(directChildren[i]);
-		blocks.push({tag: elType, child: traverseTree(directChildren[i])});
+		blocks.push({
+			tag: elType,
+			child: traverseTree(directChildren[i])
+		});
 	}
 }
 jsonFormat.child = blocks;
