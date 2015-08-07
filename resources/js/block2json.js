@@ -52,16 +52,13 @@ function traverseTree(parentNode) {
 	for (var i = 0; i < directChildren.length; i++) {
 		if (includesArrItem(directChildren[i].className, stackElements)) {
 			var elType = getElType(directChildren[i]);
-			console.log(elType);
 			pushedArr.push({tag: elType});
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
 			var elType = getElType(directChildren[i]);
-			console.log(elType);
 			pushedArr.push({tag: elType, child: traverseTree(directChildren[i])});
-			console.log('exit tree');
 		}
 	}
-	return pushedArr;
+	return pushedArr;  //recursively get children of blocks
 }
 
 var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
@@ -82,13 +79,10 @@ var wrapperElements = ['e-div', 'e-body', ];
 for (var i = 0; i < directChildren.length; i++) {
 	if (includesArrItem(directChildren[i].className, stackElements)) {
 		var elType = getElType(directChildren[i]);
-		console.log(elType);
 		blocks.push({tag: elType});
 	} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
 		var elType = getElType(directChildren[i]);
-		console.log(elType);
 		blocks.push({tag: elType, child: traverseTree(directChildren[i])});
-		console.log('exit tree');
 	}
 }
 jsonFormat.child = blocks;
