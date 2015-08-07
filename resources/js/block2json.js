@@ -107,6 +107,7 @@ function traverseTree(parentNode) {
 }
 
 var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
+var previewElement = document.getElementsByClassName('previewBody')[0];
 
 var directChildren = toArr(script.children);
 directChildren.shift();
@@ -139,6 +140,7 @@ for (var i = 0; i < directChildren.length; i++) {
 	}
 }
 jsonFormat.child = blocks;
+previewElement.innerHTML = json2html(jsonFormat);
 // example:
 //
 // var json = {
