@@ -45,6 +45,22 @@ function getElType(node) {
 	return type;
 }
 
+function traverseTree(parentNode) {
+	parentNode = parentNode.children[1];
+	var directChildren = toArr(parentNode.children);
+	for (var i = 0; i < directChildren.length; i++) {
+		if (includesArrItem(directChildren[i].className, stackElements)) {
+			var elType = getElType(directChildren[i]);
+			console.log(elType);
+		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
+			var elType = getElType(directChildren[i]);
+			console.log(elType);
+			traverseTree(directChildren[i]);
+			console.log('exit tree');
+		}
+	}
+}
+
 var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
 var blocks = {
 	tag: 'div',
@@ -54,10 +70,16 @@ var blocks = {
 var directChildren = toArr(script.children);
 directChildren.shift();
 var stackElements = ['e-img', 'e-text', ];
+var wrapperElements = ['e-div', 'e-body', ];
 for (var i = 0; i < directChildren.length; i++) {
 	if (includesArrItem(directChildren[i].className, stackElements)) {
 		var elType = getElType(directChildren[i]);
 		console.log(elType);
+	} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
+		var elType = getElType(directChildren[i]);
+		console.log(elType);
+		traverseTree(directChildren[i]);
+		console.log('exit tree');
 	}
 }
 // example:
