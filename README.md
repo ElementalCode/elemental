@@ -1,3 +1,5 @@
+This branch is for each dragging/snapping block stuff.  Until everything works, just copy/paste from here into whatever other branch (don't merge or it might not like you).
+=======
 ![image](https://cloud.githubusercontent.com/assets/5458180/8791470/4f758e90-2f29-11e5-8f29-98886c74cb52.png)
 
 **Frontend Demo:** http://elementalcode.github.io/Elemental/  

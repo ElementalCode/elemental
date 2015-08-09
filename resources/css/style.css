@@ -43,7 +43,7 @@ body {
   background: #C6E44D;
   padding: 5px 10px;
   position: relative;
-  border-radius: 0px 5px 5px 5px; }
+  border-radius: 0px 5px 5px 0px; }
 
 .hat:after {
   background: #C6E44D;
@@ -65,12 +65,22 @@ body {
   border-radius: 5px;
   border-left: 1px solid #A9A9A9; }
 
+* + .stack,
+* + .c-wrapper > .c-header {
+  border-top-left-radius: 0px; }
+
+.stack:not(:last-child),
+.c-wrapper:not(:first-child) > .c-header,
+.c-wrapper:not(:last-child) > .c-footer {
+  border-bottom-left-radius: 0px; }
+
 .c-wrapper {
   padding: 0px;
   display: table;
   border-left: 1px solid #A9A9A9; }
 
-.c-header, .c-footer {
+.c-header,
+.c-footer {
   display: table;
   background: #E44D4D;
   padding: 5px 10px;
@@ -111,7 +121,7 @@ html, body {
   min-width: 100%;
   overflow-x: scroll;
   position: relative;
-  background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("./img/diagonalTexture.png");
+  background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../img/diagonalTexture.png");
   z-index: 1; }
 
 .topBar {
@@ -332,7 +342,7 @@ html, body {
   border-top: none;
   outline: none;
   padding: 8px 10px 8px 26px;
-  background-image: url("./img/nav-search-glass.png");
+  background-image: url("../img/nav-search-glass.png");
   background-repeat: no-repeat;
   background-position: 8px 9px;
   cursor: pointer;
