@@ -2,12 +2,13 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>UI v0.0.3 | Elemental</title>
+    <title>UI v0.0.4 | Elemental</title>
     <link rel="stylesheet" href="resources/css/style.css">
     <script src="resources/js/interact.min.js"></script>
     <script src="resources/js/script.js"></script>
     <script src="resources/js/htmlparser.js"></script>
     <script src="resources/js/htmljson.js"></script>
+    <script src="resources/js/blockFilter.js"></script>
   </head>
   <body>
    <div class="topBar">
@@ -99,7 +100,7 @@
             <div class="search">
               <input type="text" id="searchBar" placeholder="Search for a block..."/>
             </div>
-            <div class="blockArea">
+            <div class="blockArea" id="filteredBlocksArea">
               <div class="block"></div>
               <div class="block small"></div>
               <div class="block"></div>
