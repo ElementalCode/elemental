@@ -1,6 +1,6 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway:400,700,900,300);
 
-body {
+body { /*every page*/
   margin:0px;
   padding:0px;
   overflow-x:hidden;
@@ -31,7 +31,7 @@ body {
 }
 .heroWrap {
   font-family: 'Raleway', sans-serif;
-  
+
   padding:160px 0 100px 0;
   position:relative;
 }
@@ -160,4 +160,32 @@ body {
   font-size:16px;
   font-family: 'Raleway', sans-serif;
   color:rgba(0,0,0,0.55);
+}
+
+.teamIcon { /* team page*/
+  border-radius: 100%;
+  width: 80px;
+  height: 80px;
+  padding: 20px;
+}
+#memberBio {
+  color: #fff;
+  font-family: 'Raleway', sans-serif;
+  font-size: 30px;
+}
+.teamBio {
+  align-self: center;
+  max-width:500px;
+  margin:0 auto;
+}
+
+.fadeout {
+  opacity: 0;
+}
+
+.trans {
+  -o-transition: all 1s;
+	-moz-transition: all 1s;
+	-webkit-transition: all 1s;
+	transition: all 1s;
 }
