@@ -1,8 +1,2 @@
-venv
-*.pyc
-staticfiles
-.env
-db.sqlite3
-*.db
-.sass-cache
 *.map
+.sass-cache/
