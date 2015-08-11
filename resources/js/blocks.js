@@ -140,14 +140,17 @@ function _destroy(ev) {
            item.classList.remove('drop-area');
        }
     });
-    var topEl = closestElem(
-        $(SNAP_CLASSES),
-        {
-            y: getOffset(selected).top,
-            x: getOffset(selected).left
-        },
-        selected
-    );
+    var topEl = null;
+    if (selected !== null) {
+        topEl = closestElem(
+            $(SNAP_CLASSES),
+            {
+                y: getOffset(selected).top,
+                x: getOffset(selected).left
+            },
+            selected
+        );
+    }
     if (topEl !== null) {
         for(var i = selected.children.length - 1; i >= 0; i--) {
             // for ome reason for/in desn't work here;
@@ -165,11 +168,13 @@ function _destroy(ev) {
         }
         selected.parentNode.removeChild(selected);
     } else {
-        if (ev.pageY - getOffset(SCRIPTING_AREA).top < 0) {
-            selected.style.top = 0;
-        }
-        if (ev.pageX - getOffset(SCRIPTING_AREA).left < 0) {
-            selected.style.left = 0;
+        if (selected !== null) {
+            if (ev.pageY - getOffset(SCRIPTING_AREA).top < 0) {
+                selected.style.top = 0;
+            }
+            if (ev.pageX - getOffset(SCRIPTING_AREA).left < 0) {
+                selected.style.left = 0;
+            }
         }
     }
     selected = null;

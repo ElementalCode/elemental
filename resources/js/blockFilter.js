@@ -62,7 +62,7 @@ var filter = {
     {
       name: 'div',
       htmlString: "<ul class='c-wrapper e-div paletteBlock'><li class='c-header'>div</li><ul class='c-content'></ul><li class='c-footer'></li></ul>",
-      tags: ['div', 'divider', 'seperator'],
+      tags: ['div', 'divider', 'separator'],
       palette: 0
     }
   ]
