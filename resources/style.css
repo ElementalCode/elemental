@@ -167,6 +167,7 @@ body { /*every page*/
   width: 80px;
   height: 80px;
   padding: 20px;
+  cursor: pointer;
 }
 #memberBio {
   color: #fff;
