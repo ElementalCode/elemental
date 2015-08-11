@@ -5,7 +5,8 @@ body {
 }
 
 .scriptingArea,
-.draggy {
+.draggy,
+.blockArea {
     font-family:'Source Code Pro';
     color:white;
     white-space: nowrap;
@@ -63,15 +64,19 @@ body {
     border-radius:5px;
     border-left: 1px solid #A9A9A9;
 }
-* + .stack,
-* + .c-wrapper > .c-header {
-    border-top-left-radius: 0px;
+
+.scriptingArea {
+    * + .stack,
+    * + .c-wrapper > .c-header {
+        border-top-left-radius: 0px;
+    }
+    .stack:not(:last-child),
+    .c-wrapper:not(:first-child) > .c-header,
+    .c-wrapper:not(:last-child) > .c-footer {  // not 100% sure if this works 100% of the time
+        border-bottom-left-radius: 0px;
+    }
 }
-.stack:not(:last-child),
-.c-wrapper:not(:first-child) > .c-header,
-.c-wrapper:not(:last-child) > .c-footer {  // not 100% sure if this works 100% of the time
-    border-bottom-left-radius: 0px;
-}
+
 .c-wrapper {
     padding:0px;
     display:table;
