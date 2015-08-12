@@ -2,7 +2,7 @@
 
 The website. By PullJosh and infinitytec.
 
-I accedentally duplicated the main directory into this. I'll fix that.
+
 
 =======
 
