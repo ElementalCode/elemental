@@ -2,10 +2,6 @@ var selected = null, // Object of the element to be moved
     x_pos = 0, y_pos = 0, // Stores x & y coordinates of the mouse pointer
     x_elem = 0, y_elem = 0; // Stores top, left values (edge) of the element
 
-var SNAP_CLASSES = '.stack, .c-header, .c-footer, .hat';
-var MIN_DISTANCE = 50;
-var SCRIPTING_AREA = $('.scriptingArea')[0];
-
 function isDescendant(parent, child) {
      var node = child.parentNode;
      while (node != null) {
@@ -216,11 +212,16 @@ function $(e) {
 //     // $(e).on('mousemove', _move_elem);
 // }
 
+var SNAP_CLASSES = '.stack, .c-header, .c-footer, .hat';
+var MIN_DISTANCE = 50;
+var SCRIPTING_AREA = $('.scriptingArea')[0];
+var BLOCK_PALETTE = $('.blockArea')[0];
+
 var DRAGGABLE_ELEMENTS = ([
     '.c-wrapper',
     '.stack',
 ]).map(function(item) {
-    return '.scriptingArea ' + item;
+    return item;  // '.scriptingArea ' + item
 }).join(', ');
 
 var C_ELEMENTS = ([
@@ -228,8 +229,25 @@ var C_ELEMENTS = ([
     '.c-content',
     '.c-footer'
 ]).map(function(item) {
-    return '.scriptingArea ' + item;
+    return item;  // '.scriptingArea ' + item
 }).join(', ');
+
+BLOCK_PALETTE.addEventListener('mousedown', function(ev) {
+    if (ev.target.className =='script-input') {
+        ev.stopPropagation();
+        return;
+    }
+    if (ev.target.matches(DRAGGABLE_ELEMENTS)) {
+        _drag_init(ev.target, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
+        ev.stopPropagation();
+        setZebra();
+    } else if (ev.target.matches(C_ELEMENTS)) {
+        console.log(ev.target.parentElement);
+        _drag_init(ev.target.parentElement, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
+        ev.stopPropagation();
+        setZebra();
+    }
+});
 
 SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
     if (ev.target.className =='script-input') {
