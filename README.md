@@ -16,10 +16,10 @@ The goal of Elemental is to act as a bridge between [Scratch](http://scratch.mit
 does things
 
 ### Firedrake969
-other things
+other people's things
 
 ### BookOwl
-weird things
+neat things
 
 ### TheInitializer
 cool things
