@@ -77,6 +77,12 @@ function getOffset( elem ) {
     
 }
 
+// returns true if the element or one of its parents has the class classname
+function parentHasClass(element, classname) {
+    if (element.className.split(' ').indexOf(classname)>=0) return true;
+    return element.parentNode && parentHasClass(element.parentNode, classname);
+}
+
 // Will be called when user starts dragging an element
 function _drag_init(elem, ev) {
     var relativeX = ev.pageX - getOffset(elem).left;
@@ -95,6 +101,28 @@ function _drag_init(elem, ev) {
         childs[i].removeAttribute('style');
         wrapper.appendChild(childs[i]);
     }
+    wrapper.style.left = curX - relativeX + 'px';
+    wrapper.style.top = curY - relativeY + 'px';
+    selected = wrapper;
+    x_elem = x_pos - selected.offsetLeft;
+    y_elem = y_pos - selected.offsetTop;
+}
+
+function _palette_drag_init(elem, ev) {
+    var relativeX = ev.pageX - getOffset(elem).left;
+    var relativeY = ev.pageY - getOffset(elem).top;
+    // Clone element
+    var newElem = elem.cloneNode(true);
+    // Store the object of the element which needs to be moved
+    var wrapper = document.createElement("ul");
+    wrapper.classList.add('draggy');
+    SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
+    selected = newElem;
+    //var curX = getOffset(elem).left;
+    //var curY = getOffset(elem).top;
+    var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
+        curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
+    wrapper.appendChild(newElem);
     wrapper.style.left = curX - relativeX + 'px';
     wrapper.style.top = curY - relativeY + 'px';
     selected = wrapper;
@@ -147,7 +175,7 @@ function _destroy(ev) {
             selected
         );
     }
-    if (topEl !== null) {
+    if (topEl !== null && parentHasClass(topEl, 'scriptingArea')) {
         for(var i = selected.children.length - 1; i >= 0; i--) {
             // for ome reason for/in desn't work here;
             var elem = selected.children[i];
@@ -221,7 +249,7 @@ var DRAGGABLE_ELEMENTS = ([
     '.c-wrapper',
     '.stack',
 ]).map(function(item) {
-    return item;  // '.scriptingArea ' + item
+    return '.scriptingArea ' + item;
 }).join(', ');
 
 var C_ELEMENTS = ([
@@ -229,7 +257,22 @@ var C_ELEMENTS = ([
     '.c-content',
     '.c-footer'
 ]).map(function(item) {
-    return item;  // '.scriptingArea ' + item
+    return '.scriptingArea ' + item;
+}).join(', ');
+
+var DRAGGABLE_PALETTE_ELEMENTS = ([
+    '.c-wrapper',
+    '.stack',
+]).map(function(item) {
+    return '.blockArea ' + item;
+}).join(', ');
+
+var C_PALETTE_ELEMENTS = ([
+    '.c-header',
+    '.c-content',
+    '.c-footer'
+]).map(function(item) {
+    return '.blockArea ' + item;
 }).join(', ');
 
 BLOCK_PALETTE.addEventListener('mousedown', function(ev) {
@@ -237,13 +280,13 @@ BLOCK_PALETTE.addEventListener('mousedown', function(ev) {
         ev.stopPropagation();
         return;
     }
-    if (ev.target.matches(DRAGGABLE_ELEMENTS)) {
-        _drag_init(ev.target, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
+    if (ev.target.matches(DRAGGABLE_PALETTE_ELEMENTS)) {
+        _palette_drag_init(ev.target, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
         ev.stopPropagation();
         setZebra();
-    } else if (ev.target.matches(C_ELEMENTS)) {
+    } else if (ev.target.matches(C_PALETTE_ELEMENTS)) {
         console.log(ev.target.parentElement);
-        _drag_init(ev.target.parentElement, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
+        _palette_drag_init(ev.target.parentElement, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
         ev.stopPropagation();
         setZebra();
     }
