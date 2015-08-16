@@ -77,6 +77,17 @@ function getOffset( elem ) {
     
 }
 
+// ancestor has parent
+function parentHasClass(element, className) {
+    do {
+        if (element.classList.contains(className)) {
+            return true;
+        }
+        element = element.parentNode;
+    } while (element);
+    return false;
+}
+
 // Will be called when user starts dragging an element
 function _drag_init(elem, ev) {
     var relativeX = ev.pageX - getOffset(elem).left;
@@ -143,7 +154,7 @@ function _move_elem(e) {
             },
             selected
         )
-        if (el !== null && !el.classList.contains('paletteBlock')) {
+        if (el !== null && !el.classList.contains('paletteBlock') && !parentHasClass(el, 'paletteBlock')) {
             el.classList.add('drop-area');
         }
         selected.style.left = (x_pos - x_elem) + 'px';
@@ -169,7 +180,7 @@ function _destroy(ev) {
             selected
         );
     }
-    if (topEl !== null && !topEl.classList.contains('paletteBlock')) {
+    if (topEl !== null && !topEl.classList.contains('paletteBlock') && !parentHasClass(topEl, 'paletteBlock')) {
         for(var i = selected.children.length - 1; i >= 0; i--) {
             // for ome reason for/in desn't work here;
             var elem = selected.children[i];
