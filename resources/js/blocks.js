@@ -77,18 +77,6 @@ function getOffset( elem ) {
     
 }
 
-// returns true if the element or one of its parents has the class classname
-function parentHasClass(element, className) {
-  var regex = new RegExp('\\b' + className + '\\b');
-  do {
-    if (regex.exec(element.className)) {
-      return true;
-    }
-    element = element.parentNode;
-  } while (element);
-  return false;
-}
-
 // Will be called when user starts dragging an element
 function _drag_init(elem, ev) {
     var relativeX = ev.pageX - getOffset(elem).left;
@@ -119,6 +107,7 @@ function _palette_drag_init(elem, ev) {
     var relativeY = ev.pageY - getOffset(elem).top;
     // Clone element
     var newElem = elem.cloneNode(true);
+    newElem.classList.remove('paletteBlock');
     // Store the object of the element which needs to be moved
     var wrapper = document.createElement("ul");
     wrapper.classList.add('draggy');
@@ -154,7 +143,7 @@ function _move_elem(e) {
             },
             selected
         )
-        if (el !== null && parentHasClass(el, 'sciptingArea')) {
+        if (el !== null && !el.classList.contains('paletteBlock')) {
             el.classList.add('drop-area');
         }
         selected.style.left = (x_pos - x_elem) + 'px';
@@ -180,7 +169,7 @@ function _destroy(ev) {
             selected
         );
     }
-    if (topEl !== null && parentHasClass(topEl, 'sciptingArea')) {
+    if (topEl !== null && !topEl.classList.contains('paletteBlock')) {
         for(var i = selected.children.length - 1; i >= 0; i--) {
             // for ome reason for/in desn't work here;
             var elem = selected.children[i];
@@ -290,7 +279,6 @@ BLOCK_PALETTE.addEventListener('mousedown', function(ev) {
         ev.stopPropagation();
         setZebra();
     } else if (ev.target.matches(C_PALETTE_ELEMENTS)) {
-        console.log(ev.target.parentElement);
         _palette_drag_init(ev.target.parentElement, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
         ev.stopPropagation();
         setZebra();
@@ -307,7 +295,6 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
         ev.stopPropagation();
         setZebra();
     } else if (ev.target.matches(C_ELEMENTS)) {
-        console.log(ev.target.parentElement);
         _drag_init(ev.target.parentElement, ev);
         ev.stopPropagation();
         setZebra();
