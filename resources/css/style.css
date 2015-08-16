@@ -122,11 +122,7 @@ html, body {
   overflow-x: scroll;
   position: relative;
   background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../img/diagonalTexture.png");
-<<<<<<< HEAD:resources/css/style.css
-  z-index: 5; }
-=======
   z-index: 1; }
->>>>>>> ddbe493b991be76b32808e2939c11a45bb816e07:resources/css/style.css
 
 .topBar {
   /* Monster Gradient: */
@@ -254,9 +250,7 @@ html, body {
     border-bottom: 2px solid #252E35;
     display: flex;
     height: 200px;
-    width: 100%;
-    z-index: 0;
-    position: relative; }
+    width: 100%; }
 
 .upperArea .paletteSelect {
   background: #444C54;
