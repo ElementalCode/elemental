@@ -31,7 +31,7 @@ html, body {
 
 	//for some reason this is cutting off the hat block ::after element...
 	background: linear-gradient($right_transparent, $right_transparent), url($right_texture);
-	z-index: 5;
+	z-index: 1;
 }
 
 .topBar {
@@ -179,8 +179,6 @@ html, body {
 		display: flex;
 		height: 200px;
 		width: 100%;
-		z-index: 0;
-		position: relative;
 	}
 }
 

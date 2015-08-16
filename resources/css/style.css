@@ -122,7 +122,11 @@ html, body {
   overflow-x: scroll;
   position: relative;
   background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../img/diagonalTexture.png");
+<<<<<<< HEAD:resources/css/style.css
   z-index: 5; }
+=======
+  z-index: 1; }
+>>>>>>> ddbe493b991be76b32808e2939c11a45bb816e07:resources/css/style.css
 
 .topBar {
   /* Monster Gradient: */

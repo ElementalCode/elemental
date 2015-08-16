@@ -25,8 +25,6 @@ cool things
 ### an-OK-squirrel
 no things
 
-=======
-
 ### Dev Notes
 If you're an Elemental Dev, be sure to read the [Dev Notes](https://github.com/ElementalCode/Elemental/wiki/Dev-Notes) to get up to speed on the rules and regulations for creating with the ElementalCode team. Happy coding! :)
 =======
