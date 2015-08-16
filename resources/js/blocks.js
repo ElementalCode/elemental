@@ -78,9 +78,15 @@ function getOffset( elem ) {
 }
 
 // returns true if the element or one of its parents has the class classname
-function parentHasClass(element, classname) {
-    if (element.className.split(' ').indexOf(classname)>=0) return true;
-    return element.parentNode && parentHasClass(element.parentNode, classname);
+function parentHasClass(element, className) {
+  var regex = new RegExp('\\b' + className + '\\b');
+  do {
+    if (regex.exec(element.className)) {
+      return true;
+    }
+    element = element.parentNode;
+  } while (element);
+  return false;
 }
 
 // Will be called when user starts dragging an element
@@ -135,23 +141,22 @@ function _move_elem(e) {
     x_pos = document.all ? window.event.clientX : e.pageX + SCRIPTING_AREA.scrollLeft;
     y_pos = document.all ? window.event.clientY : e.pageY + SCRIPTING_AREA.scrollTop;
     if (selected !== null) {
-            $(SNAP_CLASSES).each(function(item) {
-                if (item.classList.contains('drop-area')) {
-                    item.classList.remove('drop-area');
-                }
-            });
-            var el = closestElem(
-                $(SNAP_CLASSES),
-                {
-                    y: getOffset(selected).top,
-                    x: getOffset(selected).left
-                },
-                selected
-            )
-            if (el !== null) {
-                el.classList.add('drop-area');
+        $(SNAP_CLASSES).each(function(item) {
+            if (item.classList.contains('drop-area')) {
+                item.classList.remove('drop-area');
             }
-        //}
+        });
+        var el = closestElem(
+            $(SNAP_CLASSES),
+            {
+                y: getOffset(selected).top,
+                x: getOffset(selected).left
+            },
+            selected
+        )
+        if (el !== null && parentHasClass(el, 'sciptingArea')) {
+            el.classList.add('drop-area');
+        }
         selected.style.left = (x_pos - x_elem) + 'px';
         selected.style.top = (y_pos - y_elem) + 'px';
     }
@@ -175,7 +180,7 @@ function _destroy(ev) {
             selected
         );
     }
-    if (topEl !== null && parentHasClass(topEl, 'scriptingArea')) {
+    if (topEl !== null && parentHasClass(topEl, 'sciptingArea')) {
         for(var i = selected.children.length - 1; i >= 0; i--) {
             // for ome reason for/in desn't work here;
             var elem = selected.children[i];
