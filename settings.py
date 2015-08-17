@@ -46,6 +46,7 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 # Application definition
 
 INSTALLED_APPS = (
+    'flat',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
