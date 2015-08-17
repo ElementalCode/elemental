@@ -79,9 +79,16 @@ function getOffset( elem ) {
 
 // ancestor has parent
 function parentHasClass(element, className) {
+    var regex = new RegExp('\\b' + className + '\\b');
     do {
-        if (element.classList.contains(className)) {
-            return true;
+        if (element.classList !== undefined) {
+            if (element.classList.contains(className)) {
+                return true;
+            }
+        } else {
+            if (regex.exec(element.className)) {
+                return true;
+            }
         }
         element = element.parentNode;
     } while (element);
