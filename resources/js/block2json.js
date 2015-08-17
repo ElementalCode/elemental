@@ -75,9 +75,19 @@ function getText(elem) {
 	var text = '';
 	var childNodes = toArr(elem.children);
 	for (var i = 0; i < childNodes.length; i++) {
-		console.log(childNodes[i]);
 		if (childNodes[i].classList.contains(textInput)) {
 			text += childNodes[i].children[0].innerText;
+		}
+	}
+	return text;
+}
+
+function getInlineText(elem) {
+	var text = '';
+	var childNodes = toArr(elem.children);
+	for (var i = 0; i < childNodes.length; i++) {
+		if (childNodes[i].classList.contains(textInput)) {
+			text += childNodes[i].innerText;
 		}
 	}
 	return text;
@@ -92,7 +102,8 @@ function traverseTree(parentNode) {
 			var elType = getElType(directChildren[i]);
 			pushedArr.push({
 				tag: elType,
-				attr: getSingleAttrs(directChildren[i])
+				attr: getSingleAttrs(directChildren[i]),
+				text: getInlineText(directChildren[i])
 			});
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
 			var elType = getElType(directChildren[i]);
@@ -106,8 +117,8 @@ function traverseTree(parentNode) {
 	return pushedArr;  //recursively get children of blocks
 }
 
-var stackElements = ['e-img', ];
-var attrNames = ['src', 'class', 'id', ]; //add attrs
+var stackElements = ['e-img', 'e-a', 'e-h1', 'e-h2', 'e-h3', ];
+var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
 var wrapperElements = ['e-div', 'e-body', ];
 var textInput = 'e-text';
 
