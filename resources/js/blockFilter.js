@@ -47,11 +47,25 @@ var filter = {
   palette = the numerical id of the palette to which the block belongs. Counting starts at 0. */
   
   blocks: [
+
+    /* Blocks for palette 0 - text */
     {
-      name: 'image',
-      htmlString: "<li class='stack e-text paletteBlock'>image titled <span contenteditable='true' class='script-input text'>myImg.gif</span></li>",
-      tags: ['image', 'img', 'picture'],
-      palette: 1
+      name: 'heading 1',
+      htmlString: "<li class='stack e-text paletteBlock'>heading 1 with text <span contenteditable='true' class='script-input text'>An Important Heading</span></li>",
+      tags: ['heading', 'h1'],
+      palette: 0
+    },
+    {
+      name: 'heading 2',
+      htmlString: "<li class='stack e-text paletteBlock'>heading 2 with text <span contenteditable='true' class='script-input text'>A Less Important Heading</span></li>",
+      tags: ['heading', 'h2'],
+      palette: 0
+    },
+    {
+      name: 'heading 3',
+      htmlString: "<li class='stack e-text paletteBlock'>heading 3 with text <span contenteditable='true' class='script-input text'>An Even Less Important Heading</span></li>",
+      tags: ['heading', 'h2'],
+      palette: 0
     },
     {
       name: 'link',
@@ -60,11 +74,20 @@ var filter = {
       palette: 0
     },
     {
-      name: 'div',
+      name: 'division',
       htmlString: "<ul class='c-wrapper e-div paletteBlock'><li class='c-header'>div</li><ul class='c-content'></ul><li class='c-footer'></li></ul>",
       tags: ['div', 'divider', 'separator'],
       palette: 0
-    }
+    },
+
+    /* Blocks for palette 1 - Media */ 
+    {
+      name: 'image',
+      htmlString: "<li class='stack e-text paletteBlock'>image titled <span contenteditable='true' class='script-input text'>myImg.gif</span></li>",
+      tags: ['image', 'img', 'picture'],
+      palette: 1
+    },
+
   ]
 };
 
