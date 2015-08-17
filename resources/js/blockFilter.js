@@ -51,25 +51,25 @@ var filter = {
     /* Blocks for palette 0 - text */
     {
       name: 'heading 1',
-      htmlString: "<li class='stack e-text paletteBlock'>heading 1 with text <span contenteditable='true' class='script-input text'>An Important Heading</span></li>",
+      htmlString: "<li class='stack e-h1 paletteBlock'>heading 1 with text <span contenteditable='true' class='script-input e-text'>An Important Heading</span></li>",
       tags: ['heading', 'h1'],
       palette: 0
     },
     {
       name: 'heading 2',
-      htmlString: "<li class='stack e-text paletteBlock'>heading 2 with text <span contenteditable='true' class='script-input text'>A Less Important Heading</span></li>",
+      htmlString: "<li class='stack e-h2 paletteBlock'>heading 2 with text <span contenteditable='true' class='script-input e-text'>A Less Important Heading</span></li>",
       tags: ['heading', 'h2'],
       palette: 0
     },
     {
       name: 'heading 3',
-      htmlString: "<li class='stack e-text paletteBlock'>heading 3 with text <span contenteditable='true' class='script-input text'>An Even Less Important Heading</span></li>",
-      tags: ['heading', 'h2'],
+      htmlString: "<li class='stack e-h3 paletteBlock'>heading 3 with text <span contenteditable='true' class='script-input e-text'>An Even Less Important Heading</span></li>",
+      tags: ['heading', 'h3'],
       palette: 0
     },
     {
       name: 'link',
-      htmlString: "<li class='stack e-text paletteBlock'>link to <span contenteditable='true' class='script-input text'>https://google.com/</span></li>",
+      htmlString: "<li class='stack e-a paletteBlock'>link to <span contenteditable='true' class='script-input href'>https://google.com/</span> with text <span contenteditable='true' class='script-input e-text'>link</span></li>",
       tags: ['link', 'a'],
       palette: 0
     },
@@ -83,7 +83,7 @@ var filter = {
     /* Blocks for palette 1 - Media */ 
     {
       name: 'image',
-      htmlString: "<li class='stack e-text paletteBlock'>image titled <span contenteditable='true' class='script-input text'>myImg.gif</span></li>",
+      htmlString: "<li class='stack e-img paletteBlock'>image with source <span contenteditable='true' class='script-input src'>myImg.gif</span></li>",
       tags: ['image', 'img', 'picture'],
       palette: 1
     },

@@ -252,7 +252,12 @@ function $(e) {
 //     // $(e).on('mousemove', _move_elem);
 // }
 
-var SNAP_CLASSES = '.stack, .c-header, .c-footer, .hat';
+var SNAP_CLASSES = [
+    '.stack',
+    '.c-header',
+    '.c-footer',
+    '.hat'
+].join(', ');
 var MIN_DISTANCE = 50;
 var SCRIPTING_AREA = $('.scriptingArea')[0];
 var BLOCK_PALETTE = $('.blockArea')[0];
