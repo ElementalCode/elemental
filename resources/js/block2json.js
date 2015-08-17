@@ -106,48 +106,53 @@ function traverseTree(parentNode) {
 	return pushedArr;  //recursively get children of blocks
 }
 
-var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
-var previewElement = document.getElementsByClassName('previewBody')[0];
-
-var directChildren = toArr(script.children);
-directChildren.shift();
-
-var jsonFormat = {
-	tag: 'body',
-	attr: {},
-	child: [],
-};
-var blocks = [];
-
 var stackElements = ['e-img', ];
 var attrNames = ['src', 'class', 'id', ]; //add attrs
 var wrapperElements = ['e-div', 'e-body', ];
 var textInput = 'e-text';
 
-for (var i = 0; i < directChildren.length; i++) {
-	if (includesArrItem(directChildren[i].className, stackElements)) {
-		var elType = getElType(directChildren[i]);
-		blocks.push({
-			tag: elType,
-			attr: getSingleAttrs(directChildren[i])
-		});
-	} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
-		var elType = getElType(directChildren[i]);
-		blocks.push({
-			tag: elType,
-			child: traverseTree(directChildren[i])
-		});
+function setFrameContent() {
+	var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
+	var previewElement = document.getElementsByClassName('previewBody')[0];
+
+	var directChildren = toArr(script.children);
+	directChildren.shift();
+
+	var jsonFormat = {
+		tag: 'body',
+		attr: {},
+		child: [],
+	};
+	var blocks = [];
+
+	for (var i = 0; i < directChildren.length; i++) {
+		if (includesArrItem(directChildren[i].className, stackElements)) {
+			var elType = getElType(directChildren[i]);
+			blocks.push({
+				tag: elType,
+				attr: getSingleAttrs(directChildren[i])
+			});
+		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
+			var elType = getElType(directChildren[i]);
+			blocks.push({
+				tag: elType,
+				child: traverseTree(directChildren[i])
+			});
+		}
 	}
+	jsonFormat.child = blocks;
+
+	var parsedHtml = json2html(jsonFormat);
+
+	var previewWindow = previewElement;
+	previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
+	previewWindow.document.open();
+	previewWindow.document.write(parsedHtml);
+	previewWindow.document.close();
 }
-jsonFormat.child = blocks;
 
-var parsedHtml = json2html(jsonFormat);
+setFrameContent();
 
-var previewWindow = previewElement;
-previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
-previewWindow.document.open();
-previewWindow.document.write(parsedHtml);
-previewWindow.document.close();
 // example:
 //
 // var json = {

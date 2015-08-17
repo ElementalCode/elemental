@@ -301,6 +301,7 @@ BLOCK_PALETTE.addEventListener('mousedown', function(ev) {
         ev.stopPropagation();
         setZebra();
     }
+    setFrameContent();
 });
 
 SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
@@ -317,6 +318,7 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
         ev.stopPropagation();
         setZebra();
     }
+    setFrameContent();
 });
 
 // draggy('.c-wrapper');
@@ -324,6 +326,7 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
 $('body').on('mousemove', _move_elem);
 $('body').on('mouseup', function(ev) {
     _destroy(ev);
+    setFrameContent();
     setZebra();
 });
 setZebra();
