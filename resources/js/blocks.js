@@ -205,10 +205,10 @@ function _destroy(ev) {
         selected.parentNode.removeChild(selected);
     } else {
         if (selected !== null) {
-            if (ev.pageY - getOffset(SCRIPTING_AREA).top < 0) {
+            if (getOffset(selected).top - getOffset(SCRIPTING_AREA).top < 0) {
                 selected.style.top = 0;
             }
-            if (ev.pageX - getOffset(SCRIPTING_AREA).left < 0) {
+            if (getOffset(selected).left - getOffset(SCRIPTING_AREA).left < 0) {
                 selected.style.left = 0;
             }
         }
