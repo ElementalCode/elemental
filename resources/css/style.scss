@@ -10,6 +10,8 @@ $menu_drop_hover: #58B2C8;
 $menu_drop_text: #333;
 $search_icon_url: "../img/nav-search-glass.png";
 
+@import "blocks";
+
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
 
 body {
@@ -19,6 +21,17 @@ body {
 
 html, body {
 	height: 100%;
+}
+
+.scriptingArea {
+	min-height: 100%;
+	min-width: 100%;
+	overflow-x: scroll;
+	position: relative;
+
+	//for some reason this is cutting off the hat block ::after element...
+	background: linear-gradient($right_transparent, $right_transparent), url($right_texture);
+	z-index: 1;
 }
 
 .topBar {
@@ -156,9 +169,6 @@ html, body {
 }
 
 .rightSide {
-	/* This is really weird, but it works... https://css-tricks.com/tinted-images-multiple-backgrounds/ */
-    background: url($right_texture);
-	background: linear-gradient($right_transparent, $right_transparent), url($right_texture);
 	flex-grow: 1;
 	flex-shrink: 1;
 	height: 100%;
@@ -363,6 +373,11 @@ html, body {
 	opacity: 1;
 }
 
+.infoText {
+  color:#ddd;
+  font-family:'Source Code Pro', sans-serif;
+}
+
 .upperArea .allBlocks .blockArea {
 	display: flex;
 	flex-direction: row;
@@ -371,7 +386,7 @@ html, body {
 	height: calc(100% - 64px);
 	overflow-x: hidden;
 	overflow-y: auto;
-	justify-content: space-between;
+	justify-content: flex-start;
 	padding: 32px;
   
 	.block {
