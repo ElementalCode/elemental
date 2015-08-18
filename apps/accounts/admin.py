@@ -30,7 +30,7 @@ class ElementalUserAdmin(admin.ModelAdmin):
                 'is_staff', 'is_active', 'date_joined',
                 'username',
 
-                'banned', 'can_share_projects',
+                'banned', 'can_share_projects', 'deleted', 
             )
         }),
     )
@@ -42,7 +42,7 @@ class ElementalUserAdmin(admin.ModelAdmin):
                 'email', 'is_active',
                 'date_joined', 'username',
 
-                'banned', 'can_share_projects',
+                'banned', 'can_share_projects', 'deleted', 
             )
         }),
     )
