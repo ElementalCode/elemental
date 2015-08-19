@@ -30,12 +30,7 @@ function makeMap(str) {
 }
 
 function html2json(html) {
-  // Inline Elements - HTML 4.01
-  var inline = makeMap('a,abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,select,small,span,strike,strong,sub,sup,textarea,tt,u,var');
-  // but I want to handle some tag like block tag
-  inline.textarea = false;
-  inline.input = false;
-  inline.img = false;
+  var inline = {};
 
   html = html.replace(/<!DOCTYPE[\s\S]+?>/, '');
 
