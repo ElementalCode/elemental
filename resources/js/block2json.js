@@ -62,13 +62,18 @@ function getSingleAttrs(element) {
 	var attrElems = toArr(element.children);
 	for (var i = 0; i < attrElems.length; i++) {
 		var attr = getAttrNames(attrElems[i].className);
-		attrs[attr] = attrElems[i].innerText;
+		attrs[attr] = encodeEntities(attrElems[i].innerText);
+		console.log(attrs[attr]);
 	}
 	return attrs;
 }
 
 function getWrapperAttrs(element) {
 	//for later...
+}
+
+function encodeEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 }
 
 function getText(elem) {
@@ -107,9 +112,8 @@ function traverseTree(parentNode) {
 			pushedArr.push({
 				tag: elType,
 				attr: elType ? getSingleAttrs(directChildren[i]) : {},
-				text: getInlineText(directChildren[i])
+				text: encodeEntities(getInlineText(directChildren[i]))
 			});
-			console.log(pushedArr[pushedArr.length - 1]);
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
 			var elType = getElType(directChildren[i]);
 			pushedArr.push({
@@ -142,17 +146,22 @@ function setFrameContent() {
 	var blocks = [];
 
 	for (var i = 0; i < directChildren.length; i++) {
-		if (includesArrItem(directChildren[i].className, stackElements)) {
+		if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
 			var elType = getElType(directChildren[i]);
+			if (elType == 'text') {
+				elType = '';
+			}
 			blocks.push({
 				tag: elType,
-				attr: getSingleAttrs(directChildren[i])
+				attr: elType ? getSingleAttrs(directChildren[i]) : {},
+				text: encodeEntities(getInlineText(directChildren[i]))
 			});
-		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
+		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
 			var elType = getElType(directChildren[i]);
 			blocks.push({
 				tag: elType,
-				child: traverseTree(directChildren[i])
+				child: traverseTree(directChildren[i]),
+				// text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
 			});
 		}
 	}
