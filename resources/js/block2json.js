@@ -63,7 +63,6 @@ function getSingleAttrs(element) {
 	for (var i = 0; i < attrElems.length; i++) {
 		var attr = getAttrNames(attrElems[i].className);
 		attrs[attr] = encodeEntities(attrElems[i].innerText);
-		console.log(attrs[attr]);
 	}
 	return attrs;
 }
@@ -89,7 +88,6 @@ function getText(elem) {
 
 function getInlineText(elem) {
 	var text = '';
-	console.log(elem, elem.children);
 	var childNodes = toArr(elem.children);
 	for (var i = 0; i < childNodes.length; i++) {
 		if (childNodes[i].classList.contains(textInput)) {
