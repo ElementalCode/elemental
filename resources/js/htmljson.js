@@ -119,7 +119,13 @@ function html2json(html) {
           if (!last.text) {
             last.text = '';
           }
-          last.text += text;
+          // last.text += text;
+          if (last.child) {
+            last.child.push({'tag': '', 'text': text});
+          } else {
+            last.child = [];
+            last.child.push({'tag': '', 'text': text});
+          }
         }
       }
     },
@@ -152,17 +158,21 @@ function json2html(json) {
     }
   }
 
-  buf.push('<');
-  buf.push(tag);
-  json.attr ? buf.push(buildAttr(json.attr)) : null;
-  if (empty[tag]) buf.push('/');
-  buf.push('>');
+  if (tag) {
+    buf.push('<');
+    buf.push(tag);
+    json.attr ? buf.push(buildAttr(json.attr)) : null;
+    if (empty[tag]) buf.push('/');
+    buf.push('>');
+  }
   text ? buf.push(text) : null;
   if (children) {
     for (var j = 0; j < children.length; j++) {
       buf.push(json2html(children[j]));
     }
   }
-  if (!empty[tag]) buf.push('</' + tag + '>');
+  if (!empty[tag] && tag) {
+    buf.push('</' + tag + '>');
+  }
   return buf.join('');
 }

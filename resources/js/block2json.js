@@ -84,6 +84,7 @@ function getText(elem) {
 
 function getInlineText(elem) {
 	var text = '';
+	console.log(elem, elem.children);
 	var childNodes = toArr(elem.children);
 	for (var i = 0; i < childNodes.length; i++) {
 		if (childNodes[i].classList.contains(textInput)) {
@@ -100,27 +101,31 @@ function traverseTree(parentNode) {
 	for (var i = 0; i < directChildren.length; i++) {
 		if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
 			var elType = getElType(directChildren[i]);
+			if (elType == 'text') {
+				elType = '';
+			}
 			pushedArr.push({
 				tag: elType,
-				attr: getSingleAttrs(directChildren[i]),
+				attr: elType ? getSingleAttrs(directChildren[i]) : {},
 				text: getInlineText(directChildren[i])
 			});
+			console.log(pushedArr[pushedArr.length - 1]);
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
 			var elType = getElType(directChildren[i]);
 			pushedArr.push({
 				tag: elType,
 				child: traverseTree(directChildren[i]),
-				text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
+				// text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
 			});
 		}
 	}
 	return pushedArr;  //recursively get children of blocks
 }
 
-var stackElements = ['e-img', 'e-a', 'e-h1', 'e-h2', 'e-h3', ];
+var stackElements = ['e-img', 'e-a', 'e-h1', 'e-h2', 'e-h3', 'e-text'];
 var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
 var wrapperElements = ['e-div', 'e-body', ];
-var textInput = 'e-text';
+var textInput = 'text';
 
 function setFrameContent() {
 	var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
