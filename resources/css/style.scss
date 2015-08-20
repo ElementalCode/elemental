@@ -408,6 +408,24 @@ html, body {
 	}
 }
 
+.trashCan {
+    display:block;
+    position:fixed;
+    bottom:10px;
+    right:20px;
+    width:70px;
+    height:90px;
+    z-index:800;
+    background-image: url("../img/trash_closed.png");
+}
+
+/* Could replace with class rather than hover
+   if we want to have it only open when the
+   user is currently dragging a block. */
+.trashCan:hover {
+    background-image: url("../img/trash_open.png");
+}
+
 @media (max-width:450px) {
 	.advanceWrap {
 		display: none;
