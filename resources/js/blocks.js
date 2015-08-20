@@ -216,6 +216,16 @@ function _destroy(ev) {
     selected = null;
 }
 
+function _delete(ev) {
+    $(SNAP_CLASSES).each(function(item) {
+       if (item.classList.contains('drop-area')) {
+           item.classList.remove('drop-area');
+       }
+    });
+    selected.parentNode.removeChild(selected);
+    selected = null;
+}
+
 //http://jsfiddle.net/tovic/Xcb8d/light/
 
 function $(e) {
@@ -236,21 +246,6 @@ function $(e) {
     };
     return arr;
 }
-
-// function draggy(e) {
-//     $(e).on('mousedown', function(ev) {
-//         if (ev.target.className =='script-input') {
-//             ev.stopPropagation();
-//             return;
-//         }
-//         _drag_init(this, ev);
-//         ev.stopPropagation();
-//         setZebra();
-//         return false;
-//     });
-    
-//     // $(e).on('mousemove', _move_elem);
-// }
 
 var SNAP_CLASSES = [
     '.stack',
@@ -330,7 +325,12 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
 // draggy('.stack');
 $('body').on('mousemove', _move_elem);
 $('body').on('mouseup', function(ev) {
-    _destroy(ev);
+    console.log(ev.target);
+    if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea')) {
+        _delete(ev);
+    } else {
+        _destroy(ev);
+    }
     setFrameContent();
     setZebra();
 });
