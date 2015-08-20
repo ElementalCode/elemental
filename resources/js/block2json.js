@@ -62,7 +62,7 @@ function getSingleAttrs(element) {
 	var attrElems = toArr(element.children);
 	for (var i = 0; i < attrElems.length; i++) {
 		var attr = getAttrNames(attrElems[i].className);
-		attrs[attr] = attrElems[i].innerText;
+		attrs[attr] = encodeEntities(attrElems[i].innerText);
 	}
 	return attrs;
 }
@@ -71,13 +71,27 @@ function getWrapperAttrs(element) {
 	//for later...
 }
 
+function encodeEntities(str) {
+    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+
 function getText(elem) {
 	var text = '';
 	var childNodes = toArr(elem.children);
 	for (var i = 0; i < childNodes.length; i++) {
-		console.log(childNodes[i]);
 		if (childNodes[i].classList.contains(textInput)) {
 			text += childNodes[i].children[0].innerText;
+		}
+	}
+	return text;
+}
+
+function getInlineText(elem) {
+	var text = '';
+	var childNodes = toArr(elem.children);
+	for (var i = 0; i < childNodes.length; i++) {
+		if (childNodes[i].classList.contains(textInput)) {
+			text += childNodes[i].innerText;
 		}
 	}
 	return text;
@@ -90,64 +104,78 @@ function traverseTree(parentNode) {
 	for (var i = 0; i < directChildren.length; i++) {
 		if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
 			var elType = getElType(directChildren[i]);
+			if (elType == 'text') {
+				elType = '';
+			}
 			pushedArr.push({
 				tag: elType,
-				attr: getSingleAttrs(directChildren[i])
+				attr: elType ? getSingleAttrs(directChildren[i]) : {},
+				text: encodeEntities(getInlineText(directChildren[i]))
 			});
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
 			var elType = getElType(directChildren[i]);
 			pushedArr.push({
 				tag: elType,
 				child: traverseTree(directChildren[i]),
-				text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
+				// text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
 			});
 		}
 	}
 	return pushedArr;  //recursively get children of blocks
 }
 
-var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
-var previewElement = document.getElementsByClassName('previewBody')[0];
-
-var directChildren = toArr(script.children);
-directChildren.shift();
-
-var jsonFormat = {
-	tag: 'body',
-	attr: {},
-	child: [],
-};
-var blocks = [];
-
-var stackElements = ['e-img', ];
-var attrNames = ['src', 'class', 'id', ]; //add attrs
+var stackElements = ['e-img', 'e-a', 'e-h1', 'e-h2', 'e-h3', 'e-text'];
+var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
 var wrapperElements = ['e-div', 'e-body', ];
-var textInput = 'e-text';
+var textInput = 'text';
 
-for (var i = 0; i < directChildren.length; i++) {
-	if (includesArrItem(directChildren[i].className, stackElements)) {
-		var elType = getElType(directChildren[i]);
-		blocks.push({
-			tag: elType,
-			attr: getSingleAttrs(directChildren[i])
-		});
-	} else if (includesArrItem(directChildren[i].className, wrapperElements)) {
-		var elType = getElType(directChildren[i]);
-		blocks.push({
-			tag: elType,
-			child: traverseTree(directChildren[i])
-		});
+function setFrameContent() {
+	var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
+	var previewElement = document.getElementsByClassName('previewBody')[0];
+
+	var directChildren = toArr(script.children);
+	directChildren.shift();
+
+	var jsonFormat = {
+		tag: 'body',
+		attr: {},
+		child: [],
+	};
+	var blocks = [];
+
+	for (var i = 0; i < directChildren.length; i++) {
+		if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
+			var elType = getElType(directChildren[i]);
+			if (elType == 'text') {
+				elType = '';
+			}
+			blocks.push({
+				tag: elType,
+				attr: elType ? getSingleAttrs(directChildren[i]) : {},
+				text: encodeEntities(getInlineText(directChildren[i]))
+			});
+		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
+			var elType = getElType(directChildren[i]);
+			blocks.push({
+				tag: elType,
+				child: traverseTree(directChildren[i]),
+				// text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
+			});
+		}
 	}
+	jsonFormat.child = blocks;
+
+	var parsedHtml = json2html(jsonFormat);
+
+	var previewWindow = previewElement;
+	previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
+	previewWindow.document.open();
+	previewWindow.document.write(parsedHtml);
+	previewWindow.document.close();
 }
-jsonFormat.child = blocks;
 
-var parsedHtml = json2html(jsonFormat);
+setFrameContent();
 
-var previewWindow = previewElement;
-previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
-previewWindow.document.open();
-previewWindow.document.write(parsedHtml);
-previewWindow.document.close();
 // example:
 //
 // var json = {

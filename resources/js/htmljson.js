@@ -30,12 +30,7 @@ function makeMap(str) {
 }
 
 function html2json(html) {
-  // Inline Elements - HTML 4.01
-  var inline = makeMap('a,abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,select,small,span,strike,strong,sub,sup,textarea,tt,u,var');
-  // but I want to handle some tag like block tag
-  inline.textarea = false;
-  inline.input = false;
-  inline.img = false;
+  var inline = {};
 
   html = html.replace(/<!DOCTYPE[\s\S]+?>/, '');
 
@@ -124,7 +119,13 @@ function html2json(html) {
           if (!last.text) {
             last.text = '';
           }
-          last.text += text;
+          // last.text += text;
+          if (last.child) {
+            last.child.push({'tag': '', 'text': text});
+          } else {
+            last.child = [];
+            last.child.push({'tag': '', 'text': text});
+          }
         }
       }
     },
@@ -157,17 +158,21 @@ function json2html(json) {
     }
   }
 
-  buf.push('<');
-  buf.push(tag);
-  json.attr ? buf.push(buildAttr(json.attr)) : null;
-  if (empty[tag]) buf.push('/');
-  buf.push('>');
+  if (tag) {
+    buf.push('<');
+    buf.push(tag);
+    json.attr ? buf.push(buildAttr(json.attr)) : null;
+    if (empty[tag]) buf.push('/');
+    buf.push('>');
+  }
   text ? buf.push(text) : null;
   if (children) {
     for (var j = 0; j < children.length; j++) {
       buf.push(json2html(children[j]));
     }
   }
-  if (!empty[tag]) buf.push('</' + tag + '>');
+  if (!empty[tag] && tag) {
+    buf.push('</' + tag + '>');
+  }
   return buf.join('');
 }

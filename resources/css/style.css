@@ -1,12 +1,11 @@
 @import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
-/* line 3, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 body {
   background-color: gray; }
 
-/* line 8, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .scriptingArea,
-.draggy {
+.draggy,
+.blockArea {
   font-family: 'Source Code Pro';
   color: white;
   white-space: nowrap;
@@ -21,14 +20,12 @@ body {
   /* Likely future */
   cursor: default; }
 
-/* line 20, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .draggy {
   position: absolute;
   z-index: 999;
   padding: 0;
   margin: 0; }
 
-/* line 26, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .script-input {
   font-family: 'Source Code Pro';
   padding: 0 5px;
@@ -41,7 +38,6 @@ body {
   display: inline-block;
   text-align: center; }
 
-/* line 38, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .hat {
   display: table;
   /* Using "block" would result in 100% width, and "inline-block" would result in everything on same line */
@@ -50,7 +46,6 @@ body {
   position: relative;
   border-radius: 0px 5px 5px 0px; }
 
-/* line 46, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .hat:after {
   background: #C6E44D;
   display: block;
@@ -63,7 +58,6 @@ body {
   border-radius: 50%;
   z-index: -1; }
 
-/* line 58, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .stack {
   display: table;
   background: #914DE4;
@@ -72,24 +66,19 @@ body {
   border-radius: 5px;
   border-left: 1px solid #A9A9A9; }
 
-/* line 67, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
-* + .stack,
-* + .c-wrapper > .c-header {
+.scriptingArea * + .stack,
+.scriptingArea * + .c-wrapper > .c-header {
   border-top-left-radius: 0px; }
-
-/* line 72, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
-.stack:not(:last-child),
-.c-wrapper:not(:first-child) > .c-header,
-.c-wrapper:not(:last-child) > .c-footer {
+.scriptingArea .stack:not(:last-child),
+.scriptingArea .c-wrapper:not(:first-child) > .c-header,
+.scriptingArea .c-wrapper:not(:last-child) > .c-footer {
   border-bottom-left-radius: 0px; }
 
-/* line 75, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .c-wrapper {
   padding: 0px;
   display: table;
   border-left: 1px solid #A9A9A9; }
 
-/* line 81, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .c-header,
 .c-footer {
   display: table;
@@ -100,7 +89,6 @@ body {
   min-width: 40px;
   min-height: 18px; }
 
-/* line 90, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .c-content {
   background: #E44D4D;
   padding: 3px 0px 3px 25px;
@@ -109,32 +97,25 @@ body {
   overflow-x: visible;
   min-height: 30px; }
 
-/* line 98, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .c-header {
   border-top: 1px solid #A9A9A9; }
 
-/* line 101, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .c-footer {
   border-bottom: 1px solid #A9A9A9; }
 
-/* line 104, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .drop-area {
   border-bottom: 5px solid white; }
 
-/* line 107, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/blocks.scss */
 .c-wrapper.zebra > li, .c-wrapper.zebra > ul {
   background: #F45D5D; }
 
-/* line 17, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 body {
   margin: 0px;
   overflow: hidden; }
 
-/* line 22, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 html, body {
   height: 100%; }
 
-/* line 26, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .scriptingArea {
   min-height: 100%;
   min-width: 100%;
@@ -143,7 +124,6 @@ html, body {
   background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../img/diagonalTexture.png");
   z-index: 1; }
 
-/* line 37, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .topBar {
   /* Monster Gradient: */
   background: #42BA92;
@@ -153,41 +133,34 @@ html, body {
   position: relative;
   z-index: 999; }
 
-/* line 48, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .left {
   display: inline-block; }
 
-/* line 52, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .logo {
   color: white;
   font-size: 20px;
   font-weight: bold;
   vertical-align: middle; }
 
-/* line 60, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menus {
   display: inline-block;
   margin-left: 30px;
   vertical-align: middle; }
 
-/* line 66, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menu {
   display: inline-block;
   margin-right: 20px;
   position: relative;
   top: 1px; }
 
-/* line 72, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menuTitle:hover + .menuContents, .menuContents:hover {
   display: block; }
 
-/* line 76, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menuTitle {
   cursor: default;
   position: relative;
   z-index: 999; }
 
-/* line 82, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menuContents {
   background: #fff;
   border-radius: 3px;
@@ -202,7 +175,6 @@ html, body {
   z-index: 5;
   border: 1px solid #252E35; }
 
-/* line 97, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menuContents:before {
   background: #fff;
   content: ' ';
@@ -222,7 +194,6 @@ html, body {
   /* Chrome, Safari, Opera */
   transform: rotate(45deg); }
 
-/* line 116, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menuContents:after {
   content: ' ';
   display: block;
@@ -236,33 +207,27 @@ html, body {
   width: calc(100% + 20px);
   z-index: -1; }
 
-/* line 130, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menuContents li {
   color: #333;
   cursor: pointer;
   padding: 10px 20px; }
 
-/* line 136, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menuContents li:first-of-type {
   border-top-left-radius: 2px;
   border-top-right-radius: 2px; }
 
-/* line 141, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menuContents li:last-of-type {
   border-bottom-left-radius: 2px;
   border-bottom-right-radius: 2px; }
 
-/* line 146, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .menuContents li:hover {
   background: #58B2C8; }
 
-/* line 150, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .mainArea {
   align-content: stretch;
   display: flex;
   height: calc(100% - 45px); }
 
-/* line 156, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .pagePreview {
   border-right: 4px solid #252E35;
   box-sizing: border-box;
@@ -271,26 +236,22 @@ html, body {
   max-width: 100%;
   overflow-x: hidden; }
 
-/* line 165, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .previewBody {
   background: white;
   height: 100%;
   width: 100%; }
 
-/* line 171, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .rightSide {
   flex-grow: 1;
   flex-shrink: 1;
   height: 100%;
   width: 100%; }
-  /* line 177, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
   .rightSide .upperArea {
     border-bottom: 2px solid #252E35;
     display: flex;
     height: 200px;
     width: 100%; }
 
-/* line 185, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .upperArea .paletteSelect {
   background: #444C54;
   border-right: 2px solid #252E35;
@@ -298,7 +259,6 @@ html, body {
   overflow-y: auto;
   padding: 20px; }
 
-/* line 193, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .upperArea .allBlocks {
   background: #444C54;
   height: 100%;
@@ -308,7 +268,6 @@ html, body {
   /* For child positioning (absolute) */
   width: 100%; }
 
-/* line 203, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .paletteColumn {
   width: 83px;
   margin: 0px 15px;
@@ -317,11 +276,9 @@ html, body {
   display: inline-block;
   position: relative;
   left: -3px; }
-  /* line 212, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
   .paletteColumn .paletteOptionWrap:last-of-type {
     margin-bottom: 0px; }
 
-/* line 217, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .paletteOptionWrap {
   display: inline-block;
   border: 1px solid #505E77;
@@ -334,11 +291,9 @@ html, body {
   width: 100%;
   margin-bottom: 15px;
   position: relative; }
-  /* line 230, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
   .paletteOptionWrap input[type=radio] {
     display: none; }
 
-/* line 235, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .paletteColorIndicator {
   display: block;
   width: 20px;
@@ -349,7 +304,6 @@ html, body {
   right: 4px;
   border-radius: 999px; }
 
-/* line 246, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .paletteColorIndicator:after {
   content: ' ';
   display: none;
@@ -376,11 +330,9 @@ html, body {
   border: 1px solid rgba(0, 0, 0, 0.15);
   border-left-color: transparent; }
 
-/* line 274, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .paletteOptionWrap:hover {
   box-shadow: 0 1px 2px transparent; }
 
-/* line 278, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 #searchBar {
   position: absolute;
   top: 0px;
@@ -399,30 +351,25 @@ html, body {
   opacity: 0.7;
   transition: width 0.2s, padding 0.2s; }
 
-/* line 298, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 #searchBar:hover, #searchBar:focus {
   opacity: 1; }
 
-/* line 302, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 #searchBar:focus {
   cursor: auto;
   width: 170px; }
 
-/* line 307, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .farRight {
   float: right;
   padding-right: 30px;
   position: relative;
   top: 3px; }
 
-/* line 315, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .fancyCheck {
   width: 20px;
   margin: 20px auto;
   position: relative;
   display: none; }
 
-/* line 322, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .fancyCheck + label {
   cursor: pointer;
   position: absolute;
@@ -434,13 +381,12 @@ html, body {
   margin-left: 10px;
   background: #fcfff4;
   /*background: -webkit-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-	background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-	background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-	background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-	background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );*/ }
+  background: -moz-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  background: -o-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  background: -ms-linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  background: linear-gradient(top, #fcfff4 0%, #dfe5d7 40%, #b3bead 100%);
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#fcfff4', endColorstr='#b3bead',GradientType=0 );*/ }
 
-/* line 343, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .fancyCheck + label:after {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
   filter: alpha(opacity=0);
@@ -461,19 +407,20 @@ html, body {
   -ms-transform: rotate(-45deg);
   transform: rotate(-45deg); }
 
-/* line 364, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .fancyCheck + label:hover::after {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=30)";
   filter: alpha(opacity=30);
   opacity: 0.5; }
 
-/* line 370, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .fancyCheck:checked + label:after {
   -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
   filter: alpha(opacity=100);
   opacity: 1; }
 
-/* line 376, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
+.infoText {
+  color: #ddd;
+  font-family: 'Source Code Pro', sans-serif; }
+
 .upperArea .allBlocks .blockArea {
   display: flex;
   flex-direction: row;
@@ -482,10 +429,9 @@ html, body {
   height: calc(100% - 64px);
   overflow-x: hidden;
   overflow-y: auto;
-  justify-content: space-between;
+  justify-content: flex-start;
   padding: 32px;
   /* More temporary things: */ }
-  /* line 387, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
   .upperArea .allBlocks .blockArea .block {
     /* Temporary Demo Block Styles: */
     width: 190px;
@@ -494,17 +440,13 @@ html, body {
     flex-shrink: 0;
     /* Permanent Styles: */
     margin: 10px; }
-  /* line 397, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
   .upperArea .allBlocks .blockArea .block.dragging {
     box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.8); }
-  /* line 402, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
   .upperArea .allBlocks .blockArea .block.small {
     width: 150px; }
-  /* line 406, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
   .upperArea .allBlocks .blockArea .block.large {
     width: 250px; }
 
-/* line 411, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .trashCan {
   display: block;
   position: fixed;
@@ -518,12 +460,10 @@ html, body {
 /* Could replace with class rather than hover
    if we want to have it only open when the
    user is currently dragging a block. */
-/* line 425, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
 .trashCan:hover {
   background-image: url("../img/trash_open.png"); }
 
 @media (max-width: 450px) {
-  /* line 430, C:/Users/PullJosh/Documents/GitHub/Elemental/resources/css/style.scss */
   .advanceWrap {
     display: none; } }
 

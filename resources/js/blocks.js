@@ -2,10 +2,6 @@ var selected = null, // Object of the element to be moved
     x_pos = 0, y_pos = 0, // Stores x & y coordinates of the mouse pointer
     x_elem = 0, y_elem = 0; // Stores top, left values (edge) of the element
 
-var SNAP_CLASSES = '.stack, .c-header, .c-footer, .hat';
-var MIN_DISTANCE = 50;
-var SCRIPTING_AREA = $('.scriptingArea')[0];
-
 function isDescendant(parent, child) {
      var node = child.parentNode;
      while (node != null) {
@@ -81,6 +77,24 @@ function getOffset( elem ) {
     
 }
 
+// ancestor has parent
+function parentHasClass(element, className) {
+    var regex = new RegExp('\\b' + className + '\\b');
+    do {
+        if (element.classList !== undefined) {
+            if (element.classList.contains(className)) {
+                return true;
+            }
+        } else {
+            if (regex.exec(element.className)) {
+                return true;
+            }
+        }
+        element = element.parentNode;
+    } while (element);
+    return false;
+}
+
 // Will be called when user starts dragging an element
 function _drag_init(elem, ev) {
     var relativeX = ev.pageX - getOffset(elem).left;
@@ -106,28 +120,50 @@ function _drag_init(elem, ev) {
     y_elem = y_pos - selected.offsetTop;
 }
 
+function _palette_drag_init(elem, ev) {
+    var relativeX = ev.pageX - getOffset(elem).left;
+    var relativeY = ev.pageY - getOffset(elem).top;
+    // Clone element
+    var newElem = elem.cloneNode(true);
+    newElem.classList.remove('paletteBlock');
+    // Store the object of the element which needs to be moved
+    var wrapper = document.createElement("ul");
+    wrapper.classList.add('draggy');
+    SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
+    selected = newElem;
+    //var curX = getOffset(elem).left;
+    //var curY = getOffset(elem).top;
+    var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
+        curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
+    wrapper.appendChild(newElem);
+    wrapper.style.left = curX - relativeX + 'px';
+    wrapper.style.top = curY - relativeY + 'px';
+    selected = wrapper;
+    x_elem = x_pos - selected.offsetLeft;
+    y_elem = y_pos - selected.offsetTop;
+}
+
 // Will be called when user dragging an element
 function _move_elem(e) {
     x_pos = document.all ? window.event.clientX : e.pageX + SCRIPTING_AREA.scrollLeft;
     y_pos = document.all ? window.event.clientY : e.pageY + SCRIPTING_AREA.scrollTop;
     if (selected !== null) {
-            $(SNAP_CLASSES).each(function(item) {
-                if (item.classList.contains('drop-area')) {
-                    item.classList.remove('drop-area');
-                }
-            });
-            var el = closestElem(
-                $(SNAP_CLASSES),
-                {
-                    y: getOffset(selected).top,
-                    x: getOffset(selected).left
-                },
-                selected
-            )
-            if (el !== null) {
-                el.classList.add('drop-area');
+        $(SNAP_CLASSES).each(function(item) {
+            if (item.classList.contains('drop-area')) {
+                item.classList.remove('drop-area');
             }
-        //}
+        });
+        var el = closestElem(
+            $(SNAP_CLASSES),
+            {
+                y: getOffset(selected).top,
+                x: getOffset(selected).left
+            },
+            selected
+        )
+        if (el !== null && !el.classList.contains('paletteBlock') && !parentHasClass(el, 'paletteBlock')) {
+            el.classList.add('drop-area');
+        }
         selected.style.left = (x_pos - x_elem) + 'px';
         selected.style.top = (y_pos - y_elem) + 'px';
     }
@@ -140,15 +176,18 @@ function _destroy(ev) {
            item.classList.remove('drop-area');
        }
     });
-    var topEl = closestElem(
-        $(SNAP_CLASSES),
-        {
-            y: getOffset(selected).top,
-            x: getOffset(selected).left
-        },
-        selected
-    );
-    if (topEl !== null) {
+    var topEl = null;
+    if (selected !== null) {
+        topEl = closestElem(
+            $(SNAP_CLASSES),
+            {
+                y: getOffset(selected).top,
+                x: getOffset(selected).left
+            },
+            selected
+        );
+    }
+    if (topEl !== null && !topEl.classList.contains('paletteBlock') && !parentHasClass(topEl, 'paletteBlock')) {
         for(var i = selected.children.length - 1; i >= 0; i--) {
             // for ome reason for/in desn't work here;
             var elem = selected.children[i];
@@ -165,13 +204,25 @@ function _destroy(ev) {
         }
         selected.parentNode.removeChild(selected);
     } else {
-        if (ev.pageY - getOffset(SCRIPTING_AREA).top < 0) {
-            selected.style.top = 0;
-        }
-        if (ev.pageX - getOffset(SCRIPTING_AREA).left < 0) {
-            selected.style.left = 0;
+        if (selected !== null) {
+            if (getOffset(selected).top - getOffset(SCRIPTING_AREA).top < 0) {
+                selected.style.top = 0;
+            }
+            if (getOffset(selected).left - getOffset(SCRIPTING_AREA).left < 0) {
+                selected.style.left = 0;
+            }
         }
     }
+    selected = null;
+}
+
+function _delete(ev) {
+    $(SNAP_CLASSES).each(function(item) {
+       if (item.classList.contains('drop-area')) {
+           item.classList.remove('drop-area');
+       }
+    });
+    selected.parentNode.removeChild(selected);
     selected = null;
 }
 
@@ -196,26 +247,91 @@ function $(e) {
     return arr;
 }
 
-function draggy(e) {
-    $(e).on('mousedown', function(ev) {
-        if (ev.target.className =='script-input') {
-            ev.stopPropagation();
-            return;
-        }
-        _drag_init(this, ev);
+var SNAP_CLASSES = [
+    '.stack',
+    '.c-header',
+    '.c-footer',
+    '.hat'
+].join(', ');
+var MIN_DISTANCE = 50;
+var SCRIPTING_AREA = $('.scriptingArea')[0];
+var BLOCK_PALETTE = $('.blockArea')[0];
+
+var DRAGGABLE_ELEMENTS = ([
+    '.c-wrapper',
+    '.stack',
+]).map(function(item) {
+    return '.scriptingArea ' + item;
+}).join(', ');
+
+var C_ELEMENTS = ([
+    '.c-header',
+    '.c-content',
+    '.c-footer'
+]).map(function(item) {
+    return '.scriptingArea ' + item;
+}).join(', ');
+
+var DRAGGABLE_PALETTE_ELEMENTS = ([
+    '.c-wrapper',
+    '.stack',
+]).map(function(item) {
+    return '.blockArea ' + item;
+}).join(', ');
+
+var C_PALETTE_ELEMENTS = ([
+    '.c-header',
+    '.c-content',
+    '.c-footer'
+]).map(function(item) {
+    return '.blockArea ' + item;
+}).join(', ');
+
+BLOCK_PALETTE.addEventListener('mousedown', function(ev) {
+    if (ev.target.className =='script-input') {
+        ev.stopPropagation();
+        return;
+    }
+    if (ev.target.matches(DRAGGABLE_PALETTE_ELEMENTS)) {
+        _palette_drag_init(ev.target, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
         ev.stopPropagation();
         setZebra();
-        return false;
-    });
-    
-    // $(e).on('mousemove', _move_elem);
-}
+    } else if (ev.target.matches(C_PALETTE_ELEMENTS)) {
+        _palette_drag_init(ev.target.parentElement, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
+        ev.stopPropagation();
+        setZebra();
+    }
+    setFrameContent();
+});
 
-draggy('.c-wrapper');
-draggy('.stack');
+SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
+    if (ev.target.className =='script-input') {
+        ev.stopPropagation();
+        return;
+    }
+    if (ev.target.matches(DRAGGABLE_ELEMENTS)) {
+        _drag_init(ev.target, ev);
+        ev.stopPropagation();
+        setZebra();
+    } else if (ev.target.matches(C_ELEMENTS)) {
+        _drag_init(ev.target.parentElement, ev);
+        ev.stopPropagation();
+        setZebra();
+    }
+    setFrameContent();
+});
+
+// draggy('.c-wrapper');
+// draggy('.stack');
 $('body').on('mousemove', _move_elem);
 $('body').on('mouseup', function(ev) {
-    _destroy(ev);
+    console.log(ev.target);
+    if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea')) {
+        _delete(ev);
+    } else {
+        _destroy(ev);
+    }
+    setFrameContent();
     setZebra();
 });
 setZebra();

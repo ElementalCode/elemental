@@ -373,6 +373,11 @@ html, body {
 	opacity: 1;
 }
 
+.infoText {
+  color:#ddd;
+  font-family:'Source Code Pro', sans-serif;
+}
+
 .upperArea .allBlocks .blockArea {
 	display: flex;
 	flex-direction: row;
@@ -381,7 +386,7 @@ html, body {
 	height: calc(100% - 64px);
 	overflow-x: hidden;
 	overflow-y: auto;
-	justify-content: space-between;
+	justify-content: flex-start;
 	padding: 32px;
   
 	.block {
