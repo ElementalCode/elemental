@@ -326,7 +326,7 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
 $('body').on('mousemove', _move_elem);
 $('body').on('mouseup', function(ev) {
     console.log(ev.target);
-    if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea')) {
+    if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || ev.target.className.split(' ').indexOf('trashCan') > -1) {
         _delete(ev);
     } else {
         _destroy(ev);
