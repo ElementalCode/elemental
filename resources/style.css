@@ -104,7 +104,7 @@ body { /*every page*/
 }
 .cta-button:hover {
   background:#319E7A;
-  box-shadow: 0px 10px rgba(49,158,122,0.5);
+  /*box-shadow: 0px 10px rgba(49,158,122,0.5);*/
 }
 .cta-button.less-margin {
   margin-top:0px;
