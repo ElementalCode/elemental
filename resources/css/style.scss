@@ -24,9 +24,9 @@ html, body {
 }
 
 .scriptingArea {
-	min-height: 100%;
+	height: calc(100% - 200px - 12px);
 	min-width: 100%;
-	overflow-x: scroll;
+	overflow: scroll;
 	position: relative;
 
 	//for some reason this is cutting off the hat block ::after element...
