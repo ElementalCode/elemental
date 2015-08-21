@@ -334,6 +334,9 @@ $('body').on('mouseup', function(ev) {
     setFrameContent();
     setZebra();
 });
+$('body').on('keydown', function(ev) {
+    setFrameContent();
+});
 setZebra();
 
 // zebra stuff
