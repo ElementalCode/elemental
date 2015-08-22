@@ -45,28 +45,68 @@ var wrapperElements = ['e-div', 'e-body', ];
 var textInput = 'text';
 
 function generateBlocks(jsonData) {
-	var baseHtml = [
-		'<ul class="script">',
-            '<li class="hat">&lt;!DOCTYPE html&gt;</li>',
-        '</ul>',
-	]
-	return baseHtml.join('');
+    // console.log(jsonData);
+    var baseHtml = [
+        '<ul class="script">',
+            '<li class="hat">&lt;!DOCTYPE html&gt;</li>'
+    ];
+    baseHtml.push('</ul>');
+    return baseHtml.join('');
 }
 
-function loadFile(filename) {
-	currentFile = filename;
-	var fileJson = fileData[filename];
+// function loadFile(filename) {
+//     currentFile = filename;
 
-	// render the HTML somehow from the blocks
-	blockArea = $('.scriptingArea')[0];
-	blockArea.innerHTML = generateBlocks(fileJson);
-	setFrameContent();
+//     if (!fileData.hasOwnProperty(filename)) {
+//         fileData[filename] = {};
+//     }
+
+//     var fileJson = fileData[filename];
+
+//     // render the HTML somehow from the blocks
+//     blockArea = $('.scriptingArea')[0];
+//     blockArea.innerHTML = generateBlocks(fileJson.child);
+//     setFrameContent();
+// }
+
+function createFile() {
+    //we need something better than this
+    var fileName = prompt('Enter a file name', '.html');
+
+    var finalFile = $('.add-file')[0];
+
+    // first deselect the other files...
+    $('.filePane .file.selected').each(function(el) {
+        el.classList.remove('selected');
+    });
+
+    // then insert the new file selector...
+    var fileSelector = document.createElement('div');
+    fileSelector.className = 'file selected';
+    fileSelector.innerHTML = [
+        '<div class="file-name" data-file="' + fileName + '">',
+            fileName,
+        '</div>'].join('');
+    finalFile.parentNode.insertBefore(fileSelector, finalFile);
+
+    // set the fileData for it to be basic...
+    fileData[fileName] = {
+      "tag": "body",
+      "attr": {},
+      "child": []
+    }
+    blockArea = $('.scriptingArea')[0];
+    blockArea.innerHTML = generateBlocks([]);
+    setFrameContent();
 }
 
 $('.filePane').on('click', function(ev) {
-	var el = ev.target;
-	if (el.classList.contains('file') || parentHasClass(el, 'file')) {
-		loadFile(el.dataset.file);
-		ev.stopPropagation();
-	}
+    var el = ev.target;
+    if (el.classList.contains('file') || parentHasClass(el, 'file')) {
+        // loadFile(el.dataset.file);  // oops have to get the child's dataset if the parent is the one clicked
+        ev.stopPropagation();
+    } else if (el.classList.contains('add-file') || parentHasClass(el, 'add-file')) {
+        createFile();
+        ev.stopPropagation();
+    }
 });
