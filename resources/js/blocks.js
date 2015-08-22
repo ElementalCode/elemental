@@ -325,13 +325,14 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
 // draggy('.stack');
 $('body').on('mousemove', _move_elem);
 $('body').on('mouseup', function(ev) {
-    console.log(ev.target);
     if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || ev.target.className.split(' ').indexOf('trashCan') > -1) {
         _delete(ev);
     } else {
         _destroy(ev);
     }
-    setFrameContent();
+    if (!(ev.target.classList.contains('file') || parentHasClass(ev.target, 'file'))) {
+        setFrameContent();
+    }
     setZebra();
 });
 $('body').on('keydown', function(ev) {

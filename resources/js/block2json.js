@@ -165,6 +165,8 @@ function setFrameContent() {
 	}
 	jsonFormat.child = blocks;
 
+	fileData[currentFile] = jsonFormat;
+
 	var parsedHtml = json2html(jsonFormat);
 
 	var previewWindow = previewElement;

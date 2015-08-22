@@ -259,6 +259,8 @@ html, body {
         position: relative;
         top: 50%;
         transform: translateY(-50%); }
+      .leftSide .filePane .file.selected {
+        border: 2px solid #989898; }
 
 .rightSide {
   flex-grow: 1;
