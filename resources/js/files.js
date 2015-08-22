@@ -50,6 +50,8 @@ function generateBlocks(jsonData) {
         '<ul class="script">',
             '<li class="hat">&lt;!DOCTYPE html&gt;</li>'
     ];
+
+    
     baseHtml.push('</ul>');
     return baseHtml.join('');
 }

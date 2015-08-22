@@ -247,11 +247,12 @@ html, body {
     background-color: white;
     box-sizing: border-box;
     border-top: 5px solid #BFBFBF;
-    padding: 5px; }
+    padding: 5px;
+    overflow-y: scroll; }
     .leftSide .filePane .file,
     .leftSide .filePane .add-file {
-      width: 50px;
-      height: 50px;
+      width: 100px;
+      height: 100px;
       border: 2px solid #BFBFBF;
       border-radius: 3px;
       display: inline-block;
