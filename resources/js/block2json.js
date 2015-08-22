@@ -124,11 +124,6 @@ function traverseTree(parentNode) {
 	return pushedArr;  //recursively get children of blocks
 }
 
-var stackElements = ['e-img', 'e-a', 'e-h1', 'e-h2', 'e-h3', 'e-text'];
-var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
-var wrapperElements = ['e-div', 'e-body', ];
-var textInput = 'text';
-
 function setFrameContent() {
 	var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
 	var previewElement = document.getElementsByClassName('previewBody')[0];

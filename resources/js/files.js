@@ -39,6 +39,11 @@ function parentHasClass(element, className) {
 var fileData = {};
 var currentFile = 'index.html';
 
+var stackElements = ['e-img', 'e-a', 'e-h1', 'e-h2', 'e-h3', 'e-text'];
+var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
+var wrapperElements = ['e-div', 'e-body', ];
+var textInput = 'text';
+
 function generateBlocks(jsonData) {
 	var baseHtml = [
 		'<ul class="script">',
