@@ -54,20 +54,24 @@ function generateBlocks(jsonData) {
     return baseHtml.join('');
 }
 
-// function loadFile(filename) {
-//     currentFile = filename;
+function loadFile(filename, el) {
+    currentFile = filename;
 
-//     if (!fileData.hasOwnProperty(filename)) {
-//         fileData[filename] = {};
-//     }
+    var fileJson = fileData[filename];
 
-//     var fileJson = fileData[filename];
+    // first deselect other files...
+    $('.filePane .file.selected').each(function(elem) {
+        elem.classList.remove('selected');
+    });
 
-//     // render the HTML somehow from the blocks
-//     blockArea = $('.scriptingArea')[0];
-//     blockArea.innerHTML = generateBlocks(fileJson.child);
-//     setFrameContent();
-// }
+    // select this one...
+    el.parentNode.classList.add('selected');
+
+    // render the HTML somehow from the blocks
+    // blockArea = $('.scriptingArea')[0];
+    // blockArea.innerHTML = generateBlocks(fileJson.child);
+    // setFrameContent();
+}
 
 function createFile() {
     //we need something better than this
@@ -104,6 +108,12 @@ $('.filePane').on('click', function(ev) {
     var el = ev.target;
     if (el.classList.contains('file') || parentHasClass(el, 'file')) {
         // loadFile(el.dataset.file);  // oops have to get the child's dataset if the parent is the one clicked
+        console.log(el);
+        if (el.classList && el.classList.contains('file')) {
+            loadFile(el.children[0].dataset.file, el.children[0]);
+        } else if (parentHasClass(el, 'file')) {
+            loadFile(el.dataset.file, el);
+        }
         ev.stopPropagation();
     } else if (el.classList.contains('add-file') || parentHasClass(el, 'add-file')) {
         createFile();
