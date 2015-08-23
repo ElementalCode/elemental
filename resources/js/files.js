@@ -45,11 +45,16 @@ var wrapperElements = ['e-div', 'e-body', ];
 var textInput = 'text';
 
 function generateBlocks(jsonData) {
-    // console.log(jsonData);
     var baseHtml = [
         '<ul class="script">',
             '<li class="hat">&lt;!DOCTYPE html&gt;</li>'
     ];
+
+    console.log(jsonData);
+
+    for (var i = 0; i < jsonData.length; i++) {
+        //
+    }
 
     
     baseHtml.push('</ul>');
@@ -70,14 +75,15 @@ function loadFile(filename, el) {
     el.parentNode.classList.add('selected');
 
     // render the HTML somehow from the blocks
-    // blockArea = $('.scriptingArea')[0];
-    // blockArea.innerHTML = generateBlocks(fileJson.child);
+    blockArea = $('.scriptingArea')[0];
+    blockArea.innerHTML = generateBlocks(fileJson.child);
     // setFrameContent();
 }
 
 function createFile() {
     //we need something better than this
     var fileName = prompt('Enter a file name', '.html');
+    currentFile = fileName;
 
     var finalFile = $('.add-file')[0];
 

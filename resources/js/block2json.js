@@ -158,7 +158,7 @@ function setFrameContent() {
 			});
 		}
 	}
-	jsonFormat.child = blocks;
+	jsonFormat = blocks[0];
 
 	fileData[currentFile] = jsonFormat;
 

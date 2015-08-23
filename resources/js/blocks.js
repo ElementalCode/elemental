@@ -293,11 +293,11 @@ BLOCK_PALETTE.addEventListener('mousedown', function(ev) {
         return;
     }
     if (ev.target.matches(DRAGGABLE_PALETTE_ELEMENTS)) {
-        _palette_drag_init(ev.target, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
+        _palette_drag_init(ev.target, ev);
         ev.stopPropagation();
         setZebra();
     } else if (ev.target.matches(C_PALETTE_ELEMENTS)) {
-        _palette_drag_init(ev.target.parentElement, ev);  // DO A NEW DRAG_INIT FOR PALETTE DRAGGING
+        _palette_drag_init(ev.target.parentElement, ev);
         ev.stopPropagation();
         setZebra();
     }
@@ -314,9 +314,11 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
         ev.stopPropagation();
         setZebra();
     } else if (ev.target.matches(C_ELEMENTS)) {
-        _drag_init(ev.target.parentElement, ev);
-        ev.stopPropagation();
-        setZebra();
+        if (!ev.target.parentNode.classList.contains('e-body')) {
+            _drag_init(ev.target.parentElement, ev);
+            ev.stopPropagation();
+            setZebra();
+        }
     }
     setFrameContent();
 });
