@@ -36,13 +36,41 @@ function parentHasClass(element, className) {
     return false;
 }
 
+// function arrContainsFromArr(arr1, arr2) {
+//     for (var i = 0; i < arr2.length; i++) {
+//         if (arr1.indexOf(arr2[i]) > -1) {
+//             return true;
+//         }
+//     }
+//     return false;
+// }
+
 var fileData = {};
 var currentFile = 'index.html';
 
 var stackElements = ['e-img', 'e-a', 'e-h1', 'e-h2', 'e-h3', 'e-text'];
 var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
 var wrapperElements = ['e-div', 'e-body', ];
+var unnamedWrapperElements = wrapperElements.map(function(item) {
+    return item.substr(2, item.length - 1);
+});
 var textInput = 'text';
+
+function generateWrapperBlocks(jsonData) {
+    var wrapperHtml = [
+        '<ul class="c-wrapper e-' + jsonData.tag + '">',
+            '<li class="c-header">' + jsonData.tag + '</li>',
+            '<ul class="c-content">',
+    ];
+
+    wrapperHtml.push(
+        '</ul><li class="c-footer"></li></ul>'
+    );
+
+    console.log(jsonData);
+
+    return wrapperHtml.join('');
+}
 
 function generateBlocks(jsonData) {
     var baseHtml = [
@@ -57,14 +85,16 @@ function generateBlocks(jsonData) {
 
     for (var i = 0; i < jsonData.length; i++) {
         var curEl = jsonData[i];
-        console.log(jsonData[i]);
         if (stackElements.indexOf('e-' + curEl.tag) > -1) {  // if it's a stack
             baseHtml.push( // just filler for now...
                 "<li class='stack e-text'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>"
             );
         }
-        if (curEl.child && curEl.child.length) {
+        if (curEl.child &&
+            curEl.child.length &&
+            unnamedWrapperElements.indexOf(curEl.tag) > -1) {
             // repeat down tree...
+            baseHtml.push(generateWrapperBlocks(curEl));
         }
     }
 
@@ -90,6 +120,7 @@ function loadFile(filename, el) {
     blockArea = $('.scriptingArea')[0];
     blockArea.innerHTML = generateBlocks(fileJson.child);
     setFrameContent();
+    setZebra();
 }
 
 function createFile() {
