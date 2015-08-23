@@ -63,6 +63,19 @@ function generateWrapperBlocks(jsonData) {
             '<ul class="c-content">',
     ];
 
+    for (var i = 0; i < jsonData.child.length; i++) {
+        var curEl = jsonData.child[i];
+        if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
+            wrapperHtml.push( // just filler for now...
+                "<li class='stack e-text'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>"
+            );
+        }
+        if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
+            // repeat down tree...
+            wrapperHtml.push(generateWrapperBlocks(curEl));
+        }
+    }
+
     wrapperHtml.push(
         '</ul><li class="c-footer"></li></ul>'
     );
