@@ -4,9 +4,11 @@
     <meta charset="utf-8">
     <title>UI v0.0.4 | Elemental</title>
     <link rel="stylesheet" href="resources/css/style.css">
-    <script src="resources/js/interact.min.js"></script>
+    <script src="resources/js/vendor/htmlparser.js"></script>
+    <script src="resources/js/vendor/interact.min.js"></script>
+    <script src="resources/js/vendor/jszip.min.js"></script>
+    <script src="resources/js/vendor/filesaver.min.js"></script>
     <script src="resources/js/script.js"></script>
-    <script src="resources/js/htmlparser.js"></script>
     <script src="resources/js/htmljson.js"></script>
     <script src="resources/js/blockFilter.js"></script>
   </head>
@@ -19,9 +21,7 @@
         <div class="menu" id="fileMenu">
           <span class="menuTitle">File</span>
             <ul class="menuContents">
-              <li id="exportButton">Export</li>
-              <li id="importButton">Import</li>
-              <li id="saveButton">Save</li>
+              <li id="downloadButton">Download</li>
             </ul>
         </div>
         <div class="menu" id="editMenu">
@@ -173,5 +173,6 @@
   <script src='resources/js/files.js'></script>
   <script src='resources/js/blocks.js'></script>
   <script src='resources/js/block2json.js'></script>
+  <script src='resources/js/download.js'></script>
   </body>
 </html>
