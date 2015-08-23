@@ -67,8 +67,6 @@ function generateWrapperBlocks(jsonData) {
         '</ul><li class="c-footer"></li></ul>'
     );
 
-    console.log(jsonData);
-
     return wrapperHtml.join('');
 }
 
@@ -81,18 +79,14 @@ function generateBlocks(jsonData) {
                 '<ul class="c-content">',
     ];
 
-    // console.log(jsonData);
-
     for (var i = 0; i < jsonData.length; i++) {
         var curEl = jsonData[i];
-        if (stackElements.indexOf('e-' + curEl.tag) > -1) {  // if it's a stack
+        if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
             baseHtml.push( // just filler for now...
                 "<li class='stack e-text'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>"
             );
         }
-        if (curEl.child &&
-            curEl.child.length &&
-            unnamedWrapperElements.indexOf(curEl.tag) > -1) {
+        if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
             // repeat down tree...
             baseHtml.push(generateWrapperBlocks(curEl));
         }
@@ -100,6 +94,7 @@ function generateBlocks(jsonData) {
 
     
     baseHtml.push('</ul><li class="c-footer">&lt;/body&gt;</li></ul></ul>');
+    // debugger;
     return baseHtml.join('');
 }
 
@@ -119,7 +114,7 @@ function loadFile(filename, el) {
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
     blockArea.innerHTML = generateBlocks(fileJson.child);
-    // setFrameContent();  // this is somehow messing up the JSON....
+    setFrameContent();  // this is somehow messing up the JSON....
     setZebra();
 }
 
@@ -150,7 +145,6 @@ function createFile() {
       "attr": {},
       "child": []
     };
-    console.log(fileData, fileName);
     blockArea = $('.scriptingArea')[0];
     blockArea.innerHTML = generateBlocks([]);
 
