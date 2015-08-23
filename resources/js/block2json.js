@@ -117,7 +117,6 @@ function traverseTree(parentNode) {
 			pushedArr.push({
 				tag: elType,
 				child: traverseTree(directChildren[i]),
-				// text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
 			});
 		}
 	}
@@ -154,11 +153,13 @@ function setFrameContent() {
 			blocks.push({
 				tag: elType,
 				child: traverseTree(directChildren[i]),
-				// text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
 			});
 		}
 	}
-	jsonFormat = blocks[0];
+
+	if (blocks[0]) {
+		jsonFormat = blocks[0];
+	}
 
 	fileData[currentFile] = jsonFormat;
 

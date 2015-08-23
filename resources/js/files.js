@@ -47,17 +47,29 @@ var textInput = 'text';
 function generateBlocks(jsonData) {
     var baseHtml = [
         '<ul class="script">',
-            '<li class="hat">&lt;!DOCTYPE html&gt;</li>'
+            '<li class="hat">&lt;!DOCTYPE html&gt;</li>',
+            '<ul class="c-wrapper e-body">',
+                '<li class="c-header">&lt;body&gt;</li>',
+                '<ul class="c-content">',
     ];
 
-    console.log(jsonData);
+    // console.log(jsonData);
 
     for (var i = 0; i < jsonData.length; i++) {
-        //
+        var curEl = jsonData[i];
+        console.log(jsonData[i]);
+        if (stackElements.indexOf('e-' + curEl.tag) > -1) {  // if it's a stack
+            baseHtml.push( // just filler for now...
+                "<li class='stack e-text'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>"
+            );
+        }
+        if (curEl.child && curEl.child.length) {
+            // repeat down tree...
+        }
     }
 
     
-    baseHtml.push('</ul>');
+    baseHtml.push('</ul><li class="c-footer">&lt;/body&gt;</li></ul></ul>');
     return baseHtml.join('');
 }
 
@@ -77,7 +89,7 @@ function loadFile(filename, el) {
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
     blockArea.innerHTML = generateBlocks(fileJson.child);
-    // setFrameContent();
+    setFrameContent();
 }
 
 function createFile() {
@@ -106,17 +118,24 @@ function createFile() {
       "tag": "body",
       "attr": {},
       "child": []
-    }
+    };
+    console.log(fileData, fileName);
     blockArea = $('.scriptingArea')[0];
     blockArea.innerHTML = generateBlocks([]);
-    setFrameContent();
+
+    //clear preview window
+    var previewWindow = document.getElementsByClassName('previewBody')[0];
+    previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
+
+    previewWindow.document.open();
+    previewWindow.document.write('');
+    previewWindow.document.close();
 }
 
 $('.filePane').on('click', function(ev) {
     var el = ev.target;
     if (el.classList.contains('file') || parentHasClass(el, 'file')) {
         // loadFile(el.dataset.file);  // oops have to get the child's dataset if the parent is the one clicked
-        console.log(el);
         if (el.classList && el.classList.contains('file')) {
             loadFile(el.children[0].dataset.file, el.children[0]);
         } else if (parentHasClass(el, 'file')) {
