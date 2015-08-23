@@ -79,6 +79,12 @@ var filter = {
       tags: ['div', 'divider', 'separator'],
       palette: 0
     },
+    {
+      name: 'text',
+      htmlString: "<li class='stack e-text paletteBlock'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>",
+      tags: ['text'],
+      palette: 0
+    },
 
     /* Blocks for palette 1 - Media */ 
     {

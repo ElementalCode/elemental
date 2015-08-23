@@ -56,6 +56,20 @@ var unnamedWrapperElements = wrapperElements.map(function(item) {
 });
 var textInput = 'text';
 
+function getBlockHtml(tag) {
+    // debugger;
+    console.log(tag);
+    if (tag) {
+        return filter.blocks.filter(function(item) {
+            return item.name == tag;
+        })[0].htmlString;
+    } else {
+        return filter.blocks.filter(function(item) {
+            return item.name == 'text';
+        })[0].htmlString;
+    }
+}
+
 function generateWrapperBlocks(jsonData) {
     var wrapperHtml = [
         '<ul class="c-wrapper e-' + jsonData.tag + '">',
@@ -66,9 +80,7 @@ function generateWrapperBlocks(jsonData) {
     for (var i = 0; i < jsonData.child.length; i++) {
         var curEl = jsonData.child[i];
         if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
-            wrapperHtml.push( // just filler for now...
-                "<li class='stack e-text'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>"
-            );
+            wrapperHtml.push(getBlockHtml(curEl.tag));
         }
         if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
             // repeat down tree...
@@ -95,9 +107,7 @@ function generateBlocks(jsonData) {
     for (var i = 0; i < jsonData.length; i++) {
         var curEl = jsonData[i];
         if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
-            baseHtml.push( // just filler for now...
-                "<li class='stack e-text'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>"
-            );
+            baseHtml.push(getBlockHtml(curEl.tag));
         }
         if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
             // repeat down tree...
