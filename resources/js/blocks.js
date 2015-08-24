@@ -121,8 +121,8 @@ function _drag_init(elem, ev) {
 }
 
 function _palette_drag_init(elem, ev) {
-    var relativeX = ev.clientY - getOffset(elem).left;
-    var relativeY = ev.clientY - getOffset(elem).top;
+    var relativeX = ev.clientY - getOffset(elem).left - SCRIPTING_AREA.scrollLeft;
+    var relativeY = ev.clientY - getOffset(elem).top + BLOCK_PALETTE.scrollTop - SCRIPTING_AREA.scrollTop;
     // Clone element
     var newElem = elem.cloneNode(true);
     newElem.classList.remove('paletteBlock');
