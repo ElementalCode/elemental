@@ -97,8 +97,8 @@ function parentHasClass(element, className) {
 
 // Will be called when user starts dragging an element
 function _drag_init(elem, ev) {
-    var relativeX = ev.pageX - getOffset(elem).left;
-    var relativeY = ev.pageY - getOffset(elem).top;
+    var relativeX = getOffset(elem).left;
+    var relativeY = getOffset(elem).top;
     // Store the object of the element which needs to be moved
     var wrapper = document.createElement("ul");
     wrapper.classList.add('draggy');
@@ -106,8 +106,8 @@ function _drag_init(elem, ev) {
     selected = elem;
     //var curX = getOffset(elem).left;
     //var curY = getOffset(elem).top;
-    var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
-        curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
+    var curX = getOffset(SCRIPTING_AREA).left,
+        curY = getOffset(SCRIPTING_AREA).top;
     var childs = Array.prototype.slice.call(elem.parentElement.children);
     for(var i = childs.indexOf(elem); i < childs.length; i++) {
         childs[i].removeAttribute('style');
@@ -121,8 +121,8 @@ function _drag_init(elem, ev) {
 }
 
 function _palette_drag_init(elem, ev) {
-    var relativeX = ev.clientY - getOffset(elem).left;
-    var relativeY = ev.clientY - getOffset(elem).top;
+    var relativeX = getOffset(elem).left;
+    var relativeY = getOffset(elem).top;
     // Clone element
     var newElem = elem.cloneNode(true);
     newElem.classList.remove('paletteBlock');
@@ -133,8 +133,8 @@ function _palette_drag_init(elem, ev) {
     selected = newElem;
     //var curX = getOffset(elem).left;
     //var curY = getOffset(elem).top;
-    var curX = ev.clientY - getOffset(SCRIPTING_AREA).left,
-        curY = ev.clientY - getOffset(SCRIPTING_AREA).top;
+    var curX = getOffset(SCRIPTING_AREA).left,
+        curY = getOffset(SCRIPTING_AREA).top;
     wrapper.appendChild(newElem);
     wrapper.style.left = curX - relativeX + 'px';
     wrapper.style.top = curY - relativeY + 'px';
