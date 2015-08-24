@@ -36,7 +36,9 @@ body {
   background-color: white;
   color: black;
   display: inline-block;
-  text-align: center; }
+  text-align: center;
+  cursor: text;
+  z-index: 100; }
 
 .hat {
   display: table;

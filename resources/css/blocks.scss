@@ -35,6 +35,8 @@ body {
     color: black;
     display: inline-block;
     text-align: center;
+    cursor: text;
+    z-index: 100;
 }
 .hat {
     display:table;
