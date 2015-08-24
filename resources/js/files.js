@@ -144,40 +144,42 @@ function loadFile(filename, el) {
 function createFile() {
     //we need something better than this
     var fileName = prompt('Enter a file name', '.html');
-    currentFile = fileName;
+    if (fileName) {
+        currentFile = fileName;
 
-    var finalFile = $('.add-file')[0];
+        var finalFile = $('.add-file')[0];
 
-    // first deselect the other files...
-    $('.filePane .file.selected').each(function(el) {
-        el.classList.remove('selected');
-    });
+        // first deselect the other files...
+        $('.filePane .file.selected').each(function(el) {
+            el.classList.remove('selected');
+        });
 
-    // then insert the new file selector...
-    var fileSelector = document.createElement('div');
-    fileSelector.className = 'file selected';
-    fileSelector.innerHTML = [
-        '<div class="file-name" data-file="' + fileName + '">',
-            fileName,
-        '</div>'].join('');
-    finalFile.parentNode.insertBefore(fileSelector, finalFile);
+        // then insert the new file selector...
+        var fileSelector = document.createElement('div');
+        fileSelector.className = 'file selected';
+        fileSelector.innerHTML = [
+            '<div class="file-name" data-file="' + fileName + '">',
+                fileName,
+            '</div>'].join('');
+        finalFile.parentNode.insertBefore(fileSelector, finalFile);
 
-    // set the fileData for it to be basic...
-    fileData[fileName] = {
-      "tag": "body",
-      "attr": {},
-      "child": []
-    };
-    blockArea = $('.scriptingArea')[0];
-    blockArea.innerHTML = generateBlocks([]);
+        // set the fileData for it to be basic...
+        fileData[fileName] = {
+          "tag": "body",
+          "attr": {},
+          "child": []
+        };
+        blockArea = $('.scriptingArea')[0];
+        blockArea.innerHTML = generateBlocks([]);
 
-    //clear preview window
-    var previewWindow = document.getElementsByClassName('previewBody')[0];
-    previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
+        //clear preview window
+        var previewWindow = document.getElementsByClassName('previewBody')[0];
+        previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
 
-    previewWindow.document.open();
-    previewWindow.document.write('');
-    previewWindow.document.close();
+        previewWindow.document.open();
+        previewWindow.document.write('');
+        previewWindow.document.close();
+    }
 }
 
 $('.filePane').on('click', function(ev) {
