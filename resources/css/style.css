@@ -117,9 +117,9 @@ html, body {
   height: 100%; }
 
 .scriptingArea {
-  min-height: 100%;
+  height: calc(100% - 200px - 12px);
   min-width: 100%;
-  overflow-x: scroll;
+  overflow: scroll;
   position: relative;
   background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../img/diagonalTexture.png");
   z-index: 1; }
@@ -228,18 +228,41 @@ html, body {
   display: flex;
   height: calc(100% - 45px); }
 
-.pagePreview {
+.leftSide {
   border-right: 4px solid #252E35;
   box-sizing: border-box;
   flex: 0 0 400px;
   height: 100%;
   max-width: 100%;
   overflow-x: hidden; }
-
-.previewBody {
-  background: white;
-  height: 100%;
-  width: 100%; }
+  .leftSide .pagePreview {
+    height: calc(100% - 200px); }
+    .leftSide .pagePreview .previewBody {
+      background: white;
+      height: 100%;
+      width: 100%;
+      border: none; }
+  .leftSide .filePane {
+    height: 200px;
+    background-color: white;
+    box-sizing: border-box;
+    border-top: 5px solid #BFBFBF;
+    padding: 5px;
+    overflow-y: scroll; }
+    .leftSide .filePane .file,
+    .leftSide .filePane .add-file {
+      width: 100px;
+      height: 100px;
+      border: 2px solid #BFBFBF;
+      border-radius: 3px;
+      display: inline-block;
+      text-align: center; }
+    .leftSide .filePane .file-name {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%); }
+    .leftSide .filePane .file.selected {
+      border: 2px solid #989898; }
 
 .rightSide {
   flex-grow: 1;

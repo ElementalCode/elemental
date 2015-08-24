@@ -24,9 +24,9 @@ html, body {
 }
 
 .scriptingArea {
-	min-height: 100%;
+	height: calc(100% - 200px - 12px);
 	min-width: 100%;
-	overflow-x: scroll;
+	overflow: scroll;
 	position: relative;
 
 	//for some reason this is cutting off the hat block ::after element...
@@ -153,19 +153,49 @@ html, body {
 	height: calc(100% - 45px);
 }
 
-.pagePreview {
+.leftSide {
 	border-right: 4px solid $borders_color;
 	box-sizing: border-box;
 	flex: 0 0 400px;
 	height: 100%;
 	max-width: 100%;
 	overflow-x: hidden;
-}
-
-.previewBody {
-	background: white;
-	height: 100%;
-	width: 100%;
+	.pagePreview {
+		height: calc(100% - 200px);
+		.previewBody {
+			background: white;
+			height: 100%;
+			width: 100%;
+			border: none;
+		}
+	}
+	.filePane {
+		height: 200px;
+		background-color: white;
+		box-sizing: border-box;
+		border-top: 5px solid #BFBFBF;
+		padding: 5px;
+		overflow-y: scroll;
+		.file,
+		.add-file {
+			width: 100px;
+			height: 100px;
+			border: 2px solid #BFBFBF;
+			border-radius: 3px;
+			display: inline-block;
+			text-align: center;
+		}
+		.file {
+			&-name {
+				position: relative;
+				top: 50%;
+				transform: translateY(-50%);
+			}
+			&.selected {
+				border: 2px solid #989898;
+			}
+		}
+	}
 }
 
 .rightSide {

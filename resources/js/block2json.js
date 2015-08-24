@@ -117,17 +117,11 @@ function traverseTree(parentNode) {
 			pushedArr.push({
 				tag: elType,
 				child: traverseTree(directChildren[i]),
-				// text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
 			});
 		}
 	}
 	return pushedArr;  //recursively get children of blocks
 }
-
-var stackElements = ['e-img', 'e-a', 'e-h1', 'e-h2', 'e-h3', 'e-text'];
-var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
-var wrapperElements = ['e-div', 'e-body', ];
-var textInput = 'text';
 
 function setFrameContent() {
 	var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
@@ -159,11 +153,15 @@ function setFrameContent() {
 			blocks.push({
 				tag: elType,
 				child: traverseTree(directChildren[i]),
-				// text: getText(directChildren[i].children[1])  //kind of limited right now to only text, can't do text -> image -> text
 			});
 		}
 	}
-	jsonFormat.child = blocks;
+
+	if (blocks[0]) {
+		jsonFormat = blocks[0];
+	}
+
+	fileData[currentFile] = jsonFormat;
 
 	var parsedHtml = json2html(jsonFormat);
 
