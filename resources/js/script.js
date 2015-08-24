@@ -7,6 +7,9 @@ interact('.leftSide')
         x = (parseFloat(target.getAttribute('data-x')) || 0),
         y = (parseFloat(target.getAttribute('data-y')) || 0);
 
+    // don't mess with iframe
+    document.querySelector('.previewBody').style['pointer-events'] = 'none';
+
     // update the element's style
     //target.style.width  = event.rect.width + 'px';
     target.style.flexBasis  = event.rect.width + 'px';
@@ -21,6 +24,8 @@ interact('.leftSide')
 
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+  }).on('mouseup', function(event) {
+    document.querySelector('.previewBody').style['pointer-events'] = '';
   });
 
 interact('.filePane')
@@ -31,6 +36,9 @@ interact('.filePane')
     var target = event.target,
         x = (parseFloat(target.getAttribute('data-x')) || 0),
         y = (parseFloat(target.getAttribute('data-y')) || 0);
+
+    // don't mess with iframe
+    document.querySelector('.previewBody').style['pointer-events'] = 'none';
 
     // update the element's style
     target.style.width  = event.rect.width + 'px';
@@ -47,4 +55,6 @@ interact('.filePane')
 
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+  }).on('mouseup', function(event) {
+    document.querySelector('.previewBody').style['pointer-events'] = '';
   });
