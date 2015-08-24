@@ -191,7 +191,7 @@ function _destroy(ev) {
         for(var i = selected.children.length - 1; i >= 0; i--) {
             // for ome reason for/in desn't work here;
             var elem = selected.children[i];
-            if (topEl.classList.contains('stack') || topEl.classList.contains('hat')) {
+            if (topEl.classList.contains('stack')) {
                 elem.removeAttribute('style');
                 topEl.parentNode.insertBefore(elem, topEl.nextElementSibling);   
             } else if (topEl.classList.contains('c-header')) {
@@ -250,8 +250,7 @@ function $(e) {
 var SNAP_CLASSES = [
     '.stack',
     '.c-header',
-    '.c-footer',
-    '.hat'
+    '.c-footer'
 ].join(', ');
 var MIN_DISTANCE = 50;
 var SCRIPTING_AREA = $('.scriptingArea')[0];
