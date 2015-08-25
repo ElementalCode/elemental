@@ -13,6 +13,7 @@ function $(e) {
         arr.forEach(function(item) {
             item.addEventListener(event, callback);
         });
+        return arr;
     };
     return arr;
 }
@@ -57,8 +58,6 @@ var unnamedWrapperElements = wrapperElements.map(function(item) {
 var textInput = 'text';
 
 function getBlockHtml(tag) {
-    // debugger;
-    console.log(tag);
     if (tag) {
         return filter.blocks.filter(function(item) {
             return item.name == tag;
@@ -182,6 +181,9 @@ function createFile() {
     }
 }
 
+var FILE_MENU = document.querySelector('.context-menu.files');
+var RIGHT_CLICKED_FILE;
+
 $('.filePane').on('click', function(ev) {
     var el = ev.target;
     if (el.classList.contains('file') || parentHasClass(el, 'file')) {
@@ -196,4 +198,42 @@ $('.filePane').on('click', function(ev) {
         createFile();
         ev.stopPropagation();
     }
+    FILE_MENU.style.display = 'none';
+    RIGHT_CLICKED_FILE = undefined;
+}).on('contextmenu', function(ev) {
+    var el = ev.target;
+    if (el.classList.contains('file') || parentHasClass(el, 'file')) {
+        var fileName;
+        if (el.classList && el.classList.contains('file')) {
+            fileName = el.children[0].dataset.file;
+        } else if (parentHasClass(el, 'file')) {
+            fileName = el.dataset.file;
+        }
+
+        RIGHT_CLICKED_FILE = fileName;
+
+        FILE_MENU.style.display = 'block';
+        FILE_MENU.style.top = ev.pageY + 'px';
+        FILE_MENU.style.left = ev.pageX + 'px';
+
+        ev.preventDefault();
+    } else if (el.classList.contains('add-file') || parentHasClass(el, 'add-file')) {
+        ev.preventDefault();
+    }
+});
+
+$('.context-menu.files .menu-item').on('click', function(ev) {
+    if (RIGHT_CLICKED_FILE) {
+        switch (this.dataset.action) {
+            case 'delete-file':
+                if (Object.keys(fileData).length > 1) {
+                    loadFile(Object.keys(fileData)[0], document.querySelector('.filePane .file').children[0]);
+                }
+                break;
+            default:
+                //nothing
+        }
+    }
+    RIGHT_CLICKED_FILE = undefined;
+    FILE_MENU.style.display = 'none';
 });

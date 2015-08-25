@@ -226,27 +226,6 @@ function _delete(ev) {
     selected = null;
 }
 
-//http://jsfiddle.net/tovic/Xcb8d/light/
-
-function $(e) {
-    if (e.split(' ')[e.split(' ').length - 1][0] == '#') {
-        return document.getElementById(e.substr(1, e.length - 1));
-    }
-    arr = Array.prototype.slice.call(document.querySelectorAll(e));
-    arr.forEach = function(callback) {
-        for (var i = 0; i < arr.length; i++) {
-            callback(arr[i], i);            
-        }
-    };
-    arr.each = arr.forEach;
-    arr.on = function(event, callback) {
-        arr.forEach(function(item) {
-            item.addEventListener(event, callback);
-        });
-    };
-    return arr;
-}
-
 var SNAP_CLASSES = [
     '.stack',
     '.c-header',

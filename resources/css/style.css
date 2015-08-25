@@ -123,6 +123,23 @@ body {
 .c-wrapper.zebra > li, .c-wrapper.zebra > ul {
   background: #F45D5D; }
 
+.context-menu {
+  position: absolute;
+  font-family: 'Source Sans Pro', sans-serif;
+  z-index: 1000;
+  background-color: white;
+  box-sizing: border-box;
+  border: 3px solid gray;
+  border-radius: 10px;
+  display: none;
+  min-width: 150px; }
+  .context-menu .menu-item {
+    padding: 5px;
+    cursor: pointer; }
+    .context-menu .menu-item:hover {
+      color: white;
+      background-color: gray; }
+
 body {
   margin: 0px;
   overflow: hidden; }
