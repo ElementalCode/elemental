@@ -144,7 +144,7 @@ function loadFile(filename, el) {
 function createFile() {
     //we need something better than this
     var fileName = prompt('Enter a file name', '.html');
-    if (fileName) {
+    if (fileName && !fileData.hasOwnProperty(fileName)) {
         currentFile = fileName;
 
         var finalFile = $('.add-file')[0];
