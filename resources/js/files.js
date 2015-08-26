@@ -182,7 +182,7 @@ function createFile() {
 }
 
 var FILE_MENU = document.querySelector('.context-menu.files');
-var RIGHT_CLICKED_FILE;
+var RIGHT_CLICKED;
 
 $('.filePane').on('click', function(ev) {
     var el = ev.target;
@@ -199,18 +199,21 @@ $('.filePane').on('click', function(ev) {
         ev.stopPropagation();
     }
     FILE_MENU.style.display = 'none';
-    RIGHT_CLICKED_FILE = undefined;
+    RIGHT_CLICKED = undefined;
 }).on('contextmenu', function(ev) {
     var el = ev.target;
     if (el.classList.contains('file') || parentHasClass(el, 'file')) {
         var fileName;
+        var clickedEl;
         if (el.classList && el.classList.contains('file')) {
             fileName = el.children[0].dataset.file;
+            clickedEl = el;
         } else if (parentHasClass(el, 'file')) {
             fileName = el.dataset.file;
+            clickedEl = el.parentNode;
         }
 
-        RIGHT_CLICKED_FILE = fileName;
+        RIGHT_CLICKED = {file: fileName, el: clickedEl};
 
         FILE_MENU.style.display = 'block';
         FILE_MENU.style.top = ev.pageY + 'px';
@@ -223,17 +226,21 @@ $('.filePane').on('click', function(ev) {
 });
 
 $('.context-menu.files .menu-item').on('click', function(ev) {
-    if (RIGHT_CLICKED_FILE) {
+    if (RIGHT_CLICKED) {
         switch (this.dataset.action) {
             case 'delete-file':
                 if (Object.keys(fileData).length > 1) {
-                    loadFile(Object.keys(fileData)[0], document.querySelector('.filePane .file').children[0]);
+                    if (RIGHT_CLICKED.file == currentFile) {
+                        loadFile(Object.keys(fileData)[0], document.querySelector('.filePane .file').children[0]);
+                    }
+                    RIGHT_CLICKED.el.parentNode.removeChild(RIGHT_CLICKED.el);
+                    delete fileData[RIGHT_CLICKED.file];
                 }
                 break;
             default:
                 //nothing
         }
     }
-    RIGHT_CLICKED_FILE = undefined;
+    RIGHT_CLICKED = undefined;
     FILE_MENU.style.display = 'none';
 });

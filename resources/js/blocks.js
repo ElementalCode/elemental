@@ -320,9 +320,9 @@ $('body').on('keydown', function(ev) {
 });
 setZebra();
 
+
+
 // zebra stuff
-
-
 function zebra(parent, nestcount) {
     var children = parent.children;
     for (var i = 0; i < children.length; i++) {
