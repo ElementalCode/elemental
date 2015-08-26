@@ -320,7 +320,12 @@ $('body').on('keydown', function(ev) {
 });
 setZebra();
 
-
+$('.trashCan').on('mouseover', function(ev) {
+    this.classList.add('hovering');
+});
+$('.trashCan').on('mouseout', function(ev) {
+    this.classList.remove('hovering');
+});
 
 // zebra stuff
 function zebra(parent, nestcount) {
