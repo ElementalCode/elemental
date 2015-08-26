@@ -140,45 +140,53 @@ function loadFile(filename, el) {
     setZebra();
 }
 
-function createFile() {
+function manuallyCreateFile() {
     //we need something better than this
     var fileName = prompt('Enter a file name', '.html');
     if (fileName && !fileData.hasOwnProperty(fileName)) {
-        currentFile = fileName;
+        generateFile(fileName);
+    }
+}
 
-        var finalFile = $('.add-file')[0];
+function generateFile(fileName, initial) {
+    currentFile = fileName;
 
-        // first deselect the other files...
-        $('.filePane .file.selected').each(function(el) {
-            el.classList.remove('selected');
-        });
+    var finalFile = $('.add-file')[0];
 
-        // then insert the new file selector...
-        var fileSelector = document.createElement('div');
-        fileSelector.className = 'file selected';
-        fileSelector.innerHTML = [
-            '<div class="file-name" data-file="' + fileName + '">',
-                fileName,
-            '</div>'].join('');
-        finalFile.parentNode.insertBefore(fileSelector, finalFile);
+    // first deselect the other files...
+    $('.filePane .file.selected').each(function(el) {
+        el.classList.remove('selected');
+    });
 
-        // set the fileData for it to be basic...
+    // then insert the new file selector...
+    var fileSelector = document.createElement('div');
+    fileSelector.className = 'file selected';
+    fileSelector.innerHTML = [
+        '<div class="file-name" data-file="' + fileName + '">',
+            fileName,
+        '</div>'].join('');
+    finalFile.parentNode.insertBefore(fileSelector, finalFile);
+
+    // set the fileData for it to be basic...
+    if (initial) {
+        fileData[fileName] = initial;
+    } else {
         fileData[fileName] = {
           "tag": "body",
           "attr": {},
           "child": []
         };
-        blockArea = $('.scriptingArea')[0];
-        blockArea.innerHTML = generateBlocks([]);
-
-        //clear preview window
-        var previewWindow = document.getElementsByClassName('previewBody')[0];
-        previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
-
-        previewWindow.document.open();
-        previewWindow.document.write('');
-        previewWindow.document.close();
     }
+    blockArea = $('.scriptingArea')[0];
+    blockArea.innerHTML = generateBlocks([]);
+
+    //clear preview window
+    var previewWindow = document.getElementsByClassName('previewBody')[0];
+    previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
+
+    previewWindow.document.open();
+    previewWindow.document.write('');
+    previewWindow.document.close();
 }
 
 var FILE_MENU = document.querySelector('.context-menu.files');
@@ -195,7 +203,7 @@ $('.filePane').on('click', function(ev) {
         }
         ev.stopPropagation();
     } else if (el.classList.contains('add-file') || parentHasClass(el, 'add-file')) {
-        createFile();
+        manuallyCreateFile();
         ev.stopPropagation();
     }
     FILE_MENU.style.display = 'none';
@@ -244,6 +252,14 @@ $('.context-menu.files .menu-item').on('click', function(ev) {
                     RIGHT_CLICKED.el.children[0].innerText = newName;
                     fileData[newName] = fileData[RIGHT_CLICKED.file];
                     delete fileData[RIGHT_CLICKED.file];
+                }
+                break;
+
+            case 'duplicate-file':
+                var oldName = RIGHT_CLICKED.file.split('.');
+                var newName = oldName[oldName.length - 2] + '-copy.' + oldName[oldName.length - 1];  //there should be a better way...
+                if (!fileData.hasOwnProperty(newName)) {
+                    generateFile(newName, fileData[RIGHT_CLICKED.file]);
                 }
                 break;
 
