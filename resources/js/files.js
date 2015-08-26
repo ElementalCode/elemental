@@ -237,6 +237,16 @@ $('.context-menu.files .menu-item').on('click', function(ev) {
                     delete fileData[RIGHT_CLICKED.file];
                 }
                 break;
+
+            case 'rename-file':
+                var newName = prompt('Enter the new file name:', RIGHT_CLICKED.file);
+                if (newName && !fileData.hasOwnProperty(newName)) {
+                    RIGHT_CLICKED.el.children[0].innerText = newName;
+                    fileData[newName] = fileData[RIGHT_CLICKED.file];
+                    delete fileData[RIGHT_CLICKED.file];
+                }
+                break;
+
             default:
                 //nothing
         }
