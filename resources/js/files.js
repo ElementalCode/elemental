@@ -58,6 +58,7 @@ var unnamedWrapperElements = wrapperElements.map(function(item) {
 var textInput = 'text';
 
 function getBlockHtml(tag) {
+    // we're going to have to have the attribute text in here too somehow...
     if (tag) {
         return filter.blocks.filter(function(item) {
             return item.name == tag;
@@ -199,8 +200,7 @@ var RIGHT_CLICKED;
 
 $('.filePane').on('click', function(ev) {
     var el = ev.target;
-    if (el.classList.contains('file') || parentHasClass(el, 'file')) {
-        // loadFile(el.dataset.file);  // oops have to get the child's dataset if the parent is the one clicked
+    if (el.classList.contains('file') || parentHasClass(el, 'file')) { 
         if (el.classList && el.classList.contains('file')) {
             loadFile(el.children[0].dataset.file, el.children[0]);
         } else if (parentHasClass(el, 'file')) {

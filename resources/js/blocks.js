@@ -24,15 +24,6 @@ function closestElem(elem, offset, initial) { //elem is nodelist, offset is own 
     elem.each( function(item) {
         if(item == selected) {return false;} // I added this -NN
         elOffset = getOffset(item); //returns object with offsets
-
-        //we'll worry about inside c-blocks later:
-        /*if (
-        (x >= elOffset.left)  && (x <= elOffset.right) &&
-        (y >= elOffset.top)   && (y <= elOffset.bottom)
-        ) {
-            el = item;
-            return false;
-        }*/
         
         //let's only test the bottom-left corner
         dx = elOffset.left - x; 
@@ -104,8 +95,6 @@ function _drag_init(elem, ev) {
     wrapper.classList.add('draggy');
     SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
     selected = elem;
-    //var curX = getOffset(elem).left;
-    //var curY = getOffset(elem).top;
     var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
         curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
     var childs = Array.prototype.slice.call(elem.parentElement.children);
@@ -131,8 +120,6 @@ function _palette_drag_init(elem, ev) {
     wrapper.classList.add('draggy');
     SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
     selected = newElem;
-    //var curX = getOffset(elem).left;
-    //var curY = getOffset(elem).top;
     var curX = ev.clientY - getOffset(SCRIPTING_AREA).left,
         curY = ev.clientY - getOffset(SCRIPTING_AREA).top;
     wrapper.appendChild(newElem);
@@ -301,8 +288,6 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
     setFrameContent();
 });
 
-// draggy('.c-wrapper');
-// draggy('.stack');
 $('body').on('mousemove', _move_elem);
 $('body').on('mouseup', function(ev) {
     if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || ev.target.className.split(' ').indexOf('trashCan') > -1) {
