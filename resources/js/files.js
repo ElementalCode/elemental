@@ -178,7 +178,12 @@ function generateFile(fileName, initial) {
         };
     }
     blockArea = $('.scriptingArea')[0];
-    blockArea.innerHTML = generateBlocks([]);
+
+    if (initial) {
+        blockArea.innerHtml = generateBlocks(initial);
+    } else {
+        blockArea.innerHTML = generateBlocks([]);
+    }
 
     //clear preview window
     var previewWindow = document.getElementsByClassName('previewBody')[0];
