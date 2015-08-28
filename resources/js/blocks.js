@@ -337,8 +337,13 @@ $('.context-menu.scripts .menu-item').on('click', function(ev) {
                     child.removeAttribute('style');
                     wrapper.appendChild(child);
                 }
-                wrapper.style.left = ev.pageX + 'px';
-                wrapper.style.top = ev.pageY + 'px';
+
+                var relativeX = ev.pageX - getOffset(target).left;
+                var relativeY = ev.pageY - getOffset(target).top;
+                var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
+                    curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
+                wrapper.style.left = curX - relativeX + 25 + 'px';
+                wrapper.style.top = curY - relativeY + 25 + 'px';
                 SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
 
                 setZebra();
