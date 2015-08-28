@@ -36,7 +36,9 @@ body {
   background-color: white;
   color: black;
   display: inline-block;
-  text-align: center; }
+  text-align: center;
+  cursor: text;
+  z-index: 100; }
 
 .hat {
   display: table;
@@ -64,7 +66,9 @@ body {
   padding: 5px 10px;
   position: relative;
   border-radius: 5px;
-  border-left: 1px solid #A9A9A9; }
+  /*border-left: 1px solid #A9A9A9;*/
+  /* Replacing borders with box-shadows allows curving around border-radius */
+  box-shadow: -1px 0px 0px #A9A9A9; }
 
 .scriptingArea * + .stack,
 .scriptingArea * + .c-wrapper > .c-header {
@@ -77,7 +81,7 @@ body {
 .c-wrapper {
   padding: 0px;
   display: table;
-  border-left: 1px solid #A9A9A9; }
+  /*border-left: 1px solid #A9A9A9;*/ }
 
 .c-header,
 .c-footer {
@@ -89,25 +93,52 @@ body {
   min-width: 40px;
   min-height: 18px; }
 
-.c-content {
-  background: #E44D4D;
-  padding: 3px 0px 3px 25px;
-  margin: -3px 0px -3px 0px;
-  width: 4px;
-  overflow-x: visible;
-  min-height: 30px; }
-
 .c-header {
-  border-top: 1px solid #A9A9A9; }
+  border-bottom-left-radius: 0px; }
 
 .c-footer {
-  border-bottom: 1px solid #A9A9A9; }
+  border-top-left-radius: 0px;
+  margin-bottom: 1px; }
+
+.c-content {
+  background: #E44D4D;
+  padding: 6px 0px 6px 25px;
+  margin: -6px 0px -6px 0px;
+  width: 4px;
+  overflow-x: visible;
+  min-height: 30px;
+  position: relative;
+  /* For z-index (appear on top of .c-header, which in turn puts it on top of the extra border-bottom when attaching a block) */
+  box-shadow: -1px 0px 0px #A9A9A9; }
+
+.c-header {
+  box-shadow: -1px -1px 0px #A9A9A9; }
+
+.c-footer {
+  box-shadow: -1px 1px 0px #A9A9A9; }
 
 .drop-area {
   border-bottom: 5px solid white; }
 
 .c-wrapper.zebra > li, .c-wrapper.zebra > ul {
   background: #F45D5D; }
+
+.context-menu {
+  position: absolute;
+  font-family: 'Source Sans Pro', sans-serif;
+  z-index: 1000;
+  background-color: white;
+  box-sizing: border-box;
+  border: 3px solid gray;
+  border-radius: 10px;
+  display: none;
+  min-width: 150px; }
+  .context-menu .menu-item {
+    padding: 5px;
+    cursor: pointer; }
+    .context-menu .menu-item:hover {
+      color: white;
+      background-color: gray; }
 
 body {
   margin: 0px;
@@ -119,7 +150,7 @@ html, body {
 .scriptingArea {
   height: calc(100% - 200px - 12px);
   min-width: 100%;
-  overflow: scroll;
+  overflow: auto;
   position: relative;
   background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../img/diagonalTexture.png");
   z-index: 1; }
@@ -253,16 +284,20 @@ html, body {
     .leftSide .filePane .add-file {
       width: 100px;
       height: 100px;
-      border: 2px solid #BFBFBF;
+      border: 4px solid #BFBFBF;
       border-radius: 3px;
       display: inline-block;
-      text-align: center; }
+      text-align: center;
+      margin: 0px;
+      margin-right: 10px;
+      margin-bottom: 10px; }
     .leftSide .filePane .file-name {
       position: relative;
       top: 50%;
-      transform: translateY(-50%); }
+      transform: translateY(-50%);
+      font-family: 'Source Sans Pro', sans-serif; }
     .leftSide .filePane .file.selected {
-      border: 2px solid #989898; }
+      border-color: #989898; }
 
 .rightSide {
   flex-grow: 1;
@@ -445,30 +480,17 @@ html, body {
   font-family: 'Source Code Pro', sans-serif; }
 
 .upperArea .allBlocks .blockArea {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  /*display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;*/
   height: 100%;
   height: calc(100% - 64px);
   overflow-x: hidden;
   overflow-y: auto;
   justify-content: flex-start;
-  padding: 32px;
-  /* More temporary things: */ }
-  .upperArea .allBlocks .blockArea .block {
-    /* Temporary Demo Block Styles: */
-    width: 190px;
-    height: 28px;
-    background: #F15C4B;
-    flex-shrink: 0;
-    /* Permanent Styles: */
-    margin: 10px; }
-  .upperArea .allBlocks .blockArea .block.dragging {
-    box-shadow: 4px 4px 6px rgba(0, 0, 0, 0.8); }
-  .upperArea .allBlocks .blockArea .block.small {
-    width: 150px; }
-  .upperArea .allBlocks .blockArea .block.large {
-    width: 250px; }
+  padding: 32px; }
+  .upperArea .allBlocks .blockArea .stack, .upperArea .allBlocks .blockArea .c-wrapper {
+    margin: 6px 0px; }
 
 .trashCan {
   display: block;
@@ -478,13 +500,10 @@ html, body {
   width: 70px;
   height: 90px;
   z-index: 800;
-  background-image: url("../img/trash_closed.png"); }
-
-/* Could replace with class rather than hover
-   if we want to have it only open when the
-   user is currently dragging a block. */
-.trashCan:hover {
-  background-image: url("../img/trash_open.png"); }
+  background-image: url("../img/trash_closed.png");
+  cursor: default; }
+  .trashCan:hover, .trashCan.hovering {
+    background-image: url("../img/trash_open.png"); }
 
 @media (max-width: 450px) {
   .advanceWrap {

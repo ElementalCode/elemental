@@ -11,6 +11,7 @@ $menu_drop_text: #333;
 $search_icon_url: "../img/nav-search-glass.png";
 
 @import "blocks";
+@import "menus";
 
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
 
@@ -26,7 +27,7 @@ html, body {
 .scriptingArea {
 	height: calc(100% - 200px - 12px);
 	min-width: 100%;
-	overflow: scroll;
+	overflow: auto;
 	position: relative;
 
 	//for some reason this is cutting off the hat block ::after element...
@@ -180,19 +181,23 @@ html, body {
 		.add-file {
 			width: 100px;
 			height: 100px;
-			border: 2px solid #BFBFBF;
+			border: 4px solid #BFBFBF;
 			border-radius: 3px;
 			display: inline-block;
 			text-align: center;
+			margin: 0px;
+			margin-right: 10px;
+			margin-bottom: 10px;
 		}
 		.file {
 			&-name {
 				position: relative;
 				top: 50%;
 				transform: translateY(-50%);
+                font-family: 'Source Sans Pro', sans-serif;
 			}
 			&.selected {
-				border: 2px solid #989898;
+				border-color:#989898;
 			}
 		}
 	}
@@ -409,38 +414,19 @@ html, body {
 }
 
 .upperArea .allBlocks .blockArea {
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
+	/*display: flex;
+	flex-direction: column;
+	flex-wrap: wrap;*/
 	height: 100%;
 	height: calc(100% - 64px);
 	overflow-x: hidden;
 	overflow-y: auto;
 	justify-content: flex-start;
 	padding: 32px;
-  
-	.block {
-		/* Temporary Demo Block Styles: */
-		width: 190px;
-		height: 28px;
-		background: #F15C4B;
-		flex-shrink: 0;
-		/* Permanent Styles: */
-		margin: 10px;
-	}
-  
-	.block.dragging {
-		box-shadow: 4px 4px 6px rgba(0,0,0,0.8);
-	}
-  
-	/* More temporary things: */
-	.block.small {
-		width: 150px;
-	}
-  
-	.block.large {
-		width: 250px;
-	}
+    
+    .stack, .c-wrapper {
+        margin:6px 0px;
+    }
 }
 
 .trashCan {
@@ -452,13 +438,11 @@ html, body {
     height:90px;
     z-index:800;
     background-image: url("../img/trash_closed.png");
-}
-
-/* Could replace with class rather than hover
-   if we want to have it only open when the
-   user is currently dragging a block. */
-.trashCan:hover {
+    cursor: default;
+    &:hover,
+    &.hovering {
     background-image: url("../img/trash_open.png");
+    }
 }
 
 @media (max-width:450px) {

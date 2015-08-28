@@ -13,6 +13,7 @@ function $(e) {
         arr.forEach(function(item) {
             item.addEventListener(event, callback);
         });
+        return arr;
     };
     return arr;
 }
@@ -57,8 +58,7 @@ var unnamedWrapperElements = wrapperElements.map(function(item) {
 var textInput = 'text';
 
 function getBlockHtml(tag) {
-    // debugger;
-    console.log(tag);
+    // we're going to have to have the attribute text in here too somehow...
     if (tag) {
         return filter.blocks.filter(function(item) {
             return item.name == tag;
@@ -141,51 +141,66 @@ function loadFile(filename, el) {
     setZebra();
 }
 
-function createFile() {
+function manuallyCreateFile() {
     //we need something better than this
     var fileName = prompt('Enter a file name', '.html');
-    if (fileName) {
-        currentFile = fileName;
+    if (fileName && !fileData.hasOwnProperty(fileName)) {
+        generateFile(fileName);
+    }
+}
 
-        var finalFile = $('.add-file')[0];
+function generateFile(fileName, initial) {
+    currentFile = fileName;
 
-        // first deselect the other files...
-        $('.filePane .file.selected').each(function(el) {
-            el.classList.remove('selected');
-        });
+    var finalFile = $('.add-file')[0];
 
-        // then insert the new file selector...
-        var fileSelector = document.createElement('div');
-        fileSelector.className = 'file selected';
-        fileSelector.innerHTML = [
-            '<div class="file-name" data-file="' + fileName + '">',
-                fileName,
-            '</div>'].join('');
-        finalFile.parentNode.insertBefore(fileSelector, finalFile);
+    // first deselect the other files...
+    $('.filePane .file.selected').each(function(el) {
+        el.classList.remove('selected');
+    });
 
-        // set the fileData for it to be basic...
+    // then insert the new file selector...
+    var fileSelector = document.createElement('div');
+    fileSelector.className = 'file selected';
+    fileSelector.innerHTML = [
+        '<div class="file-name" data-file="' + fileName + '">',
+            fileName,
+        '</div>'].join('');
+    finalFile.parentNode.insertBefore(fileSelector, finalFile);
+
+    // set the fileData for it to be basic...
+    if (initial) {
+        fileData[fileName] = initial;
+    } else {
         fileData[fileName] = {
           "tag": "body",
           "attr": {},
           "child": []
         };
-        blockArea = $('.scriptingArea')[0];
-        blockArea.innerHTML = generateBlocks([]);
-
-        //clear preview window
-        var previewWindow = document.getElementsByClassName('previewBody')[0];
-        previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
-
-        previewWindow.document.open();
-        previewWindow.document.write('');
-        previewWindow.document.close();
     }
+    blockArea = $('.scriptingArea')[0];
+
+    if (initial) {
+        blockArea.innerHtml = generateBlocks(initial);
+    } else {
+        blockArea.innerHTML = generateBlocks([]);
+    }
+
+    //clear preview window
+    var previewWindow = document.getElementsByClassName('previewBody')[0];
+    previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
+
+    previewWindow.document.open();
+    previewWindow.document.write('');
+    previewWindow.document.close();
 }
+
+var FILE_MENU = document.querySelector('.context-menu.files');
+var RIGHT_CLICKED;
 
 $('.filePane').on('click', function(ev) {
     var el = ev.target;
-    if (el.classList.contains('file') || parentHasClass(el, 'file')) {
-        // loadFile(el.dataset.file);  // oops have to get the child's dataset if the parent is the one clicked
+    if (el.classList.contains('file') || parentHasClass(el, 'file')) { 
         if (el.classList && el.classList.contains('file')) {
             loadFile(el.children[0].dataset.file, el.children[0]);
         } else if (parentHasClass(el, 'file')) {
@@ -193,7 +208,70 @@ $('.filePane').on('click', function(ev) {
         }
         ev.stopPropagation();
     } else if (el.classList.contains('add-file') || parentHasClass(el, 'add-file')) {
-        createFile();
+        manuallyCreateFile();
         ev.stopPropagation();
     }
+    FILE_MENU.style.display = 'none';
+    RIGHT_CLICKED = undefined;
+}).on('contextmenu', function(ev) {
+    var el = ev.target;
+    if (el.classList.contains('file') || parentHasClass(el, 'file')) {
+        var fileName;
+        var clickedEl;
+        if (el.classList && el.classList.contains('file')) {
+            fileName = el.children[0].dataset.file;
+            clickedEl = el;
+        } else if (parentHasClass(el, 'file')) {
+            fileName = el.dataset.file;
+            clickedEl = el.parentNode;
+        }
+
+        RIGHT_CLICKED = {file: fileName, el: clickedEl};
+
+        FILE_MENU.style.display = 'block';
+        FILE_MENU.style.top = ev.pageY + 'px';
+        FILE_MENU.style.left = ev.pageX + 'px';
+
+        ev.preventDefault();
+    } else if (el.classList.contains('add-file') || parentHasClass(el, 'add-file')) {
+        ev.preventDefault();
+    }
+});
+
+$('.context-menu.files .menu-item').on('click', function(ev) {
+    if (RIGHT_CLICKED) {
+        switch (this.dataset.action) {
+            case 'delete-file':
+                if (Object.keys(fileData).length > 1) {
+                    if (RIGHT_CLICKED.file == currentFile) {
+                        loadFile(Object.keys(fileData)[0], document.querySelector('.filePane .file').children[0]);
+                    }
+                    RIGHT_CLICKED.el.parentNode.removeChild(RIGHT_CLICKED.el);
+                    delete fileData[RIGHT_CLICKED.file];
+                }
+                break;
+
+            case 'rename-file':
+                var newName = prompt('Enter the new file name:', RIGHT_CLICKED.file);
+                if (newName && !fileData.hasOwnProperty(newName)) {
+                    RIGHT_CLICKED.el.children[0].innerText = newName;
+                    fileData[newName] = fileData[RIGHT_CLICKED.file];
+                    delete fileData[RIGHT_CLICKED.file];
+                }
+                break;
+
+            case 'duplicate-file':
+                var oldName = RIGHT_CLICKED.file.split('.');
+                var newName = oldName[oldName.length - 2] + '-copy.' + oldName[oldName.length - 1];  //there should be a better way...
+                if (!fileData.hasOwnProperty(newName)) {
+                    generateFile(newName, fileData[RIGHT_CLICKED.file]);
+                }
+                break;
+
+            default:
+                //nothing
+        }
+    }
+    RIGHT_CLICKED = undefined;
+    FILE_MENU.style.display = 'none';
 });

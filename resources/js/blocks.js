@@ -24,15 +24,6 @@ function closestElem(elem, offset, initial) { //elem is nodelist, offset is own 
     elem.each( function(item) {
         if(item == selected) {return false;} // I added this -NN
         elOffset = getOffset(item); //returns object with offsets
-
-        //we'll worry about inside c-blocks later:
-        /*if (
-        (x >= elOffset.left)  && (x <= elOffset.right) &&
-        (y >= elOffset.top)   && (y <= elOffset.bottom)
-        ) {
-            el = item;
-            return false;
-        }*/
         
         //let's only test the bottom-left corner
         dx = elOffset.left - x; 
@@ -104,8 +95,6 @@ function _drag_init(elem, ev) {
     wrapper.classList.add('draggy');
     SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
     selected = elem;
-    //var curX = getOffset(elem).left;
-    //var curY = getOffset(elem).top;
     var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
         curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
     var childs = Array.prototype.slice.call(elem.parentElement.children);
@@ -121,8 +110,8 @@ function _drag_init(elem, ev) {
 }
 
 function _palette_drag_init(elem, ev) {
-    var relativeX = ev.pageX - getOffset(elem).left;
-    var relativeY = ev.pageY - getOffset(elem).top;
+    var relativeX = ev.clientY - getOffset(elem).left - SCRIPTING_AREA.scrollLeft;
+    var relativeY = ev.clientY - getOffset(elem).top + BLOCK_PALETTE.scrollTop - SCRIPTING_AREA.scrollTop;
     // Clone element
     var newElem = elem.cloneNode(true);
     newElem.classList.remove('paletteBlock');
@@ -131,10 +120,8 @@ function _palette_drag_init(elem, ev) {
     wrapper.classList.add('draggy');
     SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
     selected = newElem;
-    //var curX = getOffset(elem).left;
-    //var curY = getOffset(elem).top;
-    var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
-        curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
+    var curX = ev.clientY - getOffset(SCRIPTING_AREA).left,
+        curY = ev.clientY - getOffset(SCRIPTING_AREA).top;
     wrapper.appendChild(newElem);
     wrapper.style.left = curX - relativeX + 'px';
     wrapper.style.top = curY - relativeY + 'px';
@@ -226,31 +213,10 @@ function _delete(ev) {
     selected = null;
 }
 
-//http://jsfiddle.net/tovic/Xcb8d/light/
-
-function $(e) {
-    if (e.split(' ')[e.split(' ').length - 1][0] == '#') {
-        return document.getElementById(e.substr(1, e.length - 1));
-    }
-    arr = Array.prototype.slice.call(document.querySelectorAll(e));
-    arr.forEach = function(callback) {
-        for (var i = 0; i < arr.length; i++) {
-            callback(arr[i], i);            
-        }
-    };
-    arr.each = arr.forEach;
-    arr.on = function(event, callback) {
-        arr.forEach(function(item) {
-            item.addEventListener(event, callback);
-        });
-    };
-    return arr;
-}
-
 var SNAP_CLASSES = [
     '.stack',
     '.c-header',
-    '.c-footer'
+    ':not(.e-body) > .c-footer'
 ].join(', ');
 var MIN_DISTANCE = 50;
 var SCRIPTING_AREA = $('.scriptingArea')[0];
@@ -266,7 +232,7 @@ var DRAGGABLE_ELEMENTS = ([
 var C_ELEMENTS = ([
     '.c-header',
     '.c-content',
-    '.c-footer'
+    ':not(.e-body) > .c-footer'
 ]).map(function(item) {
     return '.scriptingArea ' + item;
 }).join(', ');
@@ -304,46 +270,104 @@ BLOCK_PALETTE.addEventListener('mousedown', function(ev) {
 });
 
 SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
-    if (ev.target.className =='script-input') {
-        ev.stopPropagation();
-        return;
-    }
-    if (ev.target.matches(DRAGGABLE_ELEMENTS)) {
-        _drag_init(ev.target, ev);
-        ev.stopPropagation();
-        setZebra();
-    } else if (ev.target.matches(C_ELEMENTS)) {
-        if (!ev.target.parentNode.classList.contains('e-body')) {
-            _drag_init(ev.target.parentElement, ev);
+    if (ev.which != 3) {  // shouldn't do anything on right click
+        if (ev.target.className =='script-input') {
+            ev.stopPropagation();
+            return;
+        }
+        if (ev.target.matches(DRAGGABLE_ELEMENTS)) {
+            _drag_init(ev.target, ev);
             ev.stopPropagation();
             setZebra();
+        } else if (ev.target.matches(C_ELEMENTS)) {
+            if (!ev.target.parentNode.classList.contains('e-body')) {
+                _drag_init(ev.target.parentElement, ev);
+                ev.stopPropagation();
+                setZebra();
+            }
+        }
+        setFrameContent();
+        SCRIPT_MENU.style.display = 'none';
+        RIGHT_CLICKED_SCRIPT = undefined;
+    }
+});
+
+SCRIPTING_AREA.addEventListener('contextmenu', function(ev) {
+    SCRIPT_MENU.style.display = 'block';
+    SCRIPT_MENU.style.top = ev.pageY + 'px';
+    SCRIPT_MENU.style.left = ev.pageX + 'px';
+    RIGHT_CLICKED_SCRIPT = ev.target;
+    ev.preventDefault();
+});
+
+var SCRIPT_MENU = document.querySelector('.context-menu.scripts');
+var RIGHT_CLICKED_SCRIPT = undefined;
+
+$('body').on('mousemove', _move_elem)
+    .on('mouseup', function(ev) {
+        if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || ev.target.className.split(' ').indexOf('trashCan') > -1) {
+            _delete(ev);
+        } else {
+            _destroy(ev);
+        }
+        if (!(ev.target.classList.contains('file') || parentHasClass(ev.target, 'file'))) {
+            setFrameContent();
+        }
+        setZebra();
+    }).on('keydown', function(ev) {
+        setFrameContent();
+    });
+
+$('.context-menu.scripts .menu-item').on('click', function(ev) {
+    if (RIGHT_CLICKED_SCRIPT) {
+        switch (this.dataset.action) {
+            case 'duplicate-script':
+                var target = RIGHT_CLICKED_SCRIPT;
+                // context menu stuff here...
+                if (target.matches(C_ELEMENTS)) {
+                    console.log(target.parentNode);
+                    target = target.parentNode;
+                } 
+                // do stuff with node... and get stuff beneath it too!
+                var wrapper = document.createElement('ul');
+                wrapper.className = 'draggy';
+                var childs = toArr(target.parentElement.children);
+                for (var i = childs.indexOf(target); i < childs.length; i++) {
+                    var child = childs[i].cloneNode(true);
+                    child.removeAttribute('style');
+                    wrapper.appendChild(child);
+                }
+
+                var relativeX = ev.pageX - getOffset(target).left;
+                var relativeY = ev.pageY - getOffset(target).top;
+                var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
+                    curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
+                wrapper.style.left = curX - relativeX + 25 + 'px';
+                wrapper.style.top = curY - relativeY + 25 + 'px';
+                SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
+
+                setZebra();
+                RIGHT_CLICKED_SCRIPT = undefined;
+                SCRIPT_MENU.style.display = 'none';
+                break;
+
+            default:
+                //nothing
         }
     }
-    setFrameContent();
 });
 
-// draggy('.c-wrapper');
-// draggy('.stack');
-$('body').on('mousemove', _move_elem);
-$('body').on('mouseup', function(ev) {
-    if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || ev.target.className.split(' ').indexOf('trashCan') > -1) {
-        _delete(ev);
-    } else {
-        _destroy(ev);
-    }
-    if (!(ev.target.classList.contains('file') || parentHasClass(ev.target, 'file'))) {
-        setFrameContent();
-    }
-    setZebra();
-});
-$('body').on('keydown', function(ev) {
-    setFrameContent();
-});
+
 setZebra();
 
+$('.trashCan').on('mouseover', function(ev) {
+    this.classList.add('hovering');
+});
+$('.trashCan').on('mouseout', function(ev) {
+    this.classList.remove('hovering');
+});
+
 // zebra stuff
-
-
 function zebra(parent, nestcount) {
     var children = parent.children;
     for (var i = 0; i < children.length; i++) {
