@@ -284,6 +284,9 @@ body { /*every page*/
 
 .flex-container {
   display:flex;
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -o-flex;
   flex-wrap: wrap;
   justify-content: center;
   padding:20px 0px;
