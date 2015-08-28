@@ -230,8 +230,8 @@ var DRAGGABLE_ELEMENTS = ([
 }).join(', ');
 
 var C_ELEMENTS = ([
-    '.c-header',
-    '.c-content',
+    ':not(.e-body) > .c-header',
+    ':not(.e-body) > .c-content',
     ':not(.e-body) > .c-footer'
 ]).map(function(item) {
     return '.scriptingArea ' + item;
@@ -270,39 +270,105 @@ BLOCK_PALETTE.addEventListener('mousedown', function(ev) {
 });
 
 SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
-    if (ev.target.className =='script-input') {
-        ev.stopPropagation();
-        return;
-    }
-    if (ev.target.matches(DRAGGABLE_ELEMENTS)) {
-        _drag_init(ev.target, ev);
-        ev.stopPropagation();
-        setZebra();
-    } else if (ev.target.matches(C_ELEMENTS)) {
-        if (!ev.target.parentNode.classList.contains('e-body')) {
-            _drag_init(ev.target.parentElement, ev);
+    if (ev.which != 3) {  // shouldn't do anything on right click
+        if (ev.target.className =='script-input') {
+            ev.stopPropagation();
+            return;
+        }
+        if (ev.target.matches(DRAGGABLE_ELEMENTS)) {
+            _drag_init(ev.target, ev);
             ev.stopPropagation();
             setZebra();
+        } else if (ev.target.matches(C_ELEMENTS)) {
+            if (!ev.target.parentNode.classList.contains('e-body')) {
+                _drag_init(ev.target.parentElement, ev);
+                ev.stopPropagation();
+                setZebra();
+            }
         }
+        setFrameContent();
+        SCRIPT_MENU.style.display = 'none';
+        RIGHT_CLICKED_SCRIPT = undefined;
     }
-    setFrameContent();
 });
 
-$('body').on('mousemove', _move_elem);
-$('body').on('mouseup', function(ev) {
-    if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || ev.target.className.split(' ').indexOf('trashCan') > -1) {
-        _delete(ev);
-    } else {
-        _destroy(ev);
-    }
-    if (!(ev.target.classList.contains('file') || parentHasClass(ev.target, 'file'))) {
+var SCRIPT_MENU = document.querySelector('.context-menu.scripts');
+var RIGHT_CLICKED_SCRIPT = undefined;
+
+$('body').on('mousemove', _move_elem)
+    .on('mouseup', function(ev) {
+        if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || ev.target.className.split(' ').indexOf('trashCan') > -1) {
+            _delete(ev);
+        } else {
+            _destroy(ev);
+        }
+        if (!(ev.target.classList.contains('file') || parentHasClass(ev.target, 'file'))) {
+            setFrameContent();
+        }
+        setZebra();
+    }).on('keydown', function(ev) {
         setFrameContent();
+    }).on('contextmenu', function(ev) {
+        SCRIPT_MENU.style.display = 'block';
+        SCRIPT_MENU.style.top = ev.pageY + 'px';
+        SCRIPT_MENU.style.left = ev.pageX + 'px';
+        RIGHT_CLICKED_SCRIPT = ev.target;
+        ev.preventDefault();
+        // var target = ev.target;
+        // // context menu stuff here...
+        // if (target.matches(C_ELEMENTS)) {
+        //     console.log(target.parentNode);
+        //     target = target.parentNode;
+        // } 
+        // // do stuff with node... and get stuff beneath it too!
+        // var wrapper = document.createElement('ul');
+        // wrapper.className = 'draggy';
+        // var childs = toArr(target.parentElement.children);
+        // for (var i = childs.indexOf(target); i < childs.length; i++) {
+        //     var child = childs[i].cloneNode(true);
+        //     child.removeAttribute('style');
+        //     wrapper.appendChild(child);
+        // }
+        // wrapper.style.left = ev.pageX + 'px';
+        // wrapper.style.top = ev.pageY + 'px';
+        // SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
+    });
+
+$('.context-menu.scripts .menu-item').on('click', function(ev) {
+    if (RIGHT_CLICKED_SCRIPT) {
+        switch (this.dataset.action) {
+            case 'duplicate-script':
+                var target = RIGHT_CLICKED_SCRIPT;
+                // context menu stuff here...
+                if (target.matches(C_ELEMENTS)) {
+                    console.log(target.parentNode);
+                    target = target.parentNode;
+                } 
+                // do stuff with node... and get stuff beneath it too!
+                var wrapper = document.createElement('ul');
+                wrapper.className = 'draggy';
+                var childs = toArr(target.parentElement.children);
+                for (var i = childs.indexOf(target); i < childs.length; i++) {
+                    var child = childs[i].cloneNode(true);
+                    child.removeAttribute('style');
+                    wrapper.appendChild(child);
+                }
+                wrapper.style.left = ev.pageX + 'px';
+                wrapper.style.top = ev.pageY + 'px';
+                SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
+
+                setZebra();
+                RIGHT_CLICKED_SCRIPT = undefined;
+                SCRIPT_MENU.style.display = 'none';
+                break;
+
+            default:
+                //nothing
+        }
     }
-    setZebra();
 });
-$('body').on('keydown', function(ev) {
-    setFrameContent();
-});
+
+
 setZebra();
 
 $('.trashCan').on('mouseover', function(ev) {
