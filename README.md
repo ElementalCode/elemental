@@ -1,4 +1,5 @@
 ![image](https://cloud.githubusercontent.com/assets/5458180/8791470/4f758e90-2f29-11e5-8f29-98886c74cb52.png)
+
 [![Join the chat at https://gitter.im/ElementalCode/Elemental](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ElementalCode/Elemental?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 **Frontend Demo:** http://elementalcode.github.io/Elemental/  
