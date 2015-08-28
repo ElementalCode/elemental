@@ -230,8 +230,8 @@ var DRAGGABLE_ELEMENTS = ([
 }).join(', ');
 
 var C_ELEMENTS = ([
-    ':not(.e-body) > .c-header',
-    ':not(.e-body) > .c-content',
+    '.c-header',
+    '.c-content',
     ':not(.e-body) > .c-footer'
 ]).map(function(item) {
     return '.scriptingArea ' + item;
@@ -292,6 +292,14 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
     }
 });
 
+SCRIPTING_AREA.addEventListener('contextmenu', function(ev) {
+    SCRIPT_MENU.style.display = 'block';
+    SCRIPT_MENU.style.top = ev.pageY + 'px';
+    SCRIPT_MENU.style.left = ev.pageX + 'px';
+    RIGHT_CLICKED_SCRIPT = ev.target;
+    ev.preventDefault();
+});
+
 var SCRIPT_MENU = document.querySelector('.context-menu.scripts');
 var RIGHT_CLICKED_SCRIPT = undefined;
 
@@ -308,30 +316,6 @@ $('body').on('mousemove', _move_elem)
         setZebra();
     }).on('keydown', function(ev) {
         setFrameContent();
-    }).on('contextmenu', function(ev) {
-        SCRIPT_MENU.style.display = 'block';
-        SCRIPT_MENU.style.top = ev.pageY + 'px';
-        SCRIPT_MENU.style.left = ev.pageX + 'px';
-        RIGHT_CLICKED_SCRIPT = ev.target;
-        ev.preventDefault();
-        // var target = ev.target;
-        // // context menu stuff here...
-        // if (target.matches(C_ELEMENTS)) {
-        //     console.log(target.parentNode);
-        //     target = target.parentNode;
-        // } 
-        // // do stuff with node... and get stuff beneath it too!
-        // var wrapper = document.createElement('ul');
-        // wrapper.className = 'draggy';
-        // var childs = toArr(target.parentElement.children);
-        // for (var i = childs.indexOf(target); i < childs.length; i++) {
-        //     var child = childs[i].cloneNode(true);
-        //     child.removeAttribute('style');
-        //     wrapper.appendChild(child);
-        // }
-        // wrapper.style.left = ev.pageX + 'px';
-        // wrapper.style.top = ev.pageY + 'px';
-        // SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
     });
 
 $('.context-menu.scripts .menu-item').on('click', function(ev) {
