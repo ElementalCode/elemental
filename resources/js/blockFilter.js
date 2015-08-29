@@ -75,7 +75,7 @@ var filter = {
     },
     {
       name: 'div',
-      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>div with class(es) <span contenteditable='true' class='script-input class'></span></li><ul class='c-content'></ul><li class='c-footer'></li></ul>",
+      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>div with class(es) <span contenteditable='true' class='script-input class'></span></li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
       tags: ['div', 'divider', 'separator'],
       palette: 0
     },
