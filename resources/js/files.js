@@ -37,14 +37,20 @@ function parentHasClass(element, className) {
     return false;
 }
 
-// function arrContainsFromArr(arr1, arr2) {
-//     for (var i = 0; i < arr2.length; i++) {
-//         if (arr1.indexOf(arr2[i]) > -1) {
-//             return true;
-//         }
-//     }
-//     return false;
-// }
+function stringToHtml(str) {
+    var d = document.createElement('div');
+    d.innerHTML = str;
+    return d.firstChild;
+}
+
+function arrContainsFromArr(arr1, arr2) {
+    for (var i = 0; i < arr2.length; i++) {
+        if (arr1.indexOf(arr2[i]) > -1) {
+            return true;
+        }
+    }
+    return false;
+}
 
 var fileData = {};
 var currentFile = 'index.html';
@@ -57,17 +63,36 @@ var unnamedWrapperElements = wrapperElements.map(function(item) {
 });
 var textInput = 'text';
 
-function getBlockHtml(tag) {
+function getBlockHtml(el) {
     // we're going to have to have the attribute text in here too somehow...
-    if (tag) {
-        return filter.blocks.filter(function(item) {
-            return item.name == tag;
+    var html;
+    if (el.tag) {
+        html = filter.blocks.filter(function(item) {
+            return item.name == el.tag;
         })[0].htmlString;
     } else {
-        return filter.blocks.filter(function(item) {
+        html = filter.blocks.filter(function(item) {
             return item.name == 'text';
         })[0].htmlString;
     }
+
+    var parsedHtml = stringToHtml(html);
+    var children = toArr(parsedHtml.children);
+
+    for (var i = 0; i < children.length; i++) {
+        var child = children[i];
+        var classes = child.className.split(' ');
+        if (arrContainsFromArr(classes, attrNames)) {
+            var attrName = classes[1]; // should just be the second class out of two...  please keep it consistent!
+            if (el.attr[attrName]) {
+                child.innerText = el.attr[attrName];
+            } else {
+                child.innerText = '';
+            }
+        }
+    }
+
+    return parsedHtml.outerHTML;
 }
 
 function generateWrapperBlocks(jsonData) {
@@ -80,7 +105,7 @@ function generateWrapperBlocks(jsonData) {
     for (var i = 0; i < jsonData.child.length; i++) {
         var curEl = jsonData.child[i];
         if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
-            wrapperHtml.push(getBlockHtml(curEl.tag));
+            wrapperHtml.push(getBlockHtml(curEl));
         }
         if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
             // repeat down tree...
@@ -107,7 +132,7 @@ function generateBlocks(jsonData) {
     for (var i = 0; i < jsonData.length; i++) {
         var curEl = jsonData[i];
         if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
-            baseHtml.push(getBlockHtml(curEl.tag));
+            baseHtml.push(getBlockHtml(curEl));
         }
         if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
             // repeat down tree...
@@ -122,6 +147,8 @@ function generateBlocks(jsonData) {
 }
 
 function loadFile(filename, el) {
+    setFrameContent(); // save json
+
     currentFile = filename;
 
     var fileJson = fileData[filename];
