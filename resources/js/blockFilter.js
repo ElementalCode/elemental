@@ -51,37 +51,37 @@ var filter = {
     /* Blocks for palette 0 - text */
     {
       name: 'h1',
-      htmlString: "<li class='stack e-h1 paletteBlock'>heading 1 with text <span contenteditable='true' class='script-input text'>An Important Heading</span></li>",
+      htmlString: "<li class='stack e-h1'>heading 1 with text <span contenteditable='true' class='script-input text'>An Important Heading</span></li>",
       tags: ['heading', 'h1'],
       palette: 0
     },
     {
       name: 'h2',
-      htmlString: "<li class='stack e-h2 paletteBlock'>heading 2 with text <span contenteditable='true' class='script-input text'>A Less Important Heading</span></li>",
+      htmlString: "<li class='stack e-h2'>heading 2 with text <span contenteditable='true' class='script-input text'>A Less Important Heading</span></li>",
       tags: ['heading', 'h2'],
       palette: 0
     },
     {
       name: 'h3',
-      htmlString: "<li class='stack e-h3 paletteBlock'>heading 3 with text <span contenteditable='true' class='script-input text'>An Even Less Important Heading</span></li>",
+      htmlString: "<li class='stack e-h3'>heading 3 with text <span contenteditable='true' class='script-input text'>An Even Less Important Heading</span></li>",
       tags: ['heading', 'h3'],
       palette: 0
     },
     {
       name: 'a',
-      htmlString: "<li class='stack e-a paletteBlock'>link to <span contenteditable='true' class='script-input href'>https://google.com/</span> with text <span contenteditable='true' class='script-input text'>link</span></li>",
+      htmlString: "<li class='stack e-a'>link to <span contenteditable='true' class='script-input href'>https://google.com/</span> with text <span contenteditable='true' class='script-input text'>link</span></li>",
       tags: ['link', 'a'],
       palette: 0
     },
     {
       name: 'div',
-      htmlString: "<ul class='c-wrapper e-div paletteBlock'><li class='c-header'>div</li><ul class='c-content'></ul><li class='c-footer'></li></ul>",
+      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>div with class(es) <span contenteditable='true' class='script-input class'></span></li><ul class='c-content'></ul><li class='c-footer'></li></ul>",
       tags: ['div', 'divider', 'separator'],
       palette: 0
     },
     {
       name: 'text',
-      htmlString: "<li class='stack e-text paletteBlock'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>",
+      htmlString: "<li class='stack e-text'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>",
       tags: ['text'],
       palette: 0
     },
@@ -89,7 +89,7 @@ var filter = {
     /* Blocks for palette 1 - Media */ 
     {
       name: 'img',
-      htmlString: "<li class='stack e-img paletteBlock'>image with source <span contenteditable='true' class='script-input src'>myImg.gif</span></li>",
+      htmlString: "<li class='stack e-img'>image with source <span contenteditable='true' class='script-input src'>myImg.gif</span> and class(es) <span contenteditable='true' class='script-input class'></span></li>",
       tags: ['image', 'img', 'picture'],
       palette: 1
     },
