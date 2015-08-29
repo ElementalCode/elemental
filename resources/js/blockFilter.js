@@ -75,7 +75,7 @@ var filter = {
     },
     {
       name: 'div',
-      htmlString: "<ul class='c-wrapper e-div paletteBlock'><li class='c-header'>div with class(es) <span contenteditable='true' class='script-input class'></li><ul class='c-content'></ul><li class='c-footer'></li></ul>",
+      htmlString: "<ul class='c-wrapper e-div paletteBlock'><li class='c-header'>div with class(es) <span contenteditable='true' class='script-input class'></span></li><ul class='c-content'></ul><li class='c-footer'></li></ul>",
       tags: ['div', 'divider', 'separator'],
       palette: 0
     },
@@ -89,7 +89,7 @@ var filter = {
     /* Blocks for palette 1 - Media */ 
     {
       name: 'img',
-      htmlString: "<li class='stack e-img paletteBlock'>image with source <span contenteditable='true' class='script-input src'>myImg.gif</span></li>",
+      htmlString: "<li class='stack e-img paletteBlock'>image with source <span contenteditable='true' class='script-input src'>myImg.gif</span> and class(es) <span contenteditable='true' class='script-input class'></span></li>",
       tags: ['image', 'img', 'picture'],
       palette: 1
     },
