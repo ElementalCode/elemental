@@ -148,7 +148,7 @@ function _move_elem(e) {
             },
             selected
         )
-        if (el !== null && !el.classList.contains('paletteBlock') && !parentHasClass(el, 'paletteBlock')) {
+        if (el !== null && !el.classList.contains('paletteBlock') && !parentHasClass(el, 'paletteBlock') && !parentHasClass(el, 'blockArea')) {
             el.classList.add('drop-area');
         }
         selected.style.left = (x_pos - x_elem) + 'px';
@@ -174,7 +174,7 @@ function _destroy(ev) {
             selected
         );
     }
-    if (topEl !== null && !topEl.classList.contains('paletteBlock') && !parentHasClass(topEl, 'paletteBlock')) {
+    if (topEl !== null && !topEl.classList.contains('paletteBlock') && !parentHasClass(topEl, 'paletteBlock') && !parentHasClass(topEl, 'blockArea')) {
         for(var i = selected.children.length - 1; i >= 0; i--) {
             // for ome reason for/in desn't work here;
             var elem = selected.children[i];
