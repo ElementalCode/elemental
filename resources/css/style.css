@@ -141,6 +141,12 @@ body {
       color: white;
       background-color: gray; }
 
+.fake-hidden {
+  position: absolute;
+  top: -9999px;
+  left: -9999px;
+  opacity: 0; }
+
 body {
   margin: 0px;
   overflow: hidden; }
