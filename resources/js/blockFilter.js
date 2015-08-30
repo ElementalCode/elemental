@@ -4,7 +4,8 @@ var filter = {
   searchString: "im",
   paletteNames: [
     "text",
-    "media"
+    "media",
+    "sections"
   ],
   getFilteredBlocks: function(){
     var matching = [];
@@ -92,6 +93,14 @@ var filter = {
       htmlString: "<li class='stack e-img'>image with source <span contenteditable='true' class='script-input src'>myImg.gif</span> and class(es) <span contenteditable='true' class='script-input class'></span></li>",
       tags: ['image', 'img', 'picture'],
       palette: 1
+    },
+    
+    /* Blocks for palette 2 - Sections */
+    {
+      name: 'navigation',
+      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>navigation</li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
+      tags: ['nav', 'navigation'],
+      palette: 2
     },
 
   ]
