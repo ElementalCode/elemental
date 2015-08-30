@@ -30,6 +30,7 @@ body {
   font-family: 'Source Code Pro';
   padding: 0 5px;
   min-width: 25px;
+  min-height: 20px;
   border-radius: 999px;
   border: none;
   outline: none;
