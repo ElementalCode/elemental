@@ -97,7 +97,7 @@ function getBlockHtml(el) {
 
 function generateWrapperBlocks(jsonData) {
     var wrapperHtml = [
-        '<ul class="c-wrapper e-' + jsonData.tag + '">',
+        '<ul class="c-wrapper e-' + jsonData.tag + '">', // going to have to add the attributes in here too...
             '<li class="c-header">' + jsonData.tag + '</li>',
             '<ul class="c-content">',
     ];
@@ -114,7 +114,7 @@ function generateWrapperBlocks(jsonData) {
     }
 
     wrapperHtml.push(
-        '</ul><li class="c-footer"></li></ul>'
+        '</ul><li class="c-footer">&nbsp;</li></ul>'
     );
 
     return wrapperHtml.join('');
