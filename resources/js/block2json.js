@@ -62,7 +62,7 @@ function getSingleAttrs(element) {
 	var attrElems = toArr(element.children);
 	for (var i = 0; i < attrElems.length; i++) {
 		var attr = getAttrNames(attrElems[i].className);
-		attrs[attr] = encodeEntities(attrElems[i].innerText);
+		attrs[attr] = encodeEntities(attrElems[i].textContent);
 	}
 	return attrs;
 }
@@ -73,7 +73,7 @@ function getWrapperAttrs(element) {
 	var attrElems = toArr(element.children);
 	for (var i = 0; i < attrElems.length; i++) {
 		var attr = getAttrNames(attrElems[i].className);
-		attrs[attr] = encodeEntities(attrElems[i].innerText);
+		attrs[attr] = encodeEntities(attrElems[i].textContent);
 	}
 	return attrs;
 }
@@ -87,7 +87,7 @@ function getText(elem) {
 	var childNodes = toArr(elem.children);
 	for (var i = 0; i < childNodes.length; i++) {
 		if (childNodes[i].classList.contains(textInput)) {
-			text += childNodes[i].children[0].innerText;
+			text += childNodes[i].children[0].textContent;
 		}
 	}
 	return text;
@@ -98,7 +98,7 @@ function getInlineText(elem) {
 	var childNodes = toArr(elem.children);
 	for (var i = 0; i < childNodes.length; i++) {
 		if (childNodes[i].classList.contains(textInput)) {
-			text += childNodes[i].innerText;
+			text += childNodes[i].textContent;
 		}
 	}
 	return text;
