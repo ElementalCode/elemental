@@ -176,7 +176,7 @@ function _destroy(ev) {
     }
     if (topEl !== null && !topEl.classList.contains('paletteBlock') && !parentHasClass(topEl, 'paletteBlock') && !parentHasClass(topEl, 'blockArea')) {
         for(var i = selected.children.length - 1; i >= 0; i--) {
-            // for ome reason for/in desn't work here;
+            // for one reason for/in desn't work here;
             var elem = selected.children[i];
             if (topEl.classList.contains('stack')) {
                 elem.removeAttribute('style');
