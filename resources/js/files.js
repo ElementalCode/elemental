@@ -89,6 +89,8 @@ function getBlockHtml(el) {
             } else {
                 child.textContent = '';
             }
+        } else if (classes.indexOf(textInput) > -1) {
+            child.textContent = el.text;
         }
     }
 
