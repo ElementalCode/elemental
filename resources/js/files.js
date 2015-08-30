@@ -85,9 +85,9 @@ function getBlockHtml(el) {
         if (arrContainsFromArr(classes, attrNames)) {
             var attrName = classes[1]; // should just be the second class out of two...  please keep it consistent!
             if (el.attr[attrName]) {
-                child.innerText = el.attr[attrName];
+                child.textContent = el.attr[attrName];
             } else {
-                child.innerText = '';
+                child.textContent = '';
             }
         }
     }
@@ -97,7 +97,7 @@ function getBlockHtml(el) {
 
 function generateWrapperBlocks(jsonData) {
     var wrapperHtml = [
-        '<ul class="c-wrapper e-' + jsonData.tag + '">',
+        '<ul class="c-wrapper e-' + jsonData.tag + '">', // going to have to add the attributes in here too...
             '<li class="c-header">' + jsonData.tag + '</li>',
             '<ul class="c-content">',
     ];
@@ -114,7 +114,7 @@ function generateWrapperBlocks(jsonData) {
     }
 
     wrapperHtml.push(
-        '</ul><li class="c-footer"></li></ul>'
+        '</ul><li class="c-footer">&nbsp;</li></ul>'
     );
 
     return wrapperHtml.join('');
@@ -281,7 +281,7 @@ $('.context-menu.files .menu-item').on('click', function(ev) {
             case 'rename-file':
                 var newName = prompt('Enter the new file name:', RIGHT_CLICKED.file);
                 if (newName && !fileData.hasOwnProperty(newName)) {
-                    RIGHT_CLICKED.el.children[0].innerText = newName;
+                    RIGHT_CLICKED.el.children[0].textContent = newName;
                     fileData[newName] = fileData[RIGHT_CLICKED.file];
                     delete fileData[RIGHT_CLICKED.file];
                 }
