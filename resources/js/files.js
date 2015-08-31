@@ -157,13 +157,12 @@ function loadFile(filename, el) {
 
     var fileJson = fileData[filename];
 
-    // first deselect other files...
-    $('.filePane .file.selected').each(function(elem) {
-        elem.classList.remove('selected');
-    });
-
-    // select this one...
     if (el) {
+        // first deselect other files...
+        $('.filePane .file.selected').each(function(elem) {
+            elem.classList.remove('selected');
+        });
+        // select this one...
         el.parentNode.classList.add('selected');
     }
 
