@@ -286,6 +286,7 @@ $('.context-menu.files .menu-item').on('click', function(ev) {
                     RIGHT_CLICKED.el.children[0].textContent = newName;
                     fileData[newName] = fileData[RIGHT_CLICKED.file];
                     delete fileData[RIGHT_CLICKED.file];
+                    currentFile = newName;
                 }
                 break;
 
