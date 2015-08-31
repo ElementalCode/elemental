@@ -284,6 +284,7 @@ $('.context-menu.files .menu-item').on('click', function(ev) {
                 var newName = prompt('Enter the new file name:', RIGHT_CLICKED.file);
                 if (newName && !fileData.hasOwnProperty(newName)) {
                     RIGHT_CLICKED.el.children[0].textContent = newName;
+                    RIGHT_CLICKED.el.children[0].dataset.file = newName;
                     fileData[newName] = fileData[RIGHT_CLICKED.file];
                     delete fileData[RIGHT_CLICKED.file];
                     currentFile = newName;
@@ -293,6 +294,7 @@ $('.context-menu.files .menu-item').on('click', function(ev) {
             case 'duplicate-file':
                 var oldName = RIGHT_CLICKED.file.split('.');
                 var newName = oldName[oldName.length - 2] + '-copy.' + oldName[oldName.length - 1];  //there should be a better way...
+                console.log(RIGHT_CLICKED.file);
                 if (!fileData.hasOwnProperty(newName)) {
                     generateFile(newName, fileData[RIGHT_CLICKED.file]);
                 }
