@@ -170,7 +170,7 @@ function loadFile(filename, el) {
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
     blockArea.innerHTML = generateBlocks(fileJson.child);
-    setFrameContent();  // this is somehow messing up the JSON....
+    setFrameContent();
     setZebra();
 }
 
