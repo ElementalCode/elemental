@@ -149,7 +149,9 @@ function generateBlocks(jsonData) {
 }
 
 function loadFile(filename, el) {
-    setFrameContent(); // save json
+    if (el) {
+        setFrameContent(); // save json
+    }
 
     currentFile = filename;
 
@@ -161,7 +163,9 @@ function loadFile(filename, el) {
     });
 
     // select this one...
-    el.parentNode.classList.add('selected');
+    if (el) {
+        el.parentNode.classList.add('selected');
+    }
 
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];

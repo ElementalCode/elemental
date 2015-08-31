@@ -18,7 +18,6 @@ document.getElementById('openFileButton').addEventListener('click', function() {
 });
 
 document.getElementById('projectOpen').addEventListener('change', function() {
-	console.log(this.files);
 	var opening = this.files[0];
 
 	// var zip = new JSZip();
@@ -36,7 +35,7 @@ document.getElementById('projectOpen').addEventListener('change', function() {
 		var newHtml = '';
 		var first = true;
 		for (file in newJson) {
-			newHtml += '<div class="file ' + (first ? 'selected' : '') + '"><div class="file-name" data-file="' + file + '">' + file + '</div></div>';
+			newHtml += '<div class="file' + (first ? ' selected' : '') + '"><div class="file-name" data-file="' + file + '">' + file + '</div></div>';
 			if (first) {
 				first = false;
 				currentFile = file;
@@ -45,8 +44,8 @@ document.getElementById('projectOpen').addEventListener('change', function() {
 		newHtml += '<div class="add-file"><div class="file-name">+</div></div>';
 		$('.filePane')[0].innerHTML = newHtml;
 
-		// finally, re render
-		loadFile(currentFile, $('.filePane')[0].children[0]);
+		// finally, re-render
+		loadFile(currentFile);
 	}
 	reader.readAsArrayBuffer(this.files[0]);
 
