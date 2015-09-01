@@ -11,6 +11,7 @@ class Project(models.Model):
     name = models.CharField(_('name'), max_length=50, blank=True)
     user = models.ForeignKey(ElementalUser)
     shared = models.BooleanField(default=False)
+    data = models.TextField()
 
     def __unicode__(self):
         return self.name
