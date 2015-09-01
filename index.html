@@ -34,7 +34,13 @@
         <div class="menu" id="fileMenu">
           <span class="menuTitle">File</span>
             <ul class="menuContents">
-              <li id="downloadButton">Download</li>
+              <li id="openFileButton">
+                Open
+                <input id="projectOpen" type="file" accept="application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed" class="fake-hidden" />
+              </li>
+              <li id="downloadButton">
+                Download
+              </li>
             </ul>
         </div>
         <div class="menu" id="editMenu">
@@ -182,6 +188,6 @@
   <script src='resources/js/files.js'></script>
   <script src='resources/js/blocks.js'></script>
   <script src='resources/js/block2json.js'></script>
-  <script src='resources/js/download.js'></script>
+  <script src='resources/js/fileManagement.js'></script>
   </body>
 </html>

@@ -89,6 +89,8 @@ function getBlockHtml(el) {
             } else {
                 child.textContent = '';
             }
+        } else if (classes.indexOf(textInput) > -1) {
+            child.textContent = el.text;
         }
     }
 
@@ -147,24 +149,27 @@ function generateBlocks(jsonData) {
 }
 
 function loadFile(filename, el) {
-    setFrameContent(); // save json
+    if (el) {
+        setFrameContent(); // save json
+    }
 
     currentFile = filename;
 
     var fileJson = fileData[filename];
 
-    // first deselect other files...
-    $('.filePane .file.selected').each(function(elem) {
-        elem.classList.remove('selected');
-    });
-
-    // select this one...
-    el.parentNode.classList.add('selected');
+    if (el) {
+        // first deselect other files...
+        $('.filePane .file.selected').each(function(elem) {
+            elem.classList.remove('selected');
+        });
+        // select this one...
+        el.parentNode.classList.add('selected');
+    }
 
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
     blockArea.innerHTML = generateBlocks(fileJson.child);
-    setFrameContent();  // this is somehow messing up the JSON....
+    setFrameContent();
     setZebra();
 }
 
@@ -282,14 +287,17 @@ $('.context-menu.files .menu-item').on('click', function(ev) {
                 var newName = prompt('Enter the new file name:', RIGHT_CLICKED.file);
                 if (newName && !fileData.hasOwnProperty(newName)) {
                     RIGHT_CLICKED.el.children[0].textContent = newName;
+                    RIGHT_CLICKED.el.children[0].dataset.file = newName;
                     fileData[newName] = fileData[RIGHT_CLICKED.file];
                     delete fileData[RIGHT_CLICKED.file];
+                    currentFile = newName;
                 }
                 break;
 
             case 'duplicate-file':
                 var oldName = RIGHT_CLICKED.file.split('.');
                 var newName = oldName[oldName.length - 2] + '-copy.' + oldName[oldName.length - 1];  //there should be a better way...
+                console.log(RIGHT_CLICKED.file);
                 if (!fileData.hasOwnProperty(newName)) {
                     generateFile(newName, fileData[RIGHT_CLICKED.file]);
                 }
