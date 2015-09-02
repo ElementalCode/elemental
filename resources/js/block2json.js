@@ -70,11 +70,12 @@ function getSingleAttrs(element) {
 function getWrapperAttrs(element) {
 	element = element.children[0];
 	var attrs = {};
-	var attrElems = toArr(element.children);
-	for (var i = 0; i < attrElems.length; i++) {
-		var attr = getAttrNames(attrElems[i].className);
-		attrs[attr] = encodeEntities(attrElems[i].textContent);
-	}
+	// will need refactor!
+	// var attrElems = toArr(element.children);
+	// for (var i = 0; i < attrElems.length; i++) {
+	// 	var attr = getAttrNames(attrElems[i].className);
+	// 	attrs[attr] = encodeEntities(attrElems[i].textContent);
+	// }
 	return attrs;
 }
 

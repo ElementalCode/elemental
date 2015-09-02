@@ -19,3 +19,16 @@
 		}
 	}
 }
+
+.attributeDropdown {
+	position: absolute;
+	border-radius: 10px;
+	background-color: green;
+	z-index: 100;
+
+	// just for now...
+	top: 350px;
+	left: 350px;
+	width: 200px;
+	height: 200px;
+}

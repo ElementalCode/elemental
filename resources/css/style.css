@@ -141,6 +141,16 @@ body {
       color: white;
       background-color: gray; }
 
+.attributeDropdown {
+  position: absolute;
+  border-radius: 10px;
+  background-color: green;
+  z-index: 100;
+  top: 350px;
+  left: 350px;
+  width: 200px;
+  height: 200px; }
+
 .fake-hidden {
   position: absolute;
   top: -9999px;
