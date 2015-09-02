@@ -127,3 +127,27 @@ body {
 .c-wrapper.zebra > li, .c-wrapper.zebra > ul {
     background:#F45D5D;
 }
+
+.attr-holder {
+    background-color: orange;
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 3px;
+    .attr-dropdown,
+    .attr-input {
+        border-radius: 10px;
+        min-width: 50px;
+        display: inline-block;
+    }
+    .attr-input {
+        background-color: white;
+        color: black;
+    }
+    .attr-dropdown {
+        background-color: gray;
+        &:empty {
+            content: ' ';
+        }
+    }
+}

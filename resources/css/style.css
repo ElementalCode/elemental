@@ -124,6 +124,25 @@ body {
 .c-wrapper.zebra > li, .c-wrapper.zebra > ul {
   background: #F45D5D; }
 
+.attr-holder {
+  background-color: orange;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 3px; }
+  .attr-holder .attr-dropdown,
+  .attr-holder .attr-input {
+    border-radius: 10px;
+    min-width: 50px;
+    display: inline-block; }
+  .attr-holder .attr-input {
+    background-color: white;
+    color: black; }
+  .attr-holder .attr-dropdown {
+    background-color: gray; }
+    .attr-holder .attr-dropdown:empty {
+      content: ' '; }
+
 .context-menu {
   position: absolute;
   font-family: 'Source Sans Pro', sans-serif;
@@ -156,6 +175,9 @@ body {
   top: -9999px;
   left: -9999px;
   opacity: 0; }
+
+.hidden {
+  display: none; }
 
 body {
   margin: 0px;
