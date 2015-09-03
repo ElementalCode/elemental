@@ -12,6 +12,7 @@ class Project(models.Model):
     user = models.ForeignKey(ElementalUser)
     shared = models.BooleanField(default=False)
     data = models.TextField()
+    deleted = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name
