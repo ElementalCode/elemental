@@ -6,7 +6,7 @@ from rest_framework.authentication import SessionAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from apps.projects.models import Project
-from .serializers import ProjectSerializer
+from .serializers import ProjectSerializer, ProjectCreateSerializer
 
 
 class ProjectDetail(SessionAuthentication, generics.RetrieveUpdateDestroyAPIView):
@@ -18,3 +18,14 @@ class ProjectDetail(SessionAuthentication, generics.RetrieveUpdateDestroyAPIView
     def get_object(self):
         return Project.objects.get(
             id=self.kwargs['pk'])
+
+    def delete(self, request, pk):
+        p = Project.objects.get(
+            id=self.kwargs['pk'])
+        p.deleted = True
+        p.save()
+
+
+class ProjectCreate(SessionAuthentication, generics.CreateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectCreateSerializer
