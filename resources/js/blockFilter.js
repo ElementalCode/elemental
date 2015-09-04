@@ -102,6 +102,12 @@ var filter = {
       tags: ['nav', 'navigation'],
       palette: 2
     },
+    {
+      name: 'footer',
+      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>navigation</li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
+      tags: ['footer', 'foot' /* can i addz feet plz?*/],
+      palette: 2
+    }
 
   ]
 };
