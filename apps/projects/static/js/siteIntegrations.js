@@ -16,14 +16,18 @@ SAVE_BUTTON.addEventListener('click', function(ev) {
 				name: 'test name'
 			}, config);
 		} else {
-			// request = axios.patch('/', {
-			// 	data: JSON.stringify(fileData)
-			// });
+			request = axios.patch('/rest/projects/project/' + P_ID, {
+				data: JSON.stringify(fileData),
+				name: 'new name'
+			}, config);
 		}
 		request.then(function(data) {
 			if (NEW_PROJECT) {
-				P_ID = parseFloat(data);
+				console.log('created');
+				P_ID = data.data.id;
 				NEW_PROJECT = false;
+			} else {
+				console.log('updated');
 			}
 		}).catch(function(err) {
 			console.log(err);
