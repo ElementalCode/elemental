@@ -11,6 +11,7 @@
     <script src="{% static 'js/vendor/jszip.min.js' %}"></script>
     <script src="{% static 'js/vendor/filesaver.min.j' %}s"></script>
     <script src="{% static 'js/vendor/cssjson.js' %}"></script>
+    <script src="{% static 'js/vendor/axios.min.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
     <script src="{% static 'js/htmljson.js' %}"></script>
     <script src="{% static 'js/blockFilter.js' %}"></script>
@@ -53,13 +54,14 @@
               <li id="saveButton">Find</li>
             </ul>
         </div>
-        <div class="menu" id="shareMenu">
-          <span class="menuTitle">Share</span>
-            <ul class="menuContents">
-              <li id="undoButton">Make Public</li>
-              <li id="redoButton">Set Description</li>
-            </ul>
-        </div>
+        {% if request.user.is_authenticated %}
+          <div class="menu" id="shareMenu">
+            <span class="menuTitle">Share</span>
+              <ul class="menuContents">
+                <li id="saveButton">Save</li>
+              </ul>
+          </div>
+        {% endif %}
       </div>
       <!--
       Removing the option of "advanced mode". Leaving it commented just in case, but I don't think we'll be using it.
@@ -161,24 +163,6 @@
             <ul class="c-wrapper e-body">
                 <li class="c-header">&lt;body&gt;</li>
                 <ul class="c-content">
-                    <li class="stack e-img">&lt;img src="<span contenteditable='true' class="script-input src" value="bring-back-breadfish.gif"></span>"&gt;</li>
-                    <li class="stack e-img">&lt;img src="<span contenteditable='true' class="script-input src" value="bring-back-breadfish.gif"></span>"&gt;</li>
-                    <ul class="c-wrapper e-div">
-                        <li class="c-header">div</li>
-                        <ul class="c-content">
-                          <li class='stack e-text'><span contenteditable='true' class="script-input text">breadfish.gif</span></li>
-                          <ul class="c-wrapper e-div">
-                            <li class="c-header">div</li>
-                            <ul class="c-content">
-                              <li class='stack e-text'><span contenteditable='true' class="script-input text">breadfish.gif</span></li>
-                            </ul>
-                            <li class="c-footer">&nbsp;</li>
-                          </ul>
-                          <li class='stack e-text'><span contenteditable='true' class="script-input text">breadfish.gif</span></li>
-                        </ul>
-                        <li class="c-footer">&nbsp;</li>
-                    </ul>
-                    <li class="stack e-img">&lt;img src="<span contenteditable='true' class="script-input src">breadfish.gif</span>"&gt;</li>
                 </ul>
                 <li class="c-footer">&lt;/body&gt;</li>
             </ul>
@@ -191,5 +175,18 @@
   <script src="{% static 'js/blocks.js' %}"></script>
   <script src="{% static 'js/block2json.js' %}"></script>
   <script src="{% static 'js/fileManagement.js' %}"></script>
+  {% if request.user.is_authenticated %}
+    <script>
+      var CSRF_TOKEN = '{{ csrf_token }}';
+      {% if new_project %}
+        var NEW_PROJECT = true;
+        var P_ID = undefined;
+      {% else %}
+        var NEW_PROJECT = false;
+        var P_ID; // set this...
+      {% endif %}
+    </script>
+    <script src="{% static 'js/siteIntegrations.js' %}"></script>
+  {% endif %}
   </body>
 </html>
