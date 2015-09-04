@@ -27,8 +27,24 @@
     </div>
 
     <!-- BLOCK ATTRIBUTE DROPDOWN - DEFAULTS TO HIDDEN, REMOVE THIS IF YOU WANT TO SEE IT -->
-    <div class="attributeDropdown hidden" id="blockAttributeDropdown">
-      <!-- STUFF IN HERE -->
+    <div class="attributeDropdown" id="blockAttributeDropdown">
+      <div class="searchContainer">
+        <input type="text" class="inlineSearch" id="propSearch">
+      </div>
+      <div class="scroll-up" id="attributeScrollUp">
+        <div class="upArrow"></div>
+      </div>
+      <ul class="attribute-results">
+        <li>class</li>
+        <li>id</li>
+        <li>etc...</li>
+        <li>asdf</li>
+        <li>gh</li>
+        <li>jkl;</li>
+      </ul>
+      <div class="scroll-down" id="attributeScrollUp">
+        <div class="downArrow"></div>
+      </div>
     </div>
 
     <div class="topBar">
@@ -64,14 +80,6 @@
             </ul>
         </div>
       </div>
-      <!--
-      Removing the option of "advanced mode". Leaving it commented just in case, but I don't think we'll be using it.
-      
-      <div class="advanceWrap farRight">
-        Advanced Mode
-        <input type="checkbox" name="advanceToggle" id="advanceToggle" class="fancyCheck"/><label for="advanceToggle"></label>
-      </div>
-      -->
     </div>
     <div class="mainArea">
       <div class="leftSide">
