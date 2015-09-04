@@ -19,3 +19,8 @@ from apps.accounts.mixins import UnbannedUserMixin
 
 class ProjectEdit(UnbannedUserMixin, TemplateView):
 	template_name = 'editor.html'
+
+	def get_context_data(self, **kwargs):
+		context = super(ProjectEdit, self).get_context_data(**kwargs)
+		context['new_project'] = True
+		return context
