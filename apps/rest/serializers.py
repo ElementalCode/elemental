@@ -14,6 +14,10 @@ class ProjectSerializer(serializers.ModelSerializer):
 
 class ProjectCreateSerializer(serializers.ModelSerializer):
 
+    def create(self, kwargs):
+        kwargs['user'] = self.context['request'].user
+        return Project.objects.create(**kwargs)
+
     class Meta:
         model = Project
-        fields = ('user', 'data', 'name', )
+        fields = ('data', 'name', )

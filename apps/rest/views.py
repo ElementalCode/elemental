@@ -9,7 +9,7 @@ from django.views.generic import TemplateView, ListView
 from django.views.generic.base import View
 
 from rest_framework.response import Response
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.permissions import IsAuthenticated
 
 from apps.projects.models import Project
@@ -33,26 +33,34 @@ class ProjectDetail(SessionAuthentication, generics.RetrieveUpdateDestroyAPIView
         p.deleted = True
         p.save()
 
+class ProjectCreate(SessionAuthentication, TokenAuthentication, generics.CreateAPIView):
+    queryset = Project.objects.all()
+    serializer_class = ProjectCreateSerializer
+    authentication_classes = (SessionAuthentication, TokenAuthentication, )
+    permission_classes = (IsAuthenticated, )
 
-class ProjectCreate(LoggedInRequiredMixin, View): # required: data, name
 
-    def post(self, request, *args, **kwargs):
+# class ProjectCreate(LoggedInRequiredMixin, View): # required: data, name
 
-        def is_json(myjson):
-            try:
-                json_object = json.loads(myjson)
-            except ValueError, e:
-                return False
-            return True
+#     def post(self, request, *args, **kwargs):
+#         print request.POST
 
-        project = Project.objects.get(id=kwargs['pk'])
-        get = request.POST.get
+#         def is_json(myjson):
+#             try:
+#                 json_object = json.loads(myjson)
+#             except ValueError, e:
+#                 return False
+#             return True
 
-        if is_json(get('project_data')) and get('name'):
-            p = Project.objects.create(
-                    data=get('project_data'),
-                    name=get('name'),
-                    user=request.user
-                )
+#         project = Project.objects.get(id=kwargs['pk'])
+#         get = request.POST.get
 
-        return HttpResponse('')
+#         if is_json(get('project_data')) and get('name'):
+#             p = Project.objects.create(
+#                     data=get('project_data'),
+#                     name=get('name'),
+#                     user=request.user
+#                 )
+#             return HttpResponse(p.id)
+
+#         return HttpResponse('error')
