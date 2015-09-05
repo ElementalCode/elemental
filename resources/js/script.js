@@ -61,5 +61,5 @@ interact('.filePane')
 
 window.onload = function() {
   blockFilterOnload();
-  attrOnload();
+  // attrOnload();
 }
