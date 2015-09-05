@@ -35,8 +35,9 @@ class ProjectEdit(UnbannedUserMixin, TemplateView):
 
     def dispatch(self, request, *args, **kwargs):
         project = Project.objects.get(id=self.kwargs['pk'])
-        if not project.user.can_share_projects or not project.shared or project.deleted:
-            return redirect('/') # should be 404...
+        if project.user != request.user:
+            if not project.user.can_share_projects or not project.shared or project.deleted:
+                return redirect('/') # should be 404...
         return super(ProjectEdit, self).dispatch(request)
 
     def get_context_data(self, **kwargs):
