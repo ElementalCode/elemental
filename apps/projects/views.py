@@ -15,12 +15,25 @@ from django.views.generic.edit import (FormView, UpdateView, CreateView,
                                        DeleteView)
 
 from apps.accounts.mixins import UnbannedUserMixin
+from .models import Project
 
+
+class ProjectCreate(UnbannedUserMixin, TemplateView):
+    template_name = 'editor.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(ProjectEdit, self).get_context_data(**kwargs)
+        context['new_project'] = True
+        return context
+
+
+# class ProjectView(UnbannedUserMixin, TemplateView):
+#     template_name = 'template.html'
 
 class ProjectEdit(UnbannedUserMixin, TemplateView):
-	template_name = 'editor.html'
+    template_name = 'editor.html'
 
-	def get_context_data(self, **kwargs):
-		context = super(ProjectEdit, self).get_context_data(**kwargs)
-		context['new_project'] = True
-		return context
+    def get_context_data(self, **kwargs):
+        context = super(ProjectEdit, self).get_context_data(**kwargs)
+        context['project'] = Project.objects.get(id=kwargs['pk'])
+        return context
