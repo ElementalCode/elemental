@@ -58,3 +58,8 @@ interact('.filePane')
   }).on('mouseup', function(event) {
     document.querySelector('.previewBody').style['pointer-events'] = '';
   });
+
+window.onload = function() {
+  blockFilterOnload();
+  attrOnload();
+}

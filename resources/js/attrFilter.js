@@ -1,4 +1,4 @@
-var filter = {
+var attrFilter = {
   type: 'search', // 'palette' or 'search'
   selectedPalette: 1,
   searchString: "im",
@@ -6,7 +6,7 @@ var filter = {
     "text",
     "media"
   ],
-  getFilteredBlocks: function(){
+  getFilteredAttributes: function(){
     var matching = [];
     for(i = 0; i < filter.blocks.length; i++) {
       if (filter.type == 'palette') {
@@ -109,20 +109,6 @@ function handlePaletteClick() {
   filter.displayFilteredBlocks();
 }
 
-function blockFilterOnload() { // ew multiple onloads
-  var searchBarElement = document.getElementById("searchBar");
-  
-  // Overkill? Maybe. Better safe than sorry.
-  //searchBarElement.onkeypress = handleSearchChange;
-  searchBarElement.onkeyup = handleSearchChange;
-  searchBarElement.onpaste = handleSearchChange;
-  
-  
-  var paletteButtons = document.getElementsByClassName("paletteOptionWrap");
-  for(var i = 0; i < paletteButtons.length; i++) {
-      var buttonElem = paletteButtons[i];
-      buttonElem.onclick = handlePaletteClick;
-  }
-  
-  filter.displayFilteredBlocks();
-};
+function attrOnload() {
+
+}
