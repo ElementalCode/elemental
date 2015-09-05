@@ -183,7 +183,27 @@
         var P_ID = undefined;
       {% else %}
         var NEW_PROJECT = false;
-        var P_ID; // set this...
+        var P_ID = {{ project.id }}; // set this...
+        var P_DATA = JSON.parse('{{ project.data|escapejs }}');
+
+        // first, set the json to the new json
+        fileData = P_DATA;
+
+        // then, set the file selectors
+        var newHtml = '';
+        var first = true;
+        for (file in P_DATA) {
+          newHtml += '<div class="file' + (first ? ' selected' : '') + '"><div class="file-name" data-file="' + file + '">' + file + '</div></div>';
+          if (first) {
+            first = false;
+            currentFile = file;
+          }
+        }
+        newHtml += '<div class="add-file"><div class="file-name">+</div></div>';
+        $('.filePane')[0].innerHTML = newHtml;
+
+        // finally, re-render
+        loadFile(currentFile);
       {% endif %}
     </script>
     <script src="{% static 'js/siteIntegrations.js' %}"></script>
