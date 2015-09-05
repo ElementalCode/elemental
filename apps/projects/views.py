@@ -7,7 +7,7 @@ from django.contrib.sites.models import RequestSite
 from django.core import signing
 from django.core.mail import send_mail
 from django.core.urlresolvers import reverse, reverse_lazy
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
 from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, ListView
 from django.views.generic.base import View
@@ -33,7 +33,13 @@ class ProjectCreate(UnbannedUserMixin, TemplateView):
 class ProjectEdit(UnbannedUserMixin, TemplateView):
     template_name = 'editor.html'
 
+    def dispatch(self, request, *args, **kwargs):
+        project = Project.objects.get(id=self.kwargs['pk'])
+        if not project.user.can_share_projects or not project.shared or project.deleted:
+            return redirect('/') # should be 404...
+        return super(ProjectEdit, self).dispatch(request)
+
     def get_context_data(self, **kwargs):
         context = super(ProjectEdit, self).get_context_data(**kwargs)
-        context['project'] = Project.objects.get(id=kwargs['pk'])
+        context['project'] = Project.objects.get(id=self.kwargs['pk'])
         return context
