@@ -2,6 +2,8 @@ var ATTRIBUTE_MENU = document.getElementById('blockAttributeDropdown');
 var ATTRIBUTE_SEARCH = document.getElementById('propSearch');
 var ATTRIBUTE_RESULTS = document.getElementById('attributeResults');
 
+var CLICKED_ATTR;
+
 SCRIPTING_AREA.addEventListener('click', function(ev) {
 	var el = ev.target;
 	if (ev.target.classList.contains('add-attr')) {
@@ -25,8 +27,10 @@ SCRIPTING_AREA.addEventListener('click', function(ev) {
 		ATTRIBUTE_MENU.classList.remove('hidden');
 		ATTRIBUTE_MENU.style.top = getOffset(el).top + el.offsetHeight + 'px';
         ATTRIBUTE_MENU.style.left = getOffset(el).left + 'px';
+        CLICKED_ATTR = ev.target;
 	} else {
 		ATTRIBUTE_MENU.classList.add('hidden');
+		CLICKED_ATTR = null;
 	}
 });
 
@@ -49,3 +53,8 @@ function attrSearch(ev) {
 
 ATTRIBUTE_SEARCH.addEventListener('keyup', attrSearch);
 ATTRIBUTE_SEARCH.addEventListener('paste', attrSearch);
+
+ATTRIBUTE_RESULTS.addEventListener('click', function(ev) {
+	var attr = ev.target.textContent;
+	CLICKED_ATTR.textContent = attr;
+});
