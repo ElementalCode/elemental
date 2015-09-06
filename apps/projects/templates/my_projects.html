@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% load staticfiles %}
+
+{% block content %}
+    my stuff
+    {% for p in projects %}
+        <div><a href="{% url 'projects:edit-project' pk=p.id %}">{{ p.name }}</a></div>
+    {% endfor %}
+{% endblock %}
