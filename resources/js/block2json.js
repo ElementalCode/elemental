@@ -71,11 +71,15 @@ function getWrapperAttrs(element) {
 	element = element.children[0];
 	var attrs = {};
 	// will need refactor!
-	// var attrElems = toArr(element.children);
-	// for (var i = 0; i < attrElems.length; i++) {
-	// 	var attr = getAttrNames(attrElems[i].className);
-	// 	attrs[attr] = encodeEntities(attrElems[i].textContent);
-	// }
+	var attrElems = toArr(element.children);
+	for (var i = 0; i < attrElems.length; i++) {
+		var attrHolder = attrElems[i];
+		if (attrHolder.classList && attrHolder.classList.contains('attr-holder')) {
+			var attrName = attrHolder.children[0].textContent;
+			var attrValue = attrHolder.children[1].textContent;
+			attrs[attrName] = attrValue;
+		}
+	}
 	return attrs;
 }
 
