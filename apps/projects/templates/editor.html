@@ -59,6 +59,17 @@
             <span class="menuTitle">Share</span>
               <ul class="menuContents">
                 <li id="saveButton">Save</li>
+                {% if request.user.can_share_projects %}
+                  {% if project %}
+                    {% if project.shared %}
+                      <li id="shareButton">Unshare</li>
+                    {% else %}
+                      <li id="shareButton">Share</li>
+                    {% endif %}
+                  {% else %}
+                    <li id="shareButton">Share</li>
+                  {% endif %}
+                {% endif %}
               </ul>
           </div>
         {% endif %}
@@ -178,6 +189,21 @@
   {% if request.user.is_authenticated %}
     <script>
       var CSRF_TOKEN = '{{ csrf_token }}';
+      {% if request.user.can_share_projects %}
+        var CAN_SHARE = true;
+        {% if project %}
+          {% if project.shared %}
+            var SHARED = true;
+          {% else %}
+            var SHARED = false;
+          {% endif %}
+        {% else %}
+          var SHARED = false;
+        {% endif %}
+      {% else %}
+        var CAN_SHARE = false;
+      {% endif %}
+
       {% if new_project %}
         var NEW_PROJECT = true;
         var P_ID = undefined;
