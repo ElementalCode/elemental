@@ -127,3 +127,54 @@ body {
 .c-wrapper.zebra > li, .c-wrapper.zebra > ul {
     background:#F45D5D;
 }
+
+.remove-attr {
+    display:inline-block;
+    width:0px;
+    height:0px;
+    border:7px solid transparent;
+    border-right-color:black;
+    margin-left:-4px;
+    margin-right:2px;
+    cursor:pointer;
+}
+.add-attr {
+    display:inline-block;
+    width:0px;
+    height:0px;
+    border:7px solid transparent;
+    border-left-color:black;
+    margin-left:2px;
+    margin-right:-4px;
+    cursor:pointer;
+}
+
+.attr-holder {
+    background-color: orange;
+    border-radius: 10px;
+    box-sizing: border-box;
+    display: inline-block;
+    padding: 3px;
+    margin-right: 6px;
+    .attr-dropdown,
+    .attr-input {
+        border-radius: 10px;
+        min-width: 30px;
+        display: inline-block;
+        margin:0px 3px;
+        padding: 0px 4px;
+        outline:none;
+    }
+    .attr-input {
+        background-color: white;
+        color: black;
+    }
+    .attr-dropdown {
+        background-color: white;
+        color:black;
+        &:empty {
+            content: ' ';
+        }
+        cursor:text;
+    }
+}
