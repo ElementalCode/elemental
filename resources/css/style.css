@@ -124,22 +124,48 @@ body {
 .c-wrapper.zebra > li, .c-wrapper.zebra > ul {
   background: #F45D5D; }
 
+.remove-attr {
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border: 7px solid transparent;
+  border-right-color: black;
+  margin-left: -4px;
+  margin-right: 2px;
+  cursor: pointer; }
+
+.add-attr {
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border: 7px solid transparent;
+  border-left-color: black;
+  margin-left: 2px;
+  margin-right: -4px;
+  cursor: pointer; }
+
 .attr-holder {
   background-color: orange;
   border-radius: 10px;
   box-sizing: border-box;
   display: inline-block;
-  padding: 3px; }
+  padding: 3px;
+  margin-right: 6px; }
   .attr-holder .attr-dropdown,
   .attr-holder .attr-input {
     border-radius: 10px;
-    min-width: 50px;
-    display: inline-block; }
+    min-width: 30px;
+    display: inline-block;
+    margin: 0px 3px;
+    padding: 0px 4px;
+    outline: none; }
   .attr-holder .attr-input {
     background-color: white;
     color: black; }
   .attr-holder .attr-dropdown {
-    background-color: gray; }
+    background-color: white;
+    color: black;
+    cursor: text; }
     .attr-holder .attr-dropdown:empty {
       content: ' '; }
 
@@ -166,8 +192,6 @@ body {
   background-color: #63B9D6;
   z-index: 100;
   overflow: hidden;
-  top: 350px;
-  right: 150px;
   width: 200px;
   height: 200px; }
 
