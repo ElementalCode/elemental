@@ -9,11 +9,11 @@
     <script src="{% static 'js/vendor/htmlparser.js' %}"></script>
     <script src="{% static 'js/vendor/interact.min.js' %}"></script>
     <script src="{% static 'js/vendor/jszip.min.js' %}"></script>
-    <script src="{% static 'js/vendor/filesaver.min.j' %}s"></script>
+    <script src="{% static 'js/vendor/filesaver.min.js' %}"></script>
     <script src="{% static 'js/vendor/cssjson.js' %}"></script>
     <script src="{% static 'js/vendor/axios.min.js' %}"></script>
+    <script src="{% static 'js/vendor/htmljson.js' %}"></script>
     <script src="{% static 'js/script.js' %}"></script>
-    <script src="{% static 'js/htmljson.js' %}"></script>
     <script src="{% static 'js/blockFilter.js' %}"></script>
   </head>
   <body>
@@ -27,6 +27,25 @@
     <div class="context-menu scripts">
       <div class="menu-item" data-action="duplicate-script">Duplicate</div>
       <div class="menu-item" data-action="delete-script">Rename</div>
+    </div>
+
+    <!-- BLOCK ATTRIBUTE DROPDOWN - DEFAULTS TO HIDDEN, REMOVE THIS IF YOU WANT TO SEE IT -->
+    <div class="attributeDropdown hidden" id="blockAttributeDropdown">
+      <div class="searchContainer">
+        <input type="text" class="inlineSearch" id="propSearch">
+      </div>
+      <div class="scroll-up" id="attributeScrollUp">
+        <div class="upArrow"></div>
+      </div>
+      <ul class="attribute-results" id="attributeResults">
+        <li>class</li>
+        <li>id</li>
+        <li>src</li>
+        <li>href</li>
+      </ul>
+      <div class="scroll-down" id="attributeScrollUp">
+        <div class="downArrow"></div>
+      </div>
     </div>
 
     <div class="topBar">
@@ -54,7 +73,7 @@
               <li id="saveButton">Find</li>
             </ul>
         </div>
-        {% if request.user.is_authenticated %}
+        {% if request.user.is_authenticated and True %}
           <div class="menu" id="shareMenu">
             <span class="menuTitle">Share</span>
               <ul class="menuContents">
@@ -74,14 +93,6 @@
           </div>
         {% endif %}
       </div>
-      <!--
-      Removing the option of "advanced mode". Leaving it commented just in case, but I don't think we'll be using it.
-      
-      <div class="advanceWrap farRight">
-        Advanced Mode
-        <input type="checkbox" name="advanceToggle" id="advanceToggle" class="fancyCheck"/><label for="advanceToggle"></label>
-      </div>
-      -->
     </div>
     <div class="mainArea">
       <div class="leftSide">
@@ -184,6 +195,7 @@
     </div>
   <script src="{% static 'js/files.js' %}"></script>
   <script src="{% static 'js/blocks.js' %}"></script>
+  <script src="{% static 'js/blockAttributes.js' %}"></script>
   <script src="{% static 'js/block2json.js' %}"></script>
   <script src="{% static 'js/fileManagement.js' %}"></script>
   {% if request.user.is_authenticated %}
@@ -232,7 +244,9 @@
         loadFile(currentFile);
       {% endif %}
     </script>
-    <script src="{% static 'js/siteIntegrations.js' %}"></script>
+    {% if True %}
+      <script src="{% static 'js/siteIntegrations.js' %}"></script>
+    {% endif %}
   {% endif %}
   </body>
 </html>
