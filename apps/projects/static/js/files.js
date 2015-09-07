@@ -98,9 +98,21 @@ function getBlockHtml(el) {
 }
 
 function generateWrapperBlocks(jsonData) {
+    var attrInputs = [];
+    for (attr in jsonData.attr) {
+        console.log(attr);
+        attrInputs.push([
+            '<span class="attr-holder">',
+                '<span class="attr-dropdown">' + attr + '</span>',
+                '=',
+                '<span class="attr-input" contenteditable="true">' + jsonData.attr[attr] + '</span>',
+            '</span>'
+        ].join(''));
+    }
+    attrInputs = attrInputs.join('');
     var wrapperHtml = [
         '<ul class="c-wrapper e-' + jsonData.tag + '">', // going to have to add the attributes in here too...
-            '<li class="c-header">' + jsonData.tag + '</li>',
+            '<li class="c-header">' + jsonData.tag + attrInputs + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
             '<ul class="c-content">',
     ];
 
