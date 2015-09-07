@@ -75,7 +75,7 @@ var filter = {
     },
     {
       name: 'div',
-      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>div with class(es) <span contenteditable='true' class='script-input class'></span></li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
+      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>div <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
       tags: ['div', 'divider', 'separator'],
       palette: 0
     },
@@ -109,7 +109,7 @@ function handlePaletteClick() {
   filter.displayFilteredBlocks();
 }
 
-window.onload = function() {
+function blockFilterOnload() { // ew multiple onloads
   var searchBarElement = document.getElementById("searchBar");
   
   // Overkill? Maybe. Better safe than sorry.
