@@ -1,3 +1,5 @@
+from django.core.exceptions import PermissionDenied
+
 from rest_framework import routers, serializers, viewsets
 
 from apps.projects.models import Project
@@ -13,8 +15,13 @@ class ProjectSerializer(serializers.ModelSerializer):
         return obj.user.username
 
     def update(self, instance, validated_data):
-        print self.context['request']
-        return instance
+        get = validated_data.get
+        if self.context['request'].user == instance.user:
+            print get('data')
+            instance.data = get('data', instance.data)
+            instance.save()
+            return instance
+        raise PermissionDenied
 
 
 class ProjectCreateSerializer(serializers.ModelSerializer):
