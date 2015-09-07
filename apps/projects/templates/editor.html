@@ -73,7 +73,7 @@
               <li id="saveButton">Find</li>
             </ul>
         </div>
-        {% if request.user.is_authenticated and True %}
+        {% if request.user.is_authenticated and request.user == project.user %}
           <div class="menu" id="shareMenu">
             <span class="menuTitle">Share</span>
               <ul class="menuContents">
@@ -244,7 +244,7 @@
         loadFile(currentFile);
       {% endif %}
     </script>
-    {% if True %}
+    {% if request.user == project.user %}
       <script src="{% static 'js/siteIntegrations.js' %}"></script>
     {% endif %}
   {% endif %}
