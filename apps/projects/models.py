@@ -8,9 +8,11 @@ from django.core.mail import send_mail
 from apps.accounts.models import ElementalUser
 
 class Project(models.Model):
-    name = models.CharField(_('name'), max_length=50, blank=True)
+    name = models.CharField(_('name'), max_length=50)
     user = models.ForeignKey(ElementalUser)
     shared = models.BooleanField(default=False)
+    data = models.TextField()
+    deleted = models.BooleanField(default=False)
 
     def __unicode__(self):
         return self.name
