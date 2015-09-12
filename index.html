@@ -9,9 +9,19 @@
     <script src="resources/js/vendor/jszip.min.js"></script>
     <script src="resources/js/vendor/filesaver.min.js"></script>
     <script src="resources/js/vendor/cssjson.js"></script>
+    <script src="resources/js/vendor/htmljson.js"></script>
     <script src="resources/js/script.js"></script>
-    <script src="resources/js/htmljson.js"></script>
     <script src="resources/js/blockFilter.js"></script>
+    <script>
+      console.log(
+        "    ________                          __        ________          __   \n" +
+        "   / ____/ /__  ____ ___  ___  ____  / /_____ _/ / ____/___  ____/ /__  \n" +
+        "  / __/ / / _ \\/ __ `__ \\/ _ \\/ __ \\/ __/ __ `/ / /   / __ \\/ __  / _  \n" +
+        " / /___/ /  __/ / / / / /  __/ / / / /_/ /_/ / / /___/ /_/ / /_/ /  __/ \n" +
+        "/_____/_/\\___/_/ /_/ /_/\\___/_/ /_/\\__/\\__,_/_/\\____/\\____/\\__,_/\\___/  \n" +
+        "\n"
+      );
+    </script>
   </head>
   <body>
     <!-- PUT THE CUSTOM CONTEXT MENUS IN HERE -->
@@ -24,6 +34,25 @@
     <div class="context-menu scripts">
       <div class="menu-item" data-action="duplicate-script">Duplicate</div>
       <div class="menu-item" data-action="delete-script">Rename</div>
+    </div>
+
+    <!-- BLOCK ATTRIBUTE DROPDOWN - DEFAULTS TO HIDDEN, REMOVE THIS IF YOU WANT TO SEE IT -->
+    <div class="attributeDropdown hidden" id="blockAttributeDropdown">
+      <div class="searchContainer">
+        <input type="text" class="inlineSearch" id="propSearch">
+      </div>
+      <div class="scroll-up" id="attributeScrollUp">
+        <div class="upArrow"></div>
+      </div>
+      <ul class="attribute-results" id="attributeResults">
+        <li>class</li>
+        <li>id</li>
+        <li>src</li>
+        <li>href</li>
+      </ul>
+      <div class="scroll-down" id="attributeScrollUp">
+        <div class="downArrow"></div>
+      </div>
     </div>
 
     <div class="topBar">
@@ -59,14 +88,6 @@
             </ul>
         </div>
       </div>
-      <!--
-      Removing the option of "advanced mode". Leaving it commented just in case, but I don't think we'll be using it.
-      
-      <div class="advanceWrap farRight">
-        Advanced Mode
-        <input type="checkbox" name="advanceToggle" id="advanceToggle" class="fancyCheck"/><label for="advanceToggle"></label>
-      </div>
-      -->
     </div>
     <div class="mainArea">
       <div class="leftSide">
@@ -159,24 +180,6 @@
             <ul class="c-wrapper e-body">
                 <li class="c-header">&lt;body&gt;</li>
                 <ul class="c-content">
-                    <li class="stack e-img">&lt;img src="<span contenteditable='true' class="script-input src" value="bring-back-breadfish.gif"></span>"&gt;</li>
-                    <li class="stack e-img">&lt;img src="<span contenteditable='true' class="script-input src" value="bring-back-breadfish.gif"></span>"&gt;</li>
-                    <ul class="c-wrapper e-div">
-                        <li class="c-header">div</li>
-                        <ul class="c-content">
-                          <li class='stack e-text'><span contenteditable='true' class="script-input text">breadfish.gif</span></li>
-                          <ul class="c-wrapper e-div">
-                            <li class="c-header">div</li>
-                            <ul class="c-content">
-                              <li class='stack e-text'><span contenteditable='true' class="script-input text">breadfish.gif</span></li>
-                            </ul>
-                            <li class="c-footer">&nbsp;</li>
-                          </ul>
-                          <li class='stack e-text'><span contenteditable='true' class="script-input text">breadfish.gif</span></li>
-                        </ul>
-                        <li class="c-footer">&nbsp;</li>
-                    </ul>
-                    <li class="stack e-img">&lt;img src="<span contenteditable='true' class="script-input src">breadfish.gif</span>"&gt;</li>
                 </ul>
                 <li class="c-footer">&lt;/body&gt;</li>
             </ul>
@@ -187,6 +190,7 @@
     </div>
   <script src='resources/js/files.js'></script>
   <script src='resources/js/blocks.js'></script>
+  <script src='resources/js/blockAttributes.js'></script>
   <script src='resources/js/block2json.js'></script>
   <script src='resources/js/fileManagement.js'></script>
   </body>
