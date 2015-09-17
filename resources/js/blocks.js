@@ -209,7 +209,9 @@ function _delete(ev) {
            item.classList.remove('drop-area');
        }
     });
-    selected.parentNode.removeChild(selected);
+    if (selected) { // TODO: make this not ugly
+        selected.parentNode.removeChild(selected);
+    }
     selected = null;
 }
 
