@@ -77,7 +77,7 @@ function getWrapperAttrs(element) {
 		if (attrHolder.classList && attrHolder.classList.contains('attr-holder')) {
 			var attrName = attrHolder.children[0].textContent;
 			var attrValue = attrHolder.children[1].textContent;
-			attrs[attrName] = attrValue;
+			attrs[encodeEntities(attrName)] = encodeEntities(attrValue);
 		}
 	}
 	return attrs;
