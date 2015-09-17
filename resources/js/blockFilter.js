@@ -51,25 +51,25 @@ var filter = {
     /* Blocks for palette 0 - text */
     {
       name: 'h1',
-      htmlString: "<li class='stack e-h1'>heading 1 with text <span contenteditable='true' class='script-input text'>An Important Heading</span></li>",
+      htmlString: "<li class='stack e-h1'>heading 1 with text <span contenteditable='true' class='script-input text'>An Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['heading', 'h1'],
       palette: 0
     },
     {
       name: 'h2',
-      htmlString: "<li class='stack e-h2'>heading 2 with text <span contenteditable='true' class='script-input text'>A Less Important Heading</span></li>",
+      htmlString: "<li class='stack e-h2'>heading 2 with text <span contenteditable='true' class='script-input text'>A Less Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['heading', 'h2'],
       palette: 0
     },
     {
       name: 'h3',
-      htmlString: "<li class='stack e-h3'>heading 3 with text <span contenteditable='true' class='script-input text'>An Even Less Important Heading</span></li>",
+      htmlString: "<li class='stack e-h3'>heading 3 with text <span contenteditable='true' class='script-input text'>An Even Less Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['heading', 'h3'],
       palette: 0
     },
     {
       name: 'a',
-      htmlString: "<li class='stack e-a'>link to <span contenteditable='true' class='script-input href'>https://google.com/</span> with text <span contenteditable='true' class='script-input text'>link</span></li>",
+      htmlString: "<li class='stack e-a'>link with text <span contenteditable='true' class='script-input text'>link</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['link', 'a'],
       palette: 0
     },
@@ -89,7 +89,7 @@ var filter = {
     /* Blocks for palette 1 - Media */ 
     {
       name: 'img',
-      htmlString: "<li class='stack e-img'>image with source <span contenteditable='true' class='script-input src'>myImg.gif</span> and class(es) <span contenteditable='true' class='script-input class'></span></li>",
+      htmlString: "<li class='stack e-img'>image <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></span></li>",
       tags: ['image', 'img', 'picture'],
       palette: 1
     },
