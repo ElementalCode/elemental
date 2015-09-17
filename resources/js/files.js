@@ -91,23 +91,26 @@ function getBlockHtml(el) {
     }
     attrInputs = attrInputs.join('');
 
-    for (var i = 0; i < children.length; i++) {
-        var child = children[i];
-        var classes = child.className.split(' ');
-        if (arrContainsFromArr(classes, attrNames)) {
-            var attrName = classes[1]; // should just be the second class out of two...  please keep it consistent!
-            if (el.attr[attrName]) {
-                child.textContent = el.attr[attrName];
-            } else {
-                child.textContent = '';
+    if (el.tag === "") {
+        for (var i = 0; i < children.length; i++) {
+            var child = children[i];
+            var classes = child.className.split(' ');
+            if (arrContainsFromArr(classes, attrNames)) {
+                var attrName = classes[1]; // should just be the second class out of two...  please keep it consistent!
+                if (el.attr[attrName]) {
+                    child.textContent = el.attr[attrName];
+                } else {
+                    child.textContent = '';
+                }
+            } else if (classes.indexOf(textInput) > -1) {
+                child.textContent = el.text;
             }
-        } else if (classes.indexOf(textInput) > -1) {
-            child.textContent = el.text;
         }
+    } else {
+        // ugly solution - think of something better...
+        var tmpTxt = parsedHtml.textContent;
+        parsedHtml.innerHTML = encodeEntities(tmpTxt) + attrInputs + "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>";
     }
-
-    var tmpTxt = parsedHtml.textContent;
-    parsedHtml.innerHTML = encodeEntities(tmpTxt) + attrInputs + "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>";
 
     return parsedHtml.outerHTML;
 }
