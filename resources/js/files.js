@@ -79,6 +79,18 @@ function getBlockHtml(el) {
     var parsedHtml = stringToHtml(html);
     var children = toArr(parsedHtml.children);
 
+    var attrInputs = [];
+    for (attr in el.attr) {
+        attrInputs.push([
+            '<span class="attr-holder">',
+                '<span class="attr-dropdown">' + attr + '</span>',
+                '=',
+                '<span class="attr-input" contenteditable="true">' + el.attr[attr] + '</span>',
+            '</span>'
+        ].join(''));
+    }
+    attrInputs = attrInputs.join('');
+
     for (var i = 0; i < children.length; i++) {
         var child = children[i];
         var classes = child.className.split(' ');
@@ -94,13 +106,15 @@ function getBlockHtml(el) {
         }
     }
 
+    var tmpTxt = parsedHtml.textContent;
+    parsedHtml.innerHTML = encodeEntities(tmpTxt) + attrInputs + "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>";
+
     return parsedHtml.outerHTML;
 }
 
 function generateWrapperBlocks(jsonData) {
     var attrInputs = [];
     for (attr in jsonData.attr) {
-        console.log(attr);
         attrInputs.push([
             '<span class="attr-holder">',
                 '<span class="attr-dropdown">' + attr + '</span>',
