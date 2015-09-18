@@ -4,8 +4,6 @@ from django.test import TestCase, override_settings, Client, RequestFactory
 
 from .models import ElementalUser
 
-# Create your tests here.
-
 class AccountTestCases(TestCase):
 
     @override_settings(AUTH_USER_MODEL=settings.AUTH_USER_MODEL)
@@ -15,14 +13,14 @@ class AccountTestCases(TestCase):
     @override_settings(AUTH_USER_MODEL=settings.AUTH_USER_MODEL)
     def test_user_registration(self):
         data = {
-            'username': 'testguy',
+            'username': 'testguy2',
             'password1': 'supersecurepassword',
             'password2': 'supersecurepassword'
         }
         response = self.client.post(reverse('register'), data)
         self.assertEqual(response.status_code, 302)
         try:
-            user = ElementalUser.objects.get(username='testguy')
+            user = ElementalUser.objects.get(username='testguy2')
         except:
             user = None
         self.assertIsNotNone(user)
