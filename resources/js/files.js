@@ -55,9 +55,9 @@ function arrContainsFromArr(arr1, arr2) {
 var fileData = {};
 var currentFile = 'index.html';
 
-var stackElements = ['e-img', 'e-a', 'e-h1', 'e-h2', 'e-h3', 'e-text'];
+var stackElements = ['e-img', 'e-text'];
 var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
-var wrapperElements = ['e-div', 'e-body', ];
+var wrapperElements = ['e-div', 'e-body',  'e-a', 'e-h1', 'e-h2', 'e-h3'];
 var unnamedWrapperElements = wrapperElements.map(function(item) {
     return item.substr(2, item.length - 1);
 });
@@ -65,42 +65,51 @@ var textInput = 'text';
 
 function getBlockHtml(el) {
     // we're going to have to have the attribute text in here too somehow...
-    var html;
+    var name;
     if (el.tag) {
-        html = filter.blocks.filter(function(item) {
+        name = filter.blocks.filter(function(item) {
             return item.name == el.tag;
-        })[0].htmlString;
+        })[0].name;
     } else {
-        html = filter.blocks.filter(function(item) {
-            return item.name == 'text';
-        })[0].htmlString;
+        name = '';
     }
 
-    var parsedHtml = stringToHtml(html);
-    var children = toArr(parsedHtml.children);
+    var parsedHtml;
 
-    for (var i = 0; i < children.length; i++) {
-        var child = children[i];
-        var classes = child.className.split(' ');
-        if (arrContainsFromArr(classes, attrNames)) {
-            var attrName = classes[1]; // should just be the second class out of two...  please keep it consistent!
-            if (el.attr[attrName]) {
-                child.textContent = el.attr[attrName];
-            } else {
-                child.textContent = '';
-            }
-        } else if (classes.indexOf(textInput) > -1) {
-            child.textContent = el.text;
-        }
+    var attrInputs = [];
+    for (attr in el.attr) {
+        attrInputs.push([
+            '<span class="attr-holder">',
+                '<span class="attr-dropdown">' + attr + '</span>',
+                '=',
+                '<span class="attr-input" contenteditable="true">' + el.attr[attr] + '</span>',
+            '</span>'
+        ].join(''));
+    }
+    attrInputs = attrInputs.join('');
+
+    if (el.tag === "") {
+        parsedHtml = [
+            '<li class="stack e-text">',
+                '<span contenteditable="true" class="script-input text">' + el.text + '</span>',
+            '</li>'
+        ].join('');
+    } else {
+        parsedHtml = [
+            '<li class="stack e-' + name + '">',
+                name,
+                attrInputs,
+                "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>",
+            '</li>'
+        ].join('');
     }
 
-    return parsedHtml.outerHTML;
+    return parsedHtml;
 }
 
 function generateWrapperBlocks(jsonData) {
     var attrInputs = [];
     for (attr in jsonData.attr) {
-        console.log(attr);
         attrInputs.push([
             '<span class="attr-holder">',
                 '<span class="attr-dropdown">' + attr + '</span>',
@@ -111,8 +120,8 @@ function generateWrapperBlocks(jsonData) {
     }
     attrInputs = attrInputs.join('');
     var wrapperHtml = [
-        '<ul class="c-wrapper e-' + jsonData.tag + '">', // going to have to add the attributes in here too...
-            '<li class="c-header">' + jsonData.tag + attrInputs + ' <span class="attr-controls"><span class="remove-attr">&lt;</span><span class="add-attr">&gt;</span></span></li>',
+        '<ul class="c-wrapper e-' + jsonData.tag + '">',
+            '<li class="c-header">' + jsonData.tag + attrInputs + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
             '<ul class="c-content">',
     ];
 
