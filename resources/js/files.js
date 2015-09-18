@@ -123,7 +123,7 @@ function generateWrapperBlocks(jsonData) {
     attrInputs = attrInputs.join('');
     var wrapperHtml = [
         '<ul class="c-wrapper e-' + jsonData.tag + '">',
-            '<li class="c-header">' + jsonData.tag + attrInputs + ' <span class="attr-controls"><span class="remove-attr">&lt;</span><span class="add-attr">&gt;</span></span></li>',
+            '<li class="c-header">' + jsonData.tag + attrInputs + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
             '<ul class="c-content">',
     ];
 
