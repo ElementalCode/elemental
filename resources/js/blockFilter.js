@@ -32,7 +32,31 @@ var filter = {
     if (blocksToDisplay.length > 0) {
       blockArea.innerHTML = '';
       for(x = 0; x < blocksToDisplay.length; x++) {
-        blockArea.innerHTML += filter.blocks[blocksToDisplay[x]].htmlString;
+        var block = filter.blocks[blocksToDisplay[x]];
+        var blockString;
+        if (block.type == 'wrapper') {
+          blockString = [
+            '<ul class="c-wrapper e-' + block.name + '">',
+              '<li class="c-header">' + block.name + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
+              '<ul class="c-content">',
+              '</ul>',
+              '<li class="c-footer">&nbsp;</li>',
+            '</ul>'
+          ].join('');
+        } else {
+          if (block.name != 'text') {
+            blockString = [
+              '<li class="stack e-' + block.name + '">',
+                block.name,
+                "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>",
+              '</li>'
+            ].join('');
+          } else {
+            blockString = '<li class="stack e-text"><span contenteditable="true" class="script-input text">breadfish.gif</span></li>';
+          }
+        }
+        // blockArea.innerHTML += filter.blocks[blocksToDisplay[x]].htmlString;
+        blockArea.innerHTML += blockString;
       }
     } else {
       blockArea.innerHTML = "<span class='infoText'>No blocks were found.</span>";
@@ -51,36 +75,42 @@ var filter = {
     /* Blocks for palette 0 - text */
     {
       name: 'h1',
-      htmlString: "<li class='stack e-h1'>heading 1 with text <span contenteditable='true' class='script-input text'>An Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
+      type: 'wrapper',
+      //htmlString: "<li class='stack e-h1'>heading 1 with text <span contenteditable='true' class='script-input text'>An Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['heading', 'h1'],
       palette: 0
     },
     {
       name: 'h2',
-      htmlString: "<li class='stack e-h2'>heading 2 with text <span contenteditable='true' class='script-input text'>A Less Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
+      type: 'wrapper',
+      //htmlString: "<li class='stack e-h2'>heading 2 with text <span contenteditable='true' class='script-input text'>A Less Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['heading', 'h2'],
       palette: 0
     },
     {
       name: 'h3',
-      htmlString: "<li class='stack e-h3'>heading 3 with text <span contenteditable='true' class='script-input text'>An Even Less Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
+      type: 'wrapper',
+      //htmlString: "<li class='stack e-h3'>heading 3 with text <span contenteditable='true' class='script-input text'>An Even Less Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['heading', 'h3'],
       palette: 0
     },
     {
       name: 'a',
-      htmlString: "<li class='stack e-a'>link with text <span contenteditable='true' class='script-input text'>link</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
+      type: 'wrapper',
+      //htmlString: "<li class='stack e-a'>link with text <span contenteditable='true' class='script-input text'>link</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['link', 'a'],
       palette: 0
     },
     {
       name: 'div',
-      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>div <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
+      type: 'wrapper',
+      //htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>div <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
       tags: ['div', 'divider', 'separator'],
       palette: 0
     },
     {
       name: 'text',
+      type: 'stack',
       htmlString: "<li class='stack e-text'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>",
       tags: ['text'],
       palette: 0
@@ -89,6 +119,7 @@ var filter = {
     /* Blocks for palette 1 - Media */ 
     {
       name: 'img',
+      type: 'stack',
       htmlString: "<li class='stack e-img'>image <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></span></li>",
       tags: ['image', 'img', 'picture'],
       palette: 1
