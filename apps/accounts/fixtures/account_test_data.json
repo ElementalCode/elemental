@@ -1,0 +1,13 @@
+[
+{
+    "fields": {
+        "username": "testguy",
+        "can_share_projects": true,
+        "first_name": "",
+        "last_name": "",
+        "is_superuser": true
+    },
+    "model": "accounts.elementaluser",
+    "pk": 1
+}
+]
