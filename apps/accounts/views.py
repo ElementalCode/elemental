@@ -52,7 +52,6 @@ class UserSettings(LoggedInRequiredMixin, UnbannedUserMixin, FormView):
         return kwargs
 
     def form_valid(self, form):
-        print self.request.user.email
         self.request.user.email = form.cleaned_data.get('email')
         self.request.user.save()
         if form.cleaned_data.get('password1') != '':
