@@ -55,7 +55,6 @@ var filter = {
             blockString = '<li class="stack e-text"><span contenteditable="true" class="script-input text">breadfish.gif</span></li>';
           }
         }
-        // blockArea.innerHTML += filter.blocks[blocksToDisplay[x]].htmlString;
         blockArea.innerHTML += blockString;
       }
     } else {
@@ -64,9 +63,8 @@ var filter = {
   },
   
   /* Block Object:
-  Has three things - name, htmlString, and tags.
+  Has two things - name and tags.
   name = string for human-readable element name (ex. an <a> tag would have a name of "link")
-  htmlString = the html that corresponds with this block in OUR code. This is what is added to the area where blocks are dragged out from. It is NOT the html that the block will compile to.
   tags = tags to use in the block search. All punctuation will be stripped from the search input, so a tag of "img" will match a search of "<img>". There is no limit to the number of tags a block can have.
   palette = the numerical id of the palette to which the block belongs. Counting starts at 0. */
   
@@ -106,7 +104,6 @@ var filter = {
     {
       name: 'text',
       type: 'stack',
-      htmlString: "<li class='stack e-text'><span contenteditable='true' class='script-input text'>breadfish.gif</span></li>",
       tags: ['text'],
       palette: 0
     },
