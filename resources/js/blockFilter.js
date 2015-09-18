@@ -76,35 +76,30 @@ var filter = {
     {
       name: 'h1',
       type: 'wrapper',
-      //htmlString: "<li class='stack e-h1'>heading 1 with text <span contenteditable='true' class='script-input text'>An Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['heading', 'h1'],
       palette: 0
     },
     {
       name: 'h2',
       type: 'wrapper',
-      //htmlString: "<li class='stack e-h2'>heading 2 with text <span contenteditable='true' class='script-input text'>A Less Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['heading', 'h2'],
       palette: 0
     },
     {
       name: 'h3',
       type: 'wrapper',
-      //htmlString: "<li class='stack e-h3'>heading 3 with text <span contenteditable='true' class='script-input text'>An Even Less Important Heading</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['heading', 'h3'],
       palette: 0
     },
     {
       name: 'a',
       type: 'wrapper',
-      //htmlString: "<li class='stack e-a'>link with text <span contenteditable='true' class='script-input text'>link</span> <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li>",
       tags: ['link', 'a'],
       palette: 0
     },
     {
       name: 'div',
       type: 'wrapper',
-      //htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>div <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
       tags: ['div', 'divider', 'separator'],
       palette: 0
     },
@@ -120,7 +115,6 @@ var filter = {
     {
       name: 'img',
       type: 'stack',
-      htmlString: "<li class='stack e-img'>image <span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span></span></li>",
       tags: ['image', 'img', 'picture'],
       palette: 1
     },
