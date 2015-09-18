@@ -1,3 +1,5 @@
+import json
+
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test import TestCase, override_settings, Client, RequestFactory
@@ -6,7 +8,6 @@ from apps.accounts.models import ElementalUser
 from .models import Project
 
 class ProjectTestCases(TestCase):
-    fixtures = ['account_test_data.json', 'project_test_data.json']
 
     @override_settings(AUTH_USER_MODEL=settings.AUTH_USER_MODEL)
     def setUp(self):
@@ -48,3 +49,24 @@ class ProjectTestCases(TestCase):
         except:
             project = None
         self.assertIsNone(project)
+
+    @override_settings(AUTH_USER_MODEL=settings.AUTH_USER_MODEL)
+    def test_update_project(self):
+        u = ElementalUser(password='password',
+                          username='username')
+        u.save()
+        self.client.login(username='username', password='password')
+        project = Project(name='name',
+                          user=u,
+                          data='fake_data')
+        project.save()
+        data = {
+            "data": "new_data"
+        }
+        data = json.dumps(data)
+        response = self.client.patch(reverse('api:project-data', args=[project.id]), data, content_type='application/json')
+        try:
+            project = Project.objects.get(data='new_data')
+        except:
+            project = None
+        self.assertIsNotNone(project)

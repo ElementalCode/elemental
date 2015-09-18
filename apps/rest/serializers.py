@@ -17,7 +17,6 @@ class ProjectSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         get = validated_data.get
         if self.context['request'].user == instance.user:
-            print get('data')
             instance.data = get('data', instance.data)
             instance.save()
             return instance
@@ -30,7 +29,7 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
         if self.context['request'].user.can_share_projects:
             kwargs['user'] = self.context['request'].user
             return Project.objects.create(**kwargs)
-        raise PermissionDenied;
+        raise PermissionDenied
 
     class Meta:
         model = Project
