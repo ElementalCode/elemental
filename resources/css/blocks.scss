@@ -164,6 +164,9 @@ body {
         margin:0px 3px;
         padding: 0px 4px;
         outline:none;
+        &:empty {
+            content: ' ';
+        }
     }
     .attr-input {
         background-color: white;
@@ -172,9 +175,6 @@ body {
     .attr-dropdown {
         background-color: white;
         color:black;
-        &:empty {
-            content: ' ';
-        }
         cursor:text;
     }
 }
