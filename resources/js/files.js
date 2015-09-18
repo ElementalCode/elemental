@@ -71,9 +71,7 @@ function getBlockHtml(el) {
             return item.name == el.tag;
         })[0].name;
     } else {
-        name = filter.blocks.filter(function(item) {
-            return item.name == el.tag;
-        })[0].name;
+        name = '';
     }
 
     var parsedHtml;
@@ -93,7 +91,7 @@ function getBlockHtml(el) {
     if (el.tag === "") {
         parsedHtml = [
             '<li class="stack e-text">',
-                '<span contenteditable="true" class="script-input text">placeholder</span>',
+                '<span contenteditable="true" class="script-input text">' + el.text + '</span>',
             '</li>'
         ].join('');
     } else {
