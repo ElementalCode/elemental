@@ -13,12 +13,11 @@ SAVE_BUTTON.addEventListener('click', function(ev) {
 		if (NEW_PROJECT) {
 			request = axios.post('/rest/projects/project/', {
 				data: JSON.stringify(fileData),
-				name: 'test name'
+				name: 'untitled'
 			}, config);
 		} else {
 			request = axios.patch('/rest/projects/project/' + P_ID, {
-				data: JSON.stringify(fileData),
-				name: 'new name'
+				data: JSON.stringify(fileData)
 			}, config);
 		}
 		request.then(function(data) {
