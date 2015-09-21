@@ -11,8 +11,6 @@ urlpatterns = patterns('',
 
 	# Index views
     url(r'^$', Index.as_view(), name='index'),
-    url(r'^(?i)register/?$', SignUp.as_view(), name='register'),
-    url(r'^(?i)logout/?$', Logout.as_view(), name='logout'),
     url(r'^(?i)admin/?', include(admin.site.urls)),
     url(r'^(?i)terms-of-service/?$', TermsOfService.as_view(), name='terms'),
     url(r'^(?i)banned/?$', BanPage.as_view(), name='ban-page'),
@@ -22,9 +20,7 @@ urlpatterns = patterns('',
 
     # Namespaces
     url(r'^(?i)projects/', include('apps.projects.urls', namespace='projects')),
-
-    # Some specific stuff...
-    url(r'^(?i)accounts/settings/?$', UserSettings.as_view(), name='user-settings'),
+    url(r'^(?i)accounts/', include('apps.accounts.urls', namespace='accounts')),
 
     # REST stuff
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
