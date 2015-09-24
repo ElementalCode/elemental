@@ -1,13 +1,18 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ElementalCode</title>
+  <title>{% block title %}{% endblock %}ElementalCode</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
   {% block morescripts %}{% endblock morescripts %}
 </head>
 <body>
 
-{% include "includes/navbar.html" %}
-{% block content %}{% endblock %}
+<div class="wrapper">
+    {% include "includes/navbar.html" %}
+    {% block content %}{% endblock %}
+    <div class="push"></div>
+</div>
 {% include "includes/footer.html" %}
 
 {% block extra_scripts %}{% endblock extra_scripts %}
