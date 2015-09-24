@@ -1,0 +1,36 @@
+.nav-button {
+  padding-left: 10px;
+  padding-right: 10px;
+  font-family: Raleway, sans-serif;
+  text-decoration: none;
+  color: white;
+}
+
+.end-nav {
+  border-right: 1px solid white;
+}
+
+.nav-button:hover {
+  background-color: #42BA74;
+}
+
+.nav-button>h2 {
+  margin-top: 3px;
+  margin-bottom: 3px;
+}
+
+.nav-button:not(.logo)>h2 {
+  font-weight: normal;
+}
+
+.nav-button.border-left {
+  border-left: 1px solid white;
+}
+
+.nav-button.border-right {
+  border-right: 1px solid white;
+}
+
+.nav-button.logo {
+  font-weight: bold;
+}

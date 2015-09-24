@@ -1,0 +1,29 @@
+
+// FLOATS
+.float-right { float: right !important; }
+.float-left  { float: left !important;  }
+
+// SIZES
+.full--width { width: 100% !important; }
+
+.inline-block {
+  display: inline-block;
+}
+
+.block {
+  display: block;
+}
+
+.bg-seafoam {
+  background-color: #42BA92;
+  /*If the BG is seafoam you should probably have white text :P*/
+  color: white;
+}
+
+.raleway {
+  font-family: Raleway, sans-serif;
+}
+
+.opensans {
+  font-family: "Open Sans", sans-serif;
+}
