@@ -8,8 +8,11 @@
 </head>
 <body>
 
-{% include "includes/navbar.html" %}
-{% block content %}{% endblock %}
+<div class="wrapper">
+    {% include "includes/navbar.html" %}
+    {% block content %}{% endblock %}
+    <div class="push"></div>
+</div>
 {% include "includes/footer.html" %}
 
 {% block extra_scripts %}{% endblock extra_scripts %}
