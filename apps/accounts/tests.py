@@ -54,7 +54,7 @@ class AccountTestCases(TestCase):
             'password1': 'insecurepassword',
             'password2': 'insecurepassword'
         }
-        response = self.client.post(reverse('user-settings'), data)
+        response = self.client.post(reverse('accounts:user-settings'), data)
         self.assertEqual(response.status_code, 302)
 
     @override_settings(AUTH_USER_MODEL=settings.AUTH_USER_MODEL)
@@ -71,7 +71,7 @@ class AccountTestCases(TestCase):
             'password1': 'insecurepassword',
             'password2': 'insecurepassworddiff'
         }
-        response = self.client.post(reverse('user-settings'), data)
+        response = self.client.post(reverse('accounts:user-settings'), data)
         self.assertEqual(response.status_code, 200)
 
     @override_settings(AUTH_USER_MODEL=settings.AUTH_USER_MODEL)
@@ -87,7 +87,7 @@ class AccountTestCases(TestCase):
             'current_password': 'supersecurepassword',
             'email': 'z@a.com'
         }
-        response = self.client.post(reverse('user-settings'), data)
+        response = self.client.post(reverse('accounts:user-settings'), data)
         self.assertEqual(response.status_code, 302)
         try:
             user = ElementalUser.objects.get(email='z@a.com')
@@ -108,7 +108,7 @@ class AccountTestCases(TestCase):
             'current_password': 'supersecurepasswordoops',
             'email': 'z@a.com'
         }
-        response = self.client.post(reverse('user-settings'), data)
+        response = self.client.post(reverse('accounts:user-settings'), data)
         self.assertEqual(response.status_code, 200)
         try:
             user = ElementalUser.objects.get(email='z@a.com')

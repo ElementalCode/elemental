@@ -47,7 +47,7 @@ class ProfileView(UnbannedUserMixin, TemplateView):
 class UserSettings(LoggedInRequiredMixin, UnbannedUserMixin, FormView):
     template_name = 'user_settings.html'
     form_class = UserSettingsForm
-    success_url = reverse_lazy('user-settings')
+    success_url = reverse_lazy('accounts:user-settings')
 
     def get_form_kwargs(self):
         kwargs = super(UserSettings, self).get_form_kwargs()
