@@ -12,10 +12,10 @@ thingies = [
 	"I'm lonely!", 
 	"'); DROP TABLE footers; --", 
 	"This footer is the only good thing that ever came out of super-squirrel, but don't tell him that", 
-	"thank mr skeltal", 
-	"Good ol' C-x M-c M-butterfly...", 
+	"how long have you been refreshing the page?",
 	"yes, this is completely pointless", 
-	"how long have you been refreshing the page?"
+	"thank mr skeltal", 
+	"Good ol' C-x M-c M-butterfly..."
 ]
 
 @register.simple_tag

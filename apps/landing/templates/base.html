@@ -1,7 +1,9 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
-  <title>ElementalCode</title>
+  <title>{% block title %}{% endblock %}ElementalCode</title>
+  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
   {% block morescripts %}{% endblock morescripts %}
 </head>
 <body>
