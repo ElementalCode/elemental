@@ -1,16 +1,16 @@
 {% extends "base.html" %}
-{% load staticfiles %}
+{% load addcss %}
 
+{% block title %}Register | {% endblock %}
 {% block content %}
-	register
-        <form method='POST'>
+    <div class="form-box">
+        <h3>Sign Up</h3>
+        <form method="POST">
             {% csrf_token %}
-            username
-        	{{ form.username }}
-            pass
-            {{ form.password1 }}
-            checkpass
-            {{ form.password2 }}
-            <button>look i'm a button</button>
+            {{ form.username|addcss:'form-input' }}
+            {{ form.password1|addcss:'form-input' }}
+            {{ form.password2|addcss:'form-input' }}
+            <input type="submit" class="submit-button">
         </form>
+    </div>
 {% endblock %}

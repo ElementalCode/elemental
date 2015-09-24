@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% load staticfiles %}
+
+{% block title %}Login | {% endblock %}
+{% block content %}
+    <div>
+    	<div class="form-box">
+    	    <h3>Log In</h3>
+    	    <form method="POST">
+    	    	{% csrf_token %}
+    	        {{ form.username }}
+    	        {{ form.password }}
+    	        <input type="submit" class="submit-button">
+    	    </form>
+    	</div>
+    </div>
+{% endblock %}

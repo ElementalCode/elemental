@@ -1,11 +1,14 @@
-<div id="footer">
-</div>
-<script id="shhh">
-// sorry for inline, but it's the best way to keep people from reading your sourceses!
-function a(){
-var x=[";", "return 5;", "&lt;div&gt;&lt;font&gt;Elemental: Never be like me again!&lt;/span&gt;;", "<a href='javascript:location.reload()'>please roll again</a>", "I love useless footers", "I'm lonely!", "'; DROP table Students", "This footer is the only good thing that ever came out of super-squirrel, but don't tell him that", "thank mr skeltal", "Good ol' C-x M-c M-butterfly...", "yes, this is completely pointless", "how long have you been refreshing the page?"]/*.map(function (s) {return s.replace(/[a-zA-Z]/g,function(c){return String.fromCharCode((c<="Z"?90:122)>=(c=c.charCodeAt(0)+13)?c:c-26);});})*/;
-document.getElementById("footer").innerHTML="<small>"+(x[Math.floor(Math.random() * x.length)])+"</small>";
-document.getElementById("shhh").innerHTML="";
-}
-a();
-</script>
+{% load footer %}
+<div class="darkBack footerContainer">
+        <div class="centered">
+            <div class="footer">
+                <div><a href="#" class="footerLink">About</a></div>
+                <div><a href="#" class="footerLink">Help</a></div>
+                <div><a href="#" class="footerLink">Privacy</a></div>
+                <div><a href="#" class="footerLink">Contact</a></div>
+            </div>
+            <div class="white raleway aligncenter ">
+        		{% footer %}
+        	</div>
+        </div>
+    </div>
