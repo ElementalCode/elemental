@@ -4,7 +4,8 @@ var filter = {
   searchString: "im",
   paletteNames: [
     "text",
-    "media"
+    "media",
+    "sections"
   ],
   getFilteredBlocks: function(){
     var matching = [];
@@ -115,6 +116,20 @@ var filter = {
       tags: ['image', 'img', 'picture'],
       palette: 1
     },
+    
+    /* Blocks for palette 2 - Sections */
+    {
+      name: 'navigation',
+      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>navigation</li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
+      tags: ['nav', 'navigation'],
+      palette: 2
+    },
+    {
+      name: 'footer',
+      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>navigation</li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
+      tags: ['footer', 'foot' /* can i addz feet plz?*/],
+      palette: 2
+    }
 
   ]
 };
