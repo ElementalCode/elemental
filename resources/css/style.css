@@ -165,7 +165,7 @@ body {
   .attr-holder .attr-input {
     background-color: white;
     color: black;
-    min-height: 10px; }
+    min-height: 20px; }
   .attr-holder .attr-dropdown {
     background-color: white;
     color: black;
