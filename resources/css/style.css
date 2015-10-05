@@ -164,7 +164,8 @@ body {
       content: ' '; }
   .attr-holder .attr-input {
     background-color: white;
-    color: black; }
+    color: black;
+    min-height: 20px; }
   .attr-holder .attr-dropdown {
     background-color: white;
     color: black;
