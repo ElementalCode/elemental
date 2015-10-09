@@ -34,7 +34,7 @@ class MyProjects(UnbannedUserMixin, LoggedInRequiredMixin, ListView):
     context_object_name = 'projects'
 
     def get_queryset(self): # add filtering later?
-        return Project.objects.filter(user=self.request.user)
+        return Project.objects.filter(user=self.request.user, deleted=False)
 
 class ProjectEdit(UnbannedUserMixin, TemplateView):
     template_name = 'editor.html'

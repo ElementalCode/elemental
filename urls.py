@@ -3,7 +3,7 @@ from django.conf.urls import patterns, include, url
 from django.contrib import admin
 admin.autodiscover()
 
-from apps.landing.views import (Index, SignUp, Logout, TermsOfService,
+from apps.core.views import (Index, SignUp, Logout, TermsOfService,
 								BanPage)
 from apps.accounts.views import ProfileView, UserSettings
 
