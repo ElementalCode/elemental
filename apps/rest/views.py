@@ -1,4 +1,4 @@
-from django.http import HttpResponseForbidden
+from django.http import HttpResponse, HttpResponseForbidden
 
 from rest_framework import generics, status
 import json
@@ -32,6 +32,7 @@ class ProjectDetail(SessionAuthentication, generics.RetrieveUpdateDestroyAPIView
             id=self.kwargs['pk'])
         p.deleted = True
         p.save()
+        return HttpResponse('200 OK')
 
 class ProjectCreate(SessionAuthentication, TokenAuthentication, generics.CreateAPIView):
     queryset = Project.objects.all()

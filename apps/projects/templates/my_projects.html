@@ -1,9 +1,27 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block morescripts %}
+    <script src="{% static 'js/vendor/riot_compiler.js' %}"></script>
+    <script src="{% static 'js/vendor/axios.min.js' %}"></script>
+{% endblock %}
+
 {% block content %}
     my stuff
     {% for p in projects %}
-        <div><a href="{% url 'projects:edit-project' pk=p.id %}">{{ p.name }}</a></div>
+        <projectsettings
+            id="{{ p.id}}"
+            shared="{{ p.shared }}"
+            name="{{ p.name }}"
+            canshare="{{ p.user.can_share_projects }}"
+        />
     {% endfor %}
+{% endblock %}
+
+{% block extra_scripts %}
+    <script src="{% static 'js/components/projectSettings.html' %}" type="riot/tag"></script>
+    <script>
+        var CSRF_TOKEN = '{{ csrf_token }}';
+        riot.mount('projectsettings');
+    </script>
 {% endblock %}

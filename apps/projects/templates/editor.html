@@ -6,15 +6,15 @@
     <meta charset="utf-8">
     <title>UI v0.0.4 | Elemental</title>
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    <script src="{% static 'js/vendor/htmlparser.js' %}"></script>
-    <script src="{% static 'js/vendor/interact.min.js' %}"></script>
-    <script src="{% static 'js/vendor/jszip.min.js' %}"></script>
-    <script src="{% static 'js/vendor/filesaver.min.js' %}"></script>
-    <script src="{% static 'js/vendor/cssjson.js' %}"></script>
+    <script src="{% static 'js/editor/vendor/htmlparser.js' %}"></script>
+    <script src="{% static 'js/editor/vendor/interact.min.js' %}"></script>
+    <script src="{% static 'js/editor/vendor/jszip.min.js' %}"></script>
+    <script src="{% static 'js/editor/vendor/filesaver.min.js' %}"></script>
+    <script src="{% static 'js/editor/vendor/cssjson.js' %}"></script>
     <script src="{% static 'js/vendor/axios.min.js' %}"></script>
-    <script src="{% static 'js/vendor/htmljson.js' %}"></script>
-    <script src="{% static 'js/script.js' %}"></script>
-    <script src="{% static 'js/blockFilter.js' %}"></script>
+    <script src="{% static 'js/editor/vendor/htmljson.js' %}"></script>
+    <script src="{% static 'js/editor/script.js' %}"></script>
+    <script src="{% static 'js/editor/blockFilter.js' %}"></script>
   </head>
   <body>
     <!-- PUT THE CUSTOM CONTEXT MENUS IN HERE -->
@@ -193,11 +193,11 @@
         <div class="trashCan" id="trashCan"></div>
       </div>
     </div>
-  <script src="{% static 'js/files.js' %}"></script>
-  <script src="{% static 'js/blocks.js' %}"></script>
-  <script src="{% static 'js/blockAttributes.js' %}"></script>
-  <script src="{% static 'js/block2json.js' %}"></script>
-  <script src="{% static 'js/fileManagement.js' %}"></script>
+  <script src="{% static 'js/editor/files.js' %}"></script>
+  <script src="{% static 'js/editor/blocks.js' %}"></script>
+  <script src="{% static 'js/editor/blockAttributes.js' %}"></script>
+  <script src="{% static 'js/editor/block2json.js' %}"></script>
+  <script src="{% static 'js/editor/fileManagement.js' %}"></script>
   {% if request.user.is_authenticated %}
     <script>
       var CSRF_TOKEN = '{{ csrf_token }}';
@@ -245,7 +245,7 @@
       {% endif %}
     </script>
     {% if request.user.can_share_projects and not project or request.user == project.user %}
-      <script src="{% static 'js/siteIntegrations.js' %}"></script>
+      <script src="{% static 'js/editor/siteIntegrations.js' %}"></script>
     {% endif %}
   {% endif %}
   </body>
