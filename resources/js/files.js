@@ -199,8 +199,13 @@ function manuallyCreateFile() {
     var fileName = prompt('Enter a file name', '.html');
     var ext = fileName.split('.');
     ext = ext[ext.length - 1];
-    if (fileName && !fileData.hasOwnProperty(fileName)) {
-        generateFile(fileName, ext);
+    var allowedExts = ['html', 'css'];
+    if (allowedExts.indexOf(ext) > -1) {
+        if (fileName && !fileData.hasOwnProperty(fileName)) {
+            generateFile(fileName, ext);
+        }
+    } else {
+        throw 'File type "' + ext + '" not supported.';
     }
 }
 
