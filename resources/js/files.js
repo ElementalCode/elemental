@@ -143,30 +143,36 @@ function generateWrapperBlocks(jsonData) {
     return wrapperHtml.join('');
 }
 
-function generateBlocks(jsonData) {
-    var baseHtml = [
-        '<ul class="script">',
-            '<li class="hat">&lt;!DOCTYPE html&gt;</li>',
-            '<ul class="c-wrapper e-body">',
-                '<li class="c-header">&lt;body&gt;</li>',
-                '<ul class="c-content">',
-    ];
+function generateBlocks(jsonData, ext) {
+    if (ext == 'html') {
+        var baseHtml = [
+            '<ul class="script">',
+                '<li class="hat">&lt;!DOCTYPE html&gt;</li>',
+                '<ul class="c-wrapper e-body">',
+                    '<li class="c-header">&lt;body&gt;</li>',
+                    '<ul class="c-content">',
+        ];
 
-    for (var i = 0; i < jsonData.length; i++) {
-        var curEl = jsonData[i];
-        if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
-            baseHtml.push(getBlockHtml(curEl));
+        for (var i = 0; i < jsonData.length; i++) {
+            var curEl = jsonData[i];
+            if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
+                baseHtml.push(getBlockHtml(curEl));
+            }
+            if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
+                // repeat down tree...
+                baseHtml.push(generateWrapperBlocks(curEl));
+            }
         }
-        if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
-            // repeat down tree...
-            baseHtml.push(generateWrapperBlocks(curEl));
-        }
+
+        
+        baseHtml.push('</ul><li class="c-footer">&lt;/body&gt;</li></ul></ul>');
+        // debugger;
+        return baseHtml.join('');
+    } else if (ext == 'css') {
+        //stuff
+    } else {
+        throw 'the world is going to be destroyed due to your foolishness, mortal!1111!';
     }
-
-    
-    baseHtml.push('</ul><li class="c-footer">&lt;/body&gt;</li></ul></ul>');
-    // debugger;
-    return baseHtml.join('');
 }
 
 function loadFile(filename, el) {
@@ -189,7 +195,7 @@ function loadFile(filename, el) {
 
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
-    blockArea.innerHTML = generateBlocks(fileJson.child);
+    blockArea.innerHTML = generateBlocks(fileJson.child, 'FILETYPE_GOES_HERE');
     setFrameContent();
     setZebra();
 }
@@ -232,16 +238,17 @@ function generateFile(fileName, ext, initial) {
     if (initial) {
         fileData[fileName] = initial;
     } else {
-        if (ext == '.html') {
+        if (ext == 'html') {
             fileData[fileName] = {
               "tag": "body",
               "attr": {},
               "child": []
             };
-        } else if (ext == '.css') {
+        } else if (ext == 'css') {
             fileData[fileName] = {
 
-            }
+            };
+            console.log(fileData);
         } else {
             throw 'File type "' + ext + '" not supported.';
         }
@@ -249,9 +256,9 @@ function generateFile(fileName, ext, initial) {
     blockArea = $('.scriptingArea')[0];
 
     if (initial) {
-        blockArea.innerHtml = generateBlocks(initial);
+        blockArea.innerHtml = generateBlocks(initial);  // add shim later?
     } else {
-        blockArea.innerHTML = generateBlocks([]);
+        blockArea.innerHTML = generateBlocks([], ext);
     }
 
     //clear preview window
