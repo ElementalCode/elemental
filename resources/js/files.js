@@ -197,12 +197,14 @@ function loadFile(filename, el) {
 function manuallyCreateFile() {
     //we need something better than this
     var fileName = prompt('Enter a file name', '.html');
+    var ext = fileName.split('.');
+    ext = ext[ext.length - 1];
     if (fileName && !fileData.hasOwnProperty(fileName)) {
-        generateFile(fileName);
+        generateFile(fileName, ext);
     }
 }
 
-function generateFile(fileName, initial) {
+function generateFile(fileName, ext, initial) {
     currentFile = fileName;
 
     var finalFile = $('.add-file')[0];
@@ -225,11 +227,19 @@ function generateFile(fileName, initial) {
     if (initial) {
         fileData[fileName] = initial;
     } else {
-        fileData[fileName] = {
-          "tag": "body",
-          "attr": {},
-          "child": []
-        };
+        if (ext == '.html') {
+            fileData[fileName] = {
+              "tag": "body",
+              "attr": {},
+              "child": []
+            };
+        } else if (ext == '.css') {
+            fileData[fileName] = {
+
+            }
+        } else {
+            throw 'File type "' + ext + '" not supported.';
+        }
     }
     blockArea = $('.scriptingArea')[0];
 
@@ -320,7 +330,7 @@ $('.context-menu.files .menu-item').on('click', function(ev) {
                 var newName = oldName[oldName.length - 2] + '-copy.' + oldName[oldName.length - 1];  //there should be a better way...
                 console.log(RIGHT_CLICKED.file);
                 if (!fileData.hasOwnProperty(newName)) {
-                    generateFile(newName, fileData[RIGHT_CLICKED.file]);
+                    generateFile(newName, oldName[oldName.length - 1], fileData[RIGHT_CLICKED.file]);
                 }
                 break;
 
