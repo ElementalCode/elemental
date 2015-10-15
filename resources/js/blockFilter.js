@@ -36,14 +36,25 @@ var filter = {
         var block = filter.blocks[blocksToDisplay[x]];
         var blockString;
         if (block.type == 'wrapper') {
-          blockString = [
-            '<ul class="c-wrapper e-' + block.name + '">',
-              '<li class="c-header">' + block.name + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
-              '<ul class="c-content">',
-              '</ul>',
-              '<li class="c-footer">&nbsp;</li>',
-            '</ul>'
-          ].join('');
+          if (!block.ftype || block.ftype == 'html') {
+            blockString = [
+              '<ul class="c-wrapper e-' + block.name + '">',
+                '<li class="c-header">' + block.name + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
+                '<ul class="c-content">',
+                '</ul>',
+                '<li class="c-footer">&nbsp;</li>',
+              '</ul>'
+            ].join('');
+          } else {
+            blockString = [
+              '<ul class="c-wrapper e-' + block.name + '">',
+                '<li class="c-header">' + block.name + '</li>',
+                '<ul class="c-content">',
+                '</ul>',
+                '<li class="c-footer">&nbsp;</li>',
+              '</ul>'
+            ].join('');
+          }
         } else {
           if (block.name != 'text') {
             blockString = [
@@ -120,17 +131,23 @@ var filter = {
     /* Blocks for palette 2 - Sections */
     {
       name: 'navigation',
-      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>navigation</li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
       tags: ['nav', 'navigation'],
       palette: 2
     },
     {
       name: 'footer',
-      htmlString: "<ul class='c-wrapper e-div'><li class='c-header'>navigation</li><ul class='c-content'></ul><li class='c-footer'>&nbsp;</li></ul>",
       tags: ['footer', 'foot' /* can i addz feet plz?*/],
       palette: 2
-    }
+    },
 
+    /* Blocks for CSS */
+    {
+      name: 'selector',
+      type: 'wrapper',
+      tags: ['selection', 'selector'],
+      palette: 7,
+      ftype: 'css'
+    }
   ]
 };
 

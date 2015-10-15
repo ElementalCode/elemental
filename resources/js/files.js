@@ -169,7 +169,12 @@ function generateBlocks(jsonData, ext) {
         // debugger;
         return baseHtml.join('');
     } else if (ext == 'css') {
-        //stuff
+        var baseHtml = [
+            '<ul class="script">',
+                '<li class="hat">' + currentFile + '</li>',
+        ];
+        baseHtml.push('</ul>');
+        return baseHtml.join('');
     } else {
         throw 'the world is going to be destroyed due to your foolishness, mortal!1111!';
     }
@@ -240,13 +245,21 @@ function generateFile(fileName, ext, initial) {
     } else {
         if (ext == 'html') {
             fileData[fileName] = {
-              "tag": "body",
-              "attr": {},
-              "child": []
+                "tag": "body",
+                "attr": {},
+                "child": []
             };
         } else if (ext == 'css') {
             fileData[fileName] = {
-
+                'children': {
+                    '.selector': {
+                        'children': {},
+                        'attributes': {
+                            'background-color': 'red',
+                        }
+                    }
+                },
+                'attributes': {}
             };
             console.log(fileData);
         } else {

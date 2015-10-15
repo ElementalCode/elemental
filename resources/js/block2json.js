@@ -139,53 +139,65 @@ function traverseTree(parentNode) {
 	return pushedArr;  //recursively get children of blocks
 }
 
-function setFrameContent() {
+function setFrameContent(ext) {
+	ext = ext || currentFile.split('.').pop();
 	var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
 	var previewElement = document.getElementsByClassName('previewBody')[0];
 
 	var directChildren = toArr(script.children);
 	directChildren.shift();
 
-	var jsonFormat = {
-		tag: 'body',
-		attr: {},
-		child: [],
-	};
-	var blocks = [];
-
-	for (var i = 0; i < directChildren.length; i++) {
-		if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
-			var elType = getElType(directChildren[i]);
-			if (elType == 'text') {
-				elType = '';
-			}
-			blocks.push({
-				tag: elType,
-				attr: elType ? getSingleAttrs(directChildren[i]) : {},
-				text: encodeEntities(getInlineText(directChildren[i]))
-			});
-		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
-			var elType = getElType(directChildren[i]);
-			blocks.push({
-				tag: elType,
-				child: traverseTree(directChildren[i]),
-			});
+	if (ext == 'css') {
+		var jsonFormat = {};
+		console.log(directChildren);
+		for (var i = 0; i < directChildren.length; i++) {
+			//
 		}
+	} else if (ext == 'html') {
+
+		var jsonFormat = {
+			tag: 'body',
+			attr: {},
+			child: [],
+		};
+		var blocks = [];
+
+		for (var i = 0; i < directChildren.length; i++) {
+			if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
+				var elType = getElType(directChildren[i]);
+				if (elType == 'text') {
+					elType = '';
+				}
+				blocks.push({
+					tag: elType,
+					attr: elType ? getSingleAttrs(directChildren[i]) : {},
+					text: encodeEntities(getInlineText(directChildren[i]))
+				});
+			} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
+				var elType = getElType(directChildren[i]);
+				blocks.push({
+					tag: elType,
+					child: traverseTree(directChildren[i]),
+				});
+			}
+		}
+
+		if (blocks[0]) {
+			jsonFormat = blocks[0];
+		}
+
+		fileData[currentFile] = jsonFormat;
+
+		var parsedHtml = json2html(jsonFormat);
+
+		var previewWindow = previewElement;
+		previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
+		previewWindow.document.open();
+		previewWindow.document.write(parsedHtml);
+		previewWindow.document.close();
+	} else {
+		throw 'this should never be thrown though';
 	}
-
-	if (blocks[0]) {
-		jsonFormat = blocks[0];
-	}
-
-	fileData[currentFile] = jsonFormat;
-
-	var parsedHtml = json2html(jsonFormat);
-
-	var previewWindow = previewElement;
-	previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
-	previewWindow.document.open();
-	previewWindow.document.write(parsedHtml);
-	previewWindow.document.close();
 }
 
 setFrameContent();

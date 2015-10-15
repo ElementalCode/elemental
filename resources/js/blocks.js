@@ -134,6 +134,7 @@ function _palette_drag_init(elem, ev) {
 function _move_elem(e) {
     x_pos = document.all ? window.event.clientX : e.pageX + SCRIPTING_AREA.scrollLeft;
     y_pos = document.all ? window.event.clientY : e.pageY + SCRIPTING_AREA.scrollTop;
+    var SNAP_CLASSES = currentFile.split('.').pop() == 'css' ? CSS_SNAP_CLASSES : HTML_SNAP_CLASSES;
     if (selected !== null) {
         $(SNAP_CLASSES).each(function(item) {
             if (item.classList.contains('drop-area')) {
@@ -148,7 +149,7 @@ function _move_elem(e) {
             },
             selected
         )
-        if (el !== null && !el.classList.contains('paletteBlock') && !parentHasClass(el, 'paletteBlock') && !parentHasClass(el, 'blockArea')) {
+        if ((el !== null && !el.classList.contains('paletteBlock') && !parentHasClass(el, 'paletteBlock') && !parentHasClass(el, 'blockArea'))) {
             el.classList.add('drop-area');
         }
         selected.style.left = (x_pos - x_elem) + 'px';
@@ -158,6 +159,7 @@ function _move_elem(e) {
 
 // Destroy the object when we are done
 function _destroy(ev) {
+    var SNAP_CLASSES = currentFile.split('.').pop() == 'css' ? CSS_SNAP_CLASSES : HTML_SNAP_CLASSES;
     $(SNAP_CLASSES).each(function(item) {
        if (item.classList.contains('drop-area')) {
            item.classList.remove('drop-area');
@@ -187,6 +189,9 @@ function _destroy(ev) {
             } else if (topEl.classList.contains('c-footer')) {
                 elem.removeAttribute('style');
                 topEl.parentNode.parentNode.insertBefore(elem, topEl.parentNode.nextElementSibling);
+            } else if (topEl.classList.contains('hat') && currentFile.split('.').pop() == 'css') {
+                elem.removeAttribute('style');
+                topEl.parentNode.insertBefore(elem, topEl.nextElementSibling);
             }
         }
         selected.parentNode.removeChild(selected);
@@ -204,6 +209,7 @@ function _destroy(ev) {
 }
 
 function _delete(ev) {
+    var SNAP_CLASSES = currentFile.split('.').pop() == 'css' ? CSS_SNAP_CLASSES : HTML_SNAP_CLASSES;
     $(SNAP_CLASSES).each(function(item) {
        if (item.classList.contains('drop-area')) {
            item.classList.remove('drop-area');
@@ -215,8 +221,14 @@ function _delete(ev) {
     selected = null;
 }
 
-var SNAP_CLASSES = [
+var HTML_SNAP_CLASSES = [
     '.stack',
+    '.c-header',
+    ':not(.e-body) > .c-footer'
+].join(', ');
+var CSS_SNAP_CLASSES = [
+    '.stack',
+    '.hat',
     '.c-header',
     ':not(.e-body) > .c-footer'
 ].join(', ');
