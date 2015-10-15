@@ -48,7 +48,7 @@ var filter = {
           } else {
             blockString = [
               '<ul class="c-wrapper e-' + block.name + '">',
-                '<li class="c-header">' + block.name + '</li>',
+                '<li class="c-header">' + block.name + ' <span class="script-input" contenteditable="true">&nbsp;</span></li>',
                 '<ul class="c-content">',
                 '</ul>',
                 '<li class="c-footer">&nbsp;</li>',

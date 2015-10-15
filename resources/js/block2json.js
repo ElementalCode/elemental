@@ -139,6 +139,14 @@ function traverseTree(parentNode) {
 	return pushedArr;  //recursively get children of blocks
 }
 
+function getCSSAttributes(attributes) {
+	var attributes = {};
+	for (var i = 0; i < attributes.length; i++) {
+		console.log('attribute');
+	}
+	return attributes;
+}
+
 function setFrameContent(ext) {
 	ext = ext || currentFile.split('.').pop();
 	var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
@@ -151,7 +159,11 @@ function setFrameContent(ext) {
 		var jsonFormat = {};
 		console.log(directChildren);
 		for (var i = 0; i < directChildren.length; i++) {
-			//
+			//this should be easier than HTML because it's merely a list of selectors
+			var child = directChildren[i];
+			var selector = child.children[0].children[0].textContent;
+			jsonFormat[selector] = getCSSAttributes(child.children[1]);
+			console.log(child.children[1].children);
 		}
 	} else if (ext == 'html') {
 
