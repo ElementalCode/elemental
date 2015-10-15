@@ -57,12 +57,21 @@ var filter = {
           }
         } else {
           if (block.name != 'text') {
-            blockString = [
-              '<li class="stack e-' + block.name + '">',
-                block.name,
-                "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>",
-              '</li>'
-            ].join('');
+            if (!block.ftype || block.ftype == 'html') {
+              blockString = [
+                '<li class="stack e-' + block.name + '">',
+                  block.name,
+                  "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>",
+                '</li>'
+              ].join('');
+            } else {
+              blockString = [
+                '<li class="stack e-' + block.name + '">',
+                  block.name,
+                  '<span class="script-input" contenteditable="true"></span>: <span class="script-input" contenteditable="true"></span>',
+                '</li>'
+              ].join('');
+            }
           } else {
             blockString = '<li class="stack e-text"><span contenteditable="true" class="script-input text">breadfish.gif</span></li>';
           }
@@ -145,6 +154,13 @@ var filter = {
       name: 'selector',
       type: 'wrapper',
       tags: ['selection', 'selector'],
+      palette: 7,
+      ftype: 'css'
+    },
+    {
+      name: 'rule',
+      type: 'stack',
+      tags: ['rule'],
       palette: 7,
       ftype: 'css'
     }

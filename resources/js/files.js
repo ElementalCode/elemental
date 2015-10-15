@@ -57,6 +57,11 @@ var currentFile = 'index.html';
 
 var stackElements = ['e-img', 'e-text'];
 var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
+var cssAttrNames = [
+    'background-color',
+    'height',
+    'width',
+]; //add attrs
 var wrapperElements = ['e-div', 'e-body',  'e-a', 'e-h1', 'e-h2', 'e-h3'];
 var unnamedWrapperElements = wrapperElements.map(function(item) {
     return item.substr(2, item.length - 1);
@@ -176,7 +181,7 @@ function generateBlocks(jsonData, ext) {
         baseHtml.push('</ul>');
         return baseHtml.join('');
     } else {
-        throw 'the world is going to be destroyed due to your foolishness, mortal!1111!';
+        throw 'the world is going to be destroyed due to your foolishness, mortal!1111!  ' + ext + '';
     }
 }
 
@@ -200,7 +205,7 @@ function loadFile(filename, el) {
 
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
-    blockArea.innerHTML = generateBlocks(fileJson.child, 'FILETYPE_GOES_HERE');
+    blockArea.innerHTML = generateBlocks(fileJson.child, filename.split('.').pop());
     setFrameContent();
     setZebra();
 }

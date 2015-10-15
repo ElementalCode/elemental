@@ -163,7 +163,7 @@ function setFrameContent(ext) {
 			var child = directChildren[i];
 			var selector = child.children[0].children[0].textContent;
 			jsonFormat[selector] = getCSSAttributes(child.children[1]);
-			console.log(child.children[1].children);
+			// console.log(child.children[1].children);
 		}
 	} else if (ext == 'html') {
 
