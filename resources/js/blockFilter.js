@@ -136,6 +136,12 @@ var filter = {
       tags: ['image', 'img', 'picture'],
       palette: 1
     },
+    {
+      name: 'CSS',
+      type: 'stack',
+      tags: ['css', 'style', 'link'],
+      palette: 1
+    },
     
     /* Blocks for palette 2 - Sections */
     {
