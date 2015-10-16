@@ -266,7 +266,6 @@ function generateFile(fileName, ext, initial) {
                 },
                 'attributes': {}
             };
-            console.log(fileData);
         } else {
             throw 'File type "' + ext + '" not supported.';
         }
@@ -358,7 +357,6 @@ $('.context-menu.files .menu-item').on('click', function(ev) {
             case 'duplicate-file':
                 var oldName = RIGHT_CLICKED.file.split('.');
                 var newName = oldName[oldName.length - 2] + '-copy.' + oldName[oldName.length - 1];  //there should be a better way...
-                console.log(RIGHT_CLICKED.file);
                 if (!fileData.hasOwnProperty(newName)) {
                     generateFile(newName, oldName[oldName.length - 1], fileData[RIGHT_CLICKED.file]);
                 }

@@ -139,10 +139,13 @@ function traverseTree(parentNode) {
 	return pushedArr;  //recursively get children of blocks
 }
 
-function getCSSAttributes(attributes) {
+function getCSSAttributes(children) {
 	var attributes = {};
-	for (var i = 0; i < attributes.length; i++) {
-		console.log('attribute');
+	for (var i = 0; i < children.length; i++) {
+		var child = children[i];
+		var attrName = encodeEntities(child.children[0].textContent);
+		var attrValue = encodeEntities(child.children[1].textContent);
+		attributes[attrName] = attrValue;
 	}
 	return attributes;
 }
@@ -157,14 +160,17 @@ function setFrameContent(ext) {
 
 	if (ext == 'css') {
 		var jsonFormat = {};
-		console.log(directChildren);
 		for (var i = 0; i < directChildren.length; i++) {
 			//this should be easier than HTML because it's merely a list of selectors
 			var child = directChildren[i];
-			var selector = child.children[0].children[0].textContent;
-			jsonFormat[selector] = getCSSAttributes(child.children[1]);
-			// console.log(child.children[1].children);
+			// check to make sure it's a selector block
+			if (child.classList.contains('e-selector')) {
+				var selector = child.children[0].children[0].textContent;
+				jsonFormat[selector] = getCSSAttributes(child.children[1].children);
+				// console.log(child.children[1].children);
+			}
 		}
+		fileData[currentFile] = jsonFormat;
 	} else if (ext == 'html') {
 
 		var jsonFormat = {

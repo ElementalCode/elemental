@@ -341,7 +341,6 @@ $('.context-menu.scripts .menu-item').on('click', function(ev) {
                 var target = RIGHT_CLICKED_SCRIPT;
                 // context menu stuff here...
                 if (target.matches(C_ELEMENTS)) {
-                    console.log(target.parentNode);
                     target = target.parentNode;
                 } 
                 // do stuff with node... and get stuff beneath it too!

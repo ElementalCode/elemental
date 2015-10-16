@@ -68,7 +68,7 @@ var filter = {
               blockString = [
                 '<li class="stack e-' + block.name + '">',
                   block.name,
-                  '<span class="script-input" contenteditable="true"></span>: <span class="script-input" contenteditable="true"></span>',
+                  ' <span class="script-input css-attr-dropdown" contenteditable="true"></span>: <span class="script-input" contenteditable="true"></span>',
                 '</li>'
               ].join('');
             }
