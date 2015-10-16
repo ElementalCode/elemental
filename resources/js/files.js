@@ -150,6 +150,7 @@ function generateWrapperBlocks(jsonData) {
 
 function generateBlocks(jsonData, ext) {
     if (ext == 'html') {
+        jsonData = jsonData.child;
         var baseHtml = [
             '<ul class="script">',
                 '<li class="hat">&lt;!DOCTYPE html&gt;</li>',
@@ -178,6 +179,16 @@ function generateBlocks(jsonData, ext) {
             '<ul class="script">',
                 '<li class="hat">' + currentFile + '</li>',
         ];
+        for (curSelector in jsonData) {
+            var selectorHtml = [
+                '<ul class="c-wrapper e-selector">',
+                    '<li class="c-header">selector <span class="script-input" contenteditable="true">' + curSelector + '</span></li>',
+                    '<ul class="c-content">'
+            ];
+            selectorHtml.push('');
+            selectorHtml.push('</ul><li class="c-footer">&nbsp;</li></ul>');
+            baseHtml.push(selectorHtml.join(''));
+        }
         baseHtml.push('</ul>');
         return baseHtml.join('');
     } else {
@@ -205,7 +216,7 @@ function loadFile(filename, el) {
 
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
-    blockArea.innerHTML = generateBlocks(fileJson.child, filename.split('.').pop());
+    blockArea.innerHTML = generateBlocks(fileJson, filename.split('.').pop());
     setFrameContent();
     setZebra();
 }
@@ -257,7 +268,7 @@ function generateFile(fileName, ext, initial) {
         } else if (ext == 'css') {
             fileData[fileName] = {
                 'children': {
-                    '.selector': {
+                    '.selector': { // should I initialize this?  probably not, maybe?  idk post comments on it
                         'children': {},
                         'attributes': {
                             'background-color': 'red',
@@ -275,7 +286,11 @@ function generateFile(fileName, ext, initial) {
     if (initial) {
         blockArea.innerHtml = generateBlocks(initial);  // add shim later?
     } else {
-        blockArea.innerHTML = generateBlocks([], ext);
+        if (ext == 'css') {
+            blockArea.innerHTML = generateBlocks(fileData[fileName].children, ext);
+        } else {
+            blockArea.innerHTML = generateBlocks([], ext);
+        }
     }
 
     //clear preview window
