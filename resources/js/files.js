@@ -148,6 +148,16 @@ function generateWrapperBlocks(jsonData) {
     return wrapperHtml.join('');
 }
 
+function getCSSAttributesHTML(attributes) {
+    var pushedHtml = [];
+    for (attr in attributes) {
+        console.log(attr);
+        var attrValue = attributes[attr];
+        pushedHtml.push('<li class="stack e-rule">rule <span class="script-input css-attr-dropdown" contenteditable="true">' + attr + '</span>: <span class="script-input" contenteditable="true">' + attrValue + '</span></li>');
+    }
+    return pushedHtml.join('');
+}
+
 function generateBlocks(jsonData, ext) {
     if (ext == 'html') {
         jsonData = jsonData.child;
@@ -172,7 +182,6 @@ function generateBlocks(jsonData, ext) {
 
         
         baseHtml.push('</ul><li class="c-footer">&lt;/body&gt;</li></ul></ul>');
-        // debugger;
         return baseHtml.join('');
     } else if (ext == 'css') {
         var baseHtml = [
@@ -185,7 +194,7 @@ function generateBlocks(jsonData, ext) {
                     '<li class="c-header">selector <span class="script-input" contenteditable="true">' + curSelector + '</span></li>',
                     '<ul class="c-content">'
             ];
-            selectorHtml.push('');
+            selectorHtml.push(getCSSAttributesHTML(jsonData[curSelector].attributes));
             selectorHtml.push('</ul><li class="c-footer">&nbsp;</li></ul>');
             baseHtml.push(selectorHtml.join(''));
         }

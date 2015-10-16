@@ -166,7 +166,8 @@ function setFrameContent(ext) {
 			// check to make sure it's a selector block
 			if (child.classList.contains('e-selector')) {
 				var selector = child.children[0].children[0].textContent;
-				jsonFormat[selector] = getCSSAttributes(child.children[1].children);
+				jsonFormat[selector] = {};
+				jsonFormat[selector].attributes = getCSSAttributes(child.children[1].children);
 				// console.log(child.children[1].children);
 			}
 		}
