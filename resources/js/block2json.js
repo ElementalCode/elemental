@@ -122,11 +122,32 @@ function traverseTree(parentNode) {
 			if (elType == 'text') {
 				elType = '';
 			}
-			pushedArr.push({
-				tag: elType,
-				attr: elType ? getSingleAttrs(directChildren[i]) : {},
-				text: encodeEntities(getInlineText(directChildren[i]))
-			});
+			if (elType == 'CSS') {
+				var cssFileName = getSingleAttrs(directChildren[i]).href;
+				if (fileData.hasOwnProperty(cssFileName)) {
+					var cssText = CSSJSON.toCSS({
+						children: fileData[cssFileName],
+						attributes: {}
+					});
+					pushedArr.push({
+						tag: 'style',
+						attr: getSingleAttrs(directChildren[i]),
+						text: cssText
+					});
+				} else {
+					pushedArr.push({
+						tag: 'style',
+						attr: getSingleAttrs(directChildren[i]),
+						text: ''
+					});
+				}
+			} else {
+				pushedArr.push({
+					tag: elType,
+					attr: elType ? getSingleAttrs(directChildren[i]) : {},
+					text: encodeEntities(getInlineText(directChildren[i]))
+				});
+			}
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
 			var elType = getElType(directChildren[i]);
 			pushedArr.push({
@@ -187,11 +208,15 @@ function setFrameContent(ext) {
 				if (elType == 'text') {
 					elType = '';
 				}
-				blocks.push({
-					tag: elType,
-					attr: elType ? getSingleAttrs(directChildren[i]) : {},
-					text: encodeEntities(getInlineText(directChildren[i]))
-				});
+				if (elType == 'CSS') {
+					console.log(getSingleAttrs(directChildren[i]));
+				} else {
+					blocks.push({
+						tag: elType,
+						attr: elType ? getSingleAttrs(directChildren[i]) : {},
+						text: encodeEntities(getInlineText(directChildren[i]))
+					});
+				}
 			} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
 				var elType = getElType(directChildren[i]);
 				blocks.push({

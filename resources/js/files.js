@@ -55,8 +55,8 @@ function arrContainsFromArr(arr1, arr2) {
 var fileData = {};
 var currentFile = 'index.html';
 
-var stackElements = ['e-img', 'e-text'];
-var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
+var stackElements = ['e-img', 'e-text', 'e-CSS', 'e-style', ];
+var attrNames = ['src', 'class', 'id', 'href', 'rel']; //add attrs
 var cssAttrNames = [
     'background-color',
     'height',
@@ -69,8 +69,11 @@ var unnamedWrapperElements = wrapperElements.map(function(item) {
 var textInput = 'text';
 
 function getBlockHtml(el) {
-    // we're going to have to have the attribute text in here too somehow...
+    console.log('el: ', el);
     var name;
+    if (el.tag == 'style') {
+        el.tag = 'CSS';
+    }
     if (el.tag) {
         name = filter.blocks.filter(function(item) {
             return item.name == el.tag;
@@ -90,6 +93,7 @@ function getBlockHtml(el) {
                 '<span class="attr-input" contenteditable="true">' + el.attr[attr] + '</span>',
             '</span>'
         ].join(''));
+        console.log(attr);
     }
     attrInputs = attrInputs.join('');
 
@@ -129,7 +133,6 @@ function generateWrapperBlocks(jsonData) {
             '<li class="c-header">' + jsonData.tag + attrInputs + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
             '<ul class="c-content">',
     ];
-
     for (var i = 0; i < jsonData.child.length; i++) {
         var curEl = jsonData.child[i];
         if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
@@ -151,7 +154,6 @@ function generateWrapperBlocks(jsonData) {
 function getCSSAttributesHTML(attributes) {
     var pushedHtml = [];
     for (attr in attributes) {
-        console.log(attr);
         var attrValue = attributes[attr];
         pushedHtml.push('<li class="stack e-rule">rule <span class="script-input css-attr-dropdown" contenteditable="true">' + attr + '</span>: <span class="script-input" contenteditable="true">' + attrValue + '</span></li>');
     }
@@ -169,8 +171,10 @@ function generateBlocks(jsonData, ext) {
                     '<ul class="c-content">',
         ];
 
+        console.log(jsonData);
         for (var i = 0; i < jsonData.length; i++) {
             var curEl = jsonData[i];
+            console.log(curEl.tag);
             if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
                 baseHtml.push(getBlockHtml(curEl));
             }
@@ -225,6 +229,7 @@ function loadFile(filename, el) {
 
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
+    console.log(fileData);
     blockArea.innerHTML = generateBlocks(fileJson, filename.split('.').pop());
     setFrameContent();
     setZebra();
