@@ -27,10 +27,16 @@ AUTHENTICATION_BACKENDS = (
 # See https://docs.djangoproject.com/en/1.8/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
+if os.environ.get('PRODUCTION'):
+    SECRET_KEY = os.environ['SECRET_KEY']
+else:
+    SECRET_KEY = 'i+acxn5(akgsn!sr4^qgf(^m&*@+g1@u^t@=8s@axc41ml*f=s'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+if os.environ.get('PRODUCTION'):
+    DEBUG = False
+else:
+    DEBUG = True
 
 TEMPLATE_DEBUG = True
 
