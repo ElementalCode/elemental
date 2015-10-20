@@ -1,0 +1,32 @@
+<projectsettings>
+    <div><a href={ '/projects/project/' + opts.id }>{ opts.name }</a></div>
+    <div>
+        <input name="name" value="{ opts.name }" />
+        <button name="delete" onclick={ delete }>Delete</button>
+        <input name="shared" hidden={ opts.canshare == 'True' ? '' : true } checked={ opts.shared == 'True' ? true : '' } type="checkbox"/>
+    </div>
+    <script>
+        // TODO:  STYLE!
+
+        var config = {
+            headers: {
+                "X-CSRFToken": CSRF_TOKEN
+            }
+        };
+
+        this.delete= function() {
+            // going to have to make a modal for this
+            console.log(this);
+            if (window.confirm('Would you like to delete your project "' + this.name.value + '"?')) {
+                axios.delete('/rest/projects/project/' + opts.id, config)
+                    // do some confirmation (like bootstrap messages, kinda) for successes and errors
+                    .then(function(data) {
+                        this.root.parentElement.removeChild(this.root);
+                    }.bind(this)).catch(function(error) {
+                        console.log(error);
+                        document.write(error.data)
+                    });
+            }
+        }
+    </script>
+</projectsettings>
