@@ -1,0 +1,307 @@
+<!DOCTYPE HTML>
+<html>
+<!--
+I just realized that we are using Sass.. The CSS could use some improvements, then.
+Some things are left unidented- it is completely intentional. It would make copy-pasting the CSS and JavaScript easier.
+-->
+<head>
+  <style>
+@import url(http://fonts.googleapis.com/css?family=Raleway:400,700,900,300);
+
+body {
+	background-color: #fff /*#252E35*/;
+	font-family: Raleway;
+}
+        
+img {
+    border-radius: 3px;
+}
+        
+.userpage-top-section, .userpage-favorite-section, .userpage-shared-section {
+	background-color: #fff;
+	box-shadow: 0 0 30px #888 /*0 0 5px #000*/;
+	border-radius: 5px;
+	width: 750px;
+	margin: auto;
+    margin-top:40px;
+}
+        
+.userpage-top-section {
+    height:400px;
+}
+       
+.userpage-upper {
+	background-color: #42BA92;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	padding-left: 15px;
+}
+        
+.userpage-upper h2, .userpage-upper div {
+    display: inline-block;
+}
+        
+.userpage-upper h2 {
+    font-size: 1.8em;
+}
+        
+.userpage-upper div {
+    font-size: 1.3em;
+    margin-left: 480px;
+}
+
+.userpage-about-me, .userpage-featured {
+    display: inline-flex;
+    padding-left: 30px;
+    padding-right: 30px;
+    height: 350px;
+    width: 300px;
+}
+        
+.userpage-about-me div, .userpage-featured div{
+    width: 360px;
+    height: 240px;
+}
+        
+.userpage-shared-section, .userpage-favorite-section {
+    height: 220px;
+    padding-top: 8px;
+}
+        
+.userpage-shared-section div, .userpage-favorite-section div {
+    margin-top:-22px;
+    overflow-x:auto;
+    overflow-y:hidden;
+}
+        
+.userpage-favorite-section h3, .userpage-shared-section h3 {
+    margin-left: 30px;
+}
+        
+.userpage-shared-section img, .userpage-favorite-section img {
+    height:120px;
+    width:160px;
+}
+        
+.userpage-shared-section ul, .userpage-favorite-section ul {
+    width:2170px;
+}
+        
+.userpage-shared-section ul li, .userpage-favorite-section ul li {
+    display:inline-block;
+    margin-left:-14px;
+    margin-right:31px;
+}
+</style>
+</head>
+
+
+
+
+<body>
+<div class="userpage-top-section">
+    <div class="userpage-upper">
+        <h2>Rumanti</h2>
+        <div>Developer</div>
+    </div>
+    <div class="userpage-about-me">
+        <div>
+            <h3>About Me</h3>
+            Hey. I like Pi. 'Nuff said. 3 . 1 4 1 5 9 2 6 5 3 5 8 9 7 9 3 2 3 8 4 6 2 6 4 3 3 8 3 2 7 9 5 0 2 8 8 4 1 9 7 1 6 9 3 9 9 3 7 5 1 0 5 8 2 0 9 7 4 9 4 4 5 9 2 3 0 7 8 1 6 4 0 6 2 8 6 2 0 8 9 9 8 6 2 8 0 3 4 8 2 5 3 4 2 1 1 7 0 6 7 9 8 2 1 4 8 0 8 6 5 1 3 2 8 2 3 0 6 6 4 7 0 9 3 8 4 4 6 0 9 5 5 0 5 8 2 2 3 .. 
+        </div>
+    </div>
+    <div class="userpage-featured">
+        <div style="width:340px;height:240px;">
+            <h3>Featured Creation</h3>
+            <img src="https://cdn2.scratch.mit.edu/get_image/project/79910342_282x210.png?v=1443783075.33" alt="my image"/>
+        </div>
+    </div>
+</div>
+<div class="userpage-shared-section">
+    <h3>Shared creations</h3>
+    <div>
+        <ul class="userpage-shared-section-carousel">
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+<div class="userpage-favorite-section">
+    <h3>Favorites</h3>
+    <div>
+        <ul class="userpage-favorite-section-carousel">
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li><!--
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    Lorem Ipsum
+                </a>
+            </li>-->
+        </ul>
+    </div>
+</div>
+</body>
+
+<script>
+// Number of projects displayed on each of the carousels
+var USER_PROJECT_COUNT = 0;
+var USER_FAVORITE_COUNT = 5;
+
+// Get the carousels
+var user_project_carousel = document.getElementsByClassName("userpage-shared-section-carousel");
+var user_favorite_carousel = document.getElementsByClassName("userpage-favorite-section-carousel");
+
+// Users' Projects Carousel
+if (USER_PROJECT_COUNT > 4) {
+    user_project_carousel[0].style.width = (2170-(180*(12-USER_PROJECT_COUNT))) + "px";
+} else if (USER_PROJECT_COUNT > 0) {
+    user_project_carousel[0].style.width = "720px";
+} else {
+    user_project_carousel[0].parentNode.innerHTML = "<div style='background-color:#C7E1D9;width:700px;height:100px;padding-top:50px;margin:auto;margin-top:10px;border-radius:20px;text-align:center;'>Rumanti has not shared any projects yet.</div>";
+};
+    
+// Users' Favorites Carousel
+if (USER_FAVORITE_COUNT > 4) {
+    user_favorite_carousel[0].style.width = (2170-(180*(12-USER_FAVORITE_COUNT))) + "px";
+} else if (USER_FAVORITE_COUNT > 0) {
+    user_favorite_carousel[0].style.width = "720px";
+} else {
+    user_favorite_carousel[0].parentNode.innerHTML = "<div style='background-color:#C7E1D9;width:700px;height:100px;padding-top:50px;margin:auto;margin-top:10px;border-radius:20px;text-align:center;'>Rumanti has not favorited and projects yet.</div>";
+}
+</script>
+</html>
