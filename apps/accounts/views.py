@@ -40,7 +40,7 @@ class ProfileView(UnbannedUserMixin, TemplateView):
         if context['user'].can_share_projects or request.user.is_superuser or auth_group in allowed_groups:
             context['projects'] = Project.objects.filter(user=context['user'], shared=True)
         else:
-            context['projects'] = False
+            context['projects'] = Project.objects.none()
         
         return context
 
