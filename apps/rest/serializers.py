@@ -20,6 +20,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             # need to find a better way...
             instance.data = get('data', instance.data)
             instance.name = get('name', instance.name)
+            instance.shared = get('shared', instance.shared)
             instance.save()
             return instance
         raise PermissionDenied

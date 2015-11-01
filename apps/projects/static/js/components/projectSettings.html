@@ -3,7 +3,7 @@
     <div>
         <input name="name" value="{ opts.name }" onblur={ updateName } />
         <button name="delete" onclick={ delete }>Delete</button>
-        <input name="shared" hidden={ opts.canshare == 'True' ? '' : true } checked={ opts.shared == 'True' ? true : '' } type="checkbox"/>
+        <input onclick={ share } name="shared" hidden={ opts.canshare == 'True' ? '' : true } checked={ opts.shared == 'True' ? true : '' } type="checkbox"/>
     </div>
     <script>
         // TODO:  SHARED OR NOT
@@ -13,6 +13,16 @@
             headers: {
                 "X-CSRFToken": CSRF_TOKEN
             }
+        };
+
+        this.share = function() {
+            axios.patch('/rest/projects/project/' + opts.id, {
+                shared: this.shared.checked
+            }, config).then(function(data) {
+                console.log(data);
+            }).catch(function(error) {
+                console.log(error);
+            });
         };
 
         this.delete = function() {
@@ -28,7 +38,7 @@
                         document.write(error.data)
                     });
             }
-        }
+        };
 
         this.updateName = function() {
             axios.patch('/rest/projects/project/' + opts.id, {
@@ -41,6 +51,6 @@
                 console.log('name update failed :(');
                 console.log(error);
             });
-        }
+        };
     </script>
 </projectsettings>
