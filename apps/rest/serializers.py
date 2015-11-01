@@ -17,7 +17,10 @@ class ProjectSerializer(serializers.ModelSerializer):
     def update(self, instance, validated_data):
         get = validated_data.get
         if self.context['request'].user == instance.user:
+            # need to find a better way...
             instance.data = get('data', instance.data)
+            instance.name = get('name', instance.name)
+            instance.shared = get('shared', instance.shared)
             instance.save()
             return instance
         raise PermissionDenied

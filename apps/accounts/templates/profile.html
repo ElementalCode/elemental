@@ -1,11 +1,110 @@
+
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block morescripts %}
+    <link rel="stylesheet" href="{% static 'profile.css' %}" />
+{% endblock %}
+
 {% block content %}
-	{{ user.username }}
-	{% if projects %}
-		{% for project in projects %}
-			{{ project }}
-		{% endfor %}
-	{% endif %}
+<div class="userpage-top-section">
+    <div class="userpage-upper">
+        <h2>{{ user.username }}</h2>
+        <div>User</div>
+    </div>
+    <div class="userpage-about-me">
+        <div>
+            <h3>About Me</h3>
+            things.
+        </div>
+    </div>
+    <div class="userpage-featured">
+        <div style="width:340px;height:240px;">
+            <h3>Featured Creation</h3>
+            <img src="https://cdn2.scratch.mit.edu/get_image/project/79910342_282x210.png?v=1443783075.33" alt="my image"/>
+        </div>
+    </div>
+</div>
+<div class="userpage-shared-section">
+    <h3>Shared creations</h3>
+    <div>
+        <ul class="userpage-shared-section-carousel">
+            {% for project in projects %}
+                <li>
+                    <a href="">
+                        <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                        {{ project.name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+</div>
+<div class="userpage-favorite-section">
+    <h3>Favorites</h3>
+    <div>
+        <ul class="userpage-favorite-section-carousel">
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    .
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    .
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    .
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    .
+                </a>
+            </li>
+            <li>
+                <a href="#">
+                    <img src="https://cdn2.scratch.mit.edu/get_image/project/63017184_144x108.png?v=1439883865.4"/><br/>   
+                    .
+                </a>
+            </li>
+        </ul>
+    </div>
+</div>
+{% endblock %}
+
+{% block extra_scripts %}
+<script>
+// Number of projects displayed on each of the carousels
+var USER_PROJECT_COUNT = {{ projects.count }};
+var USER_FAVORITE_COUNT = 5;
+
+// Get the carousels
+var user_project_carousel = document.getElementsByClassName("userpage-shared-section-carousel");
+var user_favorite_carousel = document.getElementsByClassName("userpage-favorite-section-carousel");
+
+// Users' Projects Carousel
+if (USER_PROJECT_COUNT > 4) {
+    user_project_carousel[0].style.width = (2170-(180*(12-USER_PROJECT_COUNT))) + "px";
+} else if (USER_PROJECT_COUNT > 0) {
+    user_project_carousel[0].style.width = "720px";
+} else {
+    user_project_carousel[0].parentNode.innerHTML = "<div style='background-color:#C7E1D9;width:700px;height:100px;padding-top:50px;margin:auto;margin-top:10px;border-radius:20px;text-align:center;'>{{ user.username }} has not shared any projects yet.</div>";
+};
+    
+// Users' Favorites Carousel
+if (USER_FAVORITE_COUNT > 4) {
+    user_favorite_carousel[0].style.width = (2170-(180*(12-USER_FAVORITE_COUNT))) + "px";
+} else if (USER_FAVORITE_COUNT > 0) {
+    user_favorite_carousel[0].style.width = "720px";
+} else {
+    user_favorite_carousel[0].parentNode.innerHTML = "<div style='background-color:#C7E1D9;width:700px;height:100px;padding-top:50px;margin:auto;margin-top:10px;border-radius:20px;text-align:center;'>{{ user.username }} has not favorited and projects yet.</div>";
+}
+</script>
 {% endblock %}
