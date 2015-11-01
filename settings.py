@@ -38,6 +38,11 @@ if os.environ.get('PRODUCTION'):
 else:
     DEBUG = True
 
+if os.environ.get('PRODUCTION'):
+    SECURE_SSL_REDIRECT = True
+    CSRF_COOKIE_SECURE = True
+    SESSION_COOKIE_SECURE = True
+
 TEMPLATE_DEBUG = True
 
 
