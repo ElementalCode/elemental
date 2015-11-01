@@ -1,14 +1,14 @@
 <projectsettings>
     <div><a href={ '/projects/project/' + opts.id }>{ opts.name }</a></div>
     <div>
-        <input name="name" value="{ opts.name }" />
+        <input name="name" value="{ opts.name }" onblur={ updateName } />
         <button name="delete" onclick={ delete }>Delete</button>
         <input name="shared" hidden={ opts.canshare == 'True' ? '' : true } checked={ opts.shared == 'True' ? true : '' } type="checkbox"/>
     </div>
     <script>
-        // TODO:  STYLE!
-        // TODO:  CHANGE NAME
+        // TODO:  CHANGE NAME (WORKING ON)
         // TODO:  SHARED OR NOT
+        // TODO:  STYLE!
 
         var config = {
             headers: {
@@ -16,7 +16,7 @@
             }
         };
 
-        this.delete= function() {
+        this.delete = function() {
             // going to have to make a modal for this
             console.log(this);
             if (window.confirm('Would you like to delete your project "' + this.name.value + '"?')) {
@@ -29,6 +29,18 @@
                         document.write(error.data)
                     });
             }
+        }
+
+        this.updateName = function() {
+            console.log(this);
+            axios.patch('/rest/projects/project/' + opts.id, {
+                name: this.name.value
+            }, config).then(function(data) {
+                console.log('name updated yay');
+            }).catch(function(error) {
+                console.log('name update failed :(');
+                console.log(error);
+            });
         }
     </script>
 </projectsettings>
