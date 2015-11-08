@@ -55,8 +55,13 @@ function arrContainsFromArr(arr1, arr2) {
 var fileData = {};
 var currentFile = 'index.html';
 
-var stackElements = ['e-img', 'e-text'];
-var attrNames = ['src', 'class', 'id', 'href', ]; //add attrs
+var stackElements = ['e-img', 'e-text', 'e-CSS', 'e-style', ];
+var attrNames = ['src', 'class', 'id', 'href', 'rel']; //add attrs
+var cssAttrNames = [
+    'background-color',
+    'height',
+    'width',
+]; //add attrs
 var wrapperElements = ['e-div', 'e-body',  'e-a', 'e-h1', 'e-h2', 'e-h3'];
 var unnamedWrapperElements = wrapperElements.map(function(item) {
     return item.substr(2, item.length - 1);
@@ -64,8 +69,11 @@ var unnamedWrapperElements = wrapperElements.map(function(item) {
 var textInput = 'text';
 
 function getBlockHtml(el) {
-    // we're going to have to have the attribute text in here too somehow...
+    console.log('el: ', el);
     var name;
+    if (el.tag == 'style') {
+        el.tag = 'CSS';
+    }
     if (el.tag) {
         name = filter.blocks.filter(function(item) {
             return item.name == el.tag;
@@ -85,6 +93,7 @@ function getBlockHtml(el) {
                 '<span class="attr-input" contenteditable="true">' + el.attr[attr] + '</span>',
             '</span>'
         ].join(''));
+        console.log(attr);
     }
     attrInputs = attrInputs.join('');
 
@@ -124,7 +133,6 @@ function generateWrapperBlocks(jsonData) {
             '<li class="c-header">' + jsonData.tag + attrInputs + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
             '<ul class="c-content">',
     ];
-
     for (var i = 0; i < jsonData.child.length; i++) {
         var curEl = jsonData.child[i];
         if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
@@ -143,30 +151,62 @@ function generateWrapperBlocks(jsonData) {
     return wrapperHtml.join('');
 }
 
-function generateBlocks(jsonData) {
-    var baseHtml = [
-        '<ul class="script">',
-            '<li class="hat">&lt;!DOCTYPE html&gt;</li>',
-            '<ul class="c-wrapper e-body">',
-                '<li class="c-header">&lt;body&gt;</li>',
-                '<ul class="c-content">',
-    ];
-
-    for (var i = 0; i < jsonData.length; i++) {
-        var curEl = jsonData[i];
-        if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
-            baseHtml.push(getBlockHtml(curEl));
-        }
-        if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
-            // repeat down tree...
-            baseHtml.push(generateWrapperBlocks(curEl));
-        }
+function getCSSAttributesHTML(attributes) {
+    var pushedHtml = [];
+    for (attr in attributes) {
+        var attrValue = attributes[attr];
+        pushedHtml.push('<li class="stack e-rule">rule <span class="script-input css-attr-dropdown" contenteditable="true">' + attr + '</span>: <span class="script-input" contenteditable="true">' + attrValue + '</span></li>');
     }
+    return pushedHtml.join('');
+}
 
-    
-    baseHtml.push('</ul><li class="c-footer">&lt;/body&gt;</li></ul></ul>');
-    // debugger;
-    return baseHtml.join('');
+function generateBlocks(jsonData, ext) {
+    if (ext == 'html') {
+        jsonData = jsonData.child;
+        var baseHtml = [
+            '<ul class="script">',
+                '<li class="hat">&lt;!DOCTYPE html&gt;</li>',
+                '<ul class="c-wrapper e-body">',
+                    '<li class="c-header">&lt;body&gt;</li>',
+                    '<ul class="c-content">',
+        ];
+
+        console.log(jsonData);
+        for (var i = 0; i < jsonData.length; i++) {
+            var curEl = jsonData[i];
+            console.log(curEl.tag);
+            if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
+                baseHtml.push(getBlockHtml(curEl));
+            }
+            if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
+                // repeat down tree...
+                baseHtml.push(generateWrapperBlocks(curEl));
+            }
+        }
+
+        
+        baseHtml.push('</ul><li class="c-footer">&lt;/body&gt;</li></ul></ul>');
+        return baseHtml.join('');
+    } else if (ext == 'css') {
+        var baseHtml = [
+            '<ul class="script">',
+                '<li class="hat">' + currentFile + '</li>',
+        ];
+        for (curSelector in jsonData) {
+            var selectorHtml = [
+                '<ul class="c-wrapper e-selector">',
+                    '<li class="c-header">selector <span class="script-input" contenteditable="true">' + curSelector + '</span></li>',
+                    '<ul class="c-content">'
+            ];
+            selectorHtml.push(getCSSAttributesHTML(jsonData[curSelector].attributes));
+            selectorHtml.push('</ul><li class="c-footer">&nbsp;</li></ul>');
+            baseHtml.push(selectorHtml.join(''));
+        }
+        baseHtml.push('</ul>');
+        return baseHtml.join('');
+    } else {
+        throw 'the world is going to be destroyed due to your foolishness, mortal!1111!  ' + ext + '';
+    }
 }
 
 function loadFile(filename, el) {
@@ -189,7 +229,8 @@ function loadFile(filename, el) {
 
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
-    blockArea.innerHTML = generateBlocks(fileJson.child);
+    console.log(fileData);
+    blockArea.innerHTML = generateBlocks(fileJson, filename.split('.').pop());
     setFrameContent();
     setZebra();
 }
@@ -197,12 +238,19 @@ function loadFile(filename, el) {
 function manuallyCreateFile() {
     //we need something better than this
     var fileName = prompt('Enter a file name', '.html');
-    if (fileName && !fileData.hasOwnProperty(fileName)) {
-        generateFile(fileName);
+    var ext = fileName.split('.');
+    ext = ext[ext.length - 1];
+    var allowedExts = ['html', 'css'];
+    if (allowedExts.indexOf(ext) > -1) {
+        if (fileName && !fileData.hasOwnProperty(fileName)) {
+            generateFile(fileName, ext);
+        }
+    } else {
+        throw 'File type "' + ext + '" not supported.';
     }
 }
 
-function generateFile(fileName, initial) {
+function generateFile(fileName, ext, initial) {
     currentFile = fileName;
 
     var finalFile = $('.add-file')[0];
@@ -225,18 +273,38 @@ function generateFile(fileName, initial) {
     if (initial) {
         fileData[fileName] = initial;
     } else {
-        fileData[fileName] = {
-          "tag": "body",
-          "attr": {},
-          "child": []
-        };
+        if (ext == 'html') {
+            fileData[fileName] = {
+                "tag": "body",
+                "attr": {},
+                "child": []
+            };
+        } else if (ext == 'css') {
+            fileData[fileName] = {
+                'children': {
+                    '.selector': { // should I initialize this?  probably not, maybe?  idk post comments on it
+                        'children': {},
+                        'attributes': {
+                            'background-color': 'red',
+                        }
+                    }
+                },
+                'attributes': {}
+            };
+        } else {
+            throw 'File type "' + ext + '" not supported.';
+        }
     }
     blockArea = $('.scriptingArea')[0];
 
     if (initial) {
-        blockArea.innerHtml = generateBlocks(initial);
+        blockArea.innerHtml = generateBlocks(initial);  // add shim later?
     } else {
-        blockArea.innerHTML = generateBlocks([]);
+        if (ext == 'css') {
+            blockArea.innerHTML = generateBlocks(fileData[fileName].children, ext);
+        } else {
+            blockArea.innerHTML = generateBlocks([], ext);
+        }
     }
 
     //clear preview window
@@ -318,9 +386,8 @@ $('.context-menu.files .menu-item').on('click', function(ev) {
             case 'duplicate-file':
                 var oldName = RIGHT_CLICKED.file.split('.');
                 var newName = oldName[oldName.length - 2] + '-copy.' + oldName[oldName.length - 1];  //there should be a better way...
-                console.log(RIGHT_CLICKED.file);
                 if (!fileData.hasOwnProperty(newName)) {
-                    generateFile(newName, fileData[RIGHT_CLICKED.file]);
+                    generateFile(newName, oldName[oldName.length - 1], fileData[RIGHT_CLICKED.file]);
                 }
                 break;
 

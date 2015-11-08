@@ -122,11 +122,32 @@ function traverseTree(parentNode) {
 			if (elType == 'text') {
 				elType = '';
 			}
-			pushedArr.push({
-				tag: elType,
-				attr: elType ? getSingleAttrs(directChildren[i]) : {},
-				text: encodeEntities(getInlineText(directChildren[i]))
-			});
+			if (elType == 'CSS') {
+				var cssFileName = getSingleAttrs(directChildren[i]).href;
+				if (fileData.hasOwnProperty(cssFileName)) {
+					var cssText = CSSJSON.toCSS({
+						children: fileData[cssFileName],
+						attributes: {}
+					});
+					pushedArr.push({
+						tag: 'style',
+						attr: getSingleAttrs(directChildren[i]),
+						text: cssText
+					});
+				} else {
+					pushedArr.push({
+						tag: 'style',
+						attr: getSingleAttrs(directChildren[i]),
+						text: ''
+					});
+				}
+			} else {
+				pushedArr.push({
+					tag: elType,
+					attr: elType ? getSingleAttrs(directChildren[i]) : {},
+					text: encodeEntities(getInlineText(directChildren[i]))
+				});
+			}
 		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
 			var elType = getElType(directChildren[i]);
 			pushedArr.push({
@@ -139,53 +160,88 @@ function traverseTree(parentNode) {
 	return pushedArr;  //recursively get children of blocks
 }
 
-function setFrameContent() {
+function getCSSAttributes(children) {
+	var attributes = {};
+	for (var i = 0; i < children.length; i++) {
+		var child = children[i];
+		var attrName = encodeEntities(child.children[0].textContent);
+		var attrValue = encodeEntities(child.children[1].textContent);
+		attributes[attrName] = attrValue;
+	}
+	return attributes;
+}
+
+function setFrameContent(ext) {
+	ext = ext || currentFile.split('.').pop();
 	var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
 	var previewElement = document.getElementsByClassName('previewBody')[0];
 
 	var directChildren = toArr(script.children);
 	directChildren.shift();
 
-	var jsonFormat = {
-		tag: 'body',
-		attr: {},
-		child: [],
-	};
-	var blocks = [];
-
-	for (var i = 0; i < directChildren.length; i++) {
-		if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
-			var elType = getElType(directChildren[i]);
-			if (elType == 'text') {
-				elType = '';
+	if (ext == 'css') {
+		var jsonFormat = {};
+		for (var i = 0; i < directChildren.length; i++) {
+			//this should be easier than HTML because it's merely a list of selectors
+			var child = directChildren[i];
+			// check to make sure it's a selector block
+			if (child.classList.contains('e-selector')) {
+				var selector = child.children[0].children[0].textContent;
+				jsonFormat[selector] = {};
+				jsonFormat[selector].attributes = getCSSAttributes(child.children[1].children);
+				// console.log(child.children[1].children);
 			}
-			blocks.push({
-				tag: elType,
-				attr: elType ? getSingleAttrs(directChildren[i]) : {},
-				text: encodeEntities(getInlineText(directChildren[i]))
-			});
-		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
-			var elType = getElType(directChildren[i]);
-			blocks.push({
-				tag: elType,
-				child: traverseTree(directChildren[i]),
-			});
 		}
+		fileData[currentFile] = jsonFormat;
+	} else if (ext == 'html') {
+
+		var jsonFormat = {
+			tag: 'body',
+			attr: {},
+			child: [],
+		};
+		var blocks = [];
+
+		for (var i = 0; i < directChildren.length; i++) {
+			if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
+				var elType = getElType(directChildren[i]);
+				if (elType == 'text') {
+					elType = '';
+				}
+				if (elType == 'CSS') {
+					console.log(getSingleAttrs(directChildren[i]));
+				} else {
+					blocks.push({
+						tag: elType,
+						attr: elType ? getSingleAttrs(directChildren[i]) : {},
+						text: encodeEntities(getInlineText(directChildren[i]))
+					});
+				}
+			} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
+				var elType = getElType(directChildren[i]);
+				blocks.push({
+					tag: elType,
+					child: traverseTree(directChildren[i]),
+				});
+			}
+		}
+
+		if (blocks[0]) {
+			jsonFormat = blocks[0];
+		}
+
+		fileData[currentFile] = jsonFormat;
+
+		var parsedHtml = json2html(jsonFormat);
+
+		var previewWindow = previewElement;
+		previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
+		previewWindow.document.open();
+		previewWindow.document.write(parsedHtml);
+		previewWindow.document.close();
+	} else {
+		throw 'this should never be thrown though';
 	}
-
-	if (blocks[0]) {
-		jsonFormat = blocks[0];
-	}
-
-	fileData[currentFile] = jsonFormat;
-
-	var parsedHtml = json2html(jsonFormat);
-
-	var previewWindow = previewElement;
-	previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
-	previewWindow.document.open();
-	previewWindow.document.write(parsedHtml);
-	previewWindow.document.close();
 }
 
 setFrameContent();
