@@ -34,6 +34,7 @@ class Index(UnbannedUserMixin, FormView):
         if user is not None:
             if user.is_active:
                 login(self.request, user)
+                user.set_ip(self.request)
                 if not user.banned:
                     return super(Index, self).form_valid(form)
                 else:

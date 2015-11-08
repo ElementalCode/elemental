@@ -159,15 +159,17 @@ body {
     margin: 0px 3px;
     padding: 0px 4px;
     outline: none; }
+    .attr-holder .attr-dropdown:empty,
+    .attr-holder .attr-input:empty {
+      content: ' '; }
   .attr-holder .attr-input {
     background-color: white;
-    color: black; }
+    color: black;
+    min-height: 20px; }
   .attr-holder .attr-dropdown {
     background-color: white;
     color: black;
     cursor: text; }
-    .attr-holder .attr-dropdown:empty {
-      content: ' '; }
 
 .context-menu {
   position: absolute;
