@@ -40,6 +40,7 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
     banned = models.BooleanField(default=False)
     can_share_projects = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
+    ip = models.GenericIPAddressField(blank=True, null=True)
 
     email = models.EmailField(_('email address'), max_length=254, blank=True)
     first_name = models.CharField(_('first name'), max_length=30, blank=True)
@@ -73,6 +74,15 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
         if self.is_superuser or auth_group in allowed_groups:
             self.can_share_projects = True
         return super(ElementalUser, self).save(*args, **kwargs)
+
+    def set_ip(self, request):
+        x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+        if x_forwarded_for:
+            ip = x_forwarded_for.split(',')[0]
+        else:
+            ip = request.META.get('REMOTE_ADDR')
+        self.ip = ip
+        self.save()
 
     def get_full_name(self):
         """
