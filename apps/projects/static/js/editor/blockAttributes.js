@@ -58,7 +58,6 @@ function attrSearch(ev) {
     var validAttrs = attrNames.filter(function(attr) {
         return attr.indexOf(searchString) > -1;
     });
-    console.log(validAttrs);
     var newHtml = [];
     for (var i = 0; i < validAttrs.length; i++) {
         var attrName = validAttrs[i];
@@ -75,3 +74,10 @@ ATTRIBUTE_RESULTS.addEventListener('click', function(ev) {
     var attr = ev.target.textContent;
     CLICKED_ATTR.textContent = attr;
 });
+
+// initialize the stuff in the menu
+var attrString = '';
+for (var i = 0; i < attrNames.length; i++) {
+    attrString += '<li>' + attrNames[i] + '</li>';
+}
+ATTRIBUTE_RESULTS.innerHTML = attrString;

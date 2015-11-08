@@ -4,7 +4,8 @@ var filter = {
   searchString: "im",
   paletteNames: [
     "text",
-    "media"
+    "media",
+    "sections"
   ],
   getFilteredBlocks: function(){
     var matching = [];
@@ -35,22 +36,42 @@ var filter = {
         var block = filter.blocks[blocksToDisplay[x]];
         var blockString;
         if (block.type == 'wrapper') {
-          blockString = [
-            '<ul class="c-wrapper e-' + block.name + '">',
-              '<li class="c-header">' + block.name + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
-              '<ul class="c-content">',
-              '</ul>',
-              '<li class="c-footer">&nbsp;</li>',
-            '</ul>'
-          ].join('');
+          if (!block.ftype || block.ftype == 'html') {
+            blockString = [
+              '<ul class="c-wrapper e-' + block.name + '">',
+                '<li class="c-header">' + block.name + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
+                '<ul class="c-content">',
+                '</ul>',
+                '<li class="c-footer">&nbsp;</li>',
+              '</ul>'
+            ].join('');
+          } else {
+            blockString = [
+              '<ul class="c-wrapper e-' + block.name + '">',
+                '<li class="c-header">' + block.name + ' <span class="script-input" contenteditable="true">&nbsp;</span></li>',
+                '<ul class="c-content">',
+                '</ul>',
+                '<li class="c-footer">&nbsp;</li>',
+              '</ul>'
+            ].join('');
+          }
         } else {
           if (block.name != 'text') {
-            blockString = [
-              '<li class="stack e-' + block.name + '">',
-                block.name,
-                "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>",
-              '</li>'
-            ].join('');
+            if (!block.ftype || block.ftype == 'html') {
+              blockString = [
+                '<li class="stack e-' + block.name + '">',
+                  block.name,
+                  "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>",
+                '</li>'
+              ].join('');
+            } else {
+              blockString = [
+                '<li class="stack e-' + block.name + '">',
+                  block.name,
+                  ' <span class="script-input css-attr-dropdown" contenteditable="true"></span>: <span class="script-input" contenteditable="true"></span>',
+                '</li>'
+              ].join('');
+            }
           } else {
             blockString = '<li class="stack e-text"><span contenteditable="true" class="script-input text">breadfish.gif</span></li>';
           }
@@ -115,7 +136,40 @@ var filter = {
       tags: ['image', 'img', 'picture'],
       palette: 1
     },
+    {
+      name: 'CSS',
+      type: 'stack',
+      tags: ['css', 'style', 'link'],
+      palette: 1
+    },
+    
+    /* Blocks for palette 2 - Sections */
+    {
+      name: 'navigation',
+      tags: ['nav', 'navigation'],
+      palette: 2
+    },
+    {
+      name: 'footer',
+      tags: ['footer', 'foot' /* can i addz feet plz?*/],
+      palette: 2
+    },
 
+    /* Blocks for CSS */
+    {
+      name: 'selector',
+      type: 'wrapper',
+      tags: ['selection', 'selector'],
+      palette: 7,
+      ftype: 'css'
+    },
+    {
+      name: 'rule',
+      type: 'stack',
+      tags: ['rule'],
+      palette: 7,
+      ftype: 'css'
+    }
   ]
 };
 
@@ -148,5 +202,3 @@ function blockFilterOnload() { // ew multiple onloads
   
   filter.displayFilteredBlocks();
 };
-
-window.onload = blockFilterOnload;
