@@ -45,12 +45,23 @@
         <div class="upArrow"></div>
       </div>
       <ul class="attribute-results" id="attributeResults">
-        <li>class</li>
-        <li>id</li>
-        <li>src</li>
-        <li>href</li>
       </ul>
       <div class="scroll-down" id="attributeScrollUp">
+        <div class="downArrow"></div>
+      </div>
+    </div>
+
+    <!-- CSS ATTRIBUTE DROPDOWN - DEFAULTS TO HIDDEN, REMOVE THIS IF YOU WANT TO SEE IT -->
+    <div class="attributeDropdown hidden" id="cssAttributeDropdown">
+      <div class="searchContainer">
+        <input type="text" class="inlineSearch" id="cssPropSearch">
+      </div>
+      <div class="scroll-up" id="cssAttributeScrollUp">
+        <div class="upArrow"></div>
+      </div>
+      <ul class="attribute-results" id="cssAttributeResults">
+      </ul>
+      <div class="scroll-down" id="cssAttributeScrollUp">
         <div class="downArrow"></div>
       </div>
     </div>
@@ -92,7 +103,7 @@
     <div class="mainArea">
       <div class="leftSide">
         <div class="pagePreview" id="draggablePreview">
-          <iframe class="previewBody" sandbox="allow-scripts allow-pointer-lock allow-popups allow-forms">
+          <iframe class="previewBody">
             mah page preview
           </iframe>
         </div>
@@ -144,7 +155,7 @@
                 </label>
                 <label class="paletteOptionWrap" for="p8" data-num="7">
                   <input type="radio" name="palette" value="p8" id="p8" />
-                  Palette 8<span class="paletteColorIndicator" style="background:#C6E44D"></span>
+                  CSS<span class="paletteColorIndicator" style="background:#C6E44D"></span>
                 </label>
               </div>
             </form>
@@ -191,6 +202,7 @@
   <script src='resources/js/files.js'></script>
   <script src='resources/js/blocks.js'></script>
   <script src='resources/js/blockAttributes.js'></script>
+  <script src='resources/js/cssAttributes.js'></script>
   <script src='resources/js/block2json.js'></script>
   <script src='resources/js/fileManagement.js'></script>
   </body>
