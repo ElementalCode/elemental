@@ -4,10 +4,10 @@
 {% block morescripts %}
     <script src="{% static 'js/vendor/riot_compiler.js' %}"></script>
     <script src="{% static 'js/vendor/axios.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/my-stuff.css' %}"></script>
 {% endblock %}
 
 {% block content %}
-    my stuff
     {% for p in projects %}
         <projectsettings
             id="{{ p.id}}"
