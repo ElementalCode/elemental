@@ -3,12 +3,12 @@ $nav_grad_bottom: #27ae60;
 $borders_color: #252E35;
 $right_background: #444C54;
 $right_transparent: rgba(68,76,84, 0.6);
-$right_texture: "../img/diagonalTexture.png";
+$right_texture: "../../img/diagonalTexture.png";
 $top_bar_text_shadow: rgba(0,0,0,0.5);
 $menu_drop_back: #fff;
 $menu_drop_hover: #58B2C8;
 $menu_drop_text: #333;
-$search_icon_url: "../img/nav-search-glass.png";
+$search_icon_url: "../../img/nav-search-glass.png";
 
 @import "blocks";
 @import "menus";
@@ -369,11 +369,11 @@ html, body {
     width:70px;
     height:90px;
     z-index:800;
-    background-image: url("../img/trash_closed.png");
+    background-image: url("../../img/trash_closed.png");
     cursor: default;
     &:hover,
     &.hovering {
-    background-image: url("../img/trash_open.png");
+    background-image: url("../../img/trash_open.png");
     }
 }
 
