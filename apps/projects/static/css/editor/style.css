@@ -12,7 +12,7 @@ body {
   /* Don't let text to "wrap" to a new line (blocks would look ugly that way) */
   -webkit-user-select: none;
   /* Chrome all / Safari all */
-  -moz-user-select: none;
+  -moz-user-select: none; 
   /* Firefox all */
   -ms-user-select: none;
   /* IE 10+ */
