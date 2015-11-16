@@ -208,7 +208,7 @@ body {
   border-radius: 999px;
   padding: 4px;
   text-indent: 24px;
-  background-image: url(../img/nav-search-glass.png);
+  background-image: url(../../img/nav-search-glass.png);
   background-repeat: no-repeat;
   background-position: 8px 4px;
   outline: none;
@@ -277,7 +277,7 @@ html, body {
   min-width: 100%;
   overflow: auto;
   position: relative;
-  background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../img/diagonalTexture.png");
+  background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../../img/diagonalTexture.png");
   z-index: 1; }
 
 .topBar {
@@ -525,7 +525,7 @@ html, body {
   border-top: none;
   outline: none;
   padding: 8px 10px 8px 26px;
-  background-image: url("../img/nav-search-glass.png");
+  background-image: url("../../img/nav-search-glass.png");
   background-repeat: no-repeat;
   background-position: 8px 9px;
   cursor: pointer;
@@ -566,10 +566,10 @@ html, body {
   width: 70px;
   height: 90px;
   z-index: 800;
-  background-image: url("../img/trash_closed.png");
+  background-image: url("../../img/trash_closed.png");
   cursor: default; }
   .trashCan:hover, .trashCan.hovering {
-    background-image: url("../img/trash_open.png"); }
+    background-image: url("../../img/trash_open.png"); }
 
 @media (max-width: 450px) {
   .advanceWrap {
