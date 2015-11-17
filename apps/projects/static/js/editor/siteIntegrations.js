@@ -10,26 +10,35 @@ SAVE_BUTTON.addEventListener('click', function(ev) {
 				"X-CSRFToken": CSRF_TOKEN
 			}
 		};
-		if (NEW_PROJECT) {
-			request = axios.post('/rest/projects/project/', {
-				data: JSON.stringify(fileData),
-				name: 'untitled'
-			}, config);
-		} else {
-			request = axios.patch('/rest/projects/project/' + P_ID, {
-				data: JSON.stringify(fileData)
-			}, config);
-		}
-		request.then(function(data) {
+
+		var previewWindow = document.getElementsByClassName('previewBody')[0];
+		html2canvas(previewWindow.contentWindow.document.body).then(function(canvas) {
+			document.body.appendChild(canvas);
+			thumbnail = canvas.toDataURL();
+			console.log(thumbnail);
 			if (NEW_PROJECT) {
-				console.log('created');
-				P_ID = data.data.id;
-				NEW_PROJECT = false;
+				request = axios.post('/rest/projects/project/', {
+					data: JSON.stringify(fileData),
+					name: 'untitled',
+					thumbnail: thumbnail,
+				}, config);
 			} else {
-				console.log('updated');
+				request = axios.patch('/rest/projects/project/' + P_ID, {
+					data: JSON.stringify(fileData),
+					thumbnail: thumbnail,
+				}, config);
 			}
-		}).catch(function(err) {
-			console.log(err);
+			request.then(function(data) {
+				if (NEW_PROJECT) {
+					console.log('created');
+					P_ID = data.data.id;
+					NEW_PROJECT = false;
+				} else {
+					console.log('updated');
+				}
+			}).catch(function(err) {
+				console.log(err);
+			});
 		});
 	}
 });
