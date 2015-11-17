@@ -13,6 +13,7 @@ class Project(models.Model):
     shared = models.BooleanField(default=False)
     data = models.TextField()
     deleted = models.BooleanField(default=False)
+    # thumbnail = models.TextField()
 
     def __unicode__(self):
         return self.name

@@ -13,8 +13,8 @@
             id="{{ p.id}}"
             shared="{{ p.shared }}"
             name="{{ p.name }}"
-            canshare="{{ p.user.can_share_projects }}"
-        />
+            canshare="{{ p.user.can_share_projects }}">
+        </projectsettings>
     {% endfor %}
 {% endblock %}
 
