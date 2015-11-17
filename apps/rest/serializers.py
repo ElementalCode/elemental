@@ -9,7 +9,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('username', 'shared', 'id', 'data', 'name', )
+        fields = ('username', 'shared', 'id', 'data', 'name', 'thumbnail', )
 
     def get_username(self, obj):
         return obj.user.username
@@ -36,4 +36,4 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('data', 'name', 'id', )
+        fields = ('data', 'name', 'id', 'thumbnail', )
