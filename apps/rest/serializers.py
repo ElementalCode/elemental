@@ -21,6 +21,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             instance.data = get('data', instance.data)
             instance.name = get('name', instance.name)
             instance.shared = get('shared', instance.shared)
+            instance.thumbnail = get('thumbnail', instance.thumbnail)
             instance.save()
             return instance
         raise PermissionDenied
