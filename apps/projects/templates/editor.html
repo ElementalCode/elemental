@@ -11,6 +11,7 @@
     <script src="{% static 'js/editor/vendor/jszip.min.js' %}"></script>
     <script src="{% static 'js/editor/vendor/filesaver.min.js' %}"></script>
     <script src="{% static 'js/editor/vendor/cssjson.js' %}"></script>
+    <script src="{% static 'js/editor/vendor/html2canvas.js' %}"></script>
     <script src="{% static 'js/vendor/axios.min.js' %}"></script>
     <script src="{% static 'js/editor/vendor/htmljson.js' %}"></script>
     <script src="{% static 'js/editor/script.js' %}"></script>
@@ -112,9 +113,7 @@
     <div class="mainArea">
       <div class="leftSide">
         <div class="pagePreview" id="draggablePreview">
-          <iframe class="previewBody">
-            mah page preview
-          </iframe>
+          <iframe class="previewBody"></iframe>
         </div>
         <div class="filePane">
           <div class="file selected">

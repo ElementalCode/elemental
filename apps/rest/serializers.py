@@ -9,7 +9,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('username', 'shared', 'id', 'data', 'name', )
+        fields = ('username', 'shared', 'id', 'data', 'name', 'thumbnail', )
 
     def get_username(self, obj):
         return obj.user.username
@@ -21,6 +21,7 @@ class ProjectSerializer(serializers.ModelSerializer):
             instance.data = get('data', instance.data)
             instance.name = get('name', instance.name)
             instance.shared = get('shared', instance.shared)
+            instance.thumbnail = get('thumbnail', instance.thumbnail)
             instance.save()
             return instance
         raise PermissionDenied
@@ -36,4 +37,4 @@ class ProjectCreateSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
-        fields = ('data', 'name', 'id', )
+        fields = ('data', 'name', 'id', 'thumbnail', )
