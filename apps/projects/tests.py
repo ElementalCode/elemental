@@ -22,7 +22,8 @@ class ProjectTestCases(TestCase):
         self.client.login(username='username', password='password')
         data = {
             'data': 'fake_testing_data_create',
-            'name': 'my_project'
+            'name': 'my_project',
+            'thumbnail': 'thumb',
         }
         response = self.client.post(reverse('api:project-create'), data)
         self.assertEqual(response.status_code, 201)
@@ -40,7 +41,8 @@ class ProjectTestCases(TestCase):
         self.client.login(username='username', password='password')
         data = {
             'data': 'fake_testing_data_create_fail',
-            'name': 'my_project'
+            'name': 'my_project',
+            'thumbnail': 'thumb',
         }
         response = self.client.post(reverse('api:project-create'), data)
         self.assertEqual(response.status_code, 403)
