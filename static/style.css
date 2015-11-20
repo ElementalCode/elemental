@@ -1,5 +1,250 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+.pull--left {
+  float: left !important; }
+
+.pull--right {
+  float: right !important; }
+
+.pad {
+  padding: 35px !important; }
+
+.pad--top {
+  padding-top: 35px !important; }
+
+.pad--right {
+  padding-right: 35px !important; }
+
+.pad--bottom {
+  padding-bottom: 35px !important; }
+
+.pad--left {
+  padding-left: 35px !important; }
+
+.pad--ends {
+  padding-top: 35px !important;
+  padding-bottom: 35px !important; }
+
+.pad--sides {
+  padding-right: 35px !important;
+  padding-left: 35px !important; }
+
+.pad-double {
+  padding: 70px !important; }
+
+.pad-double--top {
+  padding-top: 70px !important; }
+
+.pad-double--right {
+  padding-right: 70px !important; }
+
+.pad-double--bottom {
+  padding-bottom: 70px !important; }
+
+.pad-double--left {
+  padding-left: 70px !important; }
+
+.pad-double--ends {
+  padding-top: 70px !important;
+  padding-bottom: 70px !important; }
+
+.pad-double--sides {
+  padding-right: 70px !important;
+  padding-left: 70px !important; }
+
+.pad-half {
+  padding: 17.5px !important; }
+
+.pad-half--top {
+  padding-top: 17.5px !important; }
+
+.pad-half--right {
+  padding-right: 17.5px !important; }
+
+.pad-half--bottom {
+  padding-bottom: 17.5px !important; }
+
+.pad-half--left {
+  padding-left: 17.5px !important; }
+
+.pad-half--ends {
+  padding-top: 17.5px !important;
+  padding-bottom: 17.5px !important; }
+
+.pad-half--sides {
+  padding-right: 17.5px !important;
+  padding-left: 17.5px !important; }
+
+.push-double {
+  margin: 70px !important; }
+
+.push-double--top {
+  margin-top: 70px !important; }
+
+.push-double--right {
+  margin-right: 70px !important; }
+
+.push-double--bottom {
+  margin-bottom: 70px !important; }
+
+.push-double--left {
+  margin-left: 70px !important; }
+
+.push-double--ends {
+  margin-top: 70px !important;
+  margin-bottom: 70px !important; }
+
+.push-double--sides {
+  margin-right: 70px !important;
+  margin-left: 70px !important; }
+
+.push {
+  margin: 35px !important; }
+
+.push--top {
+  margin-top: 35px !important; }
+
+.push--right {
+  margin-right: 35px !important; }
+
+.push--bottom {
+  margin-bottom: 35px !important; }
+
+.push--left {
+  margin-left: 35px !important; }
+
+.push--ends {
+  margin-top: 35px !important;
+  margin-bottom: 35px !important; }
+
+.push--sides {
+  margin-right: 35px !important;
+  margin-left: 35px !important; }
+
+.push-half {
+  margin: 17.5px !important; }
+
+.push-half--top {
+  margin-top: 17.5px !important; }
+
+.push-half--right {
+  margin-right: 17.5px !important; }
+
+.push-half--bottom {
+  margin-bottom: 17.5px !important; }
+
+.push-half--left {
+  margin-left: 17.5px !important; }
+
+.push-half--ends {
+  margin-top: 17.5px !important;
+  margin-bottom: 17.5px !important; }
+
+.push-half--sides {
+  margin-right: 17.5px !important;
+  margin-left: 17.5px !important; }
+
+.push-part {
+  margin: 15px !important; }
+
+.push-part--top {
+  margin-top: 15px !important; }
+
+.push-part--right {
+  margin-right: 15px !important; }
+
+.push-part--bottom {
+  margin-bottom: 15px !important; }
+
+.push-part--left {
+  margin-left: 15px !important; }
+
+.push-part--ends {
+  margin-top: 15px !important;
+  margin-bottom: 15px !important; }
+
+.push-part--sides {
+  margin-right: 15px !important;
+  margin-left: 15px !important; }
+
+.push-tiny {
+  margin: 5px !important; }
+
+.push-tiny--top {
+  margin-top: 5px !important; }
+
+.push-tiny--right {
+  margin-right: 5px !important; }
+
+.push-tiny--bottom {
+  margin-bottom: 5px !important; }
+
+.push-tiny--left {
+  margin-left: 5px !important; }
+
+.push-tiny--ends {
+  margin-top: 5px !important;
+  margin-bottom: 5px !important; }
+
+.push-tiny--sides {
+  margin-right: 5px !important;
+  margin-left: 5px !important; }
+
+.flush {
+  margin: 0 !important; }
+
+.flush--top {
+  margin-top: 0 !important; }
+
+.flush--right {
+  margin-right: 0 !important; }
+
+.flush--bottom {
+  margin-bottom: 0 !important; }
+
+.flush--left {
+  margin-left: 0 !important; }
+
+.flush--ends {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important; }
+
+.flush--sides {
+  margin-right: 0 !important;
+  margin-left: 0 !important; }
+
+.complete-flush {
+  margin: 0 !important;
+  padding: 0 !important; }
+
+.complete-flush--top {
+  margin-top: 0 !important;
+  padding-top: 0 !important; }
+
+.complete-flush--right {
+  margin-right: 0 !important;
+  padding-right: 0 !important; }
+
+.complete-flush--bottom {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important; }
+
+.complete-flush--left {
+  margin-left: 0 !important;
+  padding-left: 0 !important; }
+
+.complete-flush--ends {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  padding-top: 0 !important; }
+
+.complete-flush--sides {
+  margin-right: 0 !important;
+  margin-left: 0 !important;
+  padding-left: 0 !important;
+  padding-right: 0 !important; }
+
 .float-right {
   float: right !important; }
 
@@ -92,6 +337,42 @@
         .footerContainer .footer div .footerLink:hover {
           background-color: #13171B; }
 
+.grid .half {
+  width: 50%; }
+.grid .one-third {
+  width: 33%; }
+.grid .one-fourth {
+  width: 25%; }
+.grid .three-fourth {
+  width: 75%; }
+.grid .one-fifth {
+  width: 20%; }
+
+/*
+    everything else is ugly so nobody touch this
+    part unless it stays clean k
+*/
+.section {
+  border: 1px solid #42BA92;
+  border-radius: 5px;
+  box-sizing: border-box;
+  position: relative;
+  padding: 7px;
+  box-sizing: border-box; }
+  .section-tall {
+    height: 200px; }
+  .section .subsection {
+    height: 100%;
+    padding-left: 5px;
+    padding-right: 5px; }
+    .section .subsection:not(:first-child) {
+      border-left: 1px solid #42BA92; }
+    .section .subsection form input,
+    .section .subsection form button {
+      display: block; }
+  .section * {
+    box-sizing: border-box; }
+
 /***************************
 balticllama's stuff 
 firedrake, clean this up pls
@@ -108,6 +389,10 @@ body {
 /*alignment/containers*/
 .centered {
   max-width: 900px;
+  margin: 0 auto; }
+
+.centered-large {
+  max-width: 1000px;
   margin: 0 auto; }
 
 .heroWrap {
