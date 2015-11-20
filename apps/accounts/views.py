@@ -90,6 +90,11 @@ class Login(UnbannedUserMixin, FormView):
     template_name = 'login.html'
     form_class = LoginForm
     success_url = reverse_lazy('index')
+
+    def get(self, request):
+        if request.user.is_authenticated():
+            return redirect(reverse('index'))
+        return super(SignUp, self).get(request)
     
     def form_valid(self, form):
         super(Login, self).form_valid(form)

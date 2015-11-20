@@ -8,6 +8,40 @@
 @import "helpers";
 @import "nav";
 @import "footer";
+@import "grid";
+
+/*
+    everything else is ugly so nobody touch this
+    part unless it stays clean k
+*/
+.section {
+    border: 1px solid #42BA92;
+    border-radius: 5px;
+    box-sizing: border-box;
+    position: relative;
+    padding: 7px;
+    box-sizing: border-box;
+    &-tall {
+        height: 200px;
+    }
+    .subsection {
+        height: 100%;
+        padding-left: 5px;
+        padding-right: 5px;
+        &:not(:first-child) {
+            border-left: 1px solid #42BA92;
+        }
+        form {
+            input,
+            button {
+                display: block;
+            }
+        }
+    }
+    * {
+        box-sizing: border-box;
+    }
+}
 
 /***************************
 balticllama's stuff 
@@ -28,6 +62,11 @@ body {
 /*alignment/containers*/
 .centered {
     max-width: 900px;
+    margin: 0 auto;
+}
+
+.centered-large {
+    max-width: 1000px;
     margin: 0 auto;
 }
 
