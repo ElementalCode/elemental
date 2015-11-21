@@ -7,9 +7,9 @@
         <h3>Sign Up</h3>
         <form method="POST">
             {% csrf_token %}
-            {{ form.username|addcss:'form-input' }}
-            {{ form.password1|addcss:'form-input' }}
-            {{ form.password2|addcss:'form-input' }}
+            <input class="form-input" id="id_username" name="username" placeholder="Username" type="text">
+            <input class="form-input" id="id_password1" name="password1" type="password" placeholder="Password">
+            <input class="form-input" id="id_password2" name="password2" type="password" placeholder="Confirm password">
             <input type="submit" class="submit-button">
         </form>
     </div>
