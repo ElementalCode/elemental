@@ -1,24 +1,43 @@
 {% extends "base.html" %}
 {% load staticfiles %}
 
+{% block morescripts %}
+    <script src="{% static 'js/vendor/axios.min.js' %}"></script>
+    <script src="{% static 'js/vendor/xml2json.js' %}"></script>
+    <script src="{% static 'js/vendor/riot_compiler.js' %}"></script>
+    <script src="{% static 'js/components/newsfeed.tag' %}" type="riot/tag"></script>
+{% endblock %}
+
 {% block content %}
     <div class="grid centered-large push-half--top">
         <div class="section section-tall">
             <div class="{% if request.user.is_authenticated %}half{% else %}three-fourth{% endif %} inline-block subsection pull--left">
                 Sorry, this page is under construction.  However, feel free register and create projects!
                 Updates and news regarding Elemental will go here later.
+                <newsfeed></newsfeed>
             </div><div class="{% if request.user.is_authenticated %}half{% else %}one-fourth{% endif %} inline-block subsection pull--right">
                 {% if request.user.is_authenticated %}
                     user feed goes here
                 {% else %}
-                    <form method="POST">
+                    <form method="POST" class="login-form vertically-center-single">
                         {% csrf_token %}
                         <input id="id_username" name="username" type="text" placeholder="Username">
                         <input id="id_password" name="password" type="password" placeholder="Password">
-                        <button>Log In</button>
+                        <div class="centered grid">
+                            <div class="pull--left one-third button-holder">
+                                <button class="vertically-center-single centered block">Log In</button>
+                            </div>
+                            <span class="inline-block pull--right smalltext two-third text--right">Don't have an account?  <a href="{% url 'accounts:register' %}">Register now!</a></span>
+                        </div>
                     </form>
                 {% endif %}
             </div>
         </div>
     </div>
+{% endblock %}
+
+{% block extra_scripts %}
+    <script>
+        riot.mount('newsfeed');
+    </script>
 {% endblock %}

@@ -9,6 +9,7 @@
 @import "nav";
 @import "footer";
 @import "grid";
+@import "typography";
 
 /*
     everything else is ugly so nobody touch this
@@ -28,13 +29,41 @@
         height: 100%;
         padding-left: 5px;
         padding-right: 5px;
+        font-family: 'Open Sans', sans-serif;
         &:not(:first-child) {
             border-left: 1px solid #42BA92;
         }
         form {
-            input,
-            button {
+            input {
                 display: block;
+            }
+            &.login-form {
+                input {
+                    margin: auto;
+                    margin-bottom: 10px;
+                    border-radius: 5px;
+                    height: 30px;
+                    border: 1px solid black;
+                    box-shadow: none;
+                    text-indent: 3px;
+                }
+                button {
+                    border: none;
+                    background-color: #1F8C68;
+                    color: white;
+                    border-radius: 4px;
+                    transition: background 0.1s ease-out;
+                    cursor: pointer;
+                    padding-top: 3px;
+                    padding-bottom: 3px;
+
+                    &:hover {
+                        background-color: #319E7A;
+                    }
+                }
+                div {
+                    height: 35px;
+                }
             }
         }
     }

@@ -1,5 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+.vertically-center-single {
+  position: relative;
+  top: 50%;
+  transform: translateY(-50%); }
+
 .pull--left {
   float: left !important; }
 
@@ -341,12 +346,23 @@
   width: 50%; }
 .grid .one-third {
   width: 33%; }
+.grid .two-third {
+  width: 66%; }
 .grid .one-fourth {
   width: 25%; }
 .grid .three-fourth {
   width: 75%; }
 .grid .one-fifth {
   width: 20%; }
+
+span.smalltext {
+  font-size: 12px; }
+
+.text--right {
+  text-align: right !important; }
+
+.text--left {
+  text-align: left !important; }
 
 /*
     everything else is ugly so nobody touch this
@@ -364,12 +380,33 @@
   .section .subsection {
     height: 100%;
     padding-left: 5px;
-    padding-right: 5px; }
+    padding-right: 5px;
+    font-family: 'Open Sans', sans-serif; }
     .section .subsection:not(:first-child) {
       border-left: 1px solid #42BA92; }
-    .section .subsection form input,
-    .section .subsection form button {
+    .section .subsection form input {
       display: block; }
+    .section .subsection form.login-form input {
+      margin: auto;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      height: 30px;
+      border: 1px solid black;
+      box-shadow: none;
+      text-indent: 3px; }
+    .section .subsection form.login-form button {
+      border: none;
+      background-color: #1F8C68;
+      color: white;
+      border-radius: 4px;
+      transition: background 0.1s ease-out;
+      cursor: pointer;
+      padding-top: 3px;
+      padding-bottom: 3px; }
+      .section .subsection form.login-form button:hover {
+        background-color: #319E7A; }
+    .section .subsection form.login-form div {
+      height: 35px; }
   .section * {
     box-sizing: border-box; }
 
