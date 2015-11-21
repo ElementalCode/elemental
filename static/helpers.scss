@@ -1,3 +1,10 @@
+// VERTICAL AND HORIZONTAL ALIGNMENT
+.vertically-center-single {
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
 // FLOATS
 .pull--left  { float: left!important; }
 .pull--right { float: right!important; }

@@ -94,7 +94,7 @@ class Login(UnbannedUserMixin, FormView):
     def get(self, request):
         if request.user.is_authenticated():
             return redirect(reverse('index'))
-        return super(SignUp, self).get(request)
+        return super(Login, self).get(request)
     
     def form_valid(self, form):
         super(Login, self).form_valid(form)
