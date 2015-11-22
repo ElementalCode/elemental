@@ -11,30 +11,6 @@
 @import "grid";
 @import "typography";
 
-/* 
-    important note: 
-    please keep things lower case. this includes comments. 
-    only use caps if completely necessary. thanks.
-*/
-
-/*
-	formatting:
-	comment "begin main section name"
-	comment "< section name"
-	..code..
-	comment "> section name"
-	
-	
-	comment "< section name 2"
-	..code..
-	comment "> section name 2"
-	comment "end main section name"
-*/
-
-/*
-    everything else is ugly so nobody touch this
-    part unless it stays clean.
-*/
 .section {
     border: 1px solid #42BA92;
     border-radius: 5px;
