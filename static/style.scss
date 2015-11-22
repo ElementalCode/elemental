@@ -11,22 +11,16 @@
 @import "grid";
 @import "typography";
 
-/* 
-    important note: 
-    please keep things lower case. this includes comments. 
-    only use caps if completely necessary. thanks.
-*/
-
 /*
 	formatting:
 	comment "begin main section name"
 	comment "< section name"
-	..code..
+	..styles..
 	comment "> section name"
 	
 	
 	comment "< section name 2"
-	..code..
+	..styles..
 	comment "> section name 2"
 	comment "end main section name"
 */
@@ -94,7 +88,7 @@
 
 /* begin presets */
 
-/* < main tags */
+/* < basic styling */
 html {
     height: 100%;
 }
@@ -104,11 +98,14 @@ body {
     padding: 0;
     height: 100%;
 }
-/* > main tags */
+/* > basic styling */
 
 
 
 /* < alignment and containers */
+
+// NOTE - most should be moved to helpers
+
 .centered {
     max-width: 900px;
     margin: 0 auto;
@@ -144,13 +141,15 @@ body {
 
 .darkBack {
     background: #252E35;
-    overflow: hidden;
+    overflow: hidden;  // keep consistent - add above or remove this line
 }
 /* > backgrounds*/
 
 
 
 /* < buttons */
+
+// still need this?
 
 .ghostButton {
     color: white;

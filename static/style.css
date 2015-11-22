@@ -365,8 +365,21 @@ span.smalltext {
   text-align: left !important; }
 
 /*
+	formatting:
+	comment "begin main section name"
+	comment "< section name"
+	..styles..
+	comment "> section name"
+	
+	
+	comment "< section name 2"
+	..styles..
+	comment "> section name 2"
+	comment "end main section name"
+*/
+/*
     everything else is ugly so nobody touch this
-    part unless it stays clean k
+    part unless it stays clean.
 */
 .section {
   border: 1px solid #42BA92;
@@ -410,11 +423,8 @@ span.smalltext {
   .section * {
     box-sizing: border-box; }
 
-/***************************
-balticllama's stuff 
-firedrake, clean this up pls
-*****************************/
-/*Presets Begin*/
+/* begin presets */
+/* < basic styling */
 html {
   height: 100%; }
 
@@ -423,7 +433,8 @@ body {
   padding: 0;
   height: 100%; }
 
-/*alignment/containers*/
+/* > basic styling */
+/* < alignment and containers */
 .centered {
   max-width: 900px;
   margin: 0 auto; }
@@ -432,10 +443,11 @@ body {
   max-width: 1000px;
   margin: 0 auto; }
 
-.heroWrap {
-  font-family: 'Raleway', sans-serif;
-  padding: 160px 0 100px 0;
-  position: relative; }
+.center-align {
+  text-align: center; }
+
+.right-align {
+  text-align: right; }
 
 .flex-container {
   display: flex;
@@ -443,13 +455,8 @@ body {
   justify-content: center;
   padding: 20px 0px; }
 
-.center-align {
-  text-align: center; }
-
-.right-align {
-  text-align: right; }
-
-/*backgrounds*/
+/* > alignment and containers */
+/* < backgrounds */
 .light-back {
   background-color: #444C54; }
 
@@ -457,11 +464,8 @@ body {
   background: #252E35;
   overflow: hidden; }
 
-/*buttons*/
-.lightButton {
-  color: white;
-  text-decoration: none; }
-
+/* > backgrounds*/
+/* < buttons */
 .ghostButton {
   color: white;
   text-decoration: none;
@@ -471,14 +475,19 @@ body {
   border-radius: 999px; }
 
 .ghostButton:hover {
+  /* keep wacky numbers to prevent font weight change from mattering */
   background: white;
   color: #444C54;
   font-weight: 600;
   margin-left: 19.8px;
-  /* Whacky numbers prevent font weight change from mattering */
   padding-left: 19px; }
 
-/*text*/
+.lightButton {
+  color: white;
+  text-decoration: none; }
+
+/* > buttons */
+/* < text */
 .boxDescription {
   max-width: 180px;
   font-family: 'Raleway', sans-serif;
@@ -512,7 +521,13 @@ body {
   font-family: 'Raleway', sans-serif;
   color: rgba(0, 0, 0, 0.55); }
 
-/*other*/
+/* > text */
+/* < hero / other */
+.heroWrap {
+  font-family: 'Raleway', sans-serif;
+  padding: 160px 0 100px 0;
+  position: relative; }
+
 .heroLink {
   text-decoration: none; }
 
@@ -539,17 +554,18 @@ body {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6); }
 
-/*Presets End*/
-/*Header Begin*/
-#header {
-  padding: 150px 0 100px 0;
-  font-family: 'Raleway', sans-serif; }
-
+/* > hero */
+/* end presets*/
+/* begin header */
 .nav {
   font-family: 'Raleway', sans-serif;
   display: inline;
   float: right;
   margin: 28px 15px; }
+
+#header {
+  padding: 150px 0 100px 0;
+  font-family: 'Raleway', sans-serif; }
 
 #title-container {
   max-width: 600px;
@@ -567,18 +583,13 @@ body {
   font-weight: 300;
   color: rgba(255, 255, 255, 0.5); }
 
-/*Header End*/
-/*Description Begin*/
+/* end header*/
+/* begin description */
 .description-icon {
   float: right; }
 
-/*Description End*/
-/*Team Begin*/
-.teamMember {
-  text-align: center;
-  font-family: 'Raleway', sans-serif;
-  margin: 40px; }
-
+/* end description */
+/* begin team */
 .teamIcon {
   width: 100px;
   height: 100px;
@@ -589,13 +600,23 @@ body {
 .teamIcon:hover {
   box-shadow: 0 0 8px 3px rgba(50, 50, 50, 0.75); }
 
+.teamMember {
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  margin: 40px; }
+
 .member-name {
   margin-top: 2px;
   font-family: sans-serif;
   color: #252e35; }
 
-/*Team End*/
-/*Sign Up/Login Begin*/
+/* end team*/
+/* begin sign up / login */
+.form-box h3 {
+  margin-top: 10px;
+  font-size: 35px;
+  color: #444c54; }
+
 .form-box {
   max-width: 400px;
   margin: 0 auto;
@@ -635,13 +656,8 @@ body {
   background: #319E7A;
   cursor: pointer; }
 
-.form-box h3 {
-  margin-top: 10px;
-  font-size: 35px;
-  color: #444c54; }
-
-/*Sign Up/Login End*/
-/*Login & Signup Header Begin*/
+/* end sign up / login */
+/* begin login & sign up header */
 #small-header {
   font-family: 'Raleway', sans-serif;
   overflow: hidden; }
@@ -656,7 +672,7 @@ body {
   color: white;
   text-decoration: none; }
 
-/*Scale down to prevent wrapping*/
+/* scale down to prevent wrapping */
 @media (max-width: 480px) {
   #small-header {
     font-size: 15px; }
@@ -665,16 +681,16 @@ body {
     margin-top: 20px;
     margin-bottom: 19px;
     font-size: 1.9em; } }
-/*Login & Sign up Header End*/
-/*Privacy Agreement*/
+/* end login & sign up header */
+/* begin privacy agreement */
 #privacy-agreement {
   max-width: 960px;
   margin: 20px auto;
   color: #3d3d3d;
   font-family: 'Raleway', sans-serif; }
 
-/*Privacy Agreement*/
-/* init's stuff */
+/* end privacy agreement*/
+/* __init__'s stuff */
 .white {
   color: white; }
 
