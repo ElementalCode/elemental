@@ -13,6 +13,7 @@
         <div class="section section-tall">
             <div class="{% if request.user.is_authenticated %}half{% else %}three-fourth{% endif %} inline-block subsection pull--left">
                 Please remember that this page (and most of them) are still under construction.
+                <div class="heading">Elemental Blog</div>
                 <newsfeed></newsfeed>
             </div><div class="{% if request.user.is_authenticated %}half{% else %}one-fourth{% endif %} inline-block subsection pull--right">
                 {% if request.user.is_authenticated %}

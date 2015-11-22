@@ -11,26 +11,8 @@
 @import "grid";
 @import "typography";
 
-/*
-	formatting:
-	comment "begin main section name"
-	comment "< section name"
-	..styles..
-	comment "> section name"
-	
-	
-	comment "< section name 2"
-	..styles..
-	comment "> section name 2"
-	comment "end main section name"
-*/
-
-/*
-    everything else is ugly so nobody touch this
-    part unless it stays clean.
-*/
 .section {
-    border: 1px solid #42BA92;
+    border: 1px solid color(seafoam);
     border-radius: 5px;
     box-sizing: border-box;
     position: relative;
@@ -45,7 +27,10 @@
         padding-right: 5px;
         font-family: 'Open Sans', sans-serif;
         &:not(:first-child) {
-            border-left: 1px solid #42BA92;
+            border-left: 1px solid color(seafoam);
+        }
+        .heading {
+            border-bottom: 1px solid color(seafoam);
         }
         form {
             input {
