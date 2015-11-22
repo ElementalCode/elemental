@@ -11,9 +11,29 @@
 @import "grid";
 @import "typography";
 
+/* 
+    important note: 
+    please keep things lower case. this includes comments. 
+    only use caps if completely necessary. thanks.
+*/
+
+/*
+	formatting:
+	comment "begin main section name"
+	comment "< section name"
+	..code..
+	comment "> section name"
+	
+	
+	comment "< section name 2"
+	..code..
+	comment "> section name 2"
+	comment "end main section name"
+*/
+
 /*
     everything else is ugly so nobody touch this
-    part unless it stays clean k
+    part unless it stays clean.
 */
 .section {
     border: 1px solid #42BA92;
@@ -67,28 +87,28 @@
             }
         }
     }
-    * {
+    *  {
         box-sizing: border-box;
     }
 }
 
-/***************************
-balticllama's stuff 
-firedrake, clean this up pls
-*****************************/
+/* begin presets */
 
-/*Presets Begin*/
+/* < main tags */
 html {
     height: 100%;
 }
+
 body {
     margin: 0;
     padding: 0;
     height: 100%;
 }
+/* > main tags */
 
 
-/*alignment/containers*/
+
+/* < alignment and containers */
 .centered {
     max-width: 900px;
     margin: 0 auto;
@@ -99,19 +119,6 @@ body {
     margin: 0 auto;
 }
 
-.heroWrap {
-    font-family: 'Raleway', sans-serif;
-    padding: 160px 0 100px 0;
-    position: relative;
-}
-
-.flex-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 20px 0px;
-}
-
 .center-align {
     text-align: center;
 }
@@ -120,24 +127,30 @@ body {
     text-align: right;
 }
 
+.flex-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 20px 0px;
+}
+/* > alignment and containers */
 
-/*backgrounds*/
+
+
+/* < backgrounds */
 .light-back {
     background-color: #444C54;
 }
-
 
 .darkBack {
     background: #252E35;
     overflow: hidden;
 }
+/* > backgrounds*/
 
 
-/*buttons*/
-.lightButton {
-    color: white;
-    text-decoration: none;
-}
+
+/* < buttons */
 
 .ghostButton {
     color: white;
@@ -149,16 +162,23 @@ body {
 }
 
 .ghostButton:hover {
+	/* keep wacky numbers to prevent font weight change from mattering */
     background: white;
     color: #444C54;
     font-weight: 600;
     margin-left: 19.8px;
-    /* Whacky numbers prevent font weight change from mattering */
     padding-left: 19px;
 }
 
+.lightButton {
+    color: white;
+    text-decoration: none;
+}
+/* > buttons */
 
-/*text*/
+
+
+/* < text */
 .boxDescription {
     max-width: 180px;
     font-family: 'Raleway', sans-serif;
@@ -196,9 +216,17 @@ body {
     font-family: 'Raleway', sans-serif;
     color: rgba(0, 0, 0, 0.55);
 }
+/* > text */
 
 
-/*other*/
+
+/* < hero / other */
+.heroWrap {
+    font-family: 'Raleway', sans-serif;
+    padding: 160px 0 100px 0;
+    position: relative;
+}
+
 .heroLink {
     text-decoration: none;
 }
@@ -229,23 +257,25 @@ body {
     font-size: 14px;
     color: rgba(255, 255, 255, 0.6);
 }
-/*Presets End*/
+/* > hero */
+
+/* end presets*/
 
 
 
 
 
-/*Header Begin*/
-#header {
-    padding: 150px 0 100px 0;
-    font-family: 'Raleway', sans-serif;
-}
-
+/* begin header */
 .nav {
     font-family: 'Raleway', sans-serif;
     display: inline;
     float: right;
     margin: 28px 15px;
+}
+
+#header {
+    padding: 150px 0 100px 0;
+    font-family: 'Raleway', sans-serif;
 }
 
 #title-container {
@@ -266,28 +296,23 @@ body {
     font-weight: 300;
     color: rgba(255, 255, 255, 0.5);
 }
-/*Header End*/
+/* end header*/
 
 
 
 
 
-/*Description Begin*/
+/* begin description */
 .description-icon {
     float: right;
 }
-/*Description End*/
+/* end description */
 
 
 
 
-/*Team Begin*/
-.teamMember {
-    text-align: center;
-    font-family: 'Raleway', sans-serif;
-    margin: 40px;
-}
 
+/* begin team */
 .teamIcon {
     width: 100px;
     height: 100px;
@@ -300,6 +325,12 @@ body {
     box-shadow: 0 0 8px 3px rgba(50, 50, 50, 0.75);
 }
 
+.teamMember {
+    text-align: center;
+    font-family: 'Raleway', sans-serif;
+    margin: 40px;
+}
+
 .member-name {
     margin-top: 2px;
     font-family: sans-serif;
@@ -308,9 +339,20 @@ body {
 
 .member-name:hover {
 }
-/*Team End*/
+/* end team*/
 
-/*Sign Up/Login Begin*/
+
+
+
+
+
+/* begin sign up / login */
+.form-box h3 {
+    margin-top: 10px;
+    font-size: 35px;
+    color: #444c54;
+}
+
 .form-box {
     max-width: 400px;
     margin: 0 auto;
@@ -354,19 +396,13 @@ body {
     background: #319E7A;
     cursor: pointer;
 }
-
-.form-box h3 {
-    margin-top: 10px;
-    font-size: 35px;
-    color: #444c54;
-}
-/*Sign Up/Login End*/
+/* end sign up / login */
 
 
 
 
 
-/*Login & Signup Header Begin*/
+/* begin login & sign up header */
 #small-header {
     font-family: 'Raleway', sans-serif;
     overflow: hidden;
@@ -384,7 +420,7 @@ body {
     text-decoration: none;
 }
 
-/*Scale down to prevent wrapping*/
+/* scale down to prevent wrapping */
 @media(max-width: 480px) {
     #small-header {
         font-size: 15px;
@@ -396,23 +432,23 @@ body {
         font-size: 1.9em;
     }
 }
-/*Login & Sign up Header End*/
+/* end login & sign up header */
 
 
 
 
 
-/*Privacy Agreement*/
+/* begin privacy agreement */
 #privacy-agreement {
     max-width: 960px;
     margin: 20px auto;
     color: #3d3d3d;
     font-family: 'Raleway', sans-serif;
 }
-/*Privacy Agreement*/
+/* end privacy agreement*/
 
 
-/* init's stuff */
+/* __init__'s stuff */
 .white {
   color: white;
 }
