@@ -381,7 +381,10 @@ span.smalltext {
     .section .subsection:not(:first-child) {
       border-left: 1px solid #42BA92; }
     .section .subsection .heading {
-      border-bottom: 1px solid #42BA92; }
+      border-bottom: 1px solid #42BA92;
+      padding-bottom: 7px;
+      margin-bottom: 10px;
+      font-size: 20px; }
     .section .subsection form input {
       display: block; }
     .section .subsection form.login-form input {
@@ -394,7 +397,7 @@ span.smalltext {
       text-indent: 3px; }
     .section .subsection form.login-form button {
       border: none;
-      background-color: #1F8C68;
+      background-color: #42BA92;
       color: white;
       border-radius: 4px;
       transition: background 0.1s ease-out;

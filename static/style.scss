@@ -31,6 +31,9 @@
         }
         .heading {
             border-bottom: 1px solid color(seafoam);
+            padding-bottom: 7px;
+            margin-bottom: 10px;
+            font-size: 20px;
         }
         form {
             input {
@@ -48,7 +51,7 @@
                 }
                 button {
                     border: none;
-                    background-color: #1F8C68;
+                    background-color: color(seafoam);
                     color: white;
                     border-radius: 4px;
                     transition: background 0.1s ease-out;
@@ -57,7 +60,7 @@
                     padding-bottom: 3px;
 
                     &:hover {
-                        background-color: #319E7A;
+                        background-color: color(seafoam-dark);
                     }
                 }
                 div {

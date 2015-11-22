@@ -12,12 +12,11 @@
     <div class="grid centered-large push-half--top">
         <div class="section section-tall">
             <div class="{% if request.user.is_authenticated %}half{% else %}three-fourth{% endif %} inline-block subsection pull--left">
-                Please remember that this page (and most of them) are still under construction.
-                <div class="heading">Elemental Blog</div>
+                <div class="heading push-tiny--right">Elemental Blog</div>
                 <newsfeed></newsfeed>
             </div><div class="{% if request.user.is_authenticated %}half{% else %}one-fourth{% endif %} inline-block subsection pull--right">
                 {% if request.user.is_authenticated %}
-                    user feed goes here
+                    <div class="heading push-tiny--left">My Feed</div>
                 {% else %}
                     <form method="POST" class="login-form vertically-center-single">
                         {% csrf_token %}
