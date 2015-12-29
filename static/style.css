@@ -1,5 +1,7 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
+
+/* Positioning  */
 .vertically-center-single {
   position: relative;
   top: 50%;
@@ -256,11 +258,13 @@
 .float-left {
   float: left !important; }
 
-.full--width {
-  width: 100% !important; }
-
 .inline-block {
   display: inline-block; }
+  
+  
+/* Appearance */
+.full--width {
+  width: 100% !important; }
 
 .block {
   display: block; }
@@ -276,6 +280,8 @@
 .opensans {
   font-family: "Open Sans", sans-serif; }
 
+
+/* Navigation */
 .nav-button {
   padding-left: 10px;
   padding-right: 10px;
@@ -310,7 +316,9 @@
   height: auto !important;
   height: 100%;
   margin-bottom: -130px; }
+  
 
+/* Footer */
 .push,
 .footerContainer {
   height: 130px; }
@@ -364,57 +372,59 @@ span.smalltext {
 .text--left {
   text-align: left !important; }
 
-/*
-    everything else is ugly so nobody touch this
-    part unless it stays clean k
-*/
+/* Sections */
 .section {
   border: 1px solid #42BA92;
   border-radius: 5px;
   box-sizing: border-box;
   position: relative;
-  padding: 7px;
-  box-sizing: border-box; }
-  .section-tall {
-    height: 200px; }
-  .section .subsection {
-    height: 100%;
-    padding-left: 5px;
-    padding-right: 5px;
-    font-family: 'Open Sans', sans-serif; }
-    .section .subsection:not(:first-child) {
-      border-left: 1px solid #42BA92; }
-    .section .subsection form input {
-      display: block; }
-    .section .subsection form.login-form input {
-      margin: auto;
-      margin-bottom: 10px;
-      border-radius: 5px;
-      height: 30px;
-      border: 1px solid black;
-      box-shadow: none;
-      text-indent: 3px; }
-    .section .subsection form.login-form button {
-      border: none;
-      background-color: #1F8C68;
-      color: white;
-      border-radius: 4px;
-      transition: background 0.1s ease-out;
-      cursor: pointer;
-      padding-top: 3px;
-      padding-bottom: 3px; }
-      .section .subsection form.login-form button:hover {
-        background-color: #319E7A; }
-    .section .subsection form.login-form div {
-      height: 35px; }
-  .section * {
-    box-sizing: border-box; }
+  padding: 7px; }
+  
+.section-tall {
+  height: 200px; }
 
-/***************************
-balticllama's stuff 
-firedrake, clean this up pls
-*****************************/
-/*Presets Begin*/
+.section .subsection {
+  height: 100%;
+  padding-left: 5px;
+  padding-right: 5px;
+  font-family: 'Open Sans', sans-serif; 
+}
+
+.section .subsection:not(:first-child) {
+  border-left: 1px solid #42BA92; }
+  
+.section .subsection form input {
+  display: block; }
+  
+.section .subsection form.login-form input {
+  margin: auto;
+  margin-bottom: 10px;
+  border-radius: 5px;
+  height: 30px;
+  border: 1px solid black;
+  box-shadow: none;
+  text-indent: 3px; }
+  
+.section .subsection form.login-form button {
+  border: none;
+  background-color: #1F8C68;
+  color: white;
+  border-radius: 4px;
+  transition: background 0.1s ease-out;
+  cursor: pointer;
+  padding-top: 3px;
+  padding-bottom: 3px; }
+  
+.section .subsection form.login-form button:hover {
+  background-color: #319E7A; }
+  
+.section .subsection form.login-form div {
+  height: 35px; }
+  
+.section * {
+  box-sizing: border-box; }
+
+/* Presets Begin */
 html {
   height: 100%; }
 
@@ -423,7 +433,7 @@ body {
   padding: 0;
   height: 100%; }
 
-/*alignment/containers*/
+/* alignment/containers */
 .centered {
   max-width: 900px;
   margin: 0 auto; }
@@ -449,7 +459,7 @@ body {
 .right-align {
   text-align: right; }
 
-/*backgrounds*/
+/* backgrounds */
 .light-back {
   background-color: #444C54; }
 
@@ -457,7 +467,7 @@ body {
   background: #252E35;
   overflow: hidden; }
 
-/*buttons*/
+/* buttons */
 .lightButton {
   color: white;
   text-decoration: none; }
@@ -478,7 +488,7 @@ body {
   /* Whacky numbers prevent font weight change from mattering */
   padding-left: 19px; }
 
-/*text*/
+/* text */
 .boxDescription {
   max-width: 180px;
   font-family: 'Raleway', sans-serif;
@@ -512,7 +522,7 @@ body {
   font-family: 'Raleway', sans-serif;
   color: rgba(0, 0, 0, 0.55); }
 
-/*other*/
+/* other */
 .heroLink {
   text-decoration: none; }
 
@@ -538,8 +548,8 @@ body {
 .cta-sub {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6); }
-
 /*Presets End*/
+
 /*Header Begin*/
 #header {
   padding: 150px 0 100px 0;
@@ -664,7 +674,9 @@ body {
   #small-header-title {
     margin-top: 20px;
     margin-bottom: 19px;
-    font-size: 1.9em; } }
+    font-size: 1.9em; }
+}
+
 /*Login & Sign up Header End*/
 /*Privacy Agreement*/
 #privacy-agreement {
@@ -674,7 +686,6 @@ body {
   font-family: 'Raleway', sans-serif; }
 
 /*Privacy Agreement*/
-/* init's stuff */
 .white {
   color: white; }
 
