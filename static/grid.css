@@ -1,0 +1,14 @@
+.grid .half {
+  width: 50%; }
+.grid .one-third {
+  width: 33%; }
+.grid .two-third {
+  width: 66%; }
+.grid .one-fourth {
+  width: 25%; }
+.grid .three-fourth {
+  width: 75%; }
+.grid .one-fifth {
+  width: 20%; }
+
+/*# sourceMappingURL=grid.css.map */

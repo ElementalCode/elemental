@@ -7,6 +7,12 @@ from apps.core.views import (Index, SignUp, Logout, TermsOfService,
 								BanPage)
 from apps.accounts.views import ProfileView, UserSettings
 
+def favicon(request):
+    f = open('static/favicon.ico', 'rb')
+    x = f.read()
+    f.close()
+    return HttpResponse(x)
+
 urlpatterns = patterns('',
 
 	# Index views
@@ -26,4 +32,5 @@ urlpatterns = patterns('',
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'^(?i)rest/', include('apps.rest.urls', namespace='api')),
+    url(r'^favicon.ico/$', favicon)
 )

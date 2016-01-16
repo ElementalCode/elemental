@@ -299,6 +299,47 @@ body {
 
 
 
+/* begin news feed */
+.news-post a {
+	transition: color 0.2s ease-in-out;
+    margin-top: 0px;
+    margin-bottom: 0px;
+	text-decoration: none;
+	color: #25aff4;
+}
+
+.news-post a:hover {
+    margin-top: 0px;
+    margin-bottom: 0px;
+	text-decoration: none;
+	color: #456fb4;
+}
+
+
+.news-post div {
+    line-height: 15px;
+    padding-top: 5px;
+	overflow: hidden;
+    height: 21px;
+}
+
+.news-post {
+	border-top: 1px solid rgba(100, 100, 100, 0.3);
+    padding-bottom: 3.5px;
+    padding-top: 3.5px;
+}
+
+.first-news-post {
+	border-top: none; 
+    margin-top: -10px;
+}
+
+/* end news feed */
+
+
+
+
+
 /* begin team */
 .teamIcon {
     width: 100px;
