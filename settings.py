@@ -68,6 +68,7 @@ INSTALLED_APPS = (
     'apps.core',
     'apps.accounts',
     'apps.projects',
+    'apps.galleries',
 )
 
 # RESTful API stuff
