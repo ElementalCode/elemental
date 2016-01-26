@@ -32,7 +32,7 @@ class ProfileView(UnbannedUserMixin, TemplateView):
     def get_context_data(self, **kwargs):
         context = super(ProfileView, self).get_context_data(**kwargs)
         context['user'] = ElementalUser.objects.get(username__iexact=self.kwargs['username'])
-        if not self.request.user.is_superuser and len(self.request.user.groups.all()[0].name) > 0:
+        if not self.request.user.is_anonymous() and not self.request.user.is_superuser and len(self.request.user.groups.all()[0].name) > 0:
             auth_group = request.user.groups.all()[0].name
 
         # just a little failsafe in case of broken things...
