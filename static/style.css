@@ -1,7 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
-
-/* Positioning  */
 .vertically-center-single {
   position: relative;
   top: 50%;
@@ -258,13 +256,11 @@
 .float-left {
   float: left !important; }
 
-.inline-block {
-  display: inline-block; }
-  
-  
-/* Appearance */
 .full--width {
   width: 100% !important; }
+
+.inline-block {
+  display: inline-block; }
 
 .block {
   display: block; }
@@ -280,8 +276,6 @@
 .opensans {
   font-family: "Open Sans", sans-serif; }
 
-
-/* Navigation */
 .nav-button {
   padding-left: 10px;
   padding-right: 10px;
@@ -316,9 +310,7 @@
   height: auto !important;
   height: 100%;
   margin-bottom: -130px; }
-  
 
-/* Footer */
 .push,
 .footerContainer {
   height: 130px; }
@@ -372,59 +364,55 @@ span.smalltext {
 .text--left {
   text-align: left !important; }
 
-/* Sections */
 .section {
   border: 1px solid #42BA92;
   border-radius: 5px;
   box-sizing: border-box;
   position: relative;
-  padding: 7px; }
-  
-.section-tall {
-  height: 200px; }
-
-.section .subsection {
-  height: 100%;
-  padding-left: 5px;
-  padding-right: 5px;
-  font-family: 'Open Sans', sans-serif; 
-}
-
-.section .subsection:not(:first-child) {
-  border-left: 1px solid #42BA92; }
-  
-.section .subsection form input {
-  display: block; }
-  
-.section .subsection form.login-form input {
-  margin: auto;
-  margin-bottom: 10px;
-  border-radius: 5px;
-  height: 30px;
-  border: 1px solid black;
-  box-shadow: none;
-  text-indent: 3px; }
-  
-.section .subsection form.login-form button {
-  border: none;
-  background-color: #1F8C68;
-  color: white;
-  border-radius: 4px;
-  transition: background 0.1s ease-out;
-  cursor: pointer;
-  padding-top: 3px;
-  padding-bottom: 3px; }
-  
-.section .subsection form.login-form button:hover {
-  background-color: #319E7A; }
-  
-.section .subsection form.login-form div {
-  height: 35px; }
-  
-.section * {
+  padding: 7px;
   box-sizing: border-box; }
+  .section-tall {
+    height: 200px; }
+  .section .subsection {
+    height: 100%;
+    padding-left: 5px;
+    padding-right: 5px;
+    font-family: 'Open Sans', sans-serif; }
+    .section .subsection:not(:first-child) {
+      border-left: 1px solid #42BA92; }
+    .section .subsection .heading {
+      border-bottom: 1px solid #42BA92;
+      padding-bottom: 7px;
+      margin-bottom: 10px;
+      font-size: 20px; }
+    .section .subsection form input {
+      display: block; }
+    .section .subsection form.login-form input {
+      margin: auto;
+      margin-bottom: 10px;
+      border-radius: 5px;
+      height: 30px;
+      border: 1px solid black;
+      box-shadow: none;
+      text-indent: 3px; }
+    .section .subsection form.login-form button {
+      border: none;
+      background-color: #42BA92;
+      color: white;
+      border-radius: 4px;
+      transition: background 0.1s ease-out;
+      cursor: pointer;
+      padding-top: 3px;
+      padding-bottom: 3px; }
+      .section .subsection form.login-form button:hover {
+        background-color: #319E7A; }
+    .section .subsection form.login-form div {
+      height: 35px; }
+  .section * {
+    box-sizing: border-box; }
 
-/* Presets Begin */
+/* begin presets */
+/* < basic styling */
 html {
   height: 100%; }
 
@@ -433,7 +421,8 @@ body {
   padding: 0;
   height: 100%; }
 
-/* alignment/containers */
+/* > basic styling */
+/* < alignment and containers */
 .centered {
   max-width: 900px;
   margin: 0 auto; }
@@ -442,10 +431,11 @@ body {
   max-width: 1000px;
   margin: 0 auto; }
 
-.heroWrap {
-  font-family: 'Raleway', sans-serif;
-  padding: 160px 0 100px 0;
-  position: relative; }
+.center-align {
+  text-align: center; }
+
+.right-align {
+  text-align: right; }
 
 .flex-container {
   display: flex;
@@ -453,13 +443,8 @@ body {
   justify-content: center;
   padding: 20px 0px; }
 
-.center-align {
-  text-align: center; }
-
-.right-align {
-  text-align: right; }
-
-/* backgrounds */
+/* > alignment and containers */
+/* < backgrounds */
 .light-back {
   background-color: #444C54; }
 
@@ -467,11 +452,8 @@ body {
   background: #252E35;
   overflow: hidden; }
 
-/* buttons */
-.lightButton {
-  color: white;
-  text-decoration: none; }
-
+/* > backgrounds*/
+/* < buttons */
 .ghostButton {
   color: white;
   text-decoration: none;
@@ -481,14 +463,19 @@ body {
   border-radius: 999px; }
 
 .ghostButton:hover {
+  /* keep wacky numbers to prevent font weight change from mattering */
   background: white;
   color: #444C54;
   font-weight: 600;
   margin-left: 19.8px;
-  /* Whacky numbers prevent font weight change from mattering */
   padding-left: 19px; }
 
-/* text */
+.lightButton {
+  color: white;
+  text-decoration: none; }
+
+/* > buttons */
+/* < text */
 .boxDescription {
   max-width: 180px;
   font-family: 'Raleway', sans-serif;
@@ -522,7 +509,13 @@ body {
   font-family: 'Raleway', sans-serif;
   color: rgba(0, 0, 0, 0.55); }
 
-/* other */
+/* > text */
+/* < hero / other */
+.heroWrap {
+  font-family: 'Raleway', sans-serif;
+  padding: 160px 0 100px 0;
+  position: relative; }
+
 .heroLink {
   text-decoration: none; }
 
@@ -548,18 +541,19 @@ body {
 .cta-sub {
   font-size: 14px;
   color: rgba(255, 255, 255, 0.6); }
-/*Presets End*/
 
-/*Header Begin*/
-#header {
-  padding: 150px 0 100px 0;
-  font-family: 'Raleway', sans-serif; }
-
+/* > hero */
+/* end presets*/
+/* begin header */
 .nav {
   font-family: 'Raleway', sans-serif;
   display: inline;
   float: right;
   margin: 28px 15px; }
+
+#header {
+  padding: 150px 0 100px 0;
+  font-family: 'Raleway', sans-serif; }
 
 #title-container {
   max-width: 600px;
@@ -577,18 +571,43 @@ body {
   font-weight: 300;
   color: rgba(255, 255, 255, 0.5); }
 
-/*Header End*/
-/*Description Begin*/
+/* end header*/
+/* begin description */
 .description-icon {
   float: right; }
 
-/*Description End*/
-/*Team Begin*/
-.teamMember {
-  text-align: center;
-  font-family: 'Raleway', sans-serif;
-  margin: 40px; }
+/* end description */
+/* begin news feed */
+.news-post a {
+  transition: color 0.2s ease-in-out;
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-decoration: none;
+  color: #25aff4; }
 
+.news-post a:hover {
+  margin-top: 0px;
+  margin-bottom: 0px;
+  text-decoration: none;
+  color: #456fb4; }
+
+.news-post div {
+  line-height: 15px;
+  padding-top: 5px;
+  overflow: hidden;
+  height: 21px; }
+
+.news-post {
+  border-top: 1px solid rgba(100, 100, 100, 0.3);
+  padding-bottom: 3.5px;
+  padding-top: 3.5px; }
+
+.first-news-post {
+  border-top: none;
+  margin-top: -10px; }
+
+/* end news feed */
+/* begin team */
 .teamIcon {
   width: 100px;
   height: 100px;
@@ -599,13 +618,23 @@ body {
 .teamIcon:hover {
   box-shadow: 0 0 8px 3px rgba(50, 50, 50, 0.75); }
 
+.teamMember {
+  text-align: center;
+  font-family: 'Raleway', sans-serif;
+  margin: 40px; }
+
 .member-name {
   margin-top: 2px;
   font-family: sans-serif;
   color: #252e35; }
 
-/*Team End*/
-/*Sign Up/Login Begin*/
+/* end team*/
+/* begin sign up / login */
+.form-box h3 {
+  margin-top: 10px;
+  font-size: 35px;
+  color: #444c54; }
+
 .form-box {
   max-width: 400px;
   margin: 0 auto;
@@ -645,13 +674,8 @@ body {
   background: #319E7A;
   cursor: pointer; }
 
-.form-box h3 {
-  margin-top: 10px;
-  font-size: 35px;
-  color: #444c54; }
-
-/*Sign Up/Login End*/
-/*Login & Signup Header Begin*/
+/* end sign up / login */
+/* begin login & sign up header */
 #small-header {
   font-family: 'Raleway', sans-serif;
   overflow: hidden; }
@@ -666,7 +690,7 @@ body {
   color: white;
   text-decoration: none; }
 
-/*Scale down to prevent wrapping*/
+/* scale down to prevent wrapping */
 @media (max-width: 480px) {
   #small-header {
     font-size: 15px; }
@@ -674,18 +698,17 @@ body {
   #small-header-title {
     margin-top: 20px;
     margin-bottom: 19px;
-    font-size: 1.9em; }
-}
-
-/*Login & Sign up Header End*/
-/*Privacy Agreement*/
+    font-size: 1.9em; } }
+/* end login & sign up header */
+/* begin privacy agreement */
 #privacy-agreement {
   max-width: 960px;
   margin: 20px auto;
   color: #3d3d3d;
   font-family: 'Raleway', sans-serif; }
 
-/*Privacy Agreement*/
+/* end privacy agreement*/
+/* __init__'s stuff */
 .white {
   color: white; }
 
