@@ -13,3 +13,16 @@ class ProjectToGallery(models.Model):
 
     def __unicode__(self):
         return '{0} is in {1}'.format(self.project.name, self.gallery.name)
+
+
+class UserToGallery(models.Model):
+    user = models.ForeignKey(ElementalUser)
+    gallery = models.ForeignKey('Gallery')
+    STATUS_CHOICES = (
+        ('owner', 'Owner'),
+        ('admin', 'Admin'),
+        ('member', 'Member'),
+    )
+
+    def __unicode__(self):
+        return '{0} is a(n) {1} of {2}'.format(self.user.username, self.status, self.gallery.name)
