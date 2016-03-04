@@ -14,6 +14,8 @@ class Project(models.Model):
     data = models.TextField()
     deleted = models.BooleanField(default=False)
     thumbnail = models.TextField()
+    updated = models.DateTimeField(auto_now=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __unicode__(self):
         return self.name
