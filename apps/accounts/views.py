@@ -86,6 +86,14 @@ class Logout(View):
         logout(request)
         return redirect('/')
 
+def get_client_ip(request):
+    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
+    if x_forwarded_for:
+        ip = x_forwarded_for.split(',')[0]
+    else:
+        ip = request.META.get('REMOTE_ADDR')
+    return ip
+
 class Login(UnbannedUserMixin, FormView):
     template_name = 'login.html'
     form_class = LoginForm
@@ -105,6 +113,8 @@ class Login(UnbannedUserMixin, FormView):
         if user is not None:
             if user.is_active:
                 login(self.request, user)
+                user.ip = get_client_ip(self.request)
+                user.save()
                 if not user.banned:
                     return super(Login, self).form_valid(form)
                 else:
