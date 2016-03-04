@@ -7,16 +7,20 @@
         </div>
     </div> -->
 
-    <div class="creation-box">
-        <input name="name" type="text" value="{ opts.name }" onblur={ updateName } /><br />
-        <button name="delete" onclick={ delete }>delete</button>
-        <div class="share-box" hidden={ opts.canshare == 'True' ? '' : true }>
-            <input onclick={ share } name="shared" checked={ opts.shared == 'True' ? true : '' } type="checkbox">shared?</input>
+    <a href="/projects/project/{ id }">
+        <div class="creation-box">
+            <input name="name" type="text" value="{ opts.name }" onblur={ updateName } /><br />
+            <button name="delete" onclick={ delete }>delete</button>
+            <div class="share-box" hidden={ opts.canshare == 'True' ? '' : true }>
+                <input onclick={ share } name="shared" checked={ opts.shared == 'True' ? true : '' } type="checkbox">shared?</input>
+            </div>
         </div>
-    </div>
+    </a>
     <script>
         // TODO:  SHARED OR NOT
         // TODO:  STYLE!
+
+        this.id = opts.id;
 
         var config = {
             headers: {
