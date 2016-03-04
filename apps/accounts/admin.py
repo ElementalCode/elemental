@@ -9,6 +9,8 @@ class ElementalUserAdmin(admin.ModelAdmin):
     search_fields = ('username', )
     list_filter = ('groups', )
 
+    readonly_fields = ('ip', )
+
     superuser_fieldsets = (
         (None, {
             'fields': (
