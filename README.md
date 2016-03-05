@@ -1,10 +1,11 @@
-[![Stories in Ready](https://badge.waffle.io/ElementalCode/Elemental.png?label=ready&title=Ready)](https://waffle.io/ElementalCode/Elemental)
 ![image](https://cloud.githubusercontent.com/assets/5458180/8791470/4f758e90-2f29-11e5-8f29-98886c74cb52.png)
 
-[![Join the chat at https://gitter.im/ElementalCode/Elemental](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ElementalCode/Elemental?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
+[![Stories in Ready](https://badge.waffle.io/ElementalCode/Elemental.png?label=ready&title=Ready)](https://waffle.io/ElementalCode/Elemental)
 
-**Frontend Demo:** http://elementalcode.github.io/Elemental/  
-**Backend Demo:** http://elementalcode.herokuapp.com/
+[![Join the chat at https://gitter.im/ElementalCode/Elemental](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/ElementalCode/Elemental)
+
+**Editor Demo:** http://elementalcode.herokuapp.com/projects/editor  
+**Website Demo:** http://elementalcode.herokuapp.com/
 
 A drag and drop block-based coding environment for front-end web technologies.
 
