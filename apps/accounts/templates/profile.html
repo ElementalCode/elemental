@@ -14,7 +14,7 @@
 		<div class="pane1 about">
 			<div class="inner-head">
 				<h3>About Me</h3>
-				<div>things.</div>
+				<div>{{ user.about_me }}</div>
 				<h3>What I'm Working On</h3>
 				<div>things</div>
 			</div>
@@ -36,16 +36,16 @@
 			</div>
 		</h3>
 		<div>
-			{% for project in projects %}
-				<ul class="userpage-shared-section-carousel">
+            <ul class="userpage-shared-section-carousel">
+    			{% for project in projects %}
 					<li>
-						<a href="https://elementalcode.herokuapp.com/projects/1">
+						<a href="{% url 'projects:edit-project' pk=project.id %}">
 							<img src="http://ipex.pw/internalpx/perm/embed/elemental/project_base_icon.png">
 						</a><br>
-						<a href="https://elementalcode.herokuapp.com/projects/1">{{ project.name }}</a>
+						<a href="{% url 'projects:edit-project' pk=project.id %}">{{ project.name }}</a>
 					</li>
-				</ul>
-			{% endfor %}
+    			{% endfor %}
+            </ul>
 		</div>
 	</div>
 	<div class="row box shadow centered">
@@ -103,7 +103,7 @@
 
 {% block extra_scripts %}
 <script>
-var ProjectsCount = {{ projects.count }};
+var ProjectsCount = {{ projects.count }} + 1;
 var FavoritesCount = 1;
 var FollowingCount = 1;
 var FollowersCount = 1;

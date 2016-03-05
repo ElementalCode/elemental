@@ -3,6 +3,16 @@ from django.core.exceptions import PermissionDenied
 from rest_framework import routers, serializers, viewsets
 
 from apps.projects.models import Project
+from apps.accounts.models import ElementalUser
+
+
+class UserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = ElementalUser
+        fields = ('id', 'username', 'date_joined', 'about_me', )
+        # read_only_fields = 
+
 
 class ProjectSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
