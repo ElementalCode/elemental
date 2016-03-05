@@ -10,37 +10,7 @@
 @import "footer";
 @import "grid";
 @import "typography";
-/*
-.section {
-    border: 1px solid color(seafoam);
-    border-radius: 15px;
-    box-sizing: border-box;
-    position: relative;
-    padding: 7px;
-    box-sizing: border-box;
-    &-tall {
-        height: 200px;
-    }
-    .subsection {
-        height: 100%;
-        padding-left: 5px;
-        padding-right: 5px;
-        font-family: 'Open Sans', sans-serif;
-        &:not(:first-child) {
-            border-left: 1px solid color(seafoam);
-        }
-        .heading {
-            border-bottom: 1px solid color(seafoam);
-            padding-bottom: 7px;
-            margin-bottom: 10px;
-            font-size: 20px;
-        }
-    }
-    *  {
-        box-sizing: border-box;
-    }
-}
-*/
+
 /* begin presets */
 
 /* < basic styling */
@@ -276,17 +246,19 @@ body {
     margin: 28px 15px;
 }
 
-img.logo {
+img.logo, img.logo:after {
     display: table;
-    content: url(http://ipex.pw/internalpx/perm/embed/elemental/icons/icon1.png);
-    margin-top: 2px;
+    content: url(/static/resources/logo-icon.png);
 	width: 128px;
+	margin-top: 1.5px;
+	margin-bottom: -2px;
 }
 
-img.logo:hover {
+img.logo:hover, img.logo:hover:after {
     display: table;
-    content: url(http://ipex.pw/internalpx/perm/embed/elemental/icons/icon2.png);
-    margin-top: 2px;
+    content: url(/static/resources/logo-icon-hover.png);
+    margin-top: 1.5px;
+	margin-bottom: -2px;
     width: 128px;
 }
 
