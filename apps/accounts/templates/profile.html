@@ -3,6 +3,12 @@
 
 {% block morescripts %}
     <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <script>
+    var ProjectsCount = {{ projects.count }} + 1;
+    var USERNAME = '{{ user.username }}';
+    var USERID = '{{ user.id }}';
+    var CSRF_TOKEN = '{{ csrf_token }}';
+    </script>
 {% endblock %}
 
 {% block content %}
@@ -14,9 +20,9 @@
 		<div class="pane1 about">
 			<div class="inner-head">
 				<h3>About Me</h3>
-				<div>{{ user.about_me }}</div>
+				<div id="aboutme"{% if request.user == user %} contenteditable="true"{% endif %}>{{ user.about_me }}</div>
 				<h3>What I'm Working On</h3>
-				<div>things</div>
+				<div id="workingon"{% if request.user == user %} contenteditable="true"{% endif %}>{{ user.working_on }}</div>
 			</div>
 		</div>
 		<div class="pane2 about">
@@ -102,32 +108,5 @@
 {% endblock %}
 
 {% block extra_scripts %}
-<script>
-var ProjectsCount = {{ projects.count }} + 1;
-var FavoritesCount = 1;
-var FollowingCount = 1;
-var FollowersCount = 1;
-
-function get_first(name) { return document.getElementsByClassName(name)[0]; }
-
-function set_width(object, count, emptymessage, imgsize) {
-	if (count > 4) {
-		object.style.width = ((imgsize + 18) * count) + "px";
-	} else if (count > 0) {
-		object.style.width = "710px";
-	} else {
-		object.parentNode.innerHTML = "<div style='background-color:#C7E1D9;width:700px;height:100px;padding-top:50px;margin:auto;margin-top:20px;border-radius:20px;text-align:center;'>" + emptymessage.replace('%user', {{ user.username }}) + "</div>";
-	}
-}
-
-var project_carousel = get_first("userpage-shared-section-carousel");
-var favorite_carousel = get_first("userpage-favorite-section-carousel");
-var following_carousel = get_first("userpage-following-section-carousel");
-var followers_carousel = get_first("userpage-followers-section-carousel");
-
-set_width(project_carousel, ProjectsCount, "%user has not shared any creations yet.", 160)
-set_width(favorite_carousel, FavoritesCount, "%user has not favorited any creations yet.", 160)
-set_width(following_carousel, FollowingCount, "%user is not following anyone yet.", 120)
-set_width(followers_carousel, FollowersCount, "Nobody is following %user yet.", 120)
-</script>
+<script src="{% static 'js/profile.js' %}"></script>
 {% endblock %}

@@ -6,12 +6,29 @@ from apps.projects.models import Project
 from apps.accounts.models import ElementalUser
 
 
+# class UserSpecificUpdate(serializers.ModelSerializer):
+
+#     def update(self, instance, validated_data):
+#         if self.context['request'].user == instance.user:
+#             super(UserSerializer, self).update(
+
+
 class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ElementalUser
         fields = ('id', 'username', 'date_joined', 'about_me', 'working_on', )
         read_only_fields = ('username', 'date_joined', )
+
+    def update(self, instance, validated_data):
+        get = validated_data.get
+        if self.context['request'].user == instance:
+            # need to find a better way...
+            instance.about_me = get('about_me', instance.about_me)
+            instance.working_on = get('working_on', instance.working_on)
+            instance.save()
+            return instance
+        raise PermissionDenied
 
 
 class ProjectSerializer(serializers.ModelSerializer):

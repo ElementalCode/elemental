@@ -1,10 +1,11 @@
-{% load static %}
+{% load staticfiles %}
 <!DOCTYPE html>
 <html>
 	<head>
 	  <title>{% block title %}{% endblock %}ElementalCode</title>
 	  <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}" />
 	  <link rel="icon" href="{% static 'favicon.ico' %}" />
+	  <script src="{% static 'js/vendor/axios.min.js' %}"></script>
 	  {% block morescripts %}{% endblock morescripts %}
 	</head>
 	<body>
