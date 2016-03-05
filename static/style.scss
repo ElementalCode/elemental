@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,700);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 // first import:
@@ -10,10 +10,10 @@
 @import "footer";
 @import "grid";
 @import "typography";
-
+/*
 .section {
     border: 1px solid color(seafoam);
-    border-radius: 5px;
+    border-radius: 15px;
     box-sizing: border-box;
     position: relative;
     padding: 7px;
@@ -35,45 +35,12 @@
             margin-bottom: 10px;
             font-size: 20px;
         }
-        form {
-            input {
-                display: block;
-            }
-            &.login-form {
-                input {
-                    margin: auto;
-                    margin-bottom: 10px;
-                    border-radius: 5px;
-                    height: 30px;
-                    border: 1px solid black;
-                    box-shadow: none;
-                    text-indent: 3px;
-                }
-                button {
-                    border: none;
-                    background-color: color(seafoam);
-                    color: white;
-                    border-radius: 4px;
-                    transition: background 0.1s ease-out;
-                    cursor: pointer;
-                    padding-top: 3px;
-                    padding-bottom: 3px;
-
-                    &:hover {
-                        background-color: color(seafoam-dark);
-                    }
-                }
-                div {
-                    height: 35px;
-                }
-            }
-        }
     }
     *  {
         box-sizing: border-box;
     }
 }
-
+*/
 /* begin presets */
 
 /* < basic styling */
@@ -85,24 +52,32 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
+	font-family: 'Raleway', 'sans-serif'
 }
+
+.main-content img {
+	border-radius: 8px;
+}
+
+.main-content a {
+	color: #0075e0;
+	text-decoration: none;
+	transition: color 0.25s ease-in-out;
+}
+
+.main-content a:hover {
+	color: #005599;
+	text-decoration: underline;
+}
+
 /* > basic styling */
 
 
 
 /* < alignment and containers */
 
-// NOTE - most should be moved to helpers
+/* NOTE - most should be moved to helpers */
 
-.centered {
-    max-width: 900px;
-    margin: 0 auto;
-}
-
-.centered-large {
-    max-width: 1000px;
-    margin: 0 auto;
-}
 
 .center-align {
     text-align: center;
@@ -118,6 +93,47 @@ body {
     justify-content: center;
     padding: 20px 0px;
 }
+
+.row {
+	border-radius: 5px;
+	width: 750px;
+	height: 220px;
+	margin-top: 40px;
+	padding-top: 1px;
+}
+
+.box {
+	background-color: #fff;
+	border-radius: 15px;
+	width: 750px;
+	margin-top: 40px;
+}
+
+.box-smaller {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    padding-left: 20px;
+    padding-right: 20px;
+	background-color: #fff;
+}
+
+.upper {
+	border-top-left-radius: 15px;
+	border-top-right-radius: 15px;
+	padding-left: 25px;
+	padding-right: 25px;
+	margin-top: 40px;
+	height: 80px;
+}
+
+.about {
+	display: inline-flex;
+	padding-left: 30px;
+	padding-right: 30px;
+	height: 350px;
+	width: 310px;
+}
+
 /* > alignment and containers */
 
 
@@ -260,6 +276,20 @@ body {
     margin: 28px 15px;
 }
 
+img.logo {
+    display: table;
+    content: url(http://ipex.pw/internalpx/perm/embed/elemental/icons/icon1.png);
+    margin-top: 2px;
+	width: 128px;
+}
+
+img.logo:hover {
+    display: table;
+    content: url(http://ipex.pw/internalpx/perm/embed/elemental/icons/icon2.png);
+    margin-top: 2px;
+    width: 128px;
+}
+
 #header {
     padding: 150px 0 100px 0;
     font-family: 'Raleway', sans-serif;
@@ -292,6 +322,21 @@ body {
 /* begin description */
 .description-icon {
     float: right;
+}
+
+.top-description div {
+	background-color: coral;
+}
+
+div.top-description {
+	background-color: coral;
+}
+
+.top-description img {
+	width: 80px;
+    display: table;
+    margin: auto;
+    padding: 15px;
 }
 /* end description */
 
@@ -374,7 +419,8 @@ body {
 
 
 
-/* begin sign up / login */
+/* begin form helpers */
+
 .form-box h3 {
     margin-top: 10px;
     font-size: 35px;
@@ -384,7 +430,6 @@ body {
 .form-box {
     max-width: 400px;
     margin: 0 auto;
-    // margin-top: 100px;
     padding: 40px;
     font-family: 'Raleway', sans-serif;
     text-align: center;
@@ -399,11 +444,10 @@ body {
     padding: 10px;
     font-size: 14px;
     line-height: 17px;
-    border-radius: 6px;
     margin: 10px auto;
-    margin-left: -12px;
-    border-radius: 6px;
+    border-radius: 8px;
     background: white;
+    margin-left: -8px;
     border: 1px solid #d9d9de;
     color: #0f2105;
 }
@@ -424,7 +468,34 @@ body {
     background: #319E7A;
     cursor: pointer;
 }
-/* end sign up / login */
+
+.frontpage-login-input {
+    width: 100%;
+    display: block;
+    padding: 10px;
+    font-size: 14px;
+    line-height: 17px;
+    border-radius: 6px;
+    margin: 10px auto;
+    border-radius: 8px;
+    background: white;
+    border: 1px solid #d9d9de;
+    color: #0f2105;
+}
+.frontpage-login-button {
+    border: none;
+    background-color: #42BA92;
+    color: white;
+    border-radius: 4px;
+    transition: background 0.1s ease-out;
+    cursor: pointer;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    margin-bottom: 10px;
+}
+/* end form helpers */
 
 
 
@@ -463,7 +534,67 @@ body {
 /* end login & sign up header */
 
 
+/* specific tags within classes */
 
+.upper h1 {
+	display: inline-block;
+}
+
+.upper div {
+	display: inline-block;
+	font-size: 1.3em;
+}
+
+.pane1 .inner-head div {
+	word-wrap: break-word;
+	width: 100%;
+	height: 95px;
+	overflow: auto
+}
+
+.pane1 {
+	border-right: 1px solid #DFDFDF;
+}
+
+.pane2 img {
+	width: 310px
+}
+
+.row div {
+	margin-top: -22px;
+	overflow-x: auto;
+	overflow-y: hidden;
+}
+
+.row h3 {
+	margin-left: 30px;
+}
+
+.row img {
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	height: 120px;
+	width: 160px;
+}
+
+.row ul {
+	overflow: auto;
+	margin-left: -12px;
+}
+
+.row ul li {
+	display: inline-block;
+	margin-right: 15.5px;
+}
+
+.user-icons img {
+	width: 120px;
+	height: 120px;
+}
+
+.see-all {
+	padding-top: 18px;
+	padding-right: 20px;
+}
 
 
 /* begin privacy agreement */
@@ -475,6 +606,43 @@ body {
 }
 /* end privacy agreement*/
 
+
+/* begin dylan5797's helpers (should be moved to helpers.scss later)*/
+
+.centered {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.shadow {
+	box-shadow: 0 0 30px #888;
+}
+
+.dark-shadow {
+	box-shadow: 0 0 5px #000;
+}
+
+.seafoam {
+	background-color: #42BA92;
+}
+
+.white {
+	color: #fff;
+}
+
+.inline {
+	color: #fff;
+}
+
+.float-right {
+	float: right;
+}
+
+.float-left {
+	float: left;
+}
+
+/* end dylan5797's helpers */
 
 /* __init__'s stuff */
 .white {

@@ -99,13 +99,16 @@
 // SIZES
 .full--width { width: 100% !important; }
 
-.inline-block {
-  display: inline-block;
-}
+.half { width: 50%; }
+.one-third { width: 33%; }
+.two-third { width: 66%; }
+.one-fourth { width: 25%; }
+.three-fourth { width: 75%; }
+.one-fifth { width: 20%; }
 
-.block {
-  display: block;
-}
+.inline-block { display: inline-block; }
+
+.block { display: block; }
 
 .bg-seafoam {
   background-color: #42BA92;
