@@ -10,8 +10,8 @@ class UserSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = ElementalUser
-        fields = ('id', 'username', 'date_joined', 'about_me', )
-        # read_only_fields = 
+        fields = ('id', 'username', 'date_joined', 'about_me', 'working_on', )
+        read_only_fields = ('username', 'date_joined', 'working_on', )
 
 
 class ProjectSerializer(serializers.ModelSerializer):

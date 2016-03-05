@@ -54,6 +54,7 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
     date_joined = models.DateTimeField(_('date joined'), default=timezone.now)
 
     about_me = models.TextField(blank=True, null=True)
+    working_on = models.TextField(blank=True, null=True)
 
     objects = ElementalUserManager()
 
