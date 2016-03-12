@@ -96,7 +96,7 @@
             <span class="menuTitle">Share</span>
               <ul class="menuContents">
                 <li id="saveButton">Save</li>
-                {% if request.user.can_share_projects %}
+                {% if request.user.trusted %}
                   {% if project %}
                     {% if project.shared %}
                       <li id="shareButton">Unshare</li>
@@ -218,7 +218,7 @@
   {% if request.user.is_authenticated %}
     <script>
       var CSRF_TOKEN = '{{ csrf_token }}';
-      {% if request.user.can_share_projects %}
+      {% if request.user.trusted %}
         var CAN_SHARE = true;
         {% if project %}
           {% if project.shared %}
@@ -261,7 +261,7 @@
         loadFile(currentFile);
       {% endif %}
     </script>
-    {% if request.user.can_share_projects and not project or request.user == project.user %}
+    {% if request.user.trusted and not project or request.user == project.user %}
       <script src="{% static 'js/editor/siteIntegrations.js' %}"></script>
     {% endif %}
   {% endif %}

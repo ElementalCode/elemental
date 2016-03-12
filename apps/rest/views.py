@@ -13,8 +13,16 @@ from rest_framework.authentication import SessionAuthentication, TokenAuthentica
 from rest_framework.permissions import IsAuthenticated
 
 from apps.projects.models import Project
+from apps.accounts.models import ElementalUser
 from apps.accounts.mixins import LoggedInRequiredMixin
-from .serializers import ProjectSerializer, ProjectCreateSerializer
+from .serializers import ProjectSerializer, ProjectCreateSerializer, UserSerializer
+
+
+class UserDetail(SessionAuthentication, generics.RetrieveUpdateAPIView):
+    queryset = ElementalUser.objects.all()
+    serializer_class = UserSerializer
+    authentication_classes = (SessionAuthentication, )
+    permission_classes = (IsAuthenticated,)
 
 
 class ProjectDetail(SessionAuthentication, generics.RetrieveUpdateDestroyAPIView):

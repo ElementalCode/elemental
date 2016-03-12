@@ -34,7 +34,7 @@ class MyProjects(UnbannedUserMixin, LoggedInRequiredMixin, ListView):
     context_object_name = 'projects'
 
     def get_queryset(self): # add filtering later?
-        return Project.objects.filter(user=self.request.user, deleted=False).order_by('updated')
+        return Project.objects.filter(user=self.request.user, deleted=False).order_by('-updated')
 
 class ProjectEdit(UnbannedUserMixin, TemplateView):
     template_name = 'editor.html'
@@ -42,7 +42,7 @@ class ProjectEdit(UnbannedUserMixin, TemplateView):
     def dispatch(self, request, *args, **kwargs):
         project = Project.objects.get(id=self.kwargs['pk'])
         if project.user != request.user:
-            if not project.user.can_share_projects or not project.shared or project.deleted:
+            if not project.user.trusted or not project.shared or project.deleted:
                 return redirect('/') # should be 404...
         return super(ProjectEdit, self).dispatch(request)
 

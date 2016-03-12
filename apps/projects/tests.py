@@ -17,7 +17,7 @@ class ProjectTestCases(TestCase):
     def test_create_project(self):
         u = ElementalUser(password='password',
                           username='username',
-                          can_share_projects=True)
+                          trusted=True)
         u.save()
         self.client.login(username='username', password='password')
         data = {
