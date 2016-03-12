@@ -596,13 +596,13 @@ body {
 
 img.logo {
   display: table;
-  content: url(http://ipex.pw/internalpx/perm/embed/elemental/icons/icon1.png);
+  content: url(/static/resources/navbarimg1.png);
   margin-top: 2px;
   width: 128px; }
 
 img.logo:hover {
   display: table;
-  content: url(http://ipex.pw/internalpx/perm/embed/elemental/icons/icon2.png);
+  content: url(/static/resources/navbarimg2.png);
   margin-top: 2px;
   width: 128px; }
 
