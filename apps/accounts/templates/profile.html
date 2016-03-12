@@ -20,9 +20,17 @@
 		<div class="pane1 about">
 			<div class="inner-head">
 				<h3>About Me</h3>
-				<div id="aboutme"{% if request.user == user %} contenteditable="true"{% endif %}>{{ user.about_me }}</div>
+				<div id="aboutme"{% if request.user == user %} contenteditable="true"{% endif %}>
+					{% if user.trusted %}
+						{{ user.about_me }}
+					{% endif %}
+				</div>
 				<h3>What I'm Working On</h3>
-				<div id="workingon"{% if request.user == user %} contenteditable="true"{% endif %}>{{ user.working_on }}</div>
+				<div id="workingon"{% if request.user == user %} contenteditable="true"{% endif %}>
+					{% if user.trusted %}
+						{{ user.working_on }}
+					{% endif %}
+				</div>
 			</div>
 		</div>
 		<div class="pane2 about">

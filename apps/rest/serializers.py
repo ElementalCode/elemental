@@ -57,7 +57,7 @@ class ProjectSerializer(serializers.ModelSerializer):
 class ProjectCreateSerializer(serializers.ModelSerializer):
 
     def create(self, kwargs):
-        if self.context['request'].user.can_share_projects:
+        if self.context['request'].user.trusted:
             kwargs['user'] = self.context['request'].user
             return Project.objects.create(**kwargs)
         raise PermissionDenied

@@ -38,7 +38,7 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
     username = models.CharField(unique=True, max_length=20, validators=[alphanumeric])
 
     banned = models.BooleanField(default=False)
-    can_share_projects = models.BooleanField(default=False)
+    trusted = models.BooleanField(default=False)
     deleted = models.BooleanField(default=False)
     ip = models.GenericIPAddressField(blank=True, null=True)
 
@@ -75,7 +75,7 @@ class ElementalUser(AbstractBaseUser, PermissionsMixin):
             auth_group = None
         allowed_groups = ('admin', 'moderator', )
         if self.is_superuser or auth_group in allowed_groups:
-            self.can_share_projects = True
+            self.trusted = True
         return super(ElementalUser, self).save(*args, **kwargs)
 
     def set_ip(self, request):

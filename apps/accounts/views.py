@@ -37,7 +37,7 @@ class ProfileView(UnbannedUserMixin, TemplateView):
 
         # just a little failsafe in case of broken things...
         allowed_groups = ('admin', 'moderator', )
-        if context['user'].can_share_projects or self.request.user.is_superuser or auth_group in allowed_groups:
+        if context['user'].trusted or self.request.user.is_superuser or auth_group in allowed_groups:
             context['projects'] = Project.objects.filter(user=context['user'], shared=True).order_by('-updated')
         else:
             context['projects'] = Project.objects.none()

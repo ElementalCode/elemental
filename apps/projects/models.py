@@ -21,6 +21,6 @@ class Project(models.Model):
         return self.name
 
     def save(self, *args, **kwargs):
-        if not self.user.can_share_projects:
+        if not self.user.trusted:
             self.shared = False
         super(Project, self).save(*args, **kwargs)
