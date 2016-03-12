@@ -52,22 +52,22 @@ body {
     margin: 0;
     padding: 0;
     height: 100%;
-	font-family: 'Raleway', 'sans-serif'
+    font-family: 'Raleway', 'sans-serif'
 }
 
 .main-content img {
-	border-radius: 8px;
+    border-radius: 8px;
 }
 
 .main-content a {
-	color: #0075e0;
-	text-decoration: none;
-	transition: color 0.25s ease-in-out;
+    color: #0075e0;
+    text-decoration: none;
+    transition: color 0.25s ease-in-out;
 }
 
 .main-content a:hover {
-	color: #005599;
-	text-decoration: underline;
+    color: #005599;
+    text-decoration: underline;
 }
 
 /* > basic styling */
@@ -95,18 +95,18 @@ body {
 }
 
 .row {
-	border-radius: 5px;
-	width: 750px;
-	height: 220px;
-	margin-top: 40px;
-	padding-top: 1px;
+    border-radius: 5px;
+    width: 750px;
+    height: 220px;
+    margin-top: 40px;
+    padding-top: 1px;
 }
 
 .box {
-	background-color: #fff;
-	border-radius: 15px;
-	width: 750px;
-	margin-top: 40px;
+    background-color: #fff;
+    border-radius: 15px;
+    width: 750px;
+    margin-top: 40px;
 }
 
 .box-smaller {
@@ -114,24 +114,24 @@ body {
     padding-bottom: 10px;
     padding-left: 20px;
     padding-right: 20px;
-	background-color: #fff;
+    background-color: #fff;
 }
 
 .upper {
-	border-top-left-radius: 15px;
-	border-top-right-radius: 15px;
-	padding-left: 25px;
-	padding-right: 25px;
-	margin-top: 40px;
-	height: 80px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    padding-left: 25px;
+    padding-right: 25px;
+    margin-top: 40px;
+    height: 80px;
 }
 
 .about {
-	display: inline-flex;
-	padding-left: 30px;
-	padding-right: 30px;
-	height: 350px;
-	width: 310px;
+    display: inline-flex;
+    padding-left: 30px;
+    padding-right: 30px;
+    height: 350px;
+    width: 310px;
 }
 
 /* > alignment and containers */
@@ -165,7 +165,7 @@ body {
 }
 
 .ghostButton:hover {
-	/* keep wacky numbers to prevent font weight change from mattering */
+    /* keep wacky numbers to prevent font weight change from mattering */
     background: white;
     color: #444C54;
     font-weight: 600;
@@ -280,7 +280,13 @@ img.logo {
     display: table;
     content: url(/static/resources/navbarimg1.png);
     margin-top: 2px;
-	width: 128px;
+    width: 128px;
+    &:after {
+        display: table;
+        content: url(/static/resources/navbarimg1.png);
+        margin-top: 2px;
+        width: 128px;
+    }
 }
 
 img.logo:hover {
@@ -288,6 +294,16 @@ img.logo:hover {
     content: url(/static/resources/navbarimg2.png);
     margin-top: 2px;
     width: 128px;
+    &:after {
+        display: table;
+        content: url(/static/resources/navbarimg2.png);
+        margin-top: 2px;
+        width: 128px;
+    }
+}
+
+img.logo:hover:after {
+    
 }
 
 #header {
@@ -325,15 +341,15 @@ img.logo:hover {
 }
 
 .top-description div {
-	background-color: coral;
+    background-color: coral;
 }
 
 div.top-description {
-	background-color: coral;
+    background-color: coral;
 }
 
 .top-description img {
-	width: 80px;
+    width: 80px;
     display: table;
     margin: auto;
     padding: 15px;
@@ -346,36 +362,36 @@ div.top-description {
 
 /* begin news feed */
 .news-post a {
-	transition: color 0.2s ease-in-out;
+    transition: color 0.2s ease-in-out;
     margin-top: 0px;
     margin-bottom: 0px;
-	text-decoration: none;
-	color: #25aff4;
+    text-decoration: none;
+    color: #25aff4;
 }
 
 .news-post a:hover {
     margin-top: 0px;
     margin-bottom: 0px;
-	text-decoration: none;
-	color: #456fb4;
+    text-decoration: none;
+    color: #456fb4;
 }
 
 
 .news-post div {
     line-height: 15px;
     padding-top: 5px;
-	overflow: hidden;
+    overflow: hidden;
     height: 21px;
 }
 
 .news-post {
-	border-top: 1px solid rgba(100, 100, 100, 0.3);
+    border-top: 1px solid rgba(100, 100, 100, 0.3);
     padding-bottom: 3.5px;
     padding-top: 3.5px;
 }
 
 .first-news-post {
-	border-top: none; 
+    border-top: none; 
     margin-top: -10px;
 }
 
@@ -537,63 +553,63 @@ div.top-description {
 /* specific tags within classes */
 
 .upper h1 {
-	display: inline-block;
+    display: inline-block;
 }
 
 .upper div {
-	display: inline-block;
-	font-size: 1.3em;
+    display: inline-block;
+    font-size: 1.3em;
 }
 
 .pane1 .inner-head div {
-	word-wrap: break-word;
-	width: 100%;
-	height: 95px;
-	overflow: auto
+    word-wrap: break-word;
+    width: 100%;
+    height: 95px;
+    overflow: auto
 }
 
 .pane1 {
-	border-right: 1px solid #DFDFDF;
+    border-right: 1px solid #DFDFDF;
 }
 
 .pane2 img {
-	width: 310px
+    width: 310px
 }
 
 .row div {
-	margin-top: -22px;
-	overflow-x: auto;
-	overflow-y: hidden;
+    margin-top: -22px;
+    overflow-x: auto;
+    overflow-y: hidden;
 }
 
 .row h3 {
-	margin-left: 30px;
+    margin-left: 30px;
 }
 
 .row img {
-	border: 1px solid rgba(0, 0, 0, 0.2);
-	height: 120px;
-	width: 160px;
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    height: 120px;
+    width: 160px;
 }
 
 .row ul {
-	overflow: auto;
-	margin-left: -12px;
+    overflow: auto;
+    margin-left: -12px;
 }
 
 .row ul li {
-	display: inline-block;
-	margin-right: 15.5px;
+    display: inline-block;
+    margin-right: 15.5px;
 }
 
 .user-icons img {
-	width: 120px;
-	height: 120px;
+    width: 120px;
+    height: 120px;
 }
 
 .see-all {
-	padding-top: 18px;
-	padding-right: 20px;
+    padding-top: 18px;
+    padding-right: 20px;
 }
 
 
@@ -610,36 +626,36 @@ div.top-description {
 /* begin dylan5797's helpers (should be moved to helpers.scss later)*/
 
 .centered {
-	margin-left: auto;
-	margin-right: auto;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .shadow {
-	box-shadow: 0 0 30px #888;
+    box-shadow: 0 0 30px #888;
 }
 
 .dark-shadow {
-	box-shadow: 0 0 5px #000;
+    box-shadow: 0 0 5px #000;
 }
 
 .seafoam {
-	background-color: #42BA92;
+    background-color: #42BA92;
 }
 
 .white {
-	color: #fff;
+    color: #fff;
 }
 
 .inline {
-	color: #fff;
+    color: #fff;
 }
 
 .float-right {
-	float: right;
+    float: right;
 }
 
 .float-left {
-	float: left;
+    float: left;
 }
 
 /* end dylan5797's helpers */
