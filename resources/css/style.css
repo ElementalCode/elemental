@@ -574,5 +574,12 @@ html, body {
 @media (max-width: 450px) {
   .advanceWrap {
     display: none; } }
+.allBlocks .search #searchBar {
+  z-index: 2000; }
+.allBlocks .blockArea {
+  display: flex;
+  flex-wrap: wrap; }
+  .allBlocks .blockArea .stack, .allBlocks .blockArea .c-wrapper {
+    margin: 5px !important; }
 
 /*# sourceMappingURL=style.css.map */
