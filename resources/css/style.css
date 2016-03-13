@@ -171,6 +171,13 @@ body {
     color: black;
     cursor: text; }
 
+.blockArea {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap; }
+  .blockArea > * {
+    margin: 5px !important; }
+
 .context-menu {
   position: absolute;
   font-family: 'Source Sans Pro', sans-serif;
@@ -202,6 +209,7 @@ body {
   text-align: center; }
 
 .inlineSearch {
+  z-index: 9001;
   display: block;
   margin: 3px auto;
   border: none;
@@ -517,6 +525,7 @@ html, body {
   box-shadow: 0 1px 2px transparent; }
 
 #searchBar {
+  z-index: 2;
   position: absolute;
   top: 0px;
   right: 57px;

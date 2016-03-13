@@ -179,3 +179,13 @@ body {
         cursor:text;
     }
 }
+
+.blockArea {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+
+    > * {
+        margin: 5px !important;
+    }
+}

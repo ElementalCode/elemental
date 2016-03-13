@@ -312,6 +312,7 @@ html, body {
 }
 
 #searchBar {
+	z-index: 2; // put search input over blocks
 	position: absolute;
 	top: 0px;
 	right: 57px;
