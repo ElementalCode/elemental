@@ -12,7 +12,11 @@ SAVE_BUTTON.addEventListener('click', function(ev) {
 		};
 
 		var previewWindow = document.getElementsByClassName('previewBody')[0];
+		previewWindow.style.height = '360px';
+		previewWindow.style.width = '480px';
 		html2canvas(previewWindow.contentWindow.document.body).then(function(canvas) {
+			previewWindow.style.height = '';
+			previewWindow.style.width = '';
 			document.body.appendChild(canvas);
 			thumbnail = canvas.toDataURL();
 			console.log(thumbnail);
