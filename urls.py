@@ -1,3 +1,4 @@
+from django.http import HttpResponse
 from django.conf.urls import patterns, include, url
 
 from django.contrib import admin
@@ -32,5 +33,5 @@ urlpatterns = patterns('',
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
 
     url(r'^(?i)rest/', include('apps.rest.urls', namespace='api')),
-    url(r'^favicon.ico/$', favicon)
+    url(r'^favicon.ico/?$', favicon)
 )
