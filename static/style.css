@@ -721,6 +721,8 @@ div.top-description {
   background: rgba(255, 255, 255, 0.7);
   border: 1px solid #c8c8c8;
   border-radius: 4px; }
+  .form-box .g-recaptcha > div > div {
+    margin: auto; }
 
 .form-input {
   width: 100%;

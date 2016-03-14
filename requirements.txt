@@ -6,3 +6,4 @@ psycopg2==2.6
 SQLAlchemy==1.0.4
 whitenoise==1.0.6
 django-flat-theme==0.9.5
+django-recaptcha==1.0.5

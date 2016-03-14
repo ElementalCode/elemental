@@ -3,7 +3,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import Group as AuthGroup
 from django.contrib.auth.forms import UserCreationForm
 
-from django.db import transaction
+from captcha.fields import ReCaptchaField
 
 from .models import ElementalUser
 
@@ -41,6 +41,9 @@ class LoginForm(forms.Form):
 
 class SignupForm(UserCreationForm):
     username = forms.CharField(required=True, widget=forms.TextInput(attrs={'class': 'form-input', 'placeholder': 'Username'}))
+    password1 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Password'}))
+    password2 = forms.CharField(required=True, widget=forms.PasswordInput(attrs={'class': 'form-input', 'placeholder': 'Confirm Password'}))
+    captcha = ReCaptchaField()
 
     class Meta:
         model = ElementalUser

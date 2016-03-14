@@ -53,6 +53,12 @@ TEMPLATE_CONTEXT_PROCESSORS = (
     'django.contrib.messages.context_processors.messages',
 )
 
+# reCAPTCHA stuff
+
+RECAPTCHA_PUBLIC_KEY = '6LdjuxoTAAAAAPVA-bMQ0zExBH4IKlc2ogoDyGLD'
+RECAPTCHA_PRIVATE_KEY = os.environ.get('ELEMENTAL_RECAPTCHA_KEY')
+NOCAPTCHA = True
+
 
 # Application definition
 
@@ -69,6 +75,7 @@ INSTALLED_APPS = (
     'apps.accounts',
     'apps.projects',
     'apps.galleries',
+    'captcha',
 )
 
 # RESTful API stuff
