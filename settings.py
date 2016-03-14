@@ -43,22 +43,11 @@ if os.environ.get('PRODUCTION'):
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
 
-TEMPLATE_DEBUG = True
-
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.static",
-    "django.core.context_processors.request",
-    'django.contrib.messages.context_processors.messages',
-)
-
 # reCAPTCHA stuff
 
 RECAPTCHA_PUBLIC_KEY = '6LdjuxoTAAAAAPVA-bMQ0zExBH4IKlc2ogoDyGLD'
 RECAPTCHA_PRIVATE_KEY = os.environ.get('ELEMENTAL_RECAPTCHA_KEY')
 NOCAPTCHA = True
-
 
 # Application definition
 
@@ -111,6 +100,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
             ],
+            'debug': DEBUG
         },
     },
 ]
