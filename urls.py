@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.conf.urls import patterns, include, url
+from django.conf.urls import include, url
 
 from django.contrib import admin
 admin.autodiscover()
@@ -14,7 +14,7 @@ def favicon(request):
     f.close()
     return HttpResponse(x)
 
-urlpatterns = patterns('',
+urlpatterns = [
 
 	# Index views
     url(r'^$', Index.as_view(), name='index'),
@@ -34,4 +34,4 @@ urlpatterns = patterns('',
 
     url(r'^(?i)rest/', include('apps.rest.urls', namespace='api')),
     url(r'^favicon.ico/?$', favicon)
-)
+]
