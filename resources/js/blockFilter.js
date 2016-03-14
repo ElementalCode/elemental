@@ -117,12 +117,6 @@ var filter = {
       palette: 0
     },
     {
-      name: 'div',
-      type: 'wrapper',
-      tags: ['div', 'divider', 'separator'],
-      palette: 0
-    },
-    {
       name: 'text',
       type: 'stack',
       tags: ['text'],
@@ -144,6 +138,12 @@ var filter = {
     },
     
     /* Blocks for palette 2 - Sections */
+    {
+      name: 'div',
+      type: 'wrapper',
+      tags: ['div', 'divider', 'separator'],
+      palette: 2
+    },
     {
       name: 'navigation',
       tags: ['nav', 'navigation'],
