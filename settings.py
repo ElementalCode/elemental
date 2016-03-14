@@ -43,17 +43,6 @@ if os.environ.get('PRODUCTION'):
     CSRF_COOKIE_SECURE = True
     SESSION_COOKIE_SECURE = True
 
-TEMPLATE_DEBUG = True
-
-
-TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.static",
-    "django.core.context_processors.request",
-    'django.contrib.messages.context_processors.messages',
-)
-
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -105,6 +94,13 @@ TEMPLATES = [
                 'django.contrib.messages.context_processors.messages',
             ],
         },
+        'TEMPLATE_DEBUG': True,
+        'TEMPLATE_CONTEXT_PROCESSORS': (
+            'django.contrib.auth.context_processors.auth',
+            'django.core.context_processors.static',
+            'django.core.context_processors.request',
+            'django.contrib.messages.context_processors.messages',
+        ),
     },
 ]
 
