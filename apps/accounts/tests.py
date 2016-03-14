@@ -1,3 +1,5 @@
+import os
+
 from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.test import TestCase, override_settings, Client, RequestFactory
@@ -9,13 +11,19 @@ class AccountTestCases(TestCase):
     @override_settings(AUTH_USER_MODEL=settings.AUTH_USER_MODEL)
     def setUp(self):
         self.client = Client()
+        os.environ['RECAPTCHA_TESTING'] = 'True'
+
+    @override_settings(AUTH_USER_MODEL=settings.AUTH_USER_MODEL)
+    def tearDown(self):
+        del os.environ['RECAPTCHA_TESTING']
 
     @override_settings(AUTH_USER_MODEL=settings.AUTH_USER_MODEL)
     def test_user_registration(self):
         data = {
             'username': 'testguy2',
             'password1': 'supersecurepassword',
-            'password2': 'supersecurepassword'
+            'password2': 'supersecurepassword',
+            'g-recaptcha-response': 'PASSED'
         }
         response = self.client.post(reverse('accounts:register'), data)
         self.assertEqual(response.status_code, 302)
@@ -30,12 +38,28 @@ class AccountTestCases(TestCase):
         data = {
             'username': 'testguy2',
             'password1': 'supersecurepassword',
-            'password2': 'supersecurepssword'
+            'password2': 'supersecurepssword',
+            'g-recaptcha-response': 'PASSED'
         }
         response = self.client.post(reverse('accounts:register'), data)
         self.assertEqual(response.status_code, 200)
         try:
             user = ElementalUser.objects.get(username='testguy2')
+        except:
+            user = None
+        self.assertIsNone(user)
+
+    @override_settings(AUTH_USER_MODEL=settings.AUTH_USER_MODEL)
+    def test_user_registration_fail_captcha(self):
+        data = {
+            'username': 'testguy8',
+            'password1': 'supersecurepassword',
+            'password2': 'supersecurepassword',
+        }
+        response = self.client.post(reverse('accounts:register'), data)
+        self.assertEqual(response.status_code, 200)
+        try:
+            user = ElementalUser.objects.get(username='testguy8')
         except:
             user = None
         self.assertIsNone(user)

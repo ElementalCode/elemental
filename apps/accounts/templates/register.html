@@ -7,9 +7,10 @@
         <h3>Sign Up</h3>
         <form method="POST">
             {% csrf_token %}
-            <input class="form-input" id="id_username" name="username" placeholder="Username" type="text">
-            <input class="form-input" id="id_password1" name="password1" type="password" placeholder="Password">
-            <input class="form-input" id="id_password2" name="password2" type="password" placeholder="Confirm password">
+            {{ form.username }}
+            {{ form.password1 }}
+            {{ form.password2 }}
+            {{ form.captcha|addcss:'centered' }}
             <input type="submit" class="submit-button">
         </form>
     </div>
