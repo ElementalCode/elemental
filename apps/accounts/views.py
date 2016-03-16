@@ -79,6 +79,7 @@ class SignUp(FormView):
         user = authenticate(username=form.cleaned_data.get('username'),
                             password=form.cleaned_data.get('password1'))
         login(self.request, user)
+        user.set_ip(self.request)
         return redirect(reverse('index'))
 
 
@@ -86,14 +87,6 @@ class Logout(View):
     def get(self, request, *args, **kwargs):
         logout(request)
         return redirect('/')
-
-def get_client_ip(request):
-    x_forwarded_for = request.META.get('HTTP_X_FORWARDED_FOR')
-    if x_forwarded_for:
-        ip = x_forwarded_for.split(',')[0]
-    else:
-        ip = request.META.get('REMOTE_ADDR')
-    return ip
 
 class Login(UnbannedUserMixin, FormView):
     template_name = 'login.html'
@@ -114,8 +107,7 @@ class Login(UnbannedUserMixin, FormView):
         if user is not None:
             if user.is_active:
                 login(self.request, user)
-                user.ip = get_client_ip(self.request)
-                user.save()
+                user.set_ip(self.request)
                 if not user.banned:
                     return super(Login, self).form_valid(form)
                 else:
