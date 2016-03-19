@@ -1,209 +1,209 @@
 <!DOCTYPE html> 
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <title>UI v0.0.4 | Elemental</title>
-    <link rel="stylesheet" href="resources/css/style.css">
-    <script src="resources/js/vendor/htmlparser.js"></script>
-    <script src="resources/js/vendor/interact.min.js"></script>
-    <script src="resources/js/vendor/jszip.min.js"></script>
-    <script src="resources/js/vendor/filesaver.min.js"></script>
-    <script src="resources/js/vendor/cssjson.js"></script>
-    <script src="resources/js/vendor/htmljson.js"></script>
-    <script src="resources/js/script.js"></script>
-    <script src="resources/js/blockFilter.js"></script>
-    <script>
-      console.log(
-        "    ________                          __        ________          __   \n" +
-        "   / ____/ /__  ____ ___  ___  ____  / /_____ _/ / ____/___  ____/ /__  \n" +
-        "  / __/ / / _ \\/ __ `__ \\/ _ \\/ __ \\/ __/ __ `/ / /   / __ \\/ __  / _  \n" +
-        " / /___/ /  __/ / / / / /  __/ / / / /_/ /_/ / / /___/ /_/ / /_/ /  __/ \n" +
-        "/_____/_/\\___/_/ /_/ /_/\\___/_/ /_/\\__/\\__,_/_/\\____/\\____/\\__,_/\\___/  \n" +
-        "\n"
-      );
-    </script>
-  </head>
-  <body>
-    <!-- PUT THE CUSTOM CONTEXT MENUS IN HERE -->
+	<head>
+	<meta charset="utf-8">
+	<title>UI v0.0.4 | Elemental</title>
+	<link rel="stylesheet" href="resources/css/style.css">
+	<script src="resources/js/vendor/htmlparser.js"></script>
+	<script src="resources/js/vendor/interact.min.js"></script>
+	<script src="resources/js/vendor/jszip.min.js"></script>
+	<script src="resources/js/vendor/filesaver.min.js"></script>
+	<script src="resources/js/vendor/cssjson.js"></script>
+	<script src="resources/js/vendor/htmljson.js"></script>
+	<script src="resources/js/script.js"></script>
+	<script src="resources/js/blockFilter.js"></script>
+	<script>
+		console.log(
+		"	________							__		________			__	 \n" +
+		"	 / ____/ /__	____ ___	___	____	/ /_____ _/ / ____/___	____/ /__	\n" +
+		"	/ __/ / / _ \\/ __ `__ \\/ _ \\/ __ \\/ __/ __ `/ / /	 / __ \\/ __	/ _	\n" +
+		" / /___/ /	__/ / / / / /	__/ / / / /_/ /_/ / / /___/ /_/ / /_/ /	__/ \n" +
+		"/_____/_/\\___/_/ /_/ /_/\\___/_/ /_/\\__/\\__,_/_/\\____/\\____/\\__,_/\\___/	\n" +
+		"\n"
+		);
+	</script>
+	</head>
+	<body>
+	<!-- PUT THE CUSTOM CONTEXT MENUS IN HERE -->
 
-    <div class="context-menu files">
-      <div class="menu-item" data-action="delete-file">Delete</div>
-      <div class="menu-item" data-action="rename-file">Rename</div>
-      <div class="menu-item" data-action="duplicate-file">Duplicate</div>
-    </div>
-    <div class="context-menu scripts">
-      <div class="menu-item" data-action="duplicate-script">Duplicate</div>
-      <div class="menu-item" data-action="delete-script">Rename</div>
-    </div>
+	<div class="context-menu files">
+		<div class="menu-item" data-action="delete-file">Delete</div>
+		<div class="menu-item" data-action="rename-file">Rename</div>
+		<div class="menu-item" data-action="duplicate-file">Duplicate</div>
+	</div>
+	<div class="context-menu scripts">
+		<div class="menu-item" data-action="duplicate-script">Duplicate</div>
+		<div class="menu-item" data-action="delete-script">Rename</div>
+	</div>
 
-    <!-- BLOCK ATTRIBUTE DROPDOWN - DEFAULTS TO HIDDEN, REMOVE THIS IF YOU WANT TO SEE IT -->
-    <div class="attributeDropdown hidden" id="blockAttributeDropdown">
-      <div class="searchContainer">
-        <input type="text" class="inlineSearch" id="propSearch">
-      </div>
-      <div class="scroll-up" id="attributeScrollUp">
-        <div class="upArrow"></div>
-      </div>
-      <ul class="attribute-results" id="attributeResults">
-      </ul>
-      <div class="scroll-down" id="attributeScrollUp">
-        <div class="downArrow"></div>
-      </div>
-    </div>
+	<!-- BLOCK ATTRIBUTE DROPDOWN - DEFAULTS TO HIDDEN, REMOVE THIS IF YOU WANT TO SEE IT -->
+	<div class="attributeDropdown hidden" id="blockAttributeDropdown">
+		<div class="searchContainer">
+		<input type="text" class="inlineSearch" id="propSearch">
+		</div>
+		<div class="scroll-up" id="attributeScrollUp">
+		<div class="upArrow"></div>
+		</div>
+		<ul class="attribute-results" id="attributeResults">
+		</ul>
+		<div class="scroll-down" id="attributeScrollUp">
+		<div class="downArrow"></div>
+		</div>
+	</div>
 
-    <!-- CSS ATTRIBUTE DROPDOWN - DEFAULTS TO HIDDEN, REMOVE THIS IF YOU WANT TO SEE IT -->
-    <div class="attributeDropdown hidden" id="cssAttributeDropdown">
-      <div class="searchContainer">
-        <input type="text" class="inlineSearch" id="cssPropSearch">
-      </div>
-      <div class="scroll-up" id="cssAttributeScrollUp">
-        <div class="upArrow"></div>
-      </div>
-      <ul class="attribute-results" id="cssAttributeResults">
-      </ul>
-      <div class="scroll-down" id="cssAttributeScrollUp">
-        <div class="downArrow"></div>
-      </div>
-    </div>
+	<!-- CSS ATTRIBUTE DROPDOWN - DEFAULTS TO HIDDEN, REMOVE THIS IF YOU WANT TO SEE IT -->
+	<div class="attributeDropdown hidden" id="cssAttributeDropdown">
+		<div class="searchContainer">
+		<input type="text" class="inlineSearch" id="cssPropSearch">
+		</div>
+		<div class="scroll-up" id="cssAttributeScrollUp">
+		<div class="upArrow"></div>
+		</div>
+		<ul class="attribute-results" id="cssAttributeResults">
+		</ul>
+		<div class="scroll-down" id="cssAttributeScrollUp">
+		<div class="downArrow"></div>
+		</div>
+	</div>
 
-    <div class="topBar">
-      <div class="left">
-        <span class="logo">Elemental </span>
-      </div>
-      <div class="menus right">
-        <div class="menu" id="fileMenu">
-          <span class="menuTitle">File</span>
-            <ul class="menuContents">
-              <li id="openFileButton">
-                Open
-                <input id="projectOpen" type="file" accept="application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed" class="fake-hidden" />
-              </li>
-              <li id="downloadButton">
-                Download
-              </li>
-            </ul>
-        </div>
-        <div class="menu" id="editMenu">
-          <span class="menuTitle">Edit</span>
-            <ul class="menuContents">
-              <li id="undoButton">Undo</li>
-              <li id="redoButton">Redo</li>
-              <li id="saveButton">Find</li>
-            </ul>
-        </div>
-        <div class="menu" id="shareMenu">
-          <span class="menuTitle">Share</span>
-            <ul class="menuContents">
-              <li id="undoButton">Make Public</li>
-              <li id="redoButton">Set Description</li>
-            </ul>
-        </div>
-      </div>
-    </div>
-    <div class="mainArea">
-      <div class="leftSide">
-        <div class="pagePreview" id="draggablePreview">
-          <iframe class="previewBody">
-            mah page preview
-          </iframe>
-        </div>
-        <div class="filePane">
-          <div class="file selected">
-            <div class="file-name" data-file="index.html">index.html</div>
-          </div><div class="add-file">
-            <div class="file-name">+</div>
-          </div>
-        </div>
-      </div>
-      <div class="rightSide">
-        <div class="upperArea">
-          <div class="paletteSelect">
-            <!-- Man, whoever decided it was a good idea to use inline styles must be really -
-                 ... ohwait ...
-                 That was me. -->
-            <form>
-              <div class="paletteColumn">
-                <label class="paletteOptionWrap" for="p1" data-num="0">
-                  <input type="radio" name="palette" value="p1" id="p1" />
-                  text<span class="paletteColorIndicator" style="background:#E44D4D"></span>
-                </label>
-                <label class="paletteOptionWrap" for="p2" data-num="1">
-                  <input type="radio" name="palette" value="p2" id="p2" />
-                  media<span class="paletteColorIndicator" style="background:#E44DBC"></span>
-                </label>
-                <label class="paletteOptionWrap" for="p3" data-num="2">
-                  <input type="radio" name="palette" value="p3" id="p3" />
-                  sections<span class="paletteColorIndicator" style="background:#914DE4"></span>
-                </label>
-                <label class="paletteOptionWrap" for="p4" data-num="3">
-                  <input type="radio" name="palette" value="p4" id="p4" />
-                  Palette 4<span class="paletteColorIndicator" style="background:#4D75E4"></span>
-                </label>
-              </div>
-              <div class="paletteColumn">
-                <label class="paletteOptionWrap" for="p5" data-num="4">
-                  <input type="radio" name="palette" value="p5" id="p5" />
-                  Palette 5<span class="paletteColorIndicator" style="background:#4DD2E4"></span>
-                </label>
-                <label class="paletteOptionWrap" for="p6" data-num="5">
-                  <input type="radio" name="palette" value="p6" id="p6" />
-                  Palette 6<span class="paletteColorIndicator" style="background:#4DE48C"></span>
-                </label>
-                <label class="paletteOptionWrap" for="p7" data-num="6">
-                  <input type="radio" name="palette" value="p7" id="p7" />
-                  Palette 7<span class="paletteColorIndicator" style="background:#87E44D"></span>
-                </label>
-                <label class="paletteOptionWrap" for="p8" data-num="7">
-                  <input type="radio" name="palette" value="p8" id="p8" />
-                  CSS<span class="paletteColorIndicator" style="background:#C6E44D"></span>
-                </label>
-              </div>
-            </form>
-          </div>
-          <div class="allBlocks">
-            <div class="search">
-              <input type="text" id="searchBar" placeholder="Search for a block..."/>
-            </div>
-            <div class="blockArea" id="filteredBlocksArea">
-              <div class="block"></div>
-              <div class="block small"></div>
-              <div class="block"></div>
-              <div class="block large"></div>
-              <div class="block large"></div>
-              <div class="block small"></div>
-              <div class="block"></div>
-              <div class="block"></div>
-              <div class="block small"></div>
-              <div class="block"></div>
-              <div class="block"></div>
-              <div class="block large"></div>
-              <div class="block small"></div>
-              <div class="block large"></div>
-              <div class="block small"></div>
-              <div class="block"></div>
-            </div>
-          </div>
-        </div>
-        <div class="scriptingArea">
-          <!-- some test stuff... -->
-          <ul class="script">
-            <li class="hat">&lt;!DOCTYPE html&gt;</li>
-            <ul class="c-wrapper e-body">
-                <li class="c-header">&lt;body&gt;</li>
-                <ul class="c-content">
-                </ul>
-                <li class="c-footer">&lt;/body&gt;</li>
-            </ul>
-          </ul>
-        </div>
-        <div class="trashCan" id="trashCan"></div>
-      </div>
-    </div>
-  <script src='resources/js/files.js'></script>
-  <script src='resources/js/blocks.js'></script>
-  <script src='resources/js/blockAttributes.js'></script>
-  <script src='resources/js/cssAttributes.js'></script>
-  <script src='resources/js/block2json.js'></script>
-  <script src='resources/js/fileManagement.js'></script>
-  </body>
+	<div class="topBar">
+		<div class="left">
+		<span class="logo">Elemental </span>
+		</div>
+		<div class="menus right">
+		<div class="menu" id="fileMenu">
+			<span class="menuTitle">File</span>
+			<ul class="menuContents">
+				<li id="openFileButton">
+				Open
+				<input id="projectOpen" type="file" accept="application/octet-stream,application/zip,application/x-zip,application/x-zip-compressed" class="fake-hidden" />
+				</li>
+				<li id="downloadButton">
+				Download
+				</li>
+			</ul>
+		</div>
+		<div class="menu" id="editMenu">
+			<span class="menuTitle">Edit</span>
+			<ul class="menuContents">
+				<li id="undoButton">Undo</li>
+				<li id="redoButton">Redo</li>
+				<li id="saveButton">Find</li>
+			</ul>
+		</div>
+		<div class="menu" id="shareMenu">
+			<span class="menuTitle">Share</span>
+			<ul class="menuContents">
+				<li id="undoButton">Make Public</li>
+				<li id="redoButton">Set Description</li>
+			</ul>
+		</div>
+		</div>
+	</div>
+	<div class="mainArea">
+		<div class="leftSide">
+		<div class="pagePreview" id="draggablePreview">
+			<iframe class="previewBody">
+			mah page preview
+			</iframe>
+		</div>
+		<div class="filePane">
+			<div class="file selected">
+			<div class="file-name" data-file="index.html">index.html</div>
+			</div><div class="add-file">
+			<div class="file-name">+</div>
+			</div>
+		</div>
+		</div>
+		<div class="rightSide">
+		<div class="upperArea">
+			<div class="paletteSelect">
+				<!-- Man, whoever decided it was a good idea to use inline styles must be really -
+					 ... ohwait ...
+					 That was me. -->
+				<form>
+				<div class="paletteColumn">
+					<label class="paletteOptionWrap" for="p1" data-num="0">
+					 <input type="radio" name="palette" value="p1" id="p1" />
+						text<span class="paletteColorIndicator" style="background:#E44D4D"></span>
+					</label>
+					<label class="paletteOptionWrap" for="p2" data-num="1">
+						<input type="radio" name="palette" value="p2" id="p2" />
+						media<span class="paletteColorIndicator" style="background:#E44DBC"></span>
+					</label>
+					<label class="paletteOptionWrap" for="p3" data-num="2">
+						<input type="radio" name="palette" value="p3" id="p3" />
+						sections<span class="paletteColorIndicator" style="background:#914DE4"></span>
+					</label>
+					<label class="paletteOptionWrap" for="p4" data-num="3">
+						<input type="radio" name="palette" value="p4" id="p4" />
+						Palette 4<span class="paletteColorIndicator" style="background:#4D75E4"></span>
+					</label>
+					</div>
+					<div class="paletteColumn">
+					<label class="paletteOptionWrap" for="p5" data-num="4">
+						<input type="radio" name="palette" value="p5" id="p5" />
+						Palette 5<span class="paletteColorIndicator" style="background:#4DD2E4"></span>
+					</label>
+					<label class="paletteOptionWrap" for="p6" data-num="5">
+						<input type="radio" name="palette" value="p6" id="p6" />
+						Palette 6<span class="paletteColorIndicator" style="background:#4DE48C"></span>
+					</label>
+					<label class="paletteOptionWrap" for="p7" data-num="6">
+						<input type="radio" name="palette" value="p7" id="p7" />
+						Palette 7<span class="paletteColorIndicator" style="background:#87E44D"></span>
+					</label>
+					<label class="paletteOptionWrap" for="p8" data-num="7">
+						<input type="radio" name="palette" value="p8" id="p8" />
+						CSS<span class="paletteColorIndicator" style="background:#C6E44D"></span>
+					</label>
+					</div>
+				</form>
+				</div>
+			<div class="allBlocks">
+			<div class="search">
+				<input type="text" id="searchBar" placeholder="Search for a block..."/>
+			</div>
+			<div class="blockArea" id="filteredBlocksArea">
+				<div class="block"></div>
+				<div class="block small"></div>
+				<div class="block"></div>
+				<div class="block large"></div>
+				<div class="block large"></div>
+				<div class="block small"></div>
+				<div class="block"></div>
+				<div class="block"></div>
+				<div class="block small"></div>
+				<div class="block"></div>
+				<div class="block"></div>
+				<div class="block large"></div>
+				<div class="block small"></div>
+				<div class="block large"></div>
+				<div class="block small"></div>
+				<div class="block"></div>
+			</div>
+			</div>
+		</div>
+		<div class="scriptingArea">
+			<!-- some test stuff... -->
+			<ul class="script">
+			<li class="hat">DOCTYPE html</li>
+			<ul class="c-wrapper e-body">
+				<li class="c-header">body</li>
+				<ul class="c-content">
+				</ul>
+				<li class="c-footer">&nbsp;</li>
+			</ul>
+		</ul>
+		<div class="trashCan" id="trashCan"></div>
+		</div>
+	</div>
+	</div>
+	<script src='resources/js/files.js'></script>
+	<script src='resources/js/blocks.js'></script>
+	<script src='resources/js/blockAttributes.js'></script>
+	<script src='resources/js/cssAttributes.js'></script>
+	<script src='resources/js/block2json.js'></script>
+	<script src='resources/js/fileManagement.js'></script>
+	</body>
 </html>

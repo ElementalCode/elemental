@@ -546,9 +546,11 @@ html, body {
   font-family: 'Source Code Pro', sans-serif; }
 
 .upperArea .allBlocks .blockArea {
-  /*display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;*/
+  /*
+  	display: flex;
+  	flex-direction: column;
+  	flex-wrap: wrap;
+  */
   height: 100%;
   height: calc(100% - 64px);
   overflow-x: hidden;
@@ -559,17 +561,18 @@ html, body {
     margin: 6px 0px; }
 
 .trashCan {
-  display: block;
+  display: none;
   position: fixed;
-  bottom: 10px;
-  right: 20px;
-  width: 70px;
-  height: 90px;
-  z-index: 800;
-  background-image: url("../img/trash_closed.png");
-  cursor: default; }
-  .trashCan:hover, .trashCan.hovering {
+  top: 56px;
+  left: calc(130px + 50%);
+  width: 140px;
+  height: 180px;
+  background-size: 100% auto;
+  background-image: url("../img/trash_closed.png"); }
+  .trashCan:hover {
     background-image: url("../img/trash_open.png"); }
+  .trashCan.showing {
+    display: block; }
 
 @media (max-width: 450px) {
   .advanceWrap {

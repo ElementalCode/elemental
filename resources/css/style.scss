@@ -43,8 +43,8 @@ html, body {
 	color: #efefef;
 	font-family: 'Source Sans Pro', sans-serif;
 	padding: 15px 24px;
-    position:relative;
-    z-index:999;
+	position:relative;
+	z-index:999;
 }
 
 .left {
@@ -93,7 +93,7 @@ html, body {
 	top: 30px;
 	width: 145px;
 	z-index: 5;
-    border:1px solid $borders_color;
+	border:1px solid $borders_color;
 }
 
 .menuContents:before {
@@ -346,35 +346,41 @@ html, body {
 }
 
 .upperArea .allBlocks .blockArea {
-	/*display: flex;
+/*
+	display: flex;
 	flex-direction: column;
-	flex-wrap: wrap;*/
+	flex-wrap: wrap;
+*/
 	height: 100%;
 	height: calc(100% - 64px);
 	overflow-x: hidden;
 	overflow-y: auto;
 	justify-content: flex-start;
 	padding: 32px;
-    
-    .stack, .c-wrapper {
-        margin:6px 0px;
-    }
+	.stack, .c-wrapper {
+	margin: 6px 0px;
+	}
 }
 
 .trashCan {
-    display:block;
-    position:fixed;
-    bottom:10px;
-    right:20px;
-    width:70px;
-    height:90px;
-    z-index:800;
-    background-image: url("../img/trash_closed.png");
-    cursor: default;
-    &:hover,
-    &.hovering {
-    background-image: url("../img/trash_open.png");
-    }
+	// @extend .upperArea;
+	display: none;
+	position: fixed;
+	top: 56px;
+	left: calc(130px + 50%);
+	width: 140px;
+	height: 180px;
+	background-size: 100% auto;
+	background-image: url("../img/trash_closed.png");
+	&:hover,
+	/* &.hovering (I don't think we need this) */
+	{
+		background-image: url("../img/trash_open.png");
+	}
+	&.showing
+	{
+		display: block;
+	}
 }
 
 @media (max-width:450px) {
