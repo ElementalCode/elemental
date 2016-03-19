@@ -293,8 +293,8 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
       _drag_init(ev.target, ev);
       ev.stopPropagation();
       setZebra();
-      trashCan = document.getElementById('trashCan');
-      trashCan.classList.add('showing')
+	  trashCan = document.getElementById('trashCan');
+	  trashCan.classList.add('showing');
     } else if (ev.target.matches(C_ELEMENTS)) {
       if (!ev.target.parentNode.classList.contains('e-body')) {
         _drag_init(ev.target.parentElement, ev);
@@ -403,7 +403,7 @@ function zebra(parent, nestcount) {
 }
 
 function setZebra() {
-  for (i = 0; i < document.querySelectorAll('.script, .draggy').length; i++) {
+  for(i = 0; i < document.querySelectorAll('.script, .draggy').length; i++) {
     zebra(document.querySelectorAll('.script, .draggy')[i], 0);
   }
 }
