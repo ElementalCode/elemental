@@ -330,7 +330,7 @@ $('body').on('mousemove', _move_elem)
             setFrameContent();
         }
         setZebra();
-    }).on('keydown', function(ev) {
+    }).on('input', function(ev) {
         setFrameContent();
     });
 
