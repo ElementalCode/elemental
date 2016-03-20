@@ -546,11 +546,9 @@ html, body {
   font-family: 'Source Code Pro', sans-serif; }
 
 .upperArea .allBlocks .blockArea {
-  /*
-  	display: flex;
-  	flex-direction: column;
-  	flex-wrap: wrap;
-  */
+  /*display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;*/
   height: 100%;
   height: calc(100% - 64px);
   overflow-x: hidden;
@@ -568,8 +566,9 @@ html, body {
   width: 140px;
   height: 180px;
   background-size: 100% auto;
-  background-image: url("../img/trash_closed.png"); }
-  .trashCan:hover {
+  background-image: url("../img/trash_closed.png");
+  cursor: default; }
+  .trashCan:hover, .trashCan.hovering {
     background-image: url("../img/trash_open.png"); }
   .trashCan.showing {
     display: block; }

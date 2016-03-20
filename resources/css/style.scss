@@ -362,18 +362,21 @@ html, body {
 }
 
 .trashCan {
-    display:block;
-    position:fixed;
-    bottom:10px;
-    right:20px;
-    width:70px;
-    height:90px;
-    z-index:800;
+    display: none;
+    position: fixed;
+    top: 56px;
+    left: calc(130px + 50%);
+    width: 140px;
+    height: 180px;
+    background-size: 100% auto;
     background-image: url("../img/trash_closed.png");
     cursor: default;
     &:hover,
     &.hovering {
         background-image: url("../img/trash_open.png");
+    }
+    &.showing {
+        display: block;
     }
 }
 
