@@ -93,7 +93,7 @@ html, body {
     top: 30px;
     width: 145px;
     z-index: 5;
-        border:1px solid $borders_color;
+    border:1px solid $borders_color;
 }
 
 .menuContents:before {
@@ -106,13 +106,13 @@ html, body {
     position: absolute;
     top: -7px;
     z-index: -8;
-        border:1px solid $borders_color;
-        border-bottom-color:transparent;
-        border-right-color:transparent;
-        
-        -ms-transform: rotate(45deg); /* IE 9 */
-        -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
-        transform: rotate(45deg);
+    border:1px solid $borders_color;
+    border-bottom-color:transparent;
+    border-right-color:transparent;
+
+    -ms-transform: rotate(45deg); /* IE 9 */
+    -webkit-transform: rotate(45deg); /* Chrome, Safari, Opera */
+    transform: rotate(45deg);
 }
 
 .menuContents:after {
@@ -195,7 +195,7 @@ html, body {
                 position: relative;
                 top: 50%;
                 transform: translateY(-50%);
-                                font-family: 'Source Sans Pro', sans-serif;
+                font-family: 'Source Sans Pro', sans-serif;
             }
             &.selected {
                 border-color:#989898;
@@ -346,19 +346,20 @@ html, body {
 }
 
 .upperArea .allBlocks .blockArea {
-    /*display: flex;
+/* 
+    display: flex;
     flex-direction: column;
-    flex-wrap: wrap;*/
+    flex-wrap: wrap;
+*/
     height: 100%;
     height: calc(100% - 64px);
     overflow-x: hidden;
     overflow-y: auto;
     justify-content: flex-start;
     padding: 32px;
-        
-        .stack, .c-wrapper {
-                margin:6px 0px;
-        }
+    .stack, .c-wrapper {
+        margin:6px 0px;
+    }
 }
 
 .trashCan {

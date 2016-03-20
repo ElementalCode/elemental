@@ -546,9 +546,11 @@ html, body {
   font-family: 'Source Code Pro', sans-serif; }
 
 .upperArea .allBlocks .blockArea {
-  /*display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;*/
+  /* 
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+  */
   height: 100%;
   height: calc(100% - 64px);
   overflow-x: hidden;
