@@ -301,7 +301,6 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
             }
         }
 	if (ev.target.matches(C_ELEMENTS) || ev.target.matches(DRAGGABLE_ELEMENTS)) {
-            console.log("Show trash can");
             trashCan = document.getElementById('trashCan');
             trashCan.classList.add('showing');
         }
@@ -313,7 +312,6 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
 
 SCRIPTING_AREA.addEventListener('mouseup', function(ev) {
     if (ev.target.matches(C_ELEMENTS) || ev.target.matches(DRAGGABLE_ELEMENTS)) {
-        console.log("Hide trash can");
         trashCan = document.getElementById('trashCan');
         trashCan.classList.remove('showing');
     }
