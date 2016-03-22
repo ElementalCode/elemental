@@ -293,8 +293,6 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
             _drag_init(ev.target, ev);
             ev.stopPropagation();
             setZebra();
-	    trashCan = document.getElementById('trashCan');
-	    trashCan.classList.add('showing');
         } else if (ev.target.matches(C_ELEMENTS)) {
             if (!ev.target.parentNode.classList.contains('e-body')) {
                 _drag_init(ev.target.parentElement, ev);
@@ -302,14 +300,21 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
                 setZebra();
             }
         }
-        setFrameContent();
-        SCRIPT_MENU.style.display = 'none';
-        RIGHT_CLICKED_SCRIPT = undefined;
+	if (ev.target.matches(C_ELEMENTS) || ev.target.matches(DRAGGABLE_ELEMENTS)) {
+            console.log("Show trash can");
+            trashCan = document.getElementById('trashCan');
+            trashCan.classList.add('showing');
+        }
+    setFrameContent();
+    SCRIPT_MENU.style.display = 'none';
+    RIGHT_CLICKED_SCRIPT = undefined;
     }
 });
 
 SCRIPTING_AREA.addEventListener('mouseup', function(ev) {
-    if (ev.target.matches(DRAGGABLE_ELEMENTS)) {
+    if (ev.target.matches(C_ELEMENTS) || ev.target.matches(DRAGGABLE_ELEMENTS)) {
+        console.log("Hide trash can");
+        trashCan = document.getElementById('trashCan');
         trashCan.classList.remove('showing');
     }
 });
