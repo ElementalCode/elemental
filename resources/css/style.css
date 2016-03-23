@@ -567,6 +567,7 @@ html, body {
   left: calc(130px + 50%);
   width: 140px;
   height: 180px;
+  z-index: 800;
   background-size: 100% auto;
   background-image: url("../img/trash_closed.png");
   cursor: default; }
@@ -574,6 +575,20 @@ html, body {
     background-image: url("../img/trash_open.png"); }
   .trashCan.showing {
     display: block; }
+
+.trashCan2 {
+  display: block;
+  position: fixed;
+  bottom: 10px;
+  right: 20px;
+  width: 70px;
+  height: 90px;
+  z-index: 800;
+  background-size: 100% auto;
+  background-image: url("../img/trash_closed.png");
+  cursor: default; }
+  .trashCan2:hover, .trashCan2.hovering {
+    background-image: url("../img/trash_open.png"); }
 
 @media (max-width: 450px) {
   .advanceWrap {

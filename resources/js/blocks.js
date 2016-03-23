@@ -332,10 +332,10 @@ var RIGHT_CLICKED_SCRIPT = undefined;
 
 $('body').on('mousemove', _move_elem)
     .on('mouseup', function(ev) {
-        if (/* ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || */ ev.target.className.split(' ').indexOf('trashCan') > -1) {
+        if (/* ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || */ ev.target.className.split(' ').indexOf('trashCan') > -1 || ev.target.className.split(' ').indexOf('trashCan2') > -1) {
             trashCan.classList.remove('showing');
             _delete(ev);
-        } else {
+	} else {
             _destroy(ev);
         }
         if (!(ev.target.classList.contains('file') || parentHasClass(ev.target, 'file'))) {
@@ -387,10 +387,19 @@ $('.context-menu.scripts .menu-item').on('click', function(ev) {
 
 setZebra();
 
-$('.trashCan').on('mouseover', function(ev) {
+document.getElementById('trashCan').addEventListener('mouseover', function(ev) {
     this.classList.add('hovering');
 });
-$('.trashCan').on('mouseout', function(ev) {
+
+document.getElementById('trashCan').addEventListener('mouseout', function(ev) {
+    this.classList.remove('hovering');
+});
+
+document.getElementById('trashCan2').addEventListener('mouseover', function(ev) {
+    this.classList.add('hovering');
+});
+
+document.getElementById('trashCan2').addEventListener('mouseout', function(ev) {
     this.classList.remove('hovering');
 });
 
