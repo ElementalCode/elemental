@@ -333,9 +333,14 @@ var RIGHT_CLICKED_SCRIPT = undefined;
 $('body').on('mousemove', _move_elem)
     .on('mouseup', function(ev) {
         if (/* ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || */ ev.target.className.split(' ').indexOf('trashCan') > -1 || ev.target.className.split(' ').indexOf('trashCan2') > -1) {
+            trashCan = document.getElementById('trashCan');
             trashCan.classList.remove('showing');
             _delete(ev);
 	} else {
+	    if (ev.target == BLOCK_PALETTE) {
+                trashCan = document.getElementById('trashCan');
+                trashCan.classList.remove('showing');
+	    }
             _destroy(ev);
         }
         if (!(ev.target.classList.contains('file') || parentHasClass(ev.target, 'file'))) {
