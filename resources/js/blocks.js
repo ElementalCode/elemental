@@ -41,10 +41,10 @@ function getOffset( elem ) {
     var offsetLeft = (function(elem) {
         var offsetLeft = 0;
         do {
-          if ( !isNaN( elem.offsetLeft ) )
-          {
-              offsetLeft += elem.offsetLeft;
-          }
+            if ( !isNaN( elem.offsetLeft ) )
+            {
+                offsetLeft += elem.offsetLeft;
+            }
         } while( elem = elem.offsetParent );
         return offsetLeft;
     })(elem);
@@ -52,10 +52,10 @@ function getOffset( elem ) {
     var offsetTop = (function(elem) {
         var offsetTop = 0;
         do {
-          if ( !isNaN( elem.offsetTop ) )
-          {
-              offsetTop += elem.offsetTop;
-          }
+            if ( !isNaN( elem.offsetTop ) )
+            {
+                offsetTop += elem.offsetTop;
+            }
         } while( elem = elem.offsetParent );
         return offsetTop;
     })(elem);
@@ -161,9 +161,9 @@ function _move_elem(e) {
 function _destroy(ev) {
     var SNAP_CLASSES = currentFile.split('.').pop() == 'css' ? CSS_SNAP_CLASSES : HTML_SNAP_CLASSES;
     $(SNAP_CLASSES).each(function(item) {
-       if (item.classList.contains('drop-area')) {
-           item.classList.remove('drop-area');
-       }
+         if (item.classList.contains('drop-area')) {
+             item.classList.remove('drop-area');
+         }
     });
     var topEl = null;
     if (selected !== null) {
@@ -182,7 +182,7 @@ function _destroy(ev) {
             var elem = selected.children[i];
             if (topEl.classList.contains('stack')) {
                 elem.removeAttribute('style');
-                topEl.parentNode.insertBefore(elem, topEl.nextElementSibling);   
+                topEl.parentNode.insertBefore(elem, topEl.nextElementSibling);     
             } else if (topEl.classList.contains('c-header')) {
                 elem.removeAttribute('style');
                 topEl.nextElementSibling.insertBefore(elem, topEl.nextElementSibling.firstElementChild);
@@ -211,9 +211,9 @@ function _destroy(ev) {
 function _delete(ev) {
     var SNAP_CLASSES = currentFile.split('.').pop() == 'css' ? CSS_SNAP_CLASSES : HTML_SNAP_CLASSES;
     $(SNAP_CLASSES).each(function(item) {
-       if (item.classList.contains('drop-area')) {
-           item.classList.remove('drop-area');
-       }
+         if (item.classList.contains('drop-area')) {
+             item.classList.remove('drop-area');
+         }
     });
     if (selected) { // TODO: make this not ugly
         selected.parentNode.removeChild(selected);
@@ -284,7 +284,7 @@ BLOCK_PALETTE.addEventListener('mousedown', function(ev) {
 });
 
 SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
-    if (ev.which != 3) {  // shouldn't do anything on right click
+    if (ev.which != 3) {    // shouldn't do anything on right click
         if (ev.target.className =='script-input') {
             ev.stopPropagation();
             return;
@@ -300,9 +300,20 @@ SCRIPTING_AREA.addEventListener('mousedown', function(ev) {
                 setZebra();
             }
         }
-        setFrameContent();
-        SCRIPT_MENU.style.display = 'none';
-        RIGHT_CLICKED_SCRIPT = undefined;
+	if (ev.target.matches(C_ELEMENTS) || ev.target.matches(DRAGGABLE_ELEMENTS)) {
+            trashCan = document.getElementById('trashCan');
+            trashCan.classList.add('showing');
+        }
+    setFrameContent();
+    SCRIPT_MENU.style.display = 'none';
+    RIGHT_CLICKED_SCRIPT = undefined;
+    }
+});
+
+SCRIPTING_AREA.addEventListener('mouseup', function(ev) {
+    if (ev.target.matches(C_ELEMENTS) || ev.target.matches(DRAGGABLE_ELEMENTS)) {
+        trashCan = document.getElementById('trashCan');
+        trashCan.classList.remove('showing');
     }
 });
 
@@ -321,9 +332,15 @@ var RIGHT_CLICKED_SCRIPT = undefined;
 
 $('body').on('mousemove', _move_elem)
     .on('mouseup', function(ev) {
-        if (ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || ev.target.className.split(' ').indexOf('trashCan') > -1) {
+        if (/* ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || */ ev.target.className.split(' ').indexOf('trashCan') > -1 || ev.target.className.split(' ').indexOf('trashCan2') > -1) {
+            trashCan = document.getElementById('trashCan');
+            trashCan.classList.remove('showing');
             _delete(ev);
-        } else {
+	} else {
+	    if (ev.target == BLOCK_PALETTE) {
+                trashCan = document.getElementById('trashCan');
+                trashCan.classList.remove('showing');
+	    }
             _destroy(ev);
         }
         if (!(ev.target.classList.contains('file') || parentHasClass(ev.target, 'file'))) {
@@ -375,10 +392,19 @@ $('.context-menu.scripts .menu-item').on('click', function(ev) {
 
 setZebra();
 
-$('.trashCan').on('mouseover', function(ev) {
+document.getElementById('trashCan').addEventListener('mouseover', function(ev) {
     this.classList.add('hovering');
 });
-$('.trashCan').on('mouseout', function(ev) {
+
+document.getElementById('trashCan').addEventListener('mouseout', function(ev) {
+    this.classList.remove('hovering');
+});
+
+document.getElementById('trashCan2').addEventListener('mouseover', function(ev) {
+    this.classList.add('hovering');
+});
+
+document.getElementById('trashCan2').addEventListener('mouseout', function(ev) {
     this.classList.remove('hovering');
 });
 
