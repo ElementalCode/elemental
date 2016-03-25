@@ -55,29 +55,14 @@ function arrContainsFromArr(arr1, arr2) {
 var fileData = {};
 var currentFile = 'index.html';
 
+var stackElements = ['e-img', 'e-text', 'e-CSS', 'e-style', ];
 var attrNames = ['src', 'class', 'id', 'href', 'rel']; //add attrs
 var cssAttrNames = [
     'background-color',
     'height',
     'width',
 ]; //add attrs
-
-// All you have to do to do it right is be lazy -- liam
-// (just kidding)
-//var stackElements = ['e-img', 'e-text', 'e-CSS', 'e-style', ];
-//var wrapperElements = ['e-div', 'e-body',  'e-a', 'e-h1', 'e-h2', 'e-h3', 'e-code', 'e-pre', 'e-p'];
-var stackElements = [];
-var wrapperElements = [];
-filter.blocks.forEach(function(block) {
-    if (block.type === 'wrapper') {
-        wrapperElements.push('e-' + block.name);
-    } else if (block.type === 'stack') {
-        stackElements.push('e-' + block.name);
-    } else {
-        console.warn('Invalid block type "' + block.type + '" for element ' + block.name);
-    }
-});
-
+var wrapperElements = ['e-div', 'e-body',  'e-a', 'e-h1', 'e-h2', 'e-h3'];
 var unnamedWrapperElements = wrapperElements.map(function(item) {
     return item.substr(2, item.length - 1);
 });
