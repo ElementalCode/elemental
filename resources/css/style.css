@@ -546,9 +546,11 @@ html, body {
   font-family: 'Source Code Pro', sans-serif; }
 
 .upperArea .allBlocks .blockArea {
-  /*display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;*/
+  /* 
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+  */
   height: 100%;
   height: calc(100% - 64px);
   overflow-x: hidden;
@@ -559,6 +561,22 @@ html, body {
     margin: 6px 0px; }
 
 .trashCan {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: calc(130px + 50%);
+  width: 140px;
+  height: 180px;
+  z-index: 800;
+  background-size: 100% auto;
+  background-image: url("../img/trash_closed.png");
+  cursor: default; }
+  .trashCan:hover, .trashCan.hovering {
+    background-image: url("../img/trash_open.png"); }
+  .trashCan.showing {
+    display: block; }
+
+.trashCan2 {
   display: block;
   position: fixed;
   bottom: 10px;
@@ -566,20 +584,14 @@ html, body {
   width: 70px;
   height: 90px;
   z-index: 800;
+  background-size: 100% auto;
   background-image: url("../img/trash_closed.png");
   cursor: default; }
-  .trashCan:hover, .trashCan.hovering {
+  .trashCan2:hover, .trashCan2.hovering {
     background-image: url("../img/trash_open.png"); }
 
 @media (max-width: 450px) {
   .advanceWrap {
     display: none; } }
-.allBlocks .search #searchBar {
-  z-index: 2000; }
-.allBlocks .blockArea {
-  display: flex;
-  flex-wrap: wrap; }
-  .allBlocks .blockArea .stack, .allBlocks .blockArea .c-wrapper {
-    margin: 5px !important; }
 
 /*# sourceMappingURL=style.css.map */

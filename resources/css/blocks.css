@@ -1,0 +1,173 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Code+Pro:400,700);
+body {
+  background-color: gray; }
+
+.scriptingArea,
+.draggy,
+.blockArea {
+  font-family: 'Source Code Pro';
+  color: white;
+  white-space: nowrap;
+  /* Don't let text to "wrap" to a new line (blocks would look ugly that way) */
+  -webkit-user-select: none;
+  /* Chrome all / Safari all */
+  -moz-user-select: none;
+  /* Firefox all */
+  -ms-user-select: none;
+  /* IE 10+ */
+  user-select: none;
+  /* Likely future */
+  cursor: default; }
+
+.draggy {
+  position: absolute;
+  z-index: 999;
+  padding: 0;
+  margin: 0; }
+
+.script-input {
+  font-family: 'Source Code Pro';
+  padding: 0 5px;
+  min-width: 25px;
+  min-height: 20px;
+  border-radius: 999px;
+  border: none;
+  outline: none;
+  background-color: white;
+  color: black;
+  display: inline-block;
+  text-align: center;
+  cursor: text;
+  z-index: 100; }
+
+.hat {
+  display: table;
+  /* Using "block" would result in 100% width, and "inline-block" would result in everything on same line */
+  background: #C6E44D;
+  padding: 5px 10px;
+  position: relative;
+  border-radius: 0px 5px 5px 0px; }
+
+.hat:after {
+  background: #C6E44D;
+  display: block;
+  content: ' ';
+  width: 80%;
+  height: 100%;
+  position: absolute;
+  top: -45%;
+  left: 0px;
+  border-radius: 50%;
+  z-index: -1; }
+
+.stack {
+  display: table;
+  background: #914DE4;
+  padding: 5px 10px;
+  position: relative;
+  border-radius: 5px;
+  /*border-left: 1px solid #A9A9A9;*/
+  /* Replacing borders with box-shadows allows curving around border-radius */
+  box-shadow: -1px 0px 0px #A9A9A9; }
+
+.scriptingArea * + .stack,
+.scriptingArea * + .c-wrapper > .c-header {
+  border-top-left-radius: 0px; }
+.scriptingArea .stack:not(:last-child),
+.scriptingArea .c-wrapper:not(:first-child) > .c-header,
+.scriptingArea .c-wrapper:not(:last-child) > .c-footer {
+  border-bottom-left-radius: 0px; }
+
+.c-wrapper {
+  padding: 0px;
+  display: table;
+  /*border-left: 1px solid #A9A9A9;*/ }
+
+.c-header,
+.c-footer {
+  display: table;
+  background: #E44D4D;
+  padding: 5px 10px;
+  position: relative;
+  border-radius: 5px;
+  min-width: 40px;
+  min-height: 18px; }
+
+.c-header {
+  border-bottom-left-radius: 0px; }
+
+.c-footer {
+  border-top-left-radius: 0px;
+  margin-bottom: 1px; }
+
+.c-content {
+  background: #E44D4D;
+  padding: 6px 0px 6px 25px;
+  margin: -6px 0px -6px 0px;
+  width: 4px;
+  overflow-x: visible;
+  min-height: 30px;
+  position: relative;
+  /* For z-index (appear on top of .c-header, which in turn puts it on top of the extra border-bottom when attaching a block) */
+  box-shadow: -1px 0px 0px #A9A9A9; }
+
+.c-header {
+  box-shadow: -1px -1px 0px #A9A9A9; }
+
+.c-footer {
+  box-shadow: -1px 1px 0px #A9A9A9; }
+
+.drop-area {
+  border-bottom: 5px solid white; }
+
+.c-wrapper.zebra > li, .c-wrapper.zebra > ul {
+  background: #F45D5D; }
+
+.remove-attr {
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border: 7px solid transparent;
+  border-right-color: black;
+  margin-left: -4px;
+  margin-right: 2px;
+  cursor: pointer; }
+
+.add-attr {
+  display: inline-block;
+  width: 0px;
+  height: 0px;
+  border: 7px solid transparent;
+  border-left-color: black;
+  margin-left: 2px;
+  margin-right: -4px;
+  cursor: pointer; }
+
+.attr-holder {
+  background-color: orange;
+  border-radius: 10px;
+  box-sizing: border-box;
+  display: inline-block;
+  padding: 3px;
+  margin-right: 6px; }
+  .attr-holder .attr-dropdown,
+  .attr-holder .attr-input {
+    border-radius: 10px;
+    min-width: 30px;
+    display: inline-block;
+    margin: 0px 3px;
+    padding: 0px 4px;
+    outline: none; }
+    .attr-holder .attr-dropdown:empty,
+    .attr-holder .attr-input:empty {
+      content: ' '; }
+  .attr-holder .attr-input {
+    background-color: white;
+    color: black;
+    min-height: 20px; }
+  .attr-holder .attr-dropdown {
+    background-color: white;
+    color: black;
+    cursor: text; }
+
+/*# sourceMappingURL=blocks.css.map */
