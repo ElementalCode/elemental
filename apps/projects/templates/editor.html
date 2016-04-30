@@ -4,7 +4,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>UI v0.0.4 | Elemental</title>
+    <title>Elemental Editor</title>
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Sans+Pro:400,700" />
     <link rel="stylesheet" href="//fonts.googleapis.com/css?family=Source+Code+Pro:400,700" />
     <link rel="stylesheet" href="{% static 'css/editor/style.css' %}" />
@@ -18,6 +18,16 @@
     <script src="{% static 'js/editor/vendor/htmljson.js' %}"></script>
     <script src="{% static 'js/editor/script.js' %}"></script>
     <script src="{% static 'js/editor/blockFilter.js' %}"></script>
+    <script>
+      console.log(
+        "    ________                          __        ________          __   \n" +
+        "   / ____/ /__  ____ ___  ___  ____  / /_____ _/ / ____/___  ____/ /__  \n" +
+        "  / __/ / / _ \\/ __ `__ \\/ _ \\/ __ \\/ __/ __ `/ / /   / __ \\/ __  / _  \n" +
+        " / /___/ /  __/ / / / / /  __/ / / / /_/ /_/ / / /___/ /_/ / /_/ /  __/ \n" +
+        "/_____/_/\\___/_/ /_/ /_/\\___/_/ /_/\\__/\\__,_/_/\\____/\\____/\\__,_/\\___/  \n" +
+        "\n"
+      );
+    </script>
   </head>
   <body>
     <!-- PUT THE CUSTOM CONTEXT MENUS IN HERE -->
@@ -41,10 +51,6 @@
         <div class="upArrow"></div>
       </div>
       <ul class="attribute-results" id="attributeResults">
-        <li>class</li>
-        <li>id</li>
-        <li>src</li>
-        <li>href</li>
       </ul>
       <div class="scroll-down" id="attributeScrollUp">
         <div class="downArrow"></div>
@@ -115,7 +121,9 @@
     <div class="mainArea">
       <div class="leftSide">
         <div class="pagePreview" id="draggablePreview">
-          <iframe class="previewBody"></iframe>
+          <iframe class="previewBody">
+            mah page preview
+          </iframe>
         </div>
         <div class="filePane">
           <div class="file selected">
@@ -147,13 +155,13 @@
                 </label>
                 <label class="paletteOptionWrap" for="p4" data-num="3">
                   <input type="radio" name="palette" value="p4" id="p4" />
-                  Palette 4<span class="paletteColorIndicator" style="background:#4D75E4"></span>
+                  tables<span class="paletteColorIndicator" style="background:#4D75E4"></span>
                 </label>
               </div>
               <div class="paletteColumn">
                 <label class="paletteOptionWrap" for="p5" data-num="4">
                   <input type="radio" name="palette" value="p5" id="p5" />
-                  Palette 5<span class="paletteColorIndicator" style="background:#4DD2E4"></span>
+                  forms<span class="paletteColorIndicator" style="background:#4DD2E4"></span>
                 </label>
                 <label class="paletteOptionWrap" for="p6" data-num="5">
                   <input type="radio" name="palette" value="p6" id="p6" />
@@ -197,16 +205,17 @@
         <div class="scriptingArea">
           <!-- some test stuff... -->
           <ul class="script">
-            <li class="hat">&lt;!DOCTYPE html&gt;</li>
+            <li class="hat">DOCTYPE html</li>
             <ul class="c-wrapper e-body">
-                <li class="c-header">&lt;body&gt;</li>
+                <li class="c-header">body</li>
                 <ul class="c-content">
                 </ul>
-                <li class="c-footer">&lt;/body&gt;</li>
+                <li class="c-footer">&nbsp;</li>
             </ul>
           </ul>
         </div>
         <div class="trashCan" id="trashCan"></div>
+        <div class="trashCan2" id="trashCan2"></div>
       </div>
     </div>
   <script src="{% static 'js/editor/files.js' %}"></script>
