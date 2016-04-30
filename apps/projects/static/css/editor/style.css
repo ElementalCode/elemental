@@ -1,3 +1,4 @@
+@import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
 body {
   background-color: gray; }
 
@@ -10,7 +11,7 @@ body {
   /* Don't let text to "wrap" to a new line (blocks would look ugly that way) */
   -webkit-user-select: none;
   /* Chrome all / Safari all */
-  -moz-user-select: none; 
+  -moz-user-select: none;
   /* Firefox all */
   -ms-user-select: none;
   /* IE 10+ */
@@ -157,17 +158,15 @@ body {
     margin: 0px 3px;
     padding: 0px 4px;
     outline: none; }
-    .attr-holder .attr-dropdown:empty,
-    .attr-holder .attr-input:empty {
-      content: ' '; }
   .attr-holder .attr-input {
     background-color: white;
-    color: black;
-    min-height: 20px; }
+    color: black; }
   .attr-holder .attr-dropdown {
     background-color: white;
     color: black;
     cursor: text; }
+    .attr-holder .attr-dropdown:empty {
+      content: ' '; }
 
 .context-menu {
   position: absolute;
@@ -206,7 +205,7 @@ body {
   border-radius: 999px;
   padding: 4px;
   text-indent: 24px;
-  background-image: url(../../img/nav-search-glass.png);
+  background-image: url(../img/nav-search-glass.png);
   background-repeat: no-repeat;
   background-position: 8px 4px;
   outline: none;
@@ -275,7 +274,7 @@ html, body {
   min-width: 100%;
   overflow: auto;
   position: relative;
-  background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../../img/diagonalTexture.png");
+  background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("/static/img/diagonalTexture.png");
   z-index: 1; }
 
 .topBar {
@@ -523,7 +522,7 @@ html, body {
   border-top: none;
   outline: none;
   padding: 8px 10px 8px 26px;
-  background-image: url("../../img/nav-search-glass.png");
+  background-image: url("/static/img/nav-search-glass.png");
   background-repeat: no-repeat;
   background-position: 8px 9px;
   cursor: pointer;
@@ -544,9 +543,11 @@ html, body {
   font-family: 'Source Code Pro', sans-serif; }
 
 .upperArea .allBlocks .blockArea {
-  /*display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;*/
+  /* 
+      display: flex;
+      flex-direction: column;
+      flex-wrap: wrap;
+  */
   height: 100%;
   height: calc(100% - 64px);
   overflow-x: hidden;
@@ -557,6 +558,22 @@ html, body {
     margin: 6px 0px; }
 
 .trashCan {
+  display: none;
+  position: fixed;
+  top: 56px;
+  left: calc(130px + 50%);
+  width: 140px;
+  height: 180px;
+  z-index: 800;
+  background-size: 100% auto;
+  background-image: url("/static/img/trash_closed.png");
+  cursor: default; }
+  .trashCan:hover, .trashCan.hovering {
+    background-image: url("/static/img/trash_open.png"); }
+  .trashCan.showing {
+    display: block; }
+
+.trashCan2 {
   display: block;
   position: fixed;
   bottom: 10px;
@@ -564,10 +581,11 @@ html, body {
   width: 70px;
   height: 90px;
   z-index: 800;
-  background-image: url("../../img/trash_closed.png");
+  background-size: 100% auto;
+  background-image: url("/static/img/trash_closed.png");
   cursor: default; }
-  .trashCan:hover, .trashCan.hovering {
-    background-image: url("../../img/trash_open.png"); }
+  .trashCan2:hover, .trashCan2.hovering {
+    background-image: url("/static/img/trash_open.png"); }
 
 @media (max-width: 450px) {
   .advanceWrap {
