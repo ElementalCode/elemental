@@ -9,7 +9,7 @@
 
     <a href="/projects/project/{ id }">
         <div class="creation-box">
-            <input name="name" type="text" value="{ opts.name }" onblur={ updateName } /><br />
+            <input name="name" type="text" value="{ opts.name }" onclick={ inputClick } onblur={ updateName } /><br />
             <button name="delete" onclick={ delete }>delete</button>
             <div class="share-box" hidden={ opts.canshare == 'True' ? '' : true }>
                 <input onclick={ share } name="shared" checked={ opts.shared == 'True' ? true : '' } type="checkbox">shared?</input>
@@ -27,6 +27,10 @@
                 "X-CSRFToken": CSRF_TOKEN
             }
         };
+
+        this.inputClick = function(e) {
+            e.stopPropagation();
+        }
 
         this.share = function() {
             axios.patch('/rest/projects/project/' + opts.id, {

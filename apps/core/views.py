@@ -17,12 +17,18 @@ from django.views.generic.edit import (FormView, UpdateView, CreateView,
 from .forms import LoginForm, SignupForm
 from apps.accounts.models import ElementalUser
 from apps.accounts.mixins import UnbannedUserMixin
+from apps.projects.models import Project
 
 
 class Index(UnbannedUserMixin, FormView):
     template_name = 'index.html'
     form_class = LoginForm
     success_url = reverse_lazy('index')
+
+    def get_context_data(self, **kwargs):
+        context = super(Index, self).get_context_data(**kwargs)
+        context['featured'] = Project.objects.exclude(featured__isnull=True).order_by('-featured')[:5]
+        return context
     
     def form_valid(self, form):
         super(Index, self).form_valid(form)
