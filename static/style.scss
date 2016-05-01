@@ -1,4 +1,4 @@
-@import url(https://fonts.googleapis.com/css?family=Raleway:400,700);
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,700,900,300);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 // first import:
@@ -10,38 +10,6 @@
 @import "footer";
 @import "grid";
 @import "typography";
-/*
-.section {
-    border: 1px solid color(seafoam);
-    border-radius: 15px;
-    box-sizing: border-box;
-    position: relative;
-    padding: 7px;
-    box-sizing: border-box;
-    &-tall {
-        height: 200px;
-    }
-    .subsection {
-        height: 100%;
-        padding-left: 5px;
-        padding-right: 5px;
-        font-family: 'Open Sans', sans-serif;
-        &:not(:first-child) {
-            border-left: 1px solid color(seafoam);
-        }
-        .heading {
-            border-bottom: 1px solid color(seafoam);
-            padding-bottom: 7px;
-            margin-bottom: 10px;
-            font-size: 20px;
-        }
-    }
-    *  {
-        box-sizing: border-box;
-    }
-}
-*/
-/* begin presets */
 
 /* < basic styling */
 html {
@@ -76,17 +44,6 @@ body {
 
 /* < alignment and containers */
 
-/* NOTE - most should be moved to helpers */
-
-
-.center-align {
-    text-align: center;
-}
-
-.right-align {
-    text-align: right;
-}
-
 .flex-container {
     display: flex;
     flex-wrap: wrap;
@@ -117,6 +74,8 @@ body {
     background-color: #fff;
 }
 
+// the crap does this mean/do?  please be descriptive - obviously it's
+// specific because of all the numbers and stuff
 .upper {
     border-top-left-radius: 15px;
     border-top-right-radius: 15px;
@@ -628,11 +587,6 @@ div.top-description {
 
 /* begin dylan5797's helpers (should be moved to helpers.scss later)*/
 
-.centered {
-    margin-left: auto;
-    margin-right: auto;
-}
-
 .shadow {
     box-shadow: 0 0 30px #888;
 }
@@ -649,6 +603,8 @@ div.top-description {
     color: #fff;
 }
 
+// inline should mean display inline, but it's the same as the .white above
+// also there are two .white classes... WHAT THE CRAP.  guys this is a mess.
 .inline {
     color: #fff;
 }
@@ -661,13 +617,70 @@ div.top-description {
     float: left;
 }
 
-/* end dylan5797's helpers */
-
-/* __init__'s stuff */
 .white {
   color: white;
 }
 
-.aligncenter {
-  text-align: center;
+// my stuff
+.creation-box {
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.7);
+    margin: 10px;
+    padding: 10px;
+    width: 360px;
+    height: 240px;
+    display: inline-block;
+    background-image:url("https://upload.wikimedia.org/wikipedia/commons/thumb/e/e3/Magnificent_CME_Erupts_on_the_Sun_-_August_31.jpg/800px-Magnificent_CME_Erupts_on_the_Sun_-_August_31.jpg");
+    background-size: cover;
+
+    font-family: Raleway;
+}
+
+.creation-box input[name="creation-title"] {
+    width: 340px;
+    padding: 5px;
+    margin: auto;
+    border: none;
+    box-shadow: 0 0 20px #000;
+    border-radius: 5px;
+    transition: box-shadow 0.5s ease;
+
+    font-family: Raleway;
+}
+
+.creation-box input[type='text']:focus {
+    box-shadow: 0 0 20px #fff, 0 0 10px #fff;
+}
+
+.creation-box button, .share-box {
+    background-color: #fff;
+    border: none;
+    border-radius: 3px;
+    width: 90px;
+    margin: 5px;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    font-size: 1em;
+    box-shadow: 0 0 10px #000;
+
+    font-family: Raleway;
+}
+
+/* delete button */
+.creation-box button {
+    margin-top: 150px;
+
+    font-family: Raleway;
+}
+
+.creation-box button:hover {
+    color: #fff;
+    background-color: #D33439;
+}
+
+/* share checkbox */
+.share-box {
+    font-family: Raleway;
+}
+.share-box:hover {
+    color: #fff;
+    background-color: #017CC2;
 }
