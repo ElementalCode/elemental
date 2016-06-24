@@ -1,6 +1,6 @@
 interact('.pagePreview')
   .resizable({
-    edges: { left: false, right: true, bottom: false, top: false }
+    edges: { left: false, right: true, bottom: true, top: false }
   })
   .on('resizemove', function (event) {
     var target = event.target,
