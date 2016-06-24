@@ -47,8 +47,8 @@ interact('.filePane')
     target.parentNode.children[0].style.height = 'calc(100% - ' + target.style.height + ')';
 
   //   translate when resizing from top or left edges
-     x += event.deltaRect.left;
-     y += event.deltaRect.top;
+    // x += event.deltaRect.left;
+    // y += event.deltaRect.top;
 
      target.style.webkitTransform = target.style.transform =
          'translate(' + x + 'px,' + y + 'px)';
