@@ -1,4 +1,4 @@
-interact('.leftSide')
+interact('.pagePreview')
   .resizable({
     edges: { left: false, right: true, bottom: false, top: false }
   })
