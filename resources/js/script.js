@@ -30,7 +30,7 @@ interact('.leftSide')
 
 interact('.filePane')
   .resizable({
-    edges: { left: false, right: false, bottom: false, top: true }
+    edges: { left: false, right: true, bottom: false, top: true }
   })
   .on('resizemove', function (event) {
     var target = event.target,
