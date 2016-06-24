@@ -1,6 +1,6 @@
 interact('.leftSide')
   .resizable({
-    edges: { bottom: false, right: true, top: false, left: false }
+    edges: { left: false, right: true, bottom: false, top: false }
   })
   .on('resizemove', function (event) {
     var target = event.target,
@@ -24,15 +24,13 @@ interact('.leftSide')
 
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
-    var filePane = document.getElementsByClassName('filePane')[0];
-    filePane.style.width = '100%';
   }).on('mouseup', function(event) {
     document.querySelector('.previewBody').style['pointer-events'] = '';
   });
 
 interact('.filePane')
   .resizable({
-    edges: { top: true, right: true, left: false, bottom: false }
+    edges: { left: false, right: false, bottom: false, top: true }
   })
   .on('resizemove', function (event) {
     var target = event.target,
