@@ -1,6 +1,6 @@
 interact('.leftSide')
   .resizable({
-    edges: { left: false, right: false, bottom: false, top: false }
+    edges: { left: false, right: true, bottom: false, top: false }
   })
   .on('resizemove', function (event) {
     var target = event.target,
