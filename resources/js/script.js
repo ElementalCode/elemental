@@ -1,6 +1,6 @@
 interact('.pagePreview')
   .resizable({
-    edges: { left: false, right: true, bottom: true, top: false }
+    edges: { axis: 'y' }
   })
   .on('resizemove', function (event) {
     var target = event.target,
@@ -32,7 +32,7 @@ interact('.pagePreview')
 
 interact('.filePane')
   .resizable({
-    edges: { left: false, right: false, bottom: false, top: true }
+    edges: { axis: 'y' }
   })
   .on('resizemove', function (event) {
     var target = event.target,
