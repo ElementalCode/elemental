@@ -24,6 +24,8 @@ interact('.pagePreview')
 
     target.setAttribute('data-x', x);
     target.setAttribute('data-y', y);
+    var filePane = document.getElementsByClassName('filePane')[0];
+    filePane.style.width = '100%';
   }).on('mouseup', function(event) {
     document.querySelector('.previewBody').style['pointer-events'] = '';
   });
