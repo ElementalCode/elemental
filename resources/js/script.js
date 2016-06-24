@@ -16,7 +16,6 @@ interact('.leftSide')
     target.style.flexBasis  = event.rect.width + 'px';
     target.style.height = event.rect.height + 'px';
     filePane.style.flexBasis =event.rect.width + 'px';
-    filePane.style.height = event.rect.height + 'px';
 
     // translate when resizing from top or left edges
     x += event.deltaRect.left;
