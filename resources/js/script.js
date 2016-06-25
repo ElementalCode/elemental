@@ -6,6 +6,7 @@ interact('.leftSide')
     var target = event.target,
         x = (parseFloat(target.getAttribute('data-x')) || 0),
         y = (parseFloat(target.getAttribute('data-y')) || 0);
+    var filePane = document.getElementsByClassName('filePane')[0];
 
     // don't mess with iframe
     document.querySelector('.previewBody').style['pointer-events'] = 'none';
@@ -14,6 +15,7 @@ interact('.leftSide')
     //target.style.width  = event.rect.width + 'px';
     target.style.flexBasis  = event.rect.width + 'px';
     target.style.height = event.rect.height + 'px';
+    filePane.style.width = event.rect.width - 2 + 'px';
 
     // translate when resizing from top or left edges
     x += event.deltaRect.left;
