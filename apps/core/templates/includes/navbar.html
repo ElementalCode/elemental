@@ -1,19 +1,18 @@
-<div id="navbar" class="bg-seafoam full--width inline-block">
-  <a href="{% url "index" %}" class="inline-block raleway float-left nav-button logo">
-    <img class="logo"></a>
-  <a href="{% url "projects:create-project" %}" class="inline-block width-auto float-left raleway nav-button border-left">
-    <h2>Create</h2></a>
-  <a href="#" class="inline-block width-auto float-left raleway nav-button border-left">
-    <h2>Explore</h2></a>
-  {% if request.user.is_authenticated %}
-    <a href='{% url "projects:my-projects" %}' class="inline-block width-auto float-right raleway nav-button">
-      <h2>My Stuff</h2></a>
-    <a href='{% url "accounts:logout" %}' class="inline-block width-auto float-right raleway nav-button border-right">
-      <h2>Log Out</h2></a>
-  {% else %}
-  <a href="{% url 'accounts:login' %}" class="inline-block width-auto float-right raleway nav-button border-right">
-    <h2>Log In</h2></a>
-  <a href="{% url 'accounts:register' %}" class="inline-block width-auto float-right raleway nav-button border-right">
-    <h2>Sign Up</h2></a>
-  {% endif %}
+<div id="nav-wrapper">
+  <nav id="site-nav" class="centered">
+    <div id="left-links">
+      <a href="{% url 'index' %}" class="green-link"><!--<img src="https://elementalcode.herokuapp.com/static/resources/navbarimg1.png" alt="Elemental" />-->Elemental</a>
+      <a href="{% url 'projects:create-project' %}">Create</a>
+      <a href="#">Explore</a>
+    </div>
+    <div id="right-links">
+      {% if request.user.is_authenticated %}
+        <a href="{% url 'projects:my-projects' %}" class="bordered-link">My Stuff</a>
+        <a href="{% url 'accounts:logout' %}" class="unbordered-link">Log Out</a>
+      {% else %}
+        <a href="{% url 'accounts:register' %}" class="bordered-link">Register</a>
+        <a href="{% url 'accounts:login' %}" class="unbordered-link">Sign In</a>
+      {% endif %}
+    </div>
+  </nav>
 </div>

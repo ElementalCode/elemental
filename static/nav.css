@@ -1,30 +1,36 @@
-.nav-button {
-  padding-left: 10px;
-  padding-right: 10px;
-  font-family: Raleway, sans-serif;
-  text-decoration: none;
-  color: white; }
+#nav-wrapper {
+  width: 100%;
+  background: #444C54;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 0 1px 5px 0px #252E35;
+  z-index: 9999; }
 
-.end-nav {
-  border-right: 1px solid white; }
-
-.nav-button:hover {
-  background-color: #42BA74; }
-
-.nav-button > h2 {
-  margin-top: 3px;
-  margin-bottom: 3px; }
-
-.nav-button:not(.logo) > h2 {
-  font-weight: normal; }
-
-.nav-button.border-left {
-  border-left: 1px solid white; }
-
-.nav-button.border-right {
-  border-right: 1px solid white; }
-
-.nav-button.logo {
-  font-weight: bold; }
+#site-nav {
+  min-height: 80px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: default;
+  border-bottom: 0; }
+  #site-nav a {
+    color: white;
+    text-decoration: none;
+    font-family: 'Source Sans Pro', sans-serif;
+    font-size: 18px;
+    margin: 0 8px;
+    display: inline-table;
+    vertical-align: middle; }
+    #site-nav a.bordered-link {
+      border: 2px solid white;
+      padding: 6px 14px;
+      border-radius: 4px; }
+      #site-nav a.bordered-link:hover {
+        background: white;
+        color: #444C54; }
+    #site-nav a.green-link {
+      font-weight: bold;
+      color: #42BA92; }
 
 /*# sourceMappingURL=nav.css.map */

@@ -1,4 +1,5 @@
 @import url(https://fonts.googleapis.com/css?family=Raleway:400,700);
+@import url(https://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
 @import url(https://fonts.googleapis.com/css?family=Open+Sans);
 
 // first import:
@@ -44,30 +45,22 @@
 /* begin presets */
 
 /* < basic styling */
-html {
-    height: 100%;
-}
-
 body {
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    font-family: 'Raleway', 'sans-serif'
+  margin:0;
+  padding:0;
+  overflow-x:hidden;
+  margin-top:60px;
+  padding-top:20px;
+}
+.centered {
+  width:90%;
+  max-width:900px;
+  margin:0 auto;
 }
 
-.main-content img {
-    border-radius: 8px;
-}
-
-.main-content a {
-    color: #0075e0;
-    text-decoration: none;
-    transition: color 0.25s ease-in-out;
-}
-
-.main-content a:hover {
-    color: #005599;
-    text-decoration: underline;
+.hero-box {
+  background:#444C54;
+  padding:20px 0;
 }
 
 /* > basic styling */
@@ -303,7 +296,7 @@ img.logo:hover {
 }
 
 img.logo:hover:after {
-    
+
 }
 
 #header {
@@ -391,7 +384,7 @@ div.top-description {
 }
 
 .first-news-post {
-    border-top: none; 
+    border-top: none;
     margin-top: -10px;
 }
 

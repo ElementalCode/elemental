@@ -1,0 +1,388 @@
+// TODO: Make media quieries for really small screens (< 850px width)
+
+.centered {
+  width:90%;
+  max-width:900px;
+  margin:0 auto;
+}
+
+/* == Logged out user things == */
+// Is it possible to only serve these when the user is logged out?
+#logged-out-header {
+
+  #logged-out-header-inner {
+    width:40%;
+  }
+  #header-text {
+    color:white;
+    text-align:center;
+    font-family:'Source Sans Pro', sans-serif;
+    font-weight: bold;
+    font-size:44px;
+    text-shadow:0 2px 2px rgba(37,46,53, 0.6);
+    margin:0 auto 30px auto;
+    padding-top:20px;
+  }
+}
+#showcase {
+  height: 40.8%;
+  margin: 0 auto;
+  position: relative; /* for the abs-positioned image */
+  cursor:default;
+  -webkit-touch-callout: none; /* iOS Safari */
+  -webkit-user-select: none;   /* Chrome/Safari/Opera */
+  -khtml-user-select: none;    /* Konqueror */
+  -moz-user-select: none;      /* Firefox */
+  -ms-user-select: none;       /* IE/Edge */
+  user-select: none;           /* non-prefixed version, currently
+                                  not supported by any browser */
+
+  .showcase-img {
+    width: 100%;
+
+    border-radius: 5px;
+    box-shadow: 0 1px 8px -1px #252E35;
+  }
+
+  .showcase-callout {
+    z-index: 8888;
+    color: white;
+    position: absolute;
+    height: 35px;
+    box-sizing: border-box;
+    font-family:'Source Sans Pro', sans-serif;
+    font-weight: bold;
+    font-size:16px;
+    letter-spacing: 1px;
+    white-space: nowrap;
+    padding: 8px 30px;
+    border-radius: 500px;
+    background-color: #252E35;
+
+    &:after {
+      content:"";
+      display: block;
+      width: 0px;
+      height: 0px;
+      border-left: 10px solid #252E35;
+      border-top: 10px solid #252E35;
+      border-right: 10px solid transparent;
+      border-bottom: 10px solid transparent;
+      transform: translate(20px,-37px) rotate(45deg);
+      position:relative;
+      top:1px;
+    }
+    &.arrowplacement2 {
+      transform:translate(-90%, 0);
+    }
+    &.arrowplacement2:after {
+      transform: translate(240px,-37px) rotate(45deg);
+    }
+  }
+}
+#showcase-pocket {
+  display:block;
+  background:#444C54;
+  height:34px;
+  position:relative;
+  z-index:5555;
+  top:-30px;
+  box-shadow: 0 -17px 20px -13px rgba(68,76,84,0.9), 0 -5px 4px -5px rgba(0,0,0,0.5);
+  width:calc(40% + 100px);
+  margin:0 auto;
+}
+#cta-wrapper {
+  text-align:center;
+}
+.cta-button {
+  display:inline-block;
+  color:white;
+  text-decoration:none;
+  font-family:'Source Sans Pro', sans-serif;
+  font-size:20px;
+  font-weight:bold;
+  padding:18px 38px;
+  background:#42BA92;
+  border-radius:4px;
+  line-height:1;
+
+  span {
+    font-size:16px;
+    color:rgba(37,46,53,0.85);
+    font-weight:normal;
+
+    /*&:before {
+      content:' ';
+      display:block;
+      width:24px;
+      margin-left:-12px;
+      height:0;
+      border-top:1px solid rgba(37,46,53,0.2);
+
+      position:absolute;
+      top:-1px;
+      left:50%;
+    }*/
+  }
+}
+#or-separator {
+  display:inline-block;
+  color:white;
+  font-family:'Source Sans Pro', sans-serif;
+  position:relative;
+  bottom:12px;
+  margin:0 20px;
+  cursor:default;
+
+  &:before {
+    content:" ";
+    display:block;
+    width:0;
+    height:8px;
+    border-right:1px solid rgba(255,255,255,0.3);
+    position:relative;
+    left:7px;
+  }
+  &:after {
+    content:" ";
+    display:block;
+    width:0;
+    height:8px;
+    border-right:1px solid rgba(255,255,255,0.3);
+    position:relative;
+    left:7px;
+    top:4px;
+  }
+}
+
+/* == Responsibly responsive == */
+@media screen and (max-width:1634px) {
+  #logged-out-header #header-text {
+    font-size:2.65vw;
+  }
+}
+@media screen and (max-width:850px) {
+  #showcase, #showcase-pocket {
+    display:none;
+  }
+  #logged-out-header #logged-out-header-inner {
+    width:80%;
+  }
+  #logged-out-header #header-text {
+    font-size:5.05vw;
+  }
+}
+@media screen and (max-width:570px) {
+  .cta-button {
+    display:block;
+
+    margin:10px 0;
+  }
+  #or-separator {
+    display:none;
+  }
+}
+/* == Carousels == */
+.carousel-wrapper {
+  padding:30px 0;
+
+  &.gray {
+    background:#ddd;
+  }
+}
+.carousel {
+  @extend .centered;
+  font-family:'Source Sans Pro', sans-serif;
+
+  .carousel-title {
+    font-size:42px;
+    margin:0;
+    color:#42BA92;
+    line-height:0.8;
+    margin-bottom:10px;
+  }
+
+  .carousel-content {
+    display:flex;
+    width:100%;
+    border-radius:4px;
+    overflow:hidden;
+
+    .carousel-link {
+      margin-bottom:-4px; // Account for inline-block spacing struggles
+      text-decoration:none;
+      flex-shrink:1;
+      flex-grow:1;
+      flex-basis:0;
+
+      position:relative;
+    }
+    .carousel-image {
+      width:100%;
+    }
+    .carousel-info {
+      width:100%;
+      height:0;
+      padding-bottom:100%; // Doctors hate this one weird trick!
+      position:absolute;
+      top:0;
+      left:0;
+      background: -moz-linear-gradient(top, rgba(0,0,0,0.75) 0%, rgba(0,0,0,0.5) 100%);
+      background: -webkit-linear-gradient(top, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.5) 100%);
+      background: linear-gradient(to bottom, rgba(0,0,0,0.75) 0%,rgba(0,0,0,0.5) 100%);
+      opacity:0;
+      overflow:hidden;
+
+      transition:0.4s;
+
+      &:hover {
+        opacity:1;
+      }
+    }
+    .carousel-header {
+      font-size:20px;
+      max-width:100%;
+      position:absolute;
+      top:15px;
+      left:15px;
+      margin:0;
+      margin-right:15px;
+      line-height:1;
+      opacity:1;
+      color:white;
+    }
+  }
+}
+
+/* putting my css down here, easier to edit (also I don't do scss) */
+.showcase-callout {
+  -webkit-transition: opacity .4s;
+  transition: opacity .4s;
+  opacity: 0;
+}
+
+/*.showcase-callout:hover {
+  opacity: .8;
+}*/
+
+.bordered-link {
+  -webkit-transition: background .5s, color .2s;
+  transition: background .5s, color .2s;
+}
+
+.unbordered-link {
+  transition: background .5s, color .2s;
+  padding: 6px 14px;
+  border-radius: 4px;
+  color: white;
+}
+
+.unbordered-link:hover {
+  background: white;
+  color: #444C54 !important;
+}
+
+.showcase-trigger {
+  border-radius: 10px;
+  width: 15px;
+  height: 15px;
+  background-color: #0074D9;
+  z-index: 8888;
+  position: absolute;
+  opacity: .8;
+  box-shadow: 0px 0px 5px #0074D9;
+  transition: opacity ease-out 0.2s, width ease-out 0.2s, height ease-out 0.2s, transform ease-out 0.2s;
+  transform: translate(0, 0);
+}
+
+.showcase-trigger:hover + .showcase-callout {
+  opacity: 1;
+}
+.showcase-trigger::after {
+  animation: pulsate 3s 1s ease-out infinite;
+  background: transparent;
+  border-radius: 10px;
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  box-sizing: border-box;
+  border: 2px solid #0074D9;
+  position: absolute;
+  display: block;
+  content: "";
+  opacity: 0;
+}
+
+.showcase-trigger:hover {
+  opacity: 0.3;
+  width: 20px;
+  height: 20px;
+  border-radius: 100%;
+  transform:translate(-3.5px, -3.5px);
+  box-shadow: none;
+}
+
+.showcase-trigger:hover::after {
+  animation: none;
+  display: none;
+}
+
+
+
+/* transition things */
+@-webkit-keyframes pulsate {
+	0% {
+		-webkit-transform:scale(1);
+		opacity:0.8
+	}
+	30% {
+		-webkit-transform:scale(2);
+		opacity:0
+	}
+	100% {
+		-webkit-transform:scale(2);
+		opacity:0
+	}
+}
+@-moz-keyframes pulsate {
+	0% {
+		-moz-transform:scale(1);
+		opacity:0.8
+	}
+	30% {
+		-moz-transform:scale(2);
+		opacity:0
+	}
+	100% {
+		-moz-transform:scale(2);
+		opacity:0
+	}
+}
+@keyframes pulsate {
+	0% {
+		-webkit-transform:scale(1);
+		-moz-transform:scale(1);
+		-ms-transform:scale(1);
+		-o-transform:scale(1);
+		transform:scale(1);
+		opacity:0.8
+	}
+	30% {
+		-webkit-transform:scale(2);
+		-moz-transform:scale(2);
+		-ms-transform:scale(2);
+		-o-transform:scale(2);
+		transform:scale(2);
+		opacity:0
+	}
+	100% {
+		-webkit-transform:scale(2);
+		-moz-transform:scale(2);
+		-ms-transform:scale(2);
+		-o-transform:scale(2);
+		transform:scale(2);
+		opacity:0
+	}
+}

@@ -2,97 +2,151 @@
 {% load staticfiles %}
 
 {% block morescripts %}
-    <script src="{% static 'js/vendor/axios.min.js' %}"></script>
+    <!-- <script src="{% static 'js/vendor/axios.min.js' %}"></script> this file is areay included in base-->
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}" />
     <!--<script src="{% static 'js/components/newsfeed.js' %}"></script>-->
+    <script>
+    window.onload = window.onscroll = function() {
+      var scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+      var amnt = (Math.sqrt(-(scrollPos-100)*scrollPos)-50)/15 - 1;
+      if(scrollPos > 50) {
+        amnt = 0;
+      }
+      if(scrollPos == 0) {
+        amnt = -5.1;
+      }
+      console.log(amnt);
+      document.getElementById("nav-wrapper").style.boxShadow = "0 1px 5px " + amnt + "px #252E35";
+    };
+    </script>
 {% endblock %}
 
 {% block content %}
-	<div class="main-content">
-		<div class="box shadow centered">
-			<div class="upper seafoam">
-				<h1 class="white">ElementalCode</h2>
-			</div>
-			{% if not request.user.is_authenticated %}
-			<div class="box-smaller center-align top-description">
-				<h3>Learn to develop on the web, with an easy drag-and-drop interface.</h3>
-				<div class="full--width">
-					<!-- sorry, it will wrap if you move these on to seperate lines :P -->
-					<div class="one-third grid inline-block border-left"><h4>Create</h4><img src="{% static 'resources/front-about-code.png' %}"></div><div class="one-third grid inline-block border-left"><h4>Share</h4><img src="{% static 'resources/front-about-share.png' %}"></div><div class="one-third grid inline-block border-left"><h4>Learn</h4><img src="{% static 'resources/front-about-learn.png' %}"></div>
-				</div>
-			</div>
-			{% endif %}
-			<div class="pane1 about">
-				<div class="inner-head">
-					<h3>Elemental Blog</h3>
-					<div></div>
-				</div>
-			</div>
-			<div class="pane2 about">
-				<div class="inner-head">
-					<h3>{% if request.user.is_authenticated %}What's Happening?{% else %}Login{% endif %}</h3>
-					{% if request.user.is_authenticated %}
-						<div>My Feed.</div>
-					{% else %}
-						<form method="POST" class="login-form">
-							{% csrf_token %}
-							<input id="id_username" class="frontpage-login-input" name="username" type="text" placeholder="Username">
-							<input id="id_password" class="frontpage-login-input" name="password" type="password" placeholder="Password">
-							<div>
-								<div>
-									<button class="block frontpage-login-button">Log In</button>
-								</div>
-								<span class="block smalltext">Don't have an account?  <a href="{% url 'accounts:register' %}">Register now!</a></span>
-							</div>
-						</form>
-					{% endif %}
-				</div>
-			</div>
-		</div>
-		<div class="row box shadow centered">
-			<h3>Featured Projects
-				<div class="inline float-right see-all see-all-projects">
-					<a>See All</a>
-				</div>
-			</h3>
-			<div>
-				<ul class="userpage-shared-section-carousel">
-				</ul>
-			</div>
-		</div>
-		<div class="row box shadow centered">
-			<h3>Featured Galleries
-				<div class="inline float-right see-all see-all-favorites">
-					<a>See All</a>
-				</div>
-			</h3>
-			<div>
-				<ul class="userpage-favorite-section-carousel">
-				</ul>
-			</div>
-		</div>
-		<div class="row box shadow centered">
-			<h3>What's Popular?
-				<div class="inline float-right see-all see-all-following">
-					<a>See All</a>
-				</div>		
-			</h3>
-			<div>
-				<ul class="userpage-following-section-carousel">
-				</ul>
-			</div>
-		</div>
-		<div class="row box shadow centered">
-			<h3>What's New?
-				<div class="inline float-right see-all see-all-followers">
-					<a>See All</a>
-				</div>	
-			</h3>
-			<div>
-				<ul class="userpage-followers-section-carousel">
-				</ul>
-			</div>
-		</div>
-	</div>
+{% if request.user.is_authenticated %}
+<!-- ??? -->
+{% else %}
+  <div id="logged-out-header" class="hero-box"> <!-- Don't include this div if user is signed in -->
+  <div id="logged-out-header-inner" class="centered">
+    <h1 id="header-text">Learn to develop on the web with an easy drag-and-drop interface.</h1>
+    <div id="showcase">
+      <img class="showcase-img" src="http://quat1024.github.io/ElementalForkasdasdsad/resources/editor-screenshot.png" />
+      <a class="showcase-trigger" style="
+  left: 70.5%; top:77%;"></a>
+      <div class="showcase-callout" style="left: 56%; top:89%;">Intuitive, block based editor</div>
+      <a class="showcase-trigger" style="
+  left: 18%; top:38%;"></a>
+      <div class="showcase-callout" style="left: 4%; top:50%;">Instant updates as you design</div>
+      <a class="showcase-trigger" style="
+  left: 18%; top:2%;"></a>
+      <div class="showcase-callout arrowplacement2" style="left: 34%; top:15%;">Share your pages online with one click</div>
+      <a class="showcase-trigger" style="
+  left: 65.5%; top:24%;"></a>
+
+      <div class="showcase-callout" style="left: 51%; top:35%;">Full HTML and CSS features</div>
+    </div>
+  </div>
+  <div id="showcase-pocket"></div>
+  <div id="cta-wrapper" class="centered">
+    <a href="#" class="cta-button">Start creating!<br><span>no account required</span></a>
+    <div id="or-separator">or</div>
+    <a href="#" class="cta-button">Register for Free<br><span>to save to the cloud</span></a>
+  </div>
+</div>
+{% endif %}
+
+<div class="carousel-wrapper gray">
+  <div class="carousel">
+    <h3 class="carousel-title">Featured Pages</h3>
+    <div class="carousel-content">
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/444/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">My Fun Website</h5>
+        </div>
+      </a>
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/555/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">ELEMENTAL IS SO COOL</h5>
+        </div>
+      </a>
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/666/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">I like apple pie</h5>
+        </div>
+      </a>
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/777/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">I decided to give this page a really long name. What was I thinking!? Giving it a long name was obviously a bad idea, but I did it anyway. How strange. Lorem Ipsum dolor sit amet something something yadda yadda yadda.</h5>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="carousel-wrapper">
+  <div class="carousel">
+    <h3 class="carousel-title">What's Popular?</h3>
+    <div class="carousel-content">
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/444/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">My Fun Website</h5>
+        </div>
+      </a>
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/555/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">ELEMENTAL IS SO COOL</h5>
+        </div>
+      </a>
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/666/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">I like apple pie</h5>
+        </div>
+      </a>
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/777/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">I decided to give this page a really long name. What was I thinking!? Giving it a long name was obviously a bad idea, but I did it anyway. How strange. Lorem Ipsum dolor sit amet something something yadda yadda yadda.</h5>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
+<div class="carousel-wrapper gray">
+  <div class="carousel">
+    <h3 class="carousel-title">What's New?</h3>
+    <div class="carousel-content">
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/444/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">My Fun Website</h5>
+        </div>
+      </a>
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/555/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">ELEMENTAL IS SO COOL</h5>
+        </div>
+      </a>
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/666/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">I like apple pie</h5>
+        </div>
+      </a>
+      <a href="#" class="carousel-link">
+        <img src="http://placehold.it/250/777/000" alt="" class="carousel-image" />
+        <div class="carousel-info">
+          <h5 class="carousel-header">I decided to give this page a really long name. What was I thinking!? Giving it a long name was obviously a bad idea, but I did it anyway. How strange. Lorem Ipsum dolor sit amet something something yadda yadda yadda.</h5>
+        </div>
+      </a>
+    </div>
+  </div>
+</div>
 {% endblock %}
 
 {% block extra_scripts %}
