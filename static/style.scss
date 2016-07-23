@@ -51,6 +51,7 @@ body {
   overflow-x:hidden;
   margin-top:60px;
   padding-top:20px;
+  font-family: 'Open Sans', sans-serif;
 }
 .centered {
   width:90%;
@@ -97,7 +98,7 @@ body {
 
 .box {
     background-color: #fff;
-    border-radius: 15px;
+    border-radius: 5px;
     width: 750px;
     margin-top: 40px;
 }
@@ -111,8 +112,8 @@ body {
 }
 
 .upper {
-    border-top-left-radius: 15px;
-    border-top-right-radius: 15px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
     padding-left: 25px;
     padding-right: 25px;
     margin-top: 40px;
