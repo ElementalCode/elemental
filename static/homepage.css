@@ -4,9 +4,9 @@
   margin: 0 auto; }
 
 /* == Logged out user things == */
-#logged-out-header #logged-out-header-inner {
+.logged-out-header .logged-out-header-inner {
   width: 40%; }
-#logged-out-header #header-text {
+.logged-out-header .header-text {
   color: white;
   text-align: center;
   font-family: 'Source Sans Pro', sans-serif;
@@ -16,7 +16,7 @@
   margin: 0 auto 30px auto;
   padding-top: 20px; }
 
-#showcase {
+.showcase {
   height: 40.8%;
   margin: 0 auto;
   position: relative;
@@ -35,11 +35,11 @@
   user-select: none;
   /* non-prefixed version, currently
      not supported by any browser */ }
-  #showcase .showcase-img {
+  .showcase .showcase-img {
     width: 100%;
     border-radius: 5px;
     box-shadow: 0 1px 8px -1px #252E35; }
-  #showcase .showcase-callout {
+  .showcase .showcase-callout {
     z-index: 8888;
     color: white;
     position: absolute;
@@ -53,7 +53,7 @@
     padding: 8px 30px;
     border-radius: 500px;
     background-color: #252E35; }
-    #showcase .showcase-callout:after {
+    .showcase .showcase-callout:after {
       content: "";
       display: block;
       width: 0px;
@@ -65,12 +65,12 @@
       transform: translate(20px, -37px) rotate(45deg);
       position: relative;
       top: 1px; }
-    #showcase .showcase-callout.arrowplacement2 {
+    .showcase .showcase-callout.arrowplacement2 {
       transform: translate(-90%, 0); }
-    #showcase .showcase-callout.arrowplacement2:after {
+    .showcase .showcase-callout.arrowplacement2:after {
       transform: translate(240px, -37px) rotate(45deg); }
 
-#showcase-pocket {
+.showcase-pocket {
   display: block;
   background: #444C54;
   height: 34px;
@@ -81,7 +81,7 @@
   width: calc(40% + 100px);
   margin: 0 auto; }
 
-#cta-wrapper {
+.cta-wrapper {
   text-align: center; }
 
 .cta-button {
@@ -112,7 +112,7 @@
       left:50%;
     }*/ }
 
-#or-separator {
+.or-separator {
   display: inline-block;
   color: white;
   font-family: 'Source Sans Pro', sans-serif;
@@ -120,7 +120,7 @@
   bottom: 12px;
   margin: 0 20px;
   cursor: default; }
-  #or-separator:before {
+  .or-separator:before {
     content: " ";
     display: block;
     width: 0;
@@ -128,7 +128,7 @@
     border-right: 1px solid rgba(255, 255, 255, 0.3);
     position: relative;
     left: 7px; }
-  #or-separator:after {
+  .or-separator:after {
     content: " ";
     display: block;
     width: 0;
@@ -140,23 +140,23 @@
 
 /* == Responsibly responsive == */
 @media screen and (max-width: 1634px) {
-  #logged-out-header #header-text {
+  .logged-out-header .header-text {
     font-size: 2.65vw; } }
 @media screen and (max-width: 850px) {
-  #showcase, #showcase-pocket {
+  .showcase, .showcase-pocket {
     display: none; }
 
-  #logged-out-header #logged-out-header-inner {
+  .logged-out-header .logged-out-header-inner {
     width: 80%; }
 
-  #logged-out-header #header-text {
+  .logged-out-header .header-text {
     font-size: 5.05vw; } }
 @media screen and (max-width: 570px) {
   .cta-button {
     display: block;
     margin: 10px 0; }
 
-  #or-separator {
+  .or-separator {
     display: none; } }
 /* == Carousels == */
 .carousel-wrapper {

@@ -8,12 +8,12 @@
 
 /* == Logged out user things == */
 // Is it possible to only serve these when the user is logged out?
-#logged-out-header {
+.logged-out-header {
 
-  #logged-out-header-inner {
+  .logged-out-header-inner {
     width:40%;
   }
-  #header-text {
+  .header-text {
     color:white;
     text-align:center;
     font-family:'Source Sans Pro', sans-serif;
@@ -24,7 +24,7 @@
     padding-top:20px;
   }
 }
-#showcase {
+.showcase {
   height: 40.8%;
   margin: 0 auto;
   position: relative; /* for the abs-positioned image */
@@ -80,7 +80,7 @@
     }
   }
 }
-#showcase-pocket {
+.showcase-pocket {
   display:block;
   background:#444C54;
   height:34px;
@@ -91,7 +91,7 @@
   width:calc(40% + 100px);
   margin:0 auto;
 }
-#cta-wrapper {
+.cta-wrapper {
   text-align:center;
 }
 .cta-button {
@@ -125,7 +125,7 @@
     }*/
   }
 }
-#or-separator {
+.or-separator {
   display:inline-block;
   color:white;
   font-family:'Source Sans Pro', sans-serif;
@@ -157,18 +157,18 @@
 
 /* == Responsibly responsive == */
 @media screen and (max-width:1634px) {
-  #logged-out-header #header-text {
+  .logged-out-header .header-text {
     font-size:2.65vw;
   }
 }
 @media screen and (max-width:850px) {
-  #showcase, #showcase-pocket {
+  .showcase, .showcase-pocket {
     display:none;
   }
-  #logged-out-header #logged-out-header-inner {
+  .logged-out-header .logged-out-header-inner {
     width:80%;
   }
-  #logged-out-header #header-text {
+  .logged-out-header .header-text {
     font-size:5.05vw;
   }
 }
@@ -178,7 +178,7 @@
 
     margin:10px 0;
   }
-  #or-separator {
+  .or-separator {
     display:none;
   }
 }

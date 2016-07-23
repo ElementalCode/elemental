@@ -10,10 +10,10 @@
 {% block content %}
 {% if request.user.is_authenticated %}
 {% else %}
-  <div id="logged-out-header" class="hero-box"> <!-- Don't include this div if user is signed in -->
-  <div id="logged-out-header-inner" class="centered">
-    <h1 id="header-text">Learn to develop on the web with an easy drag-and-drop interface.</h1>
-    <div id="showcase">
+  <div class="hero-box logged-out-header"> <!-- Don't include this div if user is signed in -->
+  <div class="centered logged-out-header-inner">
+    <h1 class="header-text">Learn to develop on the web with an easy drag-and-drop interface.</h1>
+    <div class="showcase">
       <img class="showcase-img" src="http://quat1024.github.io/ElementalForkasdasdsad/resources/editor-screenshot.png" />
       <a class="showcase-trigger" style="
   left: 70.5%; top:77%;"></a>
@@ -30,10 +30,10 @@
       <div class="showcase-callout" style="left: 51%; top:35%;">Full HTML and CSS features</div>
     </div>
   </div>
-  <div id="showcase-pocket"></div>
-  <div id="cta-wrapper" class="centered">
+  <div class="showcase-pocket"></div>
+  <div class="cta-wrapper" class="centered">
     <a href="#" class="cta-button">Start creating!<br><span>no account required</span></a>
-    <div id="or-separator">or</div>
+    <div class="or-separator">or</div>
     <a href="#" class="cta-button">Register for Free<br><span>to save to the cloud</span></a>
   </div>
 </div>
