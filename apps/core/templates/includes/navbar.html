@@ -1,4 +1,25 @@
 <div id="nav-wrapper">
+  <script>
+  var scrollShadow = function() {
+    var scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
+    var amnt = (Math.sqrt(-(scrollPos-100)*scrollPos)-50)/15 - 1;
+    if(scrollPos > 50) {
+      amnt = 0;
+    }
+    if(scrollPos == 0) {
+      amnt = -5.1;
+    }
+    document.getElementById("nav-wrapper").style.boxShadow = "0 1px 5px " + amnt + "px #252E35";
+  };
+  window.addEventListener("load", function() {
+    if(document.getElementById("content-wrapper").children[0] &&
+      document.getElementById("content-wrapper").children[0].classList.contains("hero-box")) {
+        scrollShadow();
+        window.addEventListener("scroll", scrollShadow);
+      }
+
+  });
+  </script>
   <nav id="site-nav" class="centered">
     <div id="left-links">
       <a href="{% url 'index' %}" class="green-link"><!--<img src="https://elementalcode.herokuapp.com/static/resources/navbarimg1.png" alt="Elemental" />-->Elemental</a>

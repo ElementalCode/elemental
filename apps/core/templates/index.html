@@ -5,25 +5,10 @@
     <!-- <script src="{% static 'js/vendor/axios.min.js' %}"></script> this file is areay included in base-->
     <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}" />
     <!--<script src="{% static 'js/components/newsfeed.js' %}"></script>-->
-    <script>
-    window.onload = window.onscroll = function() {
-      var scrollPos = document.documentElement.scrollTop || document.body.scrollTop;
-      var amnt = (Math.sqrt(-(scrollPos-100)*scrollPos)-50)/15 - 1;
-      if(scrollPos > 50) {
-        amnt = 0;
-      }
-      if(scrollPos == 0) {
-        amnt = -5.1;
-      }
-      console.log(amnt);
-      document.getElementById("nav-wrapper").style.boxShadow = "0 1px 5px " + amnt + "px #252E35";
-    };
-    </script>
 {% endblock %}
 
 {% block content %}
 {% if request.user.is_authenticated %}
-<!-- ??? -->
 {% else %}
   <div id="logged-out-header" class="hero-box"> <!-- Don't include this div if user is signed in -->
   <div id="logged-out-header-inner" class="centered">
