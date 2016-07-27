@@ -3,6 +3,7 @@
 
 {% block morescripts %}
     <link rel="stylesheet" href="{% static 'style.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'homepage.css' %}" />
     <script>
     var ProjectsCount = {{ projects.count }} + 1;
     var USERNAME = '{{ user.username }}';
@@ -12,7 +13,8 @@
 {% endblock %}
 
 {% block content %}
-	<div class="box shadow centered">
+<div class="hero-box">
+	<div class="box centered">
 		<div class="upper seafoam">
 			<h1 class="white">{{ user.username }}</h1>
 			<div style="float:right; margin-top:27px">User</div>
@@ -43,7 +45,9 @@
 			</div>
 		</div>
 	</div>
-	<div class="row box shadow centered">
+</div>
+<div class="carousel-wrapper gray">
+	<div class="row box centered">
 		<h3>Shared Creations
 			<div class="inline float-right see-all see-all-projects">
 				<a>See All</a>
@@ -62,7 +66,9 @@
             </ul>
 		</div>
 	</div>
-	<div class="row box shadow centered">
+</div>
+<div class="carousel-wrapper">
+	<div class="row box centered">
 		<h3>Favorite Creations
 			<div class="inline float-right see-all see-all-favorites">
 				<a>See All</a>
@@ -79,11 +85,13 @@
 			</ul>
 		</div>
 	</div>
-	<div class="row box shadow centered">
+</div>
+<div class="carousel-wrapper gray">
+	<div class="row box centered">
 		<h3>Following
 			<div class="inline float-right see-all see-all-following">
 				<a>See All</a>
-			</div>		
+			</div>
 		</h3>
 		<div>
 			<ul class="userpage-following-section-carousel user-icons">
@@ -96,11 +104,13 @@
 			</ul>
 		</div>
 	</div>
-	<div class="row box shadow centered">
+</div>
+<div class="carousel-wrapper">
+	<div class="row box centered">
 		<h3>Followers
 			<div class="inline float-right see-all see-all-followers">
 				<a>See All</a>
-			</div>	
+			</div>
 		</h3>
 		<div>
 			<ul class="userpage-followers-section-carousel user-icons">
@@ -113,6 +123,7 @@
 			</ul>
 		</div>
 	</div>
+</div>
 {% endblock %}
 
 {% block extra_scripts %}

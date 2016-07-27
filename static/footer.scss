@@ -1,5 +1,35 @@
 @import "variables";
 
+#footer {
+  font-family:'Source Sans Pro', sans-serif;
+  position:relative;
+  padding:10px 0;
+}
+#hidden_semicolon {
+  position:absolute;
+  left:-15px;
+  top:50%;
+  margin-top:-12px;
+  font-weight:bold;
+  color:rgba(0,0,0,0.2);
+  cursor:default;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.footer-link {
+  margin-right:4px;
+  color:#252E35;
+  text-decoration:none;
+  border-bottom:1px dotted #252E35;
+  &:hover {
+    border-bottom:1px solid #252E35;
+  }
+}
+
+/*
 .wrapper {
     min-height: 100%;
     height: auto !important;
@@ -43,3 +73,4 @@
         }
     }
 }
+*/
