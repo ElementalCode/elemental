@@ -9,6 +9,7 @@ body {
   font-family: 'Source Code Pro';
   color: white;
   white-space: nowrap;
+  padding-top: 20px;
   /* Don't let text to "wrap" to a new line (blocks would look ugly that way) */
   -webkit-user-select: none;
   /* Chrome all / Safari all */
@@ -22,8 +23,10 @@ body {
 
 .draggy {
   position: absolute;
-  z-index: 999;
   padding: 0;
+  margin: 0; }
+
+.script {
   margin: 0; }
 
 .script-input {
@@ -275,7 +278,7 @@ html, body {
 .scriptingArea {
   height: calc(100% - 200px - 12px);
   min-width: 100%;
-  overflow: auto;
+  overflow: visible;
   position: relative;
   background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../img/diagonalTexture.png");
   z-index: 1; }
