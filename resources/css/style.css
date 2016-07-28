@@ -97,9 +97,28 @@ body {
 .c-header {
   border-bottom-left-radius: 0px; }
 
+.c-quicktext {
+  background: #914DE4;
+  padding: 7px;
+  font-size: 10pt;
+  border-radius: 100%;
+  cursor: pointer;
+  opacity: .7;
+  position: relative;
+  top: -35px;
+  right: -3px;
+  display: none; }
+  .c-quicktext:hover {
+    opacity: .9; }
+
+.scriptingArea .c-content:empty + .c-footer .c-quicktext {
+  display: inline-block; }
+
 .c-footer {
   border-top-left-radius: 0px;
-  margin-bottom: 1px; }
+  margin-bottom: 1px;
+  max-height: 18px;
+  display: block; }
 
 .c-content {
   background: #E44D4D;

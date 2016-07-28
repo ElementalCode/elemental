@@ -42,7 +42,7 @@ var filter = {
                 '<li class="c-header">' + block.name + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
                 '<ul class="c-content">',
                 '</ul>',
-                '<li class="c-footer">&nbsp;</li>',
+                '<ul class="c-footer"><li class="c-quicktext">Aa</li></ul>',
               '</ul>'
             ].join('');
           } else {
@@ -51,7 +51,7 @@ var filter = {
                 '<li class="c-header">' + block.name + ' <span class="script-input" contenteditable="true">&nbsp;</span></li>',
                 '<ul class="c-content">',
                 '</ul>',
-                '<li class="c-footer">&nbsp;</li>',
+                '<ul class="c-footer"><li class="c-quicktext">Aa</li></ul>',
               '</ul>'
             ].join('');
           }
