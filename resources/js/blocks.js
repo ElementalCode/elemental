@@ -132,6 +132,7 @@ function _palette_drag_init(elem, ev) {
 
 // Will be called when user dragging an element
 function _move_elem(e) {
+    e.preventDefault(); // avoid selecting text or other blocks
     x_pos = document.all ? window.event.clientX : e.pageX + SCRIPTING_AREA.scrollLeft;
     y_pos = document.all ? window.event.clientY : e.pageY + SCRIPTING_AREA.scrollTop;
     var SNAP_CLASSES = currentFile.split('.').pop() == 'css' ? CSS_SNAP_CLASSES : HTML_SNAP_CLASSES;
