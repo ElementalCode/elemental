@@ -463,7 +463,7 @@ function handleSearchChange() {
 }
 
 function handlePaletteClick() {
-  filter.selectedPalette = this.dataset.num;
+  filter.selectedPalette = (this.dataset ? this.dataset.num : 0);
   filter.type = "palette";
   filter.displayFilteredBlocks();
 }
@@ -482,6 +482,5 @@ function blockFilterOnload() { // ew multiple onloads
       var buttonElem = paletteButtons[i];
       buttonElem.onclick = handlePaletteClick;
   }
-  
-  filter.displayFilteredBlocks();
+  handlePaletteClick();
 };
