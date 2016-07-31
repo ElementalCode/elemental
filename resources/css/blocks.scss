@@ -10,6 +10,7 @@ body {
     font-family:'Source Code Pro';
     color:white;
     white-space: nowrap;
+    padding-top: 20px;
     /* Don't let text to "wrap" to a new line (blocks would look ugly that way) */
     -webkit-user-select: none;  /* Chrome all / Safari all */
     -moz-user-select: none;     /* Firefox all */
@@ -20,9 +21,11 @@ body {
 }
 .draggy {
     position:absolute;
-    z-index: 999;
     padding: 0;
     margin: 0;
+}
+.script {
+  margin: 0;
 }
 .script-input {
     font-family:'Source Code Pro';
