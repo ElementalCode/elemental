@@ -332,6 +332,35 @@ SCRIPTING_AREA.addEventListener('click', function(ev) {
         ev.target.parentNode.parentNode.querySelector('.c-content').innerHTML = '<li class="stack e-text"><span contenteditable="true" class="script-input text">breadfish.gif</span></li>';
     }
 });
+  
+SCRIPTING_AREA.addEventListener('input', function(ev) {
+    if (ev.target.getAttribute('contenteditable')) {
+      if(ev.target.innerHTML != ev.target.textContent) {
+        var caretPos = 0,
+          sel, range;
+        sel = window.getSelection();
+        if (sel.rangeCount) {
+          range = sel.getRangeAt(0);
+          var children = ev.target.childNodes;
+          var keepLooping = true;
+          for(let i = 0; keepLooping; i++) {
+            if(children[i] == range.commonAncestorContainer || children[i] == range.commonAncestorContainer.parentNode) {
+              caretPos += range.endOffset;
+              keepLooping = false;
+            } else {
+              caretPos += children[i].textContent.length;
+            }
+          }
+          ev.target.innerHTML = ev.target.textContent;
+          range = document.createRange();
+          range.setStart(ev.target.childNodes[0], caretPos);
+          range.collapse(true);
+          sel.removeAllRanges();
+          sel.addRange(range);
+        }
+      }
+    }
+});
 
 var SCRIPT_MENU = document.querySelector('.context-menu.scripts');
 var RIGHT_CLICKED_SCRIPT = undefined;
