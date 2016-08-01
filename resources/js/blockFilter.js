@@ -51,7 +51,7 @@ var filter = {
                 '<li class="c-header">' + block.name + ' <span class="script-input" contenteditable="true">&nbsp;</span></li>',
                 '<ul class="c-content">',
                 '</ul>',
-                '<ul class="c-footer"><li class="c-quicktext">Aa</li></ul>',
+                '<ul class="c-footer"></ul>',
               '</ul>'
             ].join('');
           }
