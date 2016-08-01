@@ -9,7 +9,6 @@ body {
   font-family: 'Source Code Pro';
   color: white;
   white-space: nowrap;
-  padding-top: 20px;
   /* Don't let text to "wrap" to a new line (blocks would look ugly that way) */
   -webkit-user-select: none;
   /* Chrome all / Safari all */
@@ -23,10 +22,8 @@ body {
 
 .draggy {
   position: absolute;
+  z-index: 999;
   padding: 0;
-  margin: 0; }
-
-.script {
   margin: 0; }
 
 .script-input {
@@ -100,9 +97,28 @@ body {
 .c-header {
   border-bottom-left-radius: 0px; }
 
+.c-quicktext {
+  background: #914DE4;
+  padding: 7px;
+  font-size: 10pt;
+  border-radius: 100%;
+  cursor: pointer;
+  opacity: .7;
+  position: relative;
+  top: -35px;
+  right: -3px;
+  display: none; }
+  .c-quicktext:hover {
+    opacity: .9; }
+
+.scriptingArea .c-content:empty + .c-footer .c-quicktext {
+  display: inline-block; }
+
 .c-footer {
   border-top-left-radius: 0px;
-  margin-bottom: 1px; }
+  margin-bottom: 1px;
+  max-height: 18px;
+  display: block; }
 
 .c-content {
   background: #E44D4D;
@@ -278,7 +294,7 @@ html, body {
 .scriptingArea {
   height: calc(100% - 200px - 12px);
   min-width: 100%;
-  overflow: visible;
+  overflow: auto;
   position: relative;
   background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../img/diagonalTexture.png");
   z-index: 1; }

@@ -132,7 +132,6 @@ function _palette_drag_init(elem, ev) {
 
 // Will be called when user dragging an element
 function _move_elem(e) {
-    e.preventDefault(); // avoid selecting text or other blocks
     x_pos = document.all ? window.event.clientX : e.pageX + SCRIPTING_AREA.scrollLeft;
     y_pos = document.all ? window.event.clientY : e.pageY + SCRIPTING_AREA.scrollTop;
     var SNAP_CLASSES = currentFile.split('.').pop() == 'css' ? CSS_SNAP_CLASSES : HTML_SNAP_CLASSES;
@@ -328,6 +327,12 @@ SCRIPTING_AREA.addEventListener('contextmenu', function(ev) {
     }
 });
 
+SCRIPTING_AREA.addEventListener('click', function(ev) {
+    if (ev.target.matches('.c-quicktext')) {
+        ev.target.parentNode.parentNode.querySelector('.c-content').innerHTML = '<li class="stack e-text"><span contenteditable="true" class="script-input text">breadfish.gif</span></li>';
+    }
+});
+  
 SCRIPTING_AREA.addEventListener('input', function(ev) {
     if (ev.target.getAttribute('contenteditable')) {
       if(ev.target.innerHTML != ev.target.textContent) {
