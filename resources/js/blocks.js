@@ -357,6 +357,13 @@ SCRIPTING_AREA.addEventListener('input', function(ev) {
     }
 });
 
+SCRIPTING_AREA.addEventListener('click', function(ev) {
+    if (ev.target.matches('.c-quicktext')) {
+        ev.target.parentNode.parentNode.querySelector('.c-content').innerHTML = '<li class="stack e-text"><span contenteditable="true" class="script-input text">breadfish.gif</span></li>';
+        setFrameContent();
+    }
+});
+
 var SCRIPT_MENU = document.querySelector('.context-menu.scripts');
 var RIGHT_CLICKED_SCRIPT = undefined;
 

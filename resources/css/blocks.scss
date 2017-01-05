@@ -93,7 +93,6 @@ body {
 }
 .c-header,
 .c-footer {
-    display:table;
     background:#E44D4D;
     padding:5px 10px;
     position:relative;
@@ -103,10 +102,15 @@ body {
 }
 .c-header {
     border-bottom-left-radius:0px;
+    box-shadow: -1px -1px 0px #A9A9A9;
+    display:table;
 }
 .c-footer {
     border-top-left-radius:0px;
     margin-bottom:1px;
+    max-height: 18px;
+    display:block;
+    box-shadow: -1px 1px 0px #A9A9A9;
 }
 .c-content {
     background:#E44D4D;
@@ -118,11 +122,23 @@ body {
     position:relative; /* For z-index (appear on top of .c-header, which in turn puts it on top of the extra border-bottom when attaching a block) */
     box-shadow: -1px 0px 0px #A9A9A9;
 }
-.c-header {
-    box-shadow: -1px -1px 0px #A9A9A9;
+.c-quicktext {
+  background: #914DE4;
+  padding: 7px;
+  font-size: 10pt;
+  border-radius: 100%;
+  cursor: pointer;
+  opacity: .7;
+  position: relative;
+  top: -20px;
+  right: -25px;
+  display: none;
+  &:hover {
+    opacity: .9;
+  }
 }
-.c-footer {
-    box-shadow: -1px 1px 0px #A9A9A9;
+.scriptingArea .c-content:empty + .c-footer .c-quicktext {
+  display: inline-block;
 }
 .drop-area {
     border-bottom: 5px solid white;   

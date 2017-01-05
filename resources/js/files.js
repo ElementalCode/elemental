@@ -160,7 +160,7 @@ function generateWrapperBlocks(jsonData) {
     }
 
     wrapperHtml.push(
-        '</ul><li class="c-footer">&nbsp;</li></ul>'
+        '</ul><ul class="c-footer"><li class="c-quicktext">Aa</li></ul></ul>'
     );
 
     return wrapperHtml.join('');
