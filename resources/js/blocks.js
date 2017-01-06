@@ -1,6 +1,7 @@
 var selected = null, // Object of the element to be moved
     x_pos = 0, y_pos = 0, // Stores x & y coordinates of the mouse pointer
-    x_elem = 0, y_elem = 0; // Stores top, left values (edge) of the element
+    x_elem = 0, y_elem = 0, // Stores top, left values (edge) of the element
+    DEFAULT_TEXT = 'breadfish';
 
 function isDescendant(parent, child) {
      var node = child.parentNode;
@@ -359,7 +360,7 @@ SCRIPTING_AREA.addEventListener('input', function(ev) {
 
 SCRIPTING_AREA.addEventListener('click', function(ev) {
     if (ev.target.matches('.c-quicktext')) {
-        ev.target.parentNode.parentNode.querySelector('.c-content').innerHTML = '<li class="stack e-text"><span contenteditable="true" class="script-input text">breadfish.gif</span></li>';
+        ev.target.parentNode.parentNode.querySelector('.c-content').innerHTML = '<li class="stack e-text"><span contenteditable="true" class="script-input text">' + DEFAULT_TEXT + '</span></li>';
         setFrameContent();
     }
 });
