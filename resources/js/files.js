@@ -55,11 +55,21 @@ function arrContainsFromArr(arr1, arr2) {
 var fileData = {};
 var currentFile = 'index.html';
 
-var attrNames = ['src', 'class', 'id', 'href', 'rel']; //add attrs
+var attrNames = [
+    'class',
+    'for',
+    'form',
+    'href',
+    'id',
+    'rel',
+    'src',
+    'style',
+    'type'
+]; //add attrs
 var cssAttrNames = [
     'background-color',
     'height',
-    'width',
+    'width'
 ]; //add attrs
 
 // All you have to do to do it right is be lazy -- liam
