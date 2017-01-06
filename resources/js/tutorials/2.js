@@ -1,5 +1,5 @@
 //hijack the file open script so I don't have to walk user through the basics again
-fileData = {"index.html":{"tag":"body","child":[{"tag":"h1","attr":{},"child":[{"tag":"","attr":{},"text":"My Awesome Website"}]},{"tag":"","attr":{},"text":"breadfish.gif"}]}};
+fileData = {"index.html":{"tag":"body","child":[{"tag":"h1","attr":{},"child":[{"tag":"","attr":{},"text":"My Awesome Website"}]},{"tag":"","attr":{},"text":DEFAULT_TEXT}]}};
 $('.filePane')[0].innerHTML = '<div class="file selected"><div class="file-name" data-file="index.html">index.html</div></div><div class="add-file"><div class="file-name">+</div></div>';
 loadFile("index.html");
 

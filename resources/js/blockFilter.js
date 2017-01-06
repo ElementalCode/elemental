@@ -73,7 +73,7 @@ var filter = {
               ].join('');
             }
           } else {
-            blockString = '<li class="stack e-text"><span contenteditable="true" class="script-input text">breadfish.gif</span></li>';
+            blockString = '<li class="stack e-text"><span contenteditable="true" class="script-input text">' + DEFAULT_TEXT + '</span></li>';
           }
         }
         blockArea.innerHTML += blockString;
