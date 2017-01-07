@@ -66,9 +66,9 @@ function Intro3() {
         position: "right"
       },
       {
-        element: document.querySelector('#filteredBlocksArea .e-text'),
+        element: document.querySelector('.scriptingArea .e-h1 .c-quicktext'),
         tooltipClass: "intro-hidebuttons",
-        intro: "This is the <code>text</code> block. Drag it into the <code>heading</code> block.",
+        intro: "Click this button to add text to the empty <code>heading</code>.",
         position: "right"
       }
     ]
@@ -76,15 +76,13 @@ function Intro3() {
   intro3.start();
   
   intro3.onafterchange(function(e) {
-    if (e.classList.contains('e-text')) {
+    if (e.classList.contains('c-quicktext')) {
       //accommodate for IntroJS's lame incompatability with scrolling
       document.querySelector('.introjs-helperLayer').style.top = (document.querySelector('.introjs-helperLayer').style.top.replace("px", "") - document.querySelector('#filteredBlocksArea').scrollTop) + "px";
       document.querySelector('.introjs-tooltipReferenceLayer').style.top = (document.querySelector('.introjs-tooltipReferenceLayer').style.top.replace("px", "") - document.querySelector('#filteredBlocksArea').scrollTop) + "px";
-      document.body.classList.add("intro-hideoverlay");
-      introObserve(document.querySelector('#filteredBlocksArea .e-text'), "mousedown",
+      introObserve(document.querySelector('.scriptingArea .e-text'), "mousedown",
                 false, document.querySelector('.e-body'), '.e-body .e-h1 .e-text', function() {
                   intro3.exit();
-                  document.body.classList.remove("intro-hideoverlay");
                   Intro4();
                 });
     }
