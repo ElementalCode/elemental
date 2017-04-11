@@ -34,49 +34,50 @@ var filter = {
       blockArea.innerHTML = '';
       for(x = 0; x < blocksToDisplay.length; x++) {
         var block = filter.blocks[blocksToDisplay[x]];
-        var blockString;
+        var newBlock;
         if (block.type == 'wrapper') {
           if (!block.ftype || block.ftype == 'html') {
-            blockString = [
-              '<ul class="c-wrapper e-' + block.name + '">',
-                '<li class="c-header">' + block.name + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
-                '<ul class="c-content">',
-                '</ul>',
-                '<ul class="c-footer"><li class="c-quicktext">Aa</li></ul>',
-              '</ul>'
-            ].join('');
+            newBlock = new Block(block.type, block.name, {
+                hasAttrs: true,
+                hasQuickText: true,
+                scriptInputContent: null,
+                inPalette: true
+              });
           } else {
-            blockString = [
-              '<ul class="c-wrapper e-' + block.name + '">',
-                '<li class="c-header">' + block.name + ' <span class="script-input" contenteditable="true">&nbsp;</span></li>',
-                '<ul class="c-content">',
-                '</ul>',
-                '<ul class="c-footer"></ul>',
-              '</ul>'
-            ].join('');
+            newBlock = new Block(block.type, block.name, {
+                hasAttrs: false,
+                hasQuickText: false,
+                scriptInputContent: '&nbsp',
+                inPalette: true
+              });
           }
         } else {
           if (block.name != 'text') {
             if (!block.ftype || block.ftype == 'html') {
-              blockString = [
-                '<li class="stack e-' + block.name + '">',
-                  block.name,
-                  "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>",
-                '</li>'
-              ].join('');
+              newBlock = new Block(block.type, block.name, {
+                  hasAttrs: true,
+                  hasQuickText: false,
+                  scriptInputContent: null,
+                  inPalette: true
+                });
             } else {
-              blockString = [
-                '<li class="stack e-' + block.name + '">',
-                  block.name,
-                  ' <span class="script-input css-attr-dropdown" contenteditable="true"></span>: <span class="script-input" contenteditable="true"></span>',
-                '</li>'
-              ].join('');
+              newBlock = new Block(block.type, block.name, {
+                  hasAttrs: true,
+                  hasQuickText: false,
+                  scriptInputContent: '',
+                  inPalette: true
+                });;
             }
           } else {
-            blockString = '<li class="stack e-text"><span contenteditable="true" class="script-input text">' + DEFAULT_TEXT + '</span></li>';
+            newBlock = new Block('stack', 'text', {
+                hasAttrs: false,
+                hasQuickText: false,
+                scriptInputContent: DEFAULT_TEXT,
+                inPalette: true
+              });
           }
         }
-        blockArea.innerHTML += blockString;
+        blockArea.appendChild(newBlock.elem);
       }
     } else {
       blockArea.innerHTML = "<span class='infoText'>No blocks were found.</span>";
