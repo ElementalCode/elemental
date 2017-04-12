@@ -169,6 +169,8 @@ function Block(type, name, opts) {
   Draggy.apply(this);
   this.type = type;
   this.name = name;
+  this.hasAttrs = opts.hasAttrs;
+  this.hasQuickText = opts.hasQuickText;
   this.inPalette = (opts.inPalette !== undefined) ? opts.inPalette : true;
   this.unmoveable = opts.unmoveable || false;
   this.scriptInputContent = opts.scriptInputContent;
