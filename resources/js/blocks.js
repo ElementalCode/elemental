@@ -37,6 +37,7 @@ function Draggy() {
       block.content.appendChild(child.elem);
     } else {
       block.content.insertBefore(child.elem, block.children[index].elem);
+      block.children.splice(index, 0, child);
     }
     child.parent = block;
   };
@@ -225,6 +226,24 @@ function Block(type, name, opts) {
       inPalette: _inPalette
     });
   };
+  
+  block.elem.addEventListener('contextmenu', function(ev) {
+      SCRIPT_MENU.style.display = 'block';
+      SCRIPT_MENU.style.top = ev.pageY + 'px';
+      SCRIPT_MENU.style.left = ev.pageX + 'px';
+      RIGHT_CLICKED_SCRIPT = ev.target;
+      ev.preventDefault();
+      
+      setTimeout(function() {
+  			document.body.addEventListener('click', function context_blur(e2) {
+          SCRIPT_MENU.style.display = 'none';
+          RIGHT_CLICKED_SCRIPT = undefined;
+  				document.body.removeEventListener('click', context_blur);
+  			});
+  		}, 0);
+      
+  });
+  
   if(!opts.unmoveable) {
     let testBlockContents = function(elem) {
       var BLOCK_CONTENTS = [
@@ -256,8 +275,6 @@ function Block(type, name, opts) {
       }
       setZebra();
       setFrameContent();
-      SCRIPT_MENU.style.display = 'none';
-      RIGHT_CLICKED_SCRIPT = undefined;
     });
     
     this.elem.addEventListener('mouseup', function(ev) {
@@ -505,16 +522,6 @@ var BODY = newBlock = new Block('wrapper', 'body', {
     unmoveable: true
   });
 bodyScript.insertChild(BODY, -1);
-
-SCRIPTING_AREA.addEventListener('contextmenu', function(ev) {
-    if (ev.target.matches(DRAGGABLE_ELEMENTS) || ev.target.parentNode.matches(DRAGGABLE_ELEMENTS)) {
-        SCRIPT_MENU.style.display = 'block';
-        SCRIPT_MENU.style.top = ev.pageY + 'px';
-        SCRIPT_MENU.style.left = ev.pageX + 'px';
-        RIGHT_CLICKED_SCRIPT = ev.target;
-        ev.preventDefault();
-    }
-});
 
 SCRIPTING_AREA.addEventListener('input', function(ev) {
     if (ev.target.getAttribute('contenteditable')) {
