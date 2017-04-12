@@ -187,31 +187,61 @@ function getCSSAttributesHTML(attributes) {
 
 function generateBlocks(jsonData, ext) {
     if (ext == 'html') {
-        jsonData = jsonData.child;
-        var baseHtml = [
-            '<ul class="script">',
-                '<li class="hat">&lt;!DOCTYPE html&gt;</li>',
-                '<ul class="c-wrapper e-body">',
-                    '<li class="c-header">&lt;body&gt;</li>',
-                    '<ul class="c-content">',
-        ];
-
-        console.log(jsonData);
-        for (var i = 0; i < jsonData.length; i++) {
-            var curEl = jsonData[i];
-            console.log(curEl.tag);
-            if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
-                baseHtml.push(getBlockHtml(curEl));
+        function generateBlock(block) {
+          if(!block.type) return null;
+          let newBlock;
+          if(block.type == 'draggy') {
+            newBlock = new Draggy();
+          } else if(block.type == 'nullWrapperContent') {
+            // no-op since wrappers generate these in their constructor
+            return null;
+          } else {
+            newBlock = new Block(block.type, block.name, {
+                hasAttrs: block.hasAttrs,
+                hasQuickText: block.hasQuickText,
+                scriptInputContent: block.scriptInputContent,
+                inPalette: false,
+                unmoveable: block.unmoveable
+              });
+            for(let attr of block.attrs) {
+              add_attr(newBlock, attr.name, attr.value);
             }
-            if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
-                // repeat down tree...
-                baseHtml.push(generateWrapperBlocks(curEl));
-            }
+          }
+          newBlock.x = block.x;
+          newBlock.y = block.y;
+          for(let child of block.children) {
+            let newChild = generateBlock(child);
+            if(newChild) newBlock.insertChild(newChild, -1);
+          }
+          return newBlock;
         }
-
         
-        baseHtml.push('</ul><li class="c-footer">&lt;/body&gt;</li></ul></ul>');
-        return baseHtml.join('');
+        /* file format:
+        {fileName:
+          [
+            block,
+            draggy,
+            draggy
+          ]
+        }
+        ... but this function is only passed the array.
+      */
+        for(let block of jsonData) {
+          // what's the metadata around the block data?
+          let newBlock = generateBlock(block);
+          if(newBlock) {
+            if(newBlock.type == 'draggy') {
+              SCRIPTING_AREA.insertBefore(newBlock.elem, SCRIPTING_AREA.firstChild);
+              newBlock.elem.style.left = newBlock.x + 'px';
+              newBlock.elem.style.top = newBlock.y + 'px';
+            } else {
+              // should only be the body block
+              BODY.deleteDraggy();
+              BODY = newBlock;
+              bodyScript.insertChild(BODY, -1);
+            }
+          }
+        }
     } else if (ext == 'css') {
         var baseHtml = [
             '<ul class="script">',
@@ -255,7 +285,7 @@ function loadFile(filename, el) {
     // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
     console.log(fileData);
-    blockArea.innerHTML = generateBlocks(fileJson, filename.split('.').pop());
+    generateBlocks(fileJson, filename.split('.').pop());
     setFrameContent();
     setZebra();
 }
@@ -275,7 +305,7 @@ function manuallyCreateFile() {
     }
 }
 
-function generateFile(fileName, ext, initial) {
+function generateFile(fileName, ext) {
     currentFile = fileName;
 
     var finalFile = $('.add-file')[0];
@@ -294,31 +324,22 @@ function generateFile(fileName, ext, initial) {
         '</div>'].join('');
     finalFile.parentNode.insertBefore(fileSelector, finalFile);
 
-    // set the fileData for it to be basic...
-    if (initial) {
-        fileData[fileName] = initial;
-    } else {
-        if (ext == 'html') {
-            fileData[fileName] = {
-                "tag": "body",
-                "attr": {},
-                "child": []
-            };
-        } else if (ext == 'css') {
-            fileData[fileName] = {
-                'children': {
-                    '.selector': { // should I initialize this?  probably not, maybe?  idk post comments on it
-                        'children': {},
-                        'attributes': {
-                            'background-color': 'red',
-                        }
+    if (ext == 'html') {
+        fileData[fileName] = BODY;
+    } else if (ext == 'css') {
+        fileData[fileName] = {
+            'children': {
+                '.selector': { // should I initialize this?  probably not, maybe?  idk post comments on it
+                    'children': {},
+                    'attributes': {
+                        'background-color': 'red',
                     }
-                },
-                'attributes': {}
-            };
-        } else {
-            throw 'File type "' + ext + '" not supported.';
-        }
+                }
+            },
+            'attributes': {}
+        };
+    } else {
+        throw 'File type "' + ext + '" not supported.';
     }
     blockArea = $('.scriptingArea')[0];
 
@@ -328,7 +349,7 @@ function generateFile(fileName, ext, initial) {
         if (ext == 'css') {
             blockArea.innerHTML = generateBlocks(fileData[fileName].children, ext);
         } else {
-            blockArea.innerHTML = generateBlocks([], ext);
+            generateBlocks([], ext);
         }
     }
 

@@ -10,6 +10,8 @@ var blocksCount = 0; // not a real bumber of blocks. This value should never be
 // a more generic abstraction of a block
 // it can have children, so it can be a script
 function Draggy() {
+  this.x = 0;
+  this.y = 0;
   this.type = 'draggy';
   this.id = blocksCount++;
   blocksDatabase[this.id] = this;
@@ -105,7 +107,7 @@ function Draggy() {
         }
     } while( elem = elem.offsetParent );
     return offsetLeft;
-  }
+  };
   
   this.top = function() {
     var elem = block.elem;
@@ -117,15 +119,41 @@ function Draggy() {
         }
     } while( elem = elem.offsetParent );
     return offsetTop;
-  }
+  };
   
   this.right = function() {
     return block.left() + block.elem.offsetWidth;
-  }
+  };
   
   this.bottom = function() {
     return block.top() + block.elem.offsetHeight;
-  }
+  };
+  
+  this.toStringable = function() {
+    var dummyBlock = {};
+    var keysToAvoid = [
+      'parent',
+      'children',
+      'attrs'
+    ]
+    for(let key in block) {
+      if(typeof block[key] != 'function' // I know JSON does this automatically, shhh
+      && !(block[key] instanceof Element) // seemed like a good idea
+      && keysToAvoid.indexOf(key) == -1) dummyBlock[key] = block[key];
+    }
+    dummyBlock.attrs = [];
+    for(let attr of block.attrs) {
+      dummyBlock.attrs.push(attr.toStringable());
+    }
+    dummyBlock.children = [];
+    for(let child of block.children) {
+      dummyBlock.children.push(child.toStringable());
+    }
+    return dummyBlock;
+  };
+  this.toString = function() {
+    return JSON.stringify(block.toStringable());
+  };
 }
 /* 
 opts = {
@@ -143,6 +171,7 @@ function Block(type, name, opts) {
   this.name = name;
   this.inPalette = (opts.inPalette !== undefined) ? opts.inPalette : true;
   this.unmoveable = opts.unmoveable || false;
+  this.scriptInputContent = opts.scriptInputContent;
   var block = this;
   if(type == 'wrapper') {
     this.elem = document.createElement('ul');
@@ -216,6 +245,9 @@ function Block(type, name, opts) {
     this.scriptInput.setAttribute('contenteditable', 'true')
     this.scriptInput.appendChild(document.createTextNode(opts.scriptInputContent));
     this.scriptInput.addEventListener('input', cleanse_contenteditable);
+    this.scriptInput.addEventListener('input', function(e) {
+      block.scriptInputContent = block.scriptInput.textContent;
+    });
     this.header.appendChild(this.scriptInput);
   }
   

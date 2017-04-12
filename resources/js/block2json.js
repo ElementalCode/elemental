@@ -179,7 +179,7 @@ function blockTreeToHTML(block) {
   } else {
     var element = document.createElement(block.name);
     for(let attr of block.attrs) {
-      if(attr.getName().trim() && attr.getValue().trim()) element.setAttribute(attr.getName(), attr.getValue());
+      if(attr.value.trim() && attr.value.trim()) element.setAttribute(attr.value, attr.value);
     }
     for(let child of block.children) {
       let parsedChild = blockTreeToHTML(child);
@@ -191,11 +191,11 @@ function blockTreeToHTML(block) {
 
 function setFrameContent(ext) {
 	ext = ext || currentFile.split('.').pop();
-	var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
+	//var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
 	var previewElement = document.getElementsByClassName('previewBody')[0];
 
-	var directChildren = toArr(script.children);
-	directChildren.shift();
+	//var directChildren = toArr(script.children);
+	//directChildren.shift();
 
 	if (ext == 'css') {
 		var jsonFormat = {};

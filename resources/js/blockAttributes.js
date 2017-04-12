@@ -5,27 +5,31 @@ var ATTRIBUTE_RESULTS = document.getElementById('attributeResults');
 var CLICKED_ATTR;
 
 // both optional
-function Attr(attrName, value) {
+function Attr(name, value) {
 	this.elem = document.createElement('span');
 	this.elem.classList.add('attr-holder');
 	
-	if(attrName === undefined) attrName = '\u00A0';
+	this.name = (name === undefined) ? '\u00A0' : attrName;
 	this.dropdown = document.createElement('span');
 	this.dropdown.classList.add('attr-dropdown')
-	this.dropdown.appendChild(document.createTextNode(attrName));
+	this.dropdown.appendChild(document.createTextNode(this.name));
 	this.elem.appendChild(this.dropdown);
 	
 	this.elem.appendChild(document.createTextNode('='));
 	
-	if(value === undefined) value = '';
+	this.value = (value === undefined) ? '' : value;
 	this.input = document.createElement('span');
 	this.input.classList.add('attr-dropdown')
 	this.input.setAttribute('contenteditable', 'true');
-	this.input.appendChild(document.createTextNode(value));
+	this.input.appendChild(document.createTextNode(this.value));
 	this.elem.appendChild(this.input);
 	this.input.addEventListener('input', cleanse_contenteditable);
 	
 	var attr = this;
+	this.input.addEventListener('input', function(e) {
+		attr.value = attr.input.textContent;
+	});
+	
 	this.dropdown.addEventListener('click', function(e) {
 		ATTRIBUTE_MENU.classList.remove('hidden');
 		ATTRIBUTE_MENU.style.top = attr.top() + attr.elem.offsetHeight + 'px';
@@ -38,17 +42,10 @@ function Attr(attrName, value) {
 				ATTRIBUTE_MENU.classList.add('hidden');
 				CLICKED_ATTR = null;
 				document.body.removeEventListener('click', dropdown_blur);
+				attr.name =  attr.dropdown.textContent;
 			});
 		}, 0);
 	});
-	
-	this.getName = function() {
-		return attr.dropdown.textContent;
-	}
-	
-	this.getValue = function() {
-		return attr.input.textContent;
-	}
 	
 	this.left = function() {
     var elem = attr.elem;
@@ -60,7 +57,7 @@ function Attr(attrName, value) {
         }
     } while( elem = elem.offsetParent );
     return offsetLeft;
-  }
+  };
   
   this.top = function() {
     var elem = attr.elem;
@@ -72,11 +69,18 @@ function Attr(attrName, value) {
         }
     } while( elem = elem.offsetParent );
     return offsetTop;
-  }
+  };
+	
+	this.toStringable = function() {
+		return {
+			name: attr.name,
+			value: attr.value
+		};
+	}
 }
 
-function add_attr(block) {
-		var attr = new Attr();
+function add_attr(block, name, value) {
+		var attr = new Attr(name, value);
 		block.header.insertBefore(attr.elem, block.attrControls);
 		block.attrs.push(attr);
 }
