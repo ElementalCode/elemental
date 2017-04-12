@@ -47,7 +47,7 @@ var filter = {
             newBlock = new Block(block.type, block.name, {
                 hasAttrs: false,
                 hasQuickText: false,
-                scriptInputContent: '&nbsp',
+                scriptInputContent: '\u00A0',
                 inPalette: true
               });
           }

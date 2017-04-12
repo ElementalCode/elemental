@@ -3,7 +3,7 @@ document.getElementById('downloadButton').addEventListener('click', function() {
 	var jsonFiles = zip.folder('.elem');
 
 	for (fileName in fileData) {
-		zip.file(fileName, json2html(fileData[fileName]));
+		zip.file(fileName, blockTreeToHTML(fileData[fileName]).outerHTML);
 		// jsonFiles.file(fileName.split('.')[0] + '.json', JSON.stringify(fileData[fileName]));
 	}
 

@@ -10,14 +10,13 @@ var blocksCount = 0; // not a real bumber of blocks. This value should never be
 // a more generic abstraction of a block
 // it can have children, so it can be a script
 function Draggy() {
-  this.x = 0;
-  this.y = 0;
   this.type = 'draggy';
   this.id = blocksCount++;
   blocksDatabase[this.id] = this;
   allBlocks.push(this);
   this.parent = null;
   this.children = [];
+  this.attrs = [];
   this.inPalette = false;
   
   this.elem = document.createElement('ul');
@@ -54,9 +53,6 @@ function Draggy() {
   };
   this.getClosestBlock = function() {
       var el = null,
-          elOffset,
-          x = getOffset(block.elem).left,
-          y = getOffset(block.elem).top,
           distance,
           dx, dy,
           minDistance;
@@ -80,13 +76,15 @@ function Draggy() {
           pblock = pblock.parent;
         }
         
-        elOffset = getOffset(oblock.elem);
-        // move point inside c-blocks to the right;
-        if(oblock.type == 'nullWrapperContent') elOffset.left += oblock.content.style.paddingLeft;
-        
         //let's only test the bottom-left corner
-        dx = elOffset.left - x;
-        dy = elOffset.bottom - y;
+        dx = oblock.left() - block.left();
+        dy = oblock.bottom() - block.top();
+        
+        // move point inside c-blocks to the right
+        if(oblock.type == 'nullWrapperContent') {
+          dx += oblock.content.style.paddingLeft;
+        }
+        
         distance = Math.sqrt((dx*dx) + (dy*dy)); //dist to each corner
         if (distance <= MIN_DISTANCE && (minDistance === undefined || distance < minDistance)) {
             minDistance = distance;
@@ -95,6 +93,38 @@ function Draggy() {
       }
       return el;
   };
+  
+  this.left = function() {
+    var elem = block.elem;
+    var offsetLeft = 0;
+    do {
+        if ( !isNaN( elem.offsetLeft ) )
+        {
+            offsetLeft += elem.offsetLeft;
+        }
+    } while( elem = elem.offsetParent );
+    return offsetLeft;
+  }
+  
+  this.top = function() {
+    var elem = block.elem;
+    var offsetTop = 0;
+    do {
+        if ( !isNaN( elem.offsetTop ) )
+        {
+            offsetTop += elem.offsetTop;
+        }
+    } while( elem = elem.offsetParent );
+    return offsetTop;
+  }
+  
+  this.right = function() {
+    return block.left() + block.elem.offsetWidth;
+  }
+  
+  this.bottom = function() {
+    return block.top() + block.elem.offsetHeight;
+  }
 }
 /* 
 opts = {
@@ -117,15 +147,15 @@ function Block(type, name, opts) {
     this.elem = document.createElement('ul');
     this.elem.classList.add('c-wrapper');
     
-    var header = document.createElement('li');
-    header.classList.add('c-header');
-    this.elem.appendChild(header);
+    this.header = document.createElement('li');
+    this.header.classList.add('c-header');
+    this.elem.appendChild(this.header);
     
     // add a blank draggy inside wrapper
     var nullWrapperContent = new Draggy();
     nullWrapperContent.type = 'nullWrapperContent';
     this.insertChild(nullWrapperContent, -1);
-    nullWrapperContent.elem = nullWrapperContent.content = header;
+    nullWrapperContent.elem = nullWrapperContent.content = this.header;
     
     this.content = document.createElement('ul');
     this.content.classList.add('c-content');
@@ -155,15 +185,28 @@ function Block(type, name, opts) {
   } else if(type == 'stack') {
     this.elem = document.createElement('li');
     this.elem.classList.add('stack');
-    var header = this.elem;
+    this.header = this.elem;
   }
   this.elem.classList.add('e-' + name);
   this.elem.setAttribute('data-id', this.id);
   
-  header.appendChild(document.createTextNode(name + ' '));
+  this.header.appendChild(document.createTextNode(name + ' '));
   
   if(opts.hasAttrs) {
-    header.innerHTML += `<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>`;
+    this.attrControls = document.createElement('span');
+    this.attrControls.classList.add('attr-controls');
+    
+    let removeAttr = document.createElement('span');
+    removeAttr.classList.add('remove-attr');
+    this.attrControls.appendChild(removeAttr);
+    removeAttr.addEventListener('click', function(e) {remove_attr(block)});
+    
+    let addAttr = document.createElement('span');
+    addAttr.classList.add('add-attr');
+    this.attrControls.appendChild(addAttr);
+    addAttr.addEventListener('click', function(e) {add_attr(block)});
+    
+    this.header.appendChild(this.attrControls);
   }
   
   if(opts.scriptInputContent !== null) {
@@ -171,7 +214,7 @@ function Block(type, name, opts) {
     this.scriptInput.classList.add('script-input');
     this.scriptInput.setAttribute('contenteditable', 'true')
     this.scriptInput.appendChild(document.createTextNode(opts.scriptInputContent));
-    header.appendChild(this.scriptInput);
+    this.header.appendChild(this.scriptInput);
   }
   
   this.clone = function(_inPalette) {
@@ -297,8 +340,8 @@ function parentHasClass(element, className) {
 // Will be called when user starts dragging an element
 function _drag_init(block, ev) {
     var elem = block.elem;
-    var relativeX = ev.pageX - getOffset(elem).left;
-    var relativeY = ev.pageY - getOffset(elem).top;
+    var relativeX = ev.pageX - block.left();
+    var relativeY = ev.pageY - block.top();
     // Store the object of the element which needs to be moved
     var draggy = new Draggy()
     SCRIPTING_AREA.insertBefore(draggy.elem, SCRIPTING_AREA.firstChild);
@@ -323,8 +366,8 @@ function _drag_init(block, ev) {
 
 function _palette_drag_init(block, ev) {
     var elem = block.elem;
-    var relativeX = ev.clientY - getOffset(elem).left - SCRIPTING_AREA.scrollLeft;
-    var relativeY = ev.clientY - getOffset(elem).top + BLOCK_PALETTE.scrollTop - SCRIPTING_AREA.scrollTop;
+    var relativeX = ev.clientY - block.left() - SCRIPTING_AREA.scrollLeft;
+    var relativeY = ev.clientY - block.top() + BLOCK_PALETTE.scrollTop - SCRIPTING_AREA.scrollTop;
     // Clone element
     var newBlock = block.clone(false);
     var newElem = newBlock.elem;
@@ -383,10 +426,10 @@ function _destroy(ev) {
         }
         
     } else {
-        if (getOffset(selected.elem).top - getOffset(SCRIPTING_AREA).top < 0) {
+        if (selected.top() - getOffset(SCRIPTING_AREA).top < 0) {
             selected.elem.style.top = 0;
         }
-        if (getOffset(selected.elem).left - getOffset(SCRIPTING_AREA).left < 0) {
+        if (selected.left() - getOffset(SCRIPTING_AREA).left < 0) {
             selected.elem.style.left = 0;
         }
     }
@@ -454,14 +497,14 @@ var C_PALETTE_ELEMENTS = ([
 
 var bodyScript = new Draggy();
 bodyScript.elem = bodyScript.content = document.querySelector('#bodyScript');
-var body = newBlock = new Block('wrapper', 'body', {
+var BODY = newBlock = new Block('wrapper', 'body', {
     hasAttrs: true,
     hasQuickText: true,
     scriptInputContent: null,
     inPalette: false,
     unmoveable: true
   });
-bodyScript.insertChild(body, -1);
+bodyScript.insertChild(BODY, -1);
 
 SCRIPTING_AREA.addEventListener('contextmenu', function(ev) {
     if (ev.target.matches(DRAGGABLE_ELEMENTS) || ev.target.parentNode.matches(DRAGGABLE_ELEMENTS)) {

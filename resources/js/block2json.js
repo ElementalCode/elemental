@@ -171,6 +171,24 @@ function getCSSAttributes(children) {
 	return attributes;
 }
 
+function blockTreeToHTML(block) {  
+  if(block.type !== 'stack' && block.type !== 'wrapper') {
+    return null;
+  } else if(block.name == 'text') {
+    return document.createTextNode(block.scriptInput.textContent);
+  } else {
+    var element = document.createElement(block.name);
+    for(let attr of block.attrs) {
+      element.setAttribute(attr.getName(), attr.getValue());
+    }
+    for(let child of block.children) {
+      let parsedChild = blockTreeToHTML(child);
+      if(parsedChild) element.appendChild(parsedChild);
+    }
+    return element;
+  }
+}
+
 function setFrameContent(ext) {
 	ext = ext || currentFile.split('.').pop();
 	var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
@@ -194,51 +212,12 @@ function setFrameContent(ext) {
 		}
 		fileData[currentFile] = jsonFormat;
 	} else if (ext == 'html') {
-
-		var jsonFormat = {
-			tag: 'body',
-			attr: {},
-			child: [],
-		};
-		var blocks = [];
-
-		for (var i = 0; i < directChildren.length; i++) {
-			if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
-				var elType = getElType(directChildren[i]);
-				if (elType == 'text') {
-					elType = '';
-				}
-				if (elType == 'CSS') {
-					console.log(getSingleAttrs(directChildren[i]));
-				} else {
-					blocks.push({
-						tag: elType,
-						attr: elType ? getSingleAttrs(directChildren[i]) : {},
-						text: encodeEntities(getInlineText(directChildren[i]))
-					});
-				}
-			} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
-				var elType = getElType(directChildren[i]);
-				blocks.push({
-					tag: elType,
-					child: traverseTree(directChildren[i]),
-				});
-			}
-		}
-
-		if (blocks[0]) {
-			jsonFormat = blocks[0];
-		}
-
-		fileData[currentFile] = jsonFormat;
-
-		var parsedHtml = json2html(jsonFormat);
+		var parsedHtml = blockTreeToHTML(BODY);
 
 		var previewWindow = previewElement;
 		previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
-		previewWindow.document.open();
-		previewWindow.document.write(parsedHtml);
-		previewWindow.document.close();
+    while(previewWindow.document.firstChild) previewWindow.document.removeChild(previewWindow.document.firstChild);
+    previewWindow.document.appendChild(parsedHtml);
 	} else {
 		throw 'this should never be thrown though';
 	}

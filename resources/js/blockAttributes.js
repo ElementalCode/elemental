@@ -4,52 +4,85 @@ var ATTRIBUTE_RESULTS = document.getElementById('attributeResults');
 
 var CLICKED_ATTR;
 
-SCRIPTING_AREA.addEventListener('click', function(ev) {
-	var el = ev.target;
-    
-    // Check if click was on rightward arrow
-	if (ev.target.classList.contains('add-attr')) {
-        
-        // If so, add an attribute block
-		var newAttrString = [
-			'<span class="attr-holder">',
-				'<span class="attr-dropdown">&nbsp;</span>',
-				'=',
-				'<span class="attr-input" contenteditable="true"></span>',
-			'</span>'
-		].join('');
-		var newAttr = stringToHtml(newAttrString);
-		el.parentNode.parentNode.insertBefore(newAttr, el.parentNode);
-        
-    // Check if click was on the leftward arrow
-	} else if (ev.target.classList.contains('remove-attr')) {
-        
-        // If so, remove the last attribute block
-		var prev = el.parentNode.previousElementSibling;
-		if (prev) {
-			prev.parentNode.removeChild(prev);
-		}
-	}
-
-    // Check if click was on the first input of an attribute block
-	if (ev.target.classList.contains('attr-dropdown')) {
-        
-        // If so, display the searchable dropdown used for attributes
+// both optional
+function Attr(attrName, value) {
+	this.elem = document.createElement('span');
+	this.elem.classList.add('attr-holder');
+	
+	if(attrName === undefined) attrName = '\u00A0';
+	this.dropdown = document.createElement('span');
+	this.dropdown.classList.add('attr-dropdown')
+	this.dropdown.appendChild(document.createTextNode(attrName));
+	this.elem.appendChild(this.dropdown);
+	
+	this.elem.appendChild(document.createTextNode('='));
+	
+	if(value === undefined) value = '';
+	this.input = document.createElement('span');
+	this.input.classList.add('attr-dropdown')
+	this.input.setAttribute('contenteditable', 'true');
+	this.input.appendChild(document.createTextNode(value));
+	this.elem.appendChild(this.input);
+	
+	var attr = this;
+	this.dropdown.addEventListener('click', function(e) {
 		ATTRIBUTE_MENU.classList.remove('hidden');
-        
-        // Position dropdown based on input location
-		ATTRIBUTE_MENU.style.top = getOffset(el).top + el.offsetHeight + 'px';
-        ATTRIBUTE_MENU.style.left = getOffset(el).left + 'px';
-        CLICKED_ATTR = ev.target;
-        
-        ATTRIBUTE_SEARCH.focus(); // Give focus to search input so user can type without clicking
-	} else {
-        
-        // If click was not in one of the previously specified places, hide the dropdown (won't do anything if it was already hidden)
-		ATTRIBUTE_MENU.classList.add('hidden');
-		CLICKED_ATTR = null;
+		ATTRIBUTE_MENU.style.top = attr.top() + attr.elem.offsetHeight + 'px';
+		ATTRIBUTE_MENU.style.left = attr.left() + 'px';
+		CLICKED_ATTR = attr;
+		
+		ATTRIBUTE_SEARCH.focus();
+		setTimeout(function() {
+			document.body.addEventListener('click', function dropdown_blur(e2) {
+				ATTRIBUTE_MENU.classList.add('hidden');
+				CLICKED_ATTR = null;
+				document.body.removeEventListener('click', dropdown_blur);
+			});
+		}, 0);
+	});
+	
+	this.getName = function() {
+		return attr.dropdown.textContent;
 	}
-});
+	
+	this.getValue = function() {
+		return attr.input.textContent;
+	}
+	
+	this.left = function() {
+    var elem = attr.elem;
+    var offsetLeft = 0;
+    do {
+        if ( !isNaN( elem.offsetLeft ) )
+        {
+            offsetLeft += elem.offsetLeft;
+        }
+    } while( elem = elem.offsetParent );
+    return offsetLeft;
+  }
+  
+  this.top = function() {
+    var elem = attr.elem;
+    var offsetTop = 0;
+    do {
+        if ( !isNaN( elem.offsetTop ) )
+        {
+            offsetTop += elem.offsetTop;
+        }
+    } while( elem = elem.offsetParent );
+    return offsetTop;
+  }
+}
+
+function add_attr(block) {
+		var attr = new Attr();
+		block.header.insertBefore(attr.elem, block.attrControls);
+		block.attrs.push(attr);
+}
+function remove_attr(block) {
+		var attrs = block.attr.pop();
+		block.header.removeChild(attr.elem);
+}
 
 // uses array called attrNames...
 
@@ -72,7 +105,7 @@ ATTRIBUTE_SEARCH.addEventListener('paste', attrSearch);
 
 ATTRIBUTE_RESULTS.addEventListener('click', function(ev) {
 	var attr = ev.target.textContent;
-	CLICKED_ATTR.textContent = attr;
+	CLICKED_ATTR.dropdown.textContent = attr;
 });
 
 // initialize the stuff in the menu
