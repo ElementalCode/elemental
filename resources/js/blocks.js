@@ -435,7 +435,7 @@ function _destroy(ev) {
             child.removeFromParent();
             child.elem.removeAttribute('style');
             if(topEl.type == 'nullWrapperContent') {
-                topEl.parent.insertChild(child, -1);
+                topEl.parent.insertChild(child, 1); // 0 is the null Draggy
             } else if(topEl.type == 'stack'
                    || topEl.type == 'wrapper') {
                 topEl.parent.insertChild(child, topEl.getIndex() + 1);
