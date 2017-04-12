@@ -215,6 +215,7 @@ function Block(type, name, opts) {
     this.scriptInput.classList.add('script-input');
     this.scriptInput.setAttribute('contenteditable', 'true')
     this.scriptInput.appendChild(document.createTextNode(opts.scriptInputContent));
+    this.scriptInput.addEventListener('input', cleanse_contenteditable);
     this.header.appendChild(this.scriptInput);
   }
   
@@ -523,34 +524,34 @@ var BODY = newBlock = new Block('wrapper', 'body', {
   });
 bodyScript.insertChild(BODY, -1);
 
-SCRIPTING_AREA.addEventListener('input', function(ev) {
-    if (ev.target.getAttribute('contenteditable')) {
-      if(ev.target.innerHTML != ev.target.textContent) {
-        var caretPos = 0,
-          sel, range;
-        sel = window.getSelection();
-        if (sel.rangeCount) {
-          range = sel.getRangeAt(0);
-          var children = ev.target.childNodes;
-          var keepLooping = true;
-          for(let i = 0; keepLooping; i++) {
-            if(children[i] == range.commonAncestorContainer || children[i] == range.commonAncestorContainer.parentNode) {
-              caretPos += range.endOffset;
-              keepLooping = false;
-            } else {
-              caretPos += children[i].textContent.length;
-            }
+function cleanse_contenteditable (ev) {
+    if(ev.target.innerHTML != ev.target.textContent) {
+      var caretPos = 0,
+        sel, range;
+      sel = window.getSelection();
+      if (sel.rangeCount) {
+        range = sel.getRangeAt(0);
+        var children = ev.target.childNodes;
+        var keepLooping = true;
+        for(let i = 0; keepLooping; i++) {
+          if(children[i] == range.commonAncestorContainer || children[i] == range.commonAncestorContainer.parentNode) {
+            caretPos += range.endOffset;
+            keepLooping = false;
+          } else if(!children[i]) {
+            keepLooping = false;
+          } else {
+            caretPos += children[i].textContent.length;
           }
-          ev.target.innerHTML = ev.target.textContent;
-          range = document.createRange();
-          range.setStart(ev.target.childNodes[0], caretPos);
-          range.collapse(true);
-          sel.removeAllRanges();
-          sel.addRange(range);
         }
+        ev.target.innerHTML = ev.target.textContent;
+        range = document.createRange();
+        range.setStart(ev.target.childNodes[0], caretPos);
+        range.collapse(true);
+        sel.removeAllRanges();
+        sel.addRange(range);
       }
     }
-});
+}
 
 var SCRIPT_MENU = document.querySelector('.context-menu.scripts');
 var RIGHT_CLICKED_SCRIPT = undefined;
@@ -561,11 +562,11 @@ $('body').on('mousemove', _move_elem)
             trashCan = document.getElementById('trashCan');
             trashCan.classList.remove('showing');
             _delete(ev);
-	} else {
-	    if (ev.target == BLOCK_PALETTE) {
-                trashCan = document.getElementById('trashCan');
-                trashCan.classList.remove('showing');
-	    }
+	      } else {
+      	    if (ev.target == BLOCK_PALETTE) {
+                      trashCan = document.getElementById('trashCan');
+                      trashCan.classList.remove('showing');
+      	    }
             _destroy(ev);
         }
         if (!(ev.target.classList.contains('file') || parentHasClass(ev.target, 'file'))) {

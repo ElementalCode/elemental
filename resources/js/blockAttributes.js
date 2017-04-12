@@ -23,6 +23,7 @@ function Attr(attrName, value) {
 	this.input.setAttribute('contenteditable', 'true');
 	this.input.appendChild(document.createTextNode(value));
 	this.elem.appendChild(this.input);
+	this.input.addEventListener('input', cleanse_contenteditable);
 	
 	var attr = this;
 	this.dropdown.addEventListener('click', function(e) {
