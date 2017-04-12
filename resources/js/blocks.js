@@ -229,11 +229,14 @@ function Block(type, name, opts) {
   };
   
   block.elem.addEventListener('contextmenu', function(ev) {
+      ev.preventDefault();
+      
+      if(opts.unmoveable) return;
+      
       SCRIPT_MENU.style.display = 'block';
       SCRIPT_MENU.style.top = ev.pageY + 'px';
       SCRIPT_MENU.style.left = ev.pageX + 'px';
       RIGHT_CLICKED_SCRIPT = block;
-      ev.preventDefault();
       
       setTimeout(function() {
   			document.body.addEventListener('click', function context_blur(e2) {
