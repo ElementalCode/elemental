@@ -232,7 +232,7 @@ function Block(type, name, opts) {
       SCRIPT_MENU.style.display = 'block';
       SCRIPT_MENU.style.top = ev.pageY + 'px';
       SCRIPT_MENU.style.left = ev.pageX + 'px';
-      RIGHT_CLICKED_SCRIPT = ev.target;
+      RIGHT_CLICKED_SCRIPT = block;
       ev.preventDefault();
       
       setTimeout(function() {
@@ -581,28 +581,21 @@ $('.context-menu.scripts .menu-item').on('click', function(ev) {
     if (RIGHT_CLICKED_SCRIPT) {
         switch (this.dataset.action) {
             case 'duplicate-script':
-                var target = RIGHT_CLICKED_SCRIPT;
-                // context menu stuff here...
-                if (target.matches(C_ELEMENTS)) {
-                    target = target.parentNode;
-                } 
                 // do stuff with node... and get stuff beneath it too!
-                var wrapper = document.createElement('ul');
-                wrapper.className = 'draggy';
-                var childs = toArr(target.parentElement.children);
-                for (var i = childs.indexOf(target); i < childs.length; i++) {
-                    var child = childs[i].cloneNode(true);
-                    child.removeAttribute('style');
-                    wrapper.appendChild(child);
+                var target = RIGHT_CLICKED_SCRIPT;
+                var draggy = new Draggy();
+                SCRIPTING_AREA.insertBefore(draggy.elem, SCRIPTING_AREA.firstChild);
+                for(let i = target.getIndex(); i < target.parent.children.length; i++) {
+                  let child = target.parent.children[i];
+                  draggy.insertChild(child.clone(false), -1);
                 }
 
-                var relativeX = ev.pageX - getOffset(target).left;
-                var relativeY = ev.pageY - getOffset(target).top;
+                var relativeX = ev.pageX - target.left();
+                var relativeY = ev.pageY - target.top();
                 var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
                     curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
-                wrapper.style.left = curX - relativeX + 25 + 'px';
-                wrapper.style.top = curY - relativeY + 25 + 'px';
-                SCRIPTING_AREA.insertBefore(wrapper, SCRIPTING_AREA.firstChild);
+                draggy.elem.style.left = curX - relativeX + 25 + 'px';
+                draggy.elem.style.top = curY - relativeY + 25 + 'px';
 
                 setZebra();
                 RIGHT_CLICKED_SCRIPT = undefined;
