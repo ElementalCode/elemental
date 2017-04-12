@@ -179,7 +179,7 @@ function blockTreeToHTML(block) {
   } else {
     var element = document.createElement(block.name);
     for(let attr of block.attrs) {
-      element.setAttribute(attr.getName(), attr.getValue());
+      if(attr.getName().trim() && attr.getValue().trim()) element.setAttribute(attr.getName(), attr.getValue());
     }
     for(let child of block.children) {
       let parsedChild = blockTreeToHTML(child);
