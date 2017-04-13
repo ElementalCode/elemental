@@ -166,7 +166,7 @@ body {
   background-color: orange;
   border-radius: 10px;
   box-sizing: border-box;
-  display: inline-block;
+  display: inline-flex;
   padding: 3px;
   margin-right: 6px; }
   .attr-holder .attr-dropdown,
@@ -611,5 +611,3 @@ html, body {
 @media (max-width: 450px) {
   .advanceWrap {
     display: none; } }
-
-/*# sourceMappingURL=style.css.map */
