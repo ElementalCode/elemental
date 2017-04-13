@@ -4,6 +4,7 @@ var selected = null, // Object of the element to be moved
     DEFAULT_TEXT = 'breadfish';
 var blocksDatabase = {}; // all blocks by ID. Not an array in case we decide to use md5's or something later
 var allBlocks = [];
+var topLevelBlocks = [];
 var blocksCount = 0; // not a real bumber of blocks. This value should never be
                      // decrememnted because it's used to generate a blocks' unique ID
 
@@ -53,6 +54,7 @@ function Draggy() {
     block.elem.parentElement.removeChild(block.elem);
     blocksDatabase[block.id] = null;
     allBlocks[allBlocks.indexOf(block)] = null;
+    if(topLevelBlocks.indexOf(block) != -1) topLevelBlocks[topLevelBlocks.indexOf(block)] = null;
   };
   this.getClosestBlock = function() {
       var el = null,
@@ -402,6 +404,7 @@ function _drag_init(block, ev) {
     SCRIPTING_AREA.insertBefore(draggy.elem, SCRIPTING_AREA.firstChild);
     var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
         curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
+    topLevelBlocks.push(draggy);
     var parent = block.parent;
     var kids = parent.children.slice();
     for(let i = block.getIndex(), child; child = kids[i]; i++) {
@@ -429,6 +432,7 @@ function _palette_drag_init(block, ev) {
     newElem.classList.remove('paletteBlock');
     // Store the object of the element which needs to be moved
     var draggy = new Draggy();
+    topLevelBlocks.push(draggy);
     SCRIPTING_AREA.insertBefore(draggy.elem, SCRIPTING_AREA.firstChild);
     selected = newElem;
     selectedBlock = newBlock;
@@ -560,6 +564,7 @@ var BODY = newBlock = new Block('wrapper', 'body', {
     unmoveable: true
   });
 bodyScript.insertChild(BODY, -1);
+topLevelBlocks.push(BODY);
 
 function cleanse_contenteditable (ev) {
     if(ev.target.innerHTML != ev.target.textContent) {
@@ -622,6 +627,7 @@ $('.context-menu.scripts .menu-item').on('click', function(ev) {
                 var target = RIGHT_CLICKED_SCRIPT;
                 var draggy = new Draggy();
                 SCRIPTING_AREA.insertBefore(draggy.elem, SCRIPTING_AREA.firstChild);
+                topLevelBlocks.push(draggy);
                 for(let i = target.getIndex(); i < target.parent.children.length; i++) {
                   let child = target.parent.children[i];
                   draggy.insertChild(child.clone(false), -1);

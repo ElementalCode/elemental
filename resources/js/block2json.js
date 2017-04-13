@@ -175,7 +175,7 @@ function blockTreeToHTML(block) {
   if(block.type !== 'stack' && block.type !== 'wrapper') {
     return null;
   } else if(block.name == 'text') {
-    return document.createTextNode(block.scriptInput.textContent);
+    return document.createTextNode(block.scriptInputContent);
   } else {
     var element = document.createElement(block.name);
     for(let attr of block.attrs) {

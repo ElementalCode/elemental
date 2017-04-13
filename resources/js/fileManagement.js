@@ -1,13 +1,17 @@
 document.getElementById('downloadButton').addEventListener('click', function() {
 	var zip = new JSZip();
 	var jsonFiles = zip.folder('.elem');
-
-	for (fileName in fileData) {
-		zip.file(fileName, blockTreeToHTML(fileData[fileName]).outerHTML);
-		// jsonFiles.file(fileName.split('.')[0] + '.json', JSON.stringify(fileData[fileName]));
+	// only do this if it's an HTML file??
+	blocksToJSON(currentFile); // I guess other files should've been serialized when user navigated away from them?
+	// I'll figure out multiple files later
+	for(let fileName in fileData) {
+		let body = fileData[fileName][0]; // first one should always be body... I think?
+		/// ^^ that only applies to HTML files
+		console.log(body, blockTreeToHTML(body).outerHTML)
+		zip.file(fileName, blockTreeToHTML(body).outerHTML);
 	}
-
-	jsonFiles.file('project.json', JSON.stringify(fileData));
+	
+	jsonFiles.file('project.json', JSON.stringify(fileData, null, 1));
 
 	var content = zip.generate({type: 'blob'});
 	saveAs(content, 'project.zip');

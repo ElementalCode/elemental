@@ -53,6 +53,7 @@ function arrContainsFromArr(arr1, arr2) {
 }
 
 var fileData = {};
+var fileNames = ['index.html']; // make this work later
 var currentFile = 'index.html';
 
 var attrNames = [
@@ -92,89 +93,6 @@ var unnamedWrapperElements = wrapperElements.map(function(item) {
     return item.substr(2, item.length - 1);
 });
 var textInput = 'text';
-
-function getBlockHtml(el) {
-    console.log('el: ', el);
-    var name;
-    if (el.tag == 'style') {
-        el.tag = 'CSS';
-    }
-    if (el.tag) {
-        name = filter.blocks.filter(function(item) {
-            return item.name == el.tag;
-        })[0].name;
-    } else {
-        name = '';
-    }
-
-    var parsedHtml;
-
-    var attrInputs = [];
-    for (attr in el.attr) {
-        attrInputs.push([
-            '<span class="attr-holder">',
-                '<span class="attr-dropdown">' + attr + '</span>',
-                '=',
-                '<span class="attr-input" contenteditable="true">' + el.attr[attr] + '</span>',
-            '</span>'
-        ].join(''));
-        console.log(attr);
-    }
-    attrInputs = attrInputs.join('');
-
-    if (el.tag === "") {
-        parsedHtml = [
-            '<li class="stack e-text">',
-                '<span contenteditable="true" class="script-input text">' + el.text + '</span>',
-            '</li>'
-        ].join('');
-    } else {
-        parsedHtml = [
-            '<li class="stack e-' + name + '">',
-                name,
-                attrInputs,
-                "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>",
-            '</li>'
-        ].join('');
-    }
-
-    return parsedHtml;
-}
-
-function generateWrapperBlocks(jsonData) {
-    var attrInputs = [];
-    for (attr in jsonData.attr) {
-        attrInputs.push([
-            '<span class="attr-holder">',
-                '<span class="attr-dropdown">' + attr + '</span>',
-                '=',
-                '<span class="attr-input" contenteditable="true">' + jsonData.attr[attr] + '</span>',
-            '</span>'
-        ].join(''));
-    }
-    attrInputs = attrInputs.join('');
-    var wrapperHtml = [
-        '<ul class="c-wrapper e-' + jsonData.tag + '">',
-            '<li class="c-header">' + jsonData.tag + attrInputs + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
-            '<ul class="c-content">',
-    ];
-    for (var i = 0; i < jsonData.child.length; i++) {
-        var curEl = jsonData.child[i];
-        if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
-            wrapperHtml.push(getBlockHtml(curEl));
-        }
-        if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
-            // repeat down tree...
-            wrapperHtml.push(generateWrapperBlocks(curEl));
-        }
-    }
-
-    wrapperHtml.push(
-        '</ul><ul class="c-footer"><li class="c-quicktext">Aa</li></ul></ul>'
-    );
-
-    return wrapperHtml.join('');
-}
 
 function getCSSAttributesHTML(attributes) {
     var pushedHtml = [];
@@ -293,8 +211,7 @@ function loadFile(filename, el) {
 function manuallyCreateFile() {
     //we need something better than this
     var fileName = prompt('Enter a file name', '.html');
-    var ext = fileName.split('.');
-    ext = ext[ext.length - 1];
+    var ext = getExt(fileName);
     var allowedExts = ['html', 'css'];
     if (allowedExts.indexOf(ext) > -1) {
         if (fileName && !fileData.hasOwnProperty(fileName)) {
@@ -305,7 +222,23 @@ function manuallyCreateFile() {
     }
 }
 
-function generateFile(fileName, ext) {
+function getExt(fileName) {
+  return fileName.match(/\w+$/)[0];
+}
+
+function blocksToJSON(fileName) {
+  var ext = getExt(fileName);
+  if (ext == 'html') {
+    var expArray = [];
+    for(let block of topLevelBlocks) {
+      if(block) expArray.push(block.toStringable());
+    }
+    fileData[fileName] = expArray;
+  } else if (ext == 'css') {}
+}
+
+// I don't actually know what this function does but I took it apart anyway
+function generateFile_OLD(fileName, ext) {
     currentFile = fileName;
 
     var finalFile = $('.add-file')[0];
@@ -325,7 +258,7 @@ function generateFile(fileName, ext) {
     finalFile.parentNode.insertBefore(fileSelector, finalFile);
 
     if (ext == 'html') {
-        fileData[fileName] = BODY;
+        fileData[fileName] = blocksToJSON();
     } else if (ext == 'css') {
         fileData[fileName] = {
             'children': {
