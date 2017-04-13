@@ -1,6 +1,6 @@
 var selected = null, // Object of the element to be moved
-    x_pos = 0, y_pos = 0, // Stores x & y coordinates of the mouse pointer
-    x_elem = 0, y_elem = 0, // Stores top, left values (edge) of the element
+    mousePos = {x: 0, y: 0}, // Stores x & y coordinates of the mouse pointer
+    dragOffset = {x: 0, y: 0}, // Stores offset between dragged element and mouse
     DEFAULT_TEXT = 'breadfish',
     SCRIPTING_AREA = $('.scriptingArea')[0];
 var blocksDatabase, // all blocks by ID. Not an array in case we decide to use md5's or something later
@@ -134,6 +134,13 @@ function Draggy(inPalette) {
   this.bottom = function() {
     return block.top() + block.elem.offsetHeight;
   };
+  
+  this.setPosition = function(x, y) {
+    block.x = x;
+    block.y = y;
+    block.elem.style.left = block.x + 'px';
+    block.elem.style.top = block.y + 'px';
+  }
   
   this.toStringable = function() {
     var dummyBlock = {};
@@ -443,13 +450,10 @@ function _drag_init(block, ev) {
       child.elem.removeAttribute('style');
     }
     if(parent.children.length == 0 && parent.type == 'draggy') parent.deleteDraggy();
-    draggy.x = curX - relativeX;
-    draggy.y = curY - relativeY;
-    draggy.elem.style.left = draggy.x + 'px';
-    draggy.elem.style.top = draggy.y + 'px';
+    draggy.setPosition(curX - relativeX, curY - relativeY);
     selected = draggy;
-    x_elem = x_pos - selected.elem.offsetLeft;
-    y_elem = y_pos - selected.elem.offsetTop;
+    dragOffset.x = mousePos.x - selected.elem.offsetLeft;
+    dragOffset.y = mousePos.y - selected.elem.offsetTop;
 }
 
 function _palette_drag_init(block, ev) {
@@ -469,21 +473,17 @@ function _palette_drag_init(block, ev) {
     var curX = ev.clientY - getOffset(SCRIPTING_AREA).left,
         curY = ev.clientY - getOffset(SCRIPTING_AREA).top;
     draggy.insertChild(selectedBlock, -1);
-    draggy.x = curX - relativeX;
-    draggy.y = curY - relativeY;
-    draggy.elem.style.left = draggy.x + 'px';
-    draggy.elem.style.top = draggy.y + 'px';
+    draggy.setPosition(curX - relativeX, curY - relativeY);
     selected = draggy;
-    x_elem = x_pos - selected.elem.offsetLeft;
-    y_elem = y_pos - selected.elem.offsetTop;
+    dragOffset.x = mousePos.x - selected.elem.offsetLeft;
+    dragOffset.y = mousePos.y - selected.elem.offsetTop;
 }
 
 // Will be called when user dragging an element
 function _move_elem(e) {
     e.preventDefault(); // avoid selecting text or other blocks
-    x_pos = document.all ? window.event.clientX : e.pageX + SCRIPTING_AREA.scrollLeft;
-    y_pos = document.all ? window.event.clientY : e.pageY + SCRIPTING_AREA.scrollTop;
-    var SNAP_CLASSES = currentFile.split('.').pop() == 'css' ? CSS_SNAP_CLASSES : HTML_SNAP_CLASSES;
+    mousePos.x = e.pageX + SCRIPTING_AREA.scrollLeft;
+    mousePos.y = e.pageY + SCRIPTING_AREA.scrollTop;
     removeDropArea();
     if (selected !== null) {
         var el = selected.getClosestBlock();
@@ -494,8 +494,7 @@ function _move_elem(e) {
               el.elem.classList.add('drop-area');
             }
         }
-        selected.elem.style.left = (x_pos - x_elem) + 'px';
-        selected.elem.style.top = (y_pos - y_elem) + 'px';
+        selected.setPosition(mousePos.x - dragOffset.x, mousePos.y - dragOffset.y);
     }
 }
 
@@ -520,12 +519,15 @@ function _destroy(ev) {
         }
         
     } else {
-        if (selected.top() - getOffset(SCRIPTING_AREA).top < 0) {
-            selected.elem.style.top = 0;
-        }
+        let newX = selected.x,
+            newY = selected.y;
         if (selected.left() - getOffset(SCRIPTING_AREA).left < 0) {
-            selected.elem.style.left = 0;
+            newX = 0;
         }
+        if (selected.top() - getOffset(SCRIPTING_AREA).top < 0) {
+            newY = 0;
+        }
+        selected.setPosition(newX, newY);
     }
     selected = null;
 }
