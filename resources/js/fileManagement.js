@@ -2,10 +2,15 @@ document.getElementById('downloadButton').addEventListener('click', function() {
 	var zip = new JSZip();
 	var jsonFiles = zip.folder('.elem');
 	for(let fileName in fileData) {
-		let body = fileData[fileName][0]; // first one should always be body... I think?
-		/// ^^ that only applies to HTML files
-		console.log(body, blockTreeToHTML(body).outerHTML)
-		zip.file(fileName, blockTreeToHTML(body).outerHTML);
+		let ext = getExt(fileName);
+		let out = '';
+		if(ext == 'html') {
+			let body = fileData[fileName][0]; // first one should always be body
+			out = blockTreeToHTML(body).outerHTML;
+		} else if(ext == 'css') {
+			out = blockTreeToCSS();
+		}
+		zip.file(fileName, out);
 	}
 	
 	jsonFiles.file('project.json', JSON.stringify(fileData, null, 1));

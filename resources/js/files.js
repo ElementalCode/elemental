@@ -236,7 +236,9 @@ function blocksToJSON(fileName) {
       if(block) expArray.push(block.toStringable());
     }
     fileData[fileName] = expArray;
-  } else if (ext == 'css') {}
+  } else if (ext == 'css') {
+    fileData[fileName] = bodyScript.toStringable(); // yeah I know I'm ignoring loose blocks
+  }
 }
 
 // I don't actually know what this function does but I took it apart anyway
@@ -264,17 +266,10 @@ function generateFile(fileName) {
         clearBlocks();
         replaceBody();
     } else if (ext == 'css') {
-        fileData[fileName] = {
-            'children': {
-                '.selector': { // should I initialize this?  probably not, maybe?  idk post comments on it
-                    'children': {},
-                    'attributes': {
-                        'background-color': 'red',
-                    }
-                }
-            },
-            'attributes': {}
-        };
+        clearBlocks(currentFile);
+        replaceBody(new Draggy());
+        BODY.type = 'CSSNullWrapper'
+        // add default selecter and prop
     } else {
         throw 'File type "' + ext + '" not supported.';
     }

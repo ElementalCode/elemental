@@ -112,70 +112,32 @@ function getInlineText(elem) {
 	return text;
 }
 
-function traverseTree(parentNode) {
-	parentNode = parentNode.children[1];
-	var directChildren = toArr(parentNode.children);
-	var pushedArr = [];
-	for (var i = 0; i < directChildren.length; i++) {
-		if (includesArrItem(directChildren[i].className, stackElements)) {  //things like imgs
-			var elType = getElType(directChildren[i]);
-			if (elType == 'text') {
-				elType = '';
-			}
-			if (elType == 'CSS') {
-				var cssFileName = getSingleAttrs(directChildren[i]).href;
-				if (fileData.hasOwnProperty(cssFileName)) {
-					var cssText = CSSJSON.toCSS({
-						children: fileData[cssFileName],
-						attributes: {}
-					});
-					pushedArr.push({
-						tag: 'style',
-						attr: getSingleAttrs(directChildren[i]),
-						text: cssText
-					});
-				} else {
-					pushedArr.push({
-						tag: 'style',
-						attr: getSingleAttrs(directChildren[i]),
-						text: ''
-					});
-				}
-			} else {
-				pushedArr.push({
-					tag: elType,
-					attr: elType ? getSingleAttrs(directChildren[i]) : {},
-					text: encodeEntities(getInlineText(directChildren[i]))
-				});
-			}
-		} else if (includesArrItem(directChildren[i].className, wrapperElements)) {  // things that can nest things - ie most elements
-			var elType = getElType(directChildren[i]);
-			pushedArr.push({
-				tag: elType,
-				attr: getWrapperAttrs(directChildren[i]),
-				child: traverseTree(directChildren[i]),
-			});
-		}
-	}
-	return pushedArr;  //recursively get children of blocks
+function blockTreeToCSS() {
+    function blockToCSS(block) {
+    if(block.name == 'selector') {
+      let out = '';
+      for(let child of block.children) {
+        out += blockToCSS(child);
+      }
+      return `${block.inputs[0].value} {\n${out}}\n`
+    } else if(block.name == 'rule') {
+      return `  ${block.inputs[0].value}: ${block.inputs[1].value};\n`
+    } else {
+      return '';
+    }
+  }
+  var css = '';
+  for(let block of bodyScript.children) {
+    css += blockToCSS(block);
+  }
+  return css;
 }
 
-function getCSSAttributes(children) {
-	var attributes = {};
-	for (var i = 0; i < children.length; i++) {
-		var child = children[i];
-		var attrName = encodeEntities(child.children[0].textContent);
-		var attrValue = encodeEntities(child.children[1].textContent);
-		attributes[attrName] = attrValue;
-	}
-	return attributes;
-}
-
-function blockTreeToHTML(block) {  
+function blockTreeToHTML(block) {
   if(block.type !== 'stack' && block.type !== 'wrapper') {
     return null;
   } else if(block.name == 'text') {
-    return document.createTextNode(block.scriptInputContent);
+    return document.createTextNode(block.inputs[0].value);
   } else {
     var element = document.createElement(block.name);
     for(let attr of block.attrs) {
@@ -190,7 +152,7 @@ function blockTreeToHTML(block) {
 }
 
 function setFrameContent(ext) {
-	ext = ext || currentFile.split('.').pop();
+	ext = ext || getExt(currentFile);
 	//var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
 	var previewElement = document.getElementsByClassName('previewBody')[0];
 
@@ -198,19 +160,7 @@ function setFrameContent(ext) {
 	//directChildren.shift();
 
 	if (ext == 'css') {
-		var jsonFormat = {};
-		for (var i = 0; i < directChildren.length; i++) {
-			//this should be easier than HTML because it's merely a list of selectors
-			var child = directChildren[i];
-			// check to make sure it's a selector block
-			if (child.classList.contains('e-selector')) {
-				var selector = child.children[0].children[0].textContent;
-				jsonFormat[selector] = {};
-				jsonFormat[selector].attributes = getCSSAttributes(child.children[1].children);
-				// console.log(child.children[1].children);
-			}
-		}
-		fileData[currentFile] = jsonFormat;
+		blocksToJSON(currentFile);
 	} else if (ext == 'html') {
 		var parsedHtml = blockTreeToHTML(BODY);
     blocksToJSON(currentFile);

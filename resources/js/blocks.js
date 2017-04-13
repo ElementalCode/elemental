@@ -20,6 +20,7 @@ function Draggy() {
   this.parent = null;
   this.children = [];
   this.attrs = [];
+  this.inputs = [];
   this.inPalette = false;
   
   this.elem = document.createElement('ul');
@@ -150,6 +151,10 @@ function Draggy() {
     for(let child of block.children) {
       dummyBlock.children.push(child.toStringable());
     }
+    dummyBlock.inputs = [];
+    for(let input of block.inputs) {
+      dummyBlock.inputs.push(input.value);
+    }
     return dummyBlock;
   };
   this.toString = function() {
@@ -162,7 +167,9 @@ opts = {
   bool hasQuickText,
   string|null scriptInputContent,
   bool inPalette = true,
-  bool unmoveable
+  bool unmoveable,
+  string ftype,
+  array[string] inputs
 }
 */
 function Block(type, name, opts) {
@@ -170,11 +177,11 @@ function Block(type, name, opts) {
   Draggy.apply(this);
   this.type = type;
   this.name = name;
+  this.ftype = opts.ftype || 'html';
   this.hasAttrs = opts.hasAttrs;
   this.hasQuickText = opts.hasQuickText;
   this.inPalette = (opts.inPalette !== undefined) ? opts.inPalette : true;
   this.unmoveable = opts.unmoveable || false;
-  this.scriptInputContent = opts.scriptInputContent;
   var block = this;
   if(type == 'wrapper') {
     this.elem = document.createElement('ul');
@@ -208,7 +215,7 @@ function Block(type, name, opts) {
         var newBlock = new Block('stack', 'text', {
             hasAttrs: false,
             hasQuickText: false,
-            scriptInputContent: DEFAULT_TEXT,
+            inputs: [DEFAULT_TEXT],
             inPalette: false
           });
         block.insertChild(newBlock, -1);
@@ -223,7 +230,7 @@ function Block(type, name, opts) {
   this.elem.classList.add('e-' + name);
   this.elem.setAttribute('data-id', this.id);
   
-  this.header.appendChild(document.createTextNode(name + ' '));
+  if(name != 'text') this.header.appendChild(document.createTextNode(name + ' '));
   
   if(opts.hasAttrs) {
     this.attrControls = document.createElement('span');
@@ -242,23 +249,21 @@ function Block(type, name, opts) {
     this.header.appendChild(this.attrControls);
   }
   
-  if(opts.scriptInputContent !== null) {
-    this.scriptInput = document.createElement('span');
-    this.scriptInput.classList.add('script-input');
-    this.scriptInput.setAttribute('contenteditable', 'true')
-    this.scriptInput.appendChild(document.createTextNode(opts.scriptInputContent));
-    this.scriptInput.addEventListener('input', cleanse_contenteditable);
-    this.scriptInput.addEventListener('input', function(e) {
-      block.scriptInputContent = block.scriptInput.textContent;
-    });
-    this.header.appendChild(this.scriptInput);
+  if(opts.inputs) {
+    if (opts.inputs.length == 1) { // text and selector
+      (new BlockInput(opts.inputs[0])).attachToBlock(block);
+    } else if (opts.inputs.length == 2) { // rule
+      (new BlockInput(opts.inputs[0])).attachToBlock(block);
+      this.header.appendChild(document.createTextNode(':\u00A0'));
+      (new BlockInput(opts.inputs[1])).attachToBlock(block);
+    }
   }
   
   this.clone = function(_inPalette) {
     return new Block(type, name, {
       hasAttrs: opts.hasAttrs,
       hasQuickText: opts.hasQuickText,
-      scriptInputContent: opts.scriptInputContent,
+      inputs: opts.inputs,
       inPalette: _inPalette
     });
   };
@@ -325,6 +330,29 @@ function Block(type, name, opts) {
 }
 Block.prototype = Object.create(Draggy.prototype);
 Block.prototype.constructor = Block.constructor;
+
+function BlockInput(defaultValue) {
+  if (defaultValue === undefined || defaultValue === null) {
+    this.value = ''; // \u00A0
+  } else {
+    this.value = defaultValue;
+  }
+  this.elem = document.createElement('span');
+  this.elem.classList.add('script-input');
+  this.elem.setAttribute('contenteditable', 'true')
+  this.elem.appendChild(document.createTextNode(this.value));
+  this.elem.addEventListener('input', cleanse_contenteditable);
+  
+  var input = this;
+  this.elem.addEventListener('input', function(e) {
+    input.value = input.elem.textContent;
+  });
+  
+  this.attachToBlock = function(block) {
+    block.header.appendChild(input.elem);
+    block.inputs.push(input);
+  };
+}
 
 function isDescendant(parent, child) {
      var node = child.parentNode;
@@ -457,7 +485,11 @@ function _move_elem(e) {
     if (selected !== null) {
         var el = selected.getClosestBlock();
         if (el !== null && !el.inPalette) {
-            el.elem.classList.add('drop-area');
+            if(el.type == 'CSSNullWrapper') {
+              document.querySelector('#bodyScript > li.hat').classList.add('drop-area');
+            } else {
+              el.elem.classList.add('drop-area');
+            }
         }
         selected.elem.style.left = (x_pos - x_elem) + 'px';
         selected.elem.style.top = (y_pos - y_elem) + 'px';
@@ -478,7 +510,8 @@ function _destroy(ev) {
             if(topEl.type == 'nullWrapperContent') {
                 topEl.parent.insertChild(child, 1); // 0 is the null Draggy
             } else if(topEl.type == 'stack'
-                   || topEl.type == 'wrapper') {
+                   || topEl.type == 'wrapper'
+                   || topEl.type == 'CSSNullWrapper') {
                 topEl.parent.insertChild(child, topEl.getIndex() + 1);
             }
         }
@@ -552,14 +585,14 @@ var C_PALETTE_ELEMENTS = ([
     return '.blockArea ' + item;
 }).join(', ');
 
-function clearBlocks() {
+function clearBlocks(hat) {
   blocksDatabase = {};
   allBlocks = [];
   topLevelBlocks = [];
   let child;
   BODY.deleteDraggy();
   BODY = bodyScript = undefined;
-  SCRIPTING_AREA.innerHTML = `<ul class="script" id="bodyScript"><li class="hat">DOCTYPE html</li></ul>`;
+  SCRIPTING_AREA.innerHTML = `<ul class="script" id="bodyScript"><li class="hat">${hat || 'DOCTYPE html'}</li></ul>`;
 }
 
 var BODY, bodyScript;

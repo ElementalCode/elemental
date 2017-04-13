@@ -40,40 +40,45 @@ var filter = {
             newBlock = new Block(block.type, block.name, {
                 hasAttrs: true,
                 hasQuickText: true,
-                scriptInputContent: null,
-                inPalette: true
+                inputs: [],
+                inPalette: true,
+                ftype: block.ftype
               });
-          } else {
+          } else { // selector
             newBlock = new Block(block.type, block.name, {
                 hasAttrs: false,
                 hasQuickText: false,
-                scriptInputContent: '\u00A0',
-                inPalette: true
+                inputs: [''], // \u00A0
+                inPalette: true,
+                ftype: block.ftype
               });
           }
-        } else {
+        } else { // block.type == 'stack'
           if (block.name != 'text') {
             if (!block.ftype || block.ftype == 'html') {
               newBlock = new Block(block.type, block.name, {
                   hasAttrs: true,
                   hasQuickText: false,
-                  scriptInputContent: null,
-                  inPalette: true
+                  inputs: [],
+                  inPalette: true,
+                  ftype: block.ftype
                 });
-            } else {
+            } else { // rule
               newBlock = new Block(block.type, block.name, {
-                  hasAttrs: true,
+                  hasAttrs: false,
                   hasQuickText: false,
-                  scriptInputContent: '',
-                  inPalette: true
+                  inputs: ['', ''], // \u00A0
+                  inPalette: true,
+                  ftype: block.ftype
                 });;
             }
           } else {
             newBlock = new Block('stack', 'text', {
                 hasAttrs: false,
                 hasQuickText: false,
-                scriptInputContent: DEFAULT_TEXT,
-                inPalette: true
+                inputs: [DEFAULT_TEXT],
+                inPalette: true,
+                ftype: block.ftype
               });
           }
         }
