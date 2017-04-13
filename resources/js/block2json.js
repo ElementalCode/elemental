@@ -7,22 +7,26 @@ if (!String.prototype.startsWith) {  // sweet polyfill
   };
 }
 
-function blockTreeToCSS() {
-    function blockToCSS(block) {
+function blockTreeToCSS(blockList) {
+  function blockToCSS(block) {
     if(block.name == 'selector') {
       let out = '';
       for(let child of block.children) {
         out += blockToCSS(child);
       }
-      return `${block.inputs[0].value} {\n${out}}\n`
+      return `${block.inputs[0]} {\n${out}}\n`
     } else if(block.name == 'rule') {
-      return `  ${block.inputs[0].value}: ${block.inputs[1].value};\n`
+      return `  ${block.inputs[0]}: ${block.inputs[1]};\n`
     } else {
-      return '';
+      let out = '';
+      for(let child of block.children) {
+        out += blockToCSS(child);
+      }
+      return out;
     }
   }
   var css = '';
-  for(let block of bodyScript.children) {
+  for(let block of blockList) {
     css += blockToCSS(block);
   }
   return css;

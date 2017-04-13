@@ -134,13 +134,13 @@ function generateBlocks(jsonData, ext) {
     return newBlock;
   }
   if(ext == 'css') {
+    clearBlocks(currentFile);
+    replaceBody(new Draggy());
+    BODY.type = 'CSSNullWrapper';
     for(let block of jsonData) {
       let newBlock = generateBlock(block);
       if(newBlock) {
-        clearBlocks(currentFile);
-        replaceBody(new Draggy());
-        BODY.type = 'CSSNullWrapper';
-        BODY.insertChild(newBlock, -1)
+        bodyScript.insertChild(newBlock, -1)
       }
     }
   } else if(ext == 'html') {
@@ -173,7 +173,6 @@ function loadFile(filename, el) {
     }
 
     currentFile = filename;
-
     var fileJson = fileData[filename];
 
     if (el) {
@@ -227,7 +226,9 @@ function blocksToJSON(fileName) {
     // yeah I know I'm ignoring loose blocks
     var expArray = [];
     for(let block of bodyScript.children) {
-      if(block) expArray.push(block.toStringable());
+      if(block.type != 'CSSNullWrapper') {
+        expArray.push(block.toStringable());
+      }
     }
     fileData[fileName] = expArray;
     // fileData[fileName] = [bodyScript.toStringable()];

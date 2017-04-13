@@ -8,7 +8,7 @@ document.getElementById('downloadButton').addEventListener('click', function() {
 			let body = fileData[fileName][0]; // first one should always be body
 			out = blockTreeToHTML(body).outerHTML;
 		} else if(ext == 'css') {
-			out = blockTreeToCSS();
+			out = blockTreeToCSS(fileData[fileName]);
 		}
 		zip.file(fileName, out);
 	}
