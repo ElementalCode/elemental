@@ -96,6 +96,9 @@ body {
   min-width: 40px;
   min-height: 18px; }
 
+.e-body > .c-footer {
+  margin-bottom: 15px; }
+
 .c-header {
   border-bottom-left-radius: 0px;
   box-shadow: -1px -1px 0px #A9A9A9;
@@ -293,7 +296,7 @@ html, body {
 .scriptingArea {
   height: calc(100% - 200px - 12px);
   min-width: 100%;
-  overflow: visible;
+  overflow: scroll;
   position: relative;
   background: linear-gradient(rgba(68, 76, 84, 0.6), rgba(68, 76, 84, 0.6)), url("../img/diagonalTexture.png");
   z-index: 1; }
@@ -611,5 +614,3 @@ html, body {
 @media (max-width: 450px) {
   .advanceWrap {
     display: none; } }
-
-/*# sourceMappingURL=style.css.map */

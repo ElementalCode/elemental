@@ -95,6 +95,9 @@ body {
   min-width: 40px;
   min-height: 18px; }
 
+.e-body > .c-footer {
+  margin-bottom: 15px; }
+
 .c-header {
   border-bottom-left-radius: 0px;
   box-shadow: -1px -1px 0px #A9A9A9;
@@ -187,5 +190,3 @@ body {
     background-color: white;
     color: black;
     cursor: text; }
-
-/*# sourceMappingURL=blocks.css.map */
