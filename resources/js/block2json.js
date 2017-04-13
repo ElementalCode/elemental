@@ -7,111 +7,6 @@ if (!String.prototype.startsWith) {  // sweet polyfill
   };
 }
 
-function toArr(nl) {
-	return Array.prototype.slice.call(nl);
-}
-
-function includesArrItem(str, arr) {
-	var includes = false;
-	for (var i = 0; i < arr.length; i++) {
-		if (str.indexOf(arr[i]) > -1) {
-			includes = true;
-			break;
-		}
-	}
-	return includes;
-}
-
-function getChildElem(parent, cName) {
-	var child = null;
-	for (var i = 0; i < parent.childNodes.length; i++) {
-	    if (parent.childNodes[i].className == cName) {
-	        child = parent.childNodes[i];
-	        break;
-	    }        
-	}
-	return child;
-}
-
-function getElType(node) {
-	var classList = node.className.split(' ');
-	var type = null;
-	for (var i = 0; i < classList.length; i++) {
-		if (classList[i].startsWith('e-')) {
-			type = classList[i].substr(2, classList[i].length - 1);
-			break;
-		}
-	}
-	return type;
-}
-
-function getAttrNames(classes) {
-	var classList = classes.split(' ');
-	var names = [];
-	for (var i = 0; i < classList.length; i++) {
-		if (attrNames.indexOf(classList[i]) > -1) {
-			names.push(classList[i]);
-		}
-	}
-	return names;
-}
-
-function getSingleAttrs(element) {
-	// get attributes from element
-	var attrs = {};
-	var attrElems = toArr(element.children);
-	for (var i = 0; i < attrElems.length; i++) {
-		var attrHolder = attrElems[i];
-		if (attrHolder.classList && attrHolder.classList.contains('attr-holder')) {
-			var attrName = attrHolder.children[0].textContent;
-			var attrValue = attrHolder.children[1].textContent;
-			attrs[encodeEntities(attrName)] = encodeEntities(attrValue);
-		}
-	}
-	return attrs;
-}
-
-function getWrapperAttrs(element) {
-	element = element.children[0];
-	var attrs = {};
-	var attrElems = toArr(element.children);
-	for (var i = 0; i < attrElems.length; i++) {
-		var attrHolder = attrElems[i];
-		if (attrHolder.classList && attrHolder.classList.contains('attr-holder')) {
-			var attrName = attrHolder.children[0].textContent;
-			var attrValue = attrHolder.children[1].textContent;
-			attrs[encodeEntities(attrName)] = encodeEntities(attrValue);
-		}
-	}
-	return attrs;
-}
-
-function encodeEntities(str) {
-    return String(str).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
-}
-
-function getText(elem) {
-	var text = '';
-	var childNodes = toArr(elem.children);
-	for (var i = 0; i < childNodes.length; i++) {
-		if (childNodes[i].classList.contains(textInput)) {
-			text += childNodes[i].children[0].textContent;
-		}
-	}
-	return text;
-}
-
-function getInlineText(elem) {
-	var text = '';
-	var childNodes = toArr(elem.children);
-	for (var i = 0; i < childNodes.length; i++) {
-		if (childNodes[i].classList.contains(textInput)) {
-			text += childNodes[i].textContent;
-		}
-	}
-	return text;
-}
-
 function blockTreeToCSS() {
     function blockToCSS(block) {
     if(block.name == 'selector') {
@@ -153,11 +48,7 @@ function blockTreeToHTML(block) {
 
 function setFrameContent(ext) {
 	ext = ext || getExt(currentFile);
-	//var script = document.getElementsByClassName('script')[0].cloneNode(true); //should only be one...
 	var previewElement = document.getElementsByClassName('previewBody')[0];
-
-	//var directChildren = toArr(script.children);
-	//directChildren.shift();
 
 	if (ext == 'css') {
 		blocksToJSON(currentFile);
@@ -175,36 +66,3 @@ function setFrameContent(ext) {
 }
 
 setFrameContent();
-
-// example:
-//
-// var json = {
-//   tag: 'body',
-//   attr: {
-//     id: '1',
-//     class: ['foo']
-//   },
-//   child: [{
-//     tag: 'h2',
-//     text: 'sample text with <code>inline tag</code>'
-//   },{
-//     tag: 'pre',
-//     attr: {
-//       id: 'demo',
-//       class: ['foo', 'bar']
-//     }
-//   },{
-//     tag: 'pre',
-//     attr: {
-//       id: 'output',
-//       class: ['goo']
-//     }
-//   },{
-//     tag: 'input',
-//     attr: {
-//       id: 'execute',
-//       type: 'button',
-//       value: 'execute'
-//     }
-//   }]
-// };

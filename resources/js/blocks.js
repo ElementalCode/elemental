@@ -229,7 +229,6 @@ function Block(type, name, opts) {
   }
   this.elem.classList.add('e-' + name);
   this.elem.setAttribute('data-id', this.id);
-  
   if(name != 'text') this.header.appendChild(document.createTextNode(name + ' '));
   
   if(opts.hasAttrs) {

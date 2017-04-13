@@ -104,78 +104,65 @@ function getCSSAttributesHTML(attributes) {
 }
 
 function generateBlocks(jsonData, ext) {
-    if (ext == 'html') {
-        function generateBlock(block) {
-          if(!block.type) return null;
-          let newBlock;
-          if(block.type == 'draggy') {
-            newBlock = new Draggy();
-          } else if(block.type == 'nullWrapperContent') {
-            // no-op since wrappers generate these in their constructor
-            return null;
+    function generateBlock(block) {
+      if(!block.type) return null;
+      let newBlock;
+      if(block.type == 'draggy') {
+        newBlock = new Draggy();
+      } else if( block.type == 'nullWrapperContent'
+              || block.type == 'CSSNullWrapper') {
+        // no-op since wrappers generate these in their constructor
+        return null;
+      } else {
+        newBlock = new Block(block.type, block.name, {
+            hasAttrs: block.hasAttrs,
+            hasQuickText: block.hasQuickText,
+            inputs: block.inputs,
+            inPalette: false,
+            unmoveable: block.unmoveable
+          });
+        for(let attr of block.attrs) {
+          add_attr(newBlock, attr.name, attr.value);
+        }
+      }
+      newBlock.x = block.x;
+      newBlock.y = block.y;
+      for(let child of block.children) {
+        let newChild = generateBlock(child);
+        if(newChild) newBlock.insertChild(newChild, -1);
+      }
+      return newBlock;
+    }
+    
+    /* file format:
+    {fileName:
+      [
+        block,
+        draggy,
+        draggy
+      ]
+    }
+    ... but this function is only passed the array.
+  */
+    for(let block of jsonData) {
+      let newBlock = generateBlock(block);
+      if(newBlock) {
+        if(ext == 'css') {
+          clearBlocks(currentFile);
+          replaceBody(new Draggy());
+          BODY.type = 'CSSNullWrapper';
+          BODY.insertChild(newBlock, -1)
+        } else {
+          if(newBlock.type == 'draggy') {
+            SCRIPTING_AREA.insertBefore(newBlock.elem, SCRIPTING_AREA.firstChild);
+            newBlock.elem.style.left = newBlock.x + 'px';
+            newBlock.elem.style.top = newBlock.y + 'px';
           } else {
-            newBlock = new Block(block.type, block.name, {
-                hasAttrs: block.hasAttrs,
-                hasQuickText: block.hasQuickText,
-                scriptInputContent: block.scriptInputContent,
-                inPalette: false,
-                unmoveable: block.unmoveable
-              });
-            for(let attr of block.attrs) {
-              add_attr(newBlock, attr.name, attr.value);
-            }
-          }
-          newBlock.x = block.x;
-          newBlock.y = block.y;
-          for(let child of block.children) {
-            let newChild = generateBlock(child);
-            if(newChild) newBlock.insertChild(newChild, -1);
-          }
-          return newBlock;
-        }
-        
-        /* file format:
-        {fileName:
-          [
-            block,
-            draggy,
-            draggy
-          ]
-        }
-        ... but this function is only passed the array.
-      */
-        for(let block of jsonData) {
-          // what's the metadata around the block data?
-          let newBlock = generateBlock(block);
-          if(newBlock) {
-            if(newBlock.type == 'draggy') {
-              SCRIPTING_AREA.insertBefore(newBlock.elem, SCRIPTING_AREA.firstChild);
-              newBlock.elem.style.left = newBlock.x + 'px';
-              newBlock.elem.style.top = newBlock.y + 'px';
-            } else {
-              replaceBody(newBlock);
-            }
+            clearBlocks();
+            replaceBody(newBlock);
           }
         }
-    } else if (ext == 'css') {
-        var baseHtml = [
-            '<ul class="script">',
-                '<li class="hat">' + currentFile + '</li>',
-        ];
-        for (curSelector in jsonData) {
-            var selectorHtml = [
-                '<ul class="c-wrapper e-selector">',
-                    '<li class="c-header">selector <span class="script-input" contenteditable="true">' + curSelector + '</span></li>',
-                    '<ul class="c-content">'
-            ];
-            selectorHtml.push(getCSSAttributesHTML(jsonData[curSelector].attributes));
-            selectorHtml.push('</ul><li class="c-footer">&nbsp;</li></ul>');
-            baseHtml.push(selectorHtml.join(''));
-        }
-        baseHtml.push('</ul>');
-        return baseHtml.join('');
-    } else {
-        throw 'the world is going to be destroyed due to your foolishness, mortal!1111!  ' + ext + '';
+      }
     }
 }
 
@@ -198,7 +185,6 @@ function loadFile(filename, el) {
     }
 
     blockArea = $('.scriptingArea')[0];
-    clearBlocks();
     generateBlocks(fileJson, getExt(filename));
     setFrameContent();
     setZebra();
@@ -237,7 +223,7 @@ function blocksToJSON(fileName) {
     }
     fileData[fileName] = expArray;
   } else if (ext == 'css') {
-    fileData[fileName] = bodyScript.toStringable(); // yeah I know I'm ignoring loose blocks
+    fileData[fileName] = [bodyScript.toStringable()]; // yeah I know I'm ignoring loose blocks
   }
 }
 
@@ -268,8 +254,7 @@ function generateFile(fileName) {
     } else if (ext == 'css') {
         clearBlocks(currentFile);
         replaceBody(new Draggy());
-        BODY.type = 'CSSNullWrapper'
-        // add default selecter and prop
+        BODY.type = 'CSSNullWrapper';
     } else {
         throw 'File type "' + ext + '" not supported.';
     }
