@@ -104,66 +104,67 @@ function getCSSAttributesHTML(attributes) {
 }
 
 function generateBlocks(jsonData, ext) {
-    function generateBlock(block) {
-      if(!block.type) return null;
-      let newBlock;
-      if(block.type == 'draggy') {
-        newBlock = new Draggy();
-      } else if( block.type == 'nullWrapperContent'
-              || block.type == 'CSSNullWrapper') {
-        // no-op since wrappers generate these in their constructor
-        return null;
-      } else {
-        newBlock = new Block(block.type, block.name, {
-            hasAttrs: block.hasAttrs,
-            hasQuickText: block.hasQuickText,
-            inputs: block.inputs,
-            inPalette: false,
-            unmoveable: block.unmoveable
-          });
-        for(let attr of block.attrs) {
-          add_attr(newBlock, attr.name, attr.value);
-        }
-      }
-      newBlock.x = block.x;
-      newBlock.y = block.y;
-      for(let child of block.children) {
-        let newChild = generateBlock(child);
-        if(newChild) newBlock.insertChild(newChild, -1);
-      }
-      return newBlock;
+  function generateBlock(block) {
+    if(!block.type) return null;
+    let newBlock;
+    if(block.type == 'draggy') {
+      newBlock = new Draggy();
+    } else if( block.type == 'stack'
+            || block.type == 'wrapper') {
+              newBlock = new Block(block.type, block.name, {
+                  hasAttrs: block.hasAttrs,
+                  hasQuickText: block.hasQuickText,
+                  inputs: block.inputs,
+                  inPalette: false,
+                  unmoveable: block.unmoveable,
+                  ftype: block.ftype
+                });
+              for(let attr of block.attrs) {
+                add_attr(newBlock, attr.name, attr.value);
+              }
+    } else {
+      return null; // other types of Draggies are generated in block constructors
     }
-    
-    /* file format:
-    {fileName:
-      [
-        block,
-        draggy,
-        draggy
-      ]
+    newBlock.x = block.x;
+    newBlock.y = block.y;
+    for(let child of block.children) {
+      let newChild = generateBlock(child);
+      if(newChild) newBlock.insertChild(newChild, -1);
     }
-    ... but this function is only passed the array.
-  */
+    return newBlock;
+  }
+  if(ext == 'css') {
     for(let block of jsonData) {
       let newBlock = generateBlock(block);
       if(newBlock) {
-        if(ext == 'css') {
-          clearBlocks(currentFile);
-          replaceBody(new Draggy());
-          BODY.type = 'CSSNullWrapper';
-          BODY.insertChild(newBlock, -1)
-        } else {
-          if(newBlock.type == 'draggy') {
-            SCRIPTING_AREA.insertBefore(newBlock.elem, SCRIPTING_AREA.firstChild);
-            newBlock.elem.style.left = newBlock.x + 'px';
-            newBlock.elem.style.top = newBlock.y + 'px';
-          } else {
-            clearBlocks();
-            replaceBody(newBlock);
-          }
+        clearBlocks(currentFile);
+        replaceBody(new Draggy());
+        BODY.type = 'CSSNullWrapper';
+        BODY.insertChild(newBlock, -1)
+      }
+    }
+  } else if(ext == 'html') {
+    let body;
+    for(let block of jsonData) {
+      if (block.name == 'body') {
+        body = block;
+        break;
+      }
+    }
+    clearBlocks();
+    let newBody = generateBlock(body);
+    replaceBody(newBody);
+    for(let block of jsonData) {
+      if(block != body) {
+        let newBlock = generateBlock(block);
+        if(newBlock) {
+          SCRIPTING_AREA.insertBefore(newBlock.elem, SCRIPTING_AREA.firstChild);
+          newBlock.elem.style.left = newBlock.x + 'px';
+          newBlock.elem.style.top = newBlock.y + 'px';
         }
       }
     }
+  }
 }
 
 function loadFile(filename, el) {
@@ -223,11 +224,16 @@ function blocksToJSON(fileName) {
     }
     fileData[fileName] = expArray;
   } else if (ext == 'css') {
-    fileData[fileName] = [bodyScript.toStringable()]; // yeah I know I'm ignoring loose blocks
+    // yeah I know I'm ignoring loose blocks
+    var expArray = [];
+    for(let block of bodyScript.children) {
+      if(block) expArray.push(block.toStringable());
+    }
+    fileData[fileName] = expArray;
+    // fileData[fileName] = [bodyScript.toStringable()];
   }
 }
 
-// I don't actually know what this function does but I took it apart anyway
 function generateFile(fileName) {
     var ext = getExt(fileName);
     currentFile = fileName;

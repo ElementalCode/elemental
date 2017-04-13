@@ -42,7 +42,7 @@ var filter = {
                 hasQuickText: true,
                 inputs: [],
                 inPalette: true,
-                ftype: block.ftype
+                ftype: 'html'
               });
           } else { // selector
             newBlock = new Block(block.type, block.name, {
@@ -50,7 +50,7 @@ var filter = {
                 hasQuickText: false,
                 inputs: [''], // \u00A0
                 inPalette: true,
-                ftype: block.ftype
+                ftype: 'css'
               });
           }
         } else { // block.type == 'stack'
@@ -61,7 +61,7 @@ var filter = {
                   hasQuickText: false,
                   inputs: [],
                   inPalette: true,
-                  ftype: block.ftype
+                  ftype: 'html'
                 });
             } else { // rule
               newBlock = new Block(block.type, block.name, {
@@ -69,7 +69,7 @@ var filter = {
                   hasQuickText: false,
                   inputs: ['', ''], // \u00A0
                   inPalette: true,
-                  ftype: block.ftype
+                  ftype: 'css'
                 });;
             }
           } else {
@@ -78,7 +78,7 @@ var filter = {
                 hasQuickText: false,
                 inputs: [DEFAULT_TEXT],
                 inPalette: true,
-                ftype: block.ftype
+                ftype: 'html  '
               });
           }
         }

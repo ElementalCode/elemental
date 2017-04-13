@@ -1,27 +1,30 @@
 var selected = null, // Object of the element to be moved
     x_pos = 0, y_pos = 0, // Stores x & y coordinates of the mouse pointer
     x_elem = 0, y_elem = 0, // Stores top, left values (edge) of the element
-    DEFAULT_TEXT = 'breadfish';
-var blocksDatabase = {}; // all blocks by ID. Not an array in case we decide to use md5's or something later
-var allBlocks = [];
-var topLevelBlocks = [];
-var blocksCount = 0; // not a real bumber of blocks. This value should never be
+    DEFAULT_TEXT = 'breadfish',
+    SCRIPTING_AREA = $('.scriptingArea')[0];
+var blocksDatabase, // all blocks by ID. Not an array in case we decide to use md5's or something later
+    scriptBlocks,
+    topLevelBlocks,
+    blocksCount = 0; // not a real bumber of blocks. This value should never be
                      // decrememnted because it's used to generate a blocks' unique ID
+clearBlocks();
+replaceBody();
 
 // a more generic abstraction of a block
 // it can have children, so it can be a script
-function Draggy() {
+function Draggy(inPalette) {
   this.x = 0;
   this.y = 0;
   this.type = 'draggy';
   this.id = blocksCount++;
   blocksDatabase[this.id] = this;
-  allBlocks.push(this);
   this.parent = null;
   this.children = [];
   this.attrs = [];
   this.inputs = [];
-  this.inPalette = false;
+  this.inPalette = inPalette;
+  if(!this.inPalette) scriptBlocks.push(this);
   
   this.elem = document.createElement('ul');
   this.elem.classList.add('draggy');
@@ -54,16 +57,17 @@ function Draggy() {
     block.removeFromParent();
     block.elem.parentElement.removeChild(block.elem);
     blocksDatabase[block.id] = null;
-    let index = allBlocks.indexOf(block);
-    if(index != -1) allBlocks[index] = null;
-    if(topLevelBlocks.indexOf(block) != -1) topLevelBlocks[topLevelBlocks.indexOf(block)] = null;
+    let index1 = scriptBlocks.indexOf(block);
+    if(index1 != -1) scriptBlocks[index] = null;
+    let index2 = topLevelBlocks.indexOf(block);
+    if(index2 != -1) topLevelBlocks[index2] = null;
   };
   this.getClosestBlock = function() {
       var el = null,
           distance,
           dx, dy,
           minDistance;
-      blocks: for(let oblock of allBlocks) {
+      blocks: for(let oblock of scriptBlocks) {
         if (!oblock
          || oblock.type == 'draggy'
          || oblock.unmoveable) continue blocks;
@@ -174,7 +178,7 @@ opts = {
 */
 function Block(type, name, opts) {
   if(!opts) opts = {};
-  Draggy.apply(this);
+  Draggy.apply(this, [opts.inPalette]);
   this.type = type;
   this.name = name;
   this.ftype = opts.ftype || 'html';
@@ -192,7 +196,7 @@ function Block(type, name, opts) {
     this.elem.appendChild(this.header);
     
     // add a blank draggy inside wrapper
-    var nullWrapperContent = new Draggy();
+    var nullWrapperContent = new Draggy(this.inPalette);
     nullWrapperContent.type = 'nullWrapperContent';
     this.insertChild(nullWrapperContent, -1);
     nullWrapperContent.elem = nullWrapperContent.content = this.header;
@@ -483,7 +487,7 @@ function _move_elem(e) {
     removeDropArea();
     if (selected !== null) {
         var el = selected.getClosestBlock();
-        if (el !== null && !el.inPalette) {
+        if (el !== null) {
             if(el.type == 'CSSNullWrapper') {
               document.querySelector('#bodyScript > li.hat').classList.add('drop-area');
             } else {
@@ -501,7 +505,7 @@ function _destroy(ev) {
     
     if (selected == null) return;
     var topEl = selected.getClosestBlock();
-    if (topEl !== null && !topEl.inPalette && !parentHasClass(topEl.elem, 'blockArea')) {
+    if (topEl !== null) {
         var kids = selected.children.slice();
         for(let child of kids) {
             child.removeFromParent();
@@ -551,7 +555,6 @@ var CSS_SNAP_CLASSES = [
     ':not(.e-body) > .c-footer'
 ].join(', ');
 var MIN_DISTANCE = 50;
-var SCRIPTING_AREA = $('.scriptingArea')[0];
 var BLOCK_PALETTE = $('.blockArea')[0];
 
 var DRAGGABLE_ELEMENTS = ([
@@ -586,10 +589,10 @@ var C_PALETTE_ELEMENTS = ([
 
 function clearBlocks(hat) {
   blocksDatabase = {};
-  allBlocks = [];
+  scriptBlocks = [];
   topLevelBlocks = [];
   let child;
-  BODY.deleteDraggy();
+  if(BODY) BODY.deleteDraggy();
   BODY = bodyScript = undefined;
   SCRIPTING_AREA.innerHTML = `<ul class="script" id="bodyScript"><li class="hat">${hat || 'DOCTYPE html'}</li></ul>`;
 }
@@ -612,7 +615,6 @@ function replaceBody(bodyBlock) {
   bodyScript.insertChild(BODY, -1);
   topLevelBlocks.push(BODY);
 }
-replaceBody();
 
 function cleanse_contenteditable (ev) {
     if(ev.target.innerHTML != ev.target.textContent) {
