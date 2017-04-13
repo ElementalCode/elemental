@@ -58,7 +58,7 @@ function Draggy(inPalette) {
     block.elem.parentElement.removeChild(block.elem);
     blocksDatabase[block.id] = null;
     let index1 = scriptBlocks.indexOf(block);
-    if(index1 != -1) scriptBlocks[index] = null;
+    if(index1 != -1) scriptBlocks[index1] = null;
     let index2 = topLevelBlocks.indexOf(block);
     if(index2 != -1) topLevelBlocks[index2] = null;
   };
@@ -436,8 +436,8 @@ function _drag_init(block, ev) {
         curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
     topLevelBlocks.push(draggy);
     var parent = block.parent;
-    var kids = parent.children.slice();
-    for(let i = block.getIndex(), child; child = kids[i]; i++) {
+    var kids = parent.children.slice(block.getIndex());
+    for(let child of kids) {
       child.removeFromParent();
       draggy.insertChild(child, -1);
       child.elem.removeAttribute('style');
@@ -506,7 +506,7 @@ function _destroy(ev) {
     if (selected == null) return;
     var topEl = selected.getClosestBlock();
     if (topEl !== null) {
-        var kids = selected.children.slice();
+        var kids = selected.children.slice().reverse();
         for(let child of kids) {
             child.removeFromParent();
             child.elem.removeAttribute('style');
