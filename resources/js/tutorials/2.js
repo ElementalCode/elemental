@@ -70,8 +70,11 @@ function Intro3() {
   				;});
   intro3.onafterchange(function(e) {
     if (e.classList.contains('add-attr')) {
-    	introObserve(document.querySelector('.e-body .e-a .add-attr'), "click",
-  								intro3, document.querySelector('.e-body .e-a'), '.e-body .e-a .add-attr', Intro4);
+    	introObserve(false, "=",
+  								false, document.querySelector('.e-body'), '.e-body .e-a .add-attr', function() {
+                    intro3.exit();
+                    Intro4()
+                  });
     }
   });
 }
@@ -113,19 +116,10 @@ function Intro4() {
 }
 function Intro5() {
 	//prefill img url, using code stolen from blockAttributes.js
-	var el = document.querySelector('.e-body .e-img .add-attr')
-	var newAttrString = [
-			'<span class="attr-holder">',
-				'<span class="attr-dropdown">src</span>',
-				'=',
-				'<span class="attr-input" contenteditable="true">https://33.media.tumblr.com/tumblr_lm7kcfDP2g1qbkjkd.gif</span>',
-			'</span>'
-		].join('');
-		var newAttr = stringToHtml(newAttrString);
-		el.parentNode.parentNode.insertBefore(newAttr, el.parentNode);
-
-
-
+	var el = document.querySelector('.e-body .e-img');
+  var id = el.getAttribute('data-id');
+  var block = blocksDatabase[id];
+  add_attr(block, 'src', 'https://33.media.tumblr.com/tumblr_lm7kcfDP2g1qbkjkd.gif');
 
 	var intro5 = introJs();
 
