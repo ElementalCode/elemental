@@ -213,6 +213,7 @@ function setFrameContent(ext) {
 		fileData[currentFile] = jsonFormat;
 	} else if (ext == 'html') {
 		var parsedHtml = blockTreeToHTML(BODY);
+    blocksToJSON(currentFile);
 
 		var previewWindow = previewElement;
 		previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;

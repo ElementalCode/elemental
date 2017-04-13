@@ -553,18 +553,30 @@ var C_PALETTE_ELEMENTS = ([
     return '.blockArea ' + item;
 }).join(', ');
 
+function clearBlocks() {
+  blocksDatabase = {};
+  allBlocks = [];
+  topLevelBlocks = [];
+  let child;
+  SCRIPTING_AREA.innerHTML = `<ul class="script" id="bodyScript"><li class="hat">DOCTYPE html</li></ul>`;
+  BODY = bodyScript = undefined;
+}
 
-var bodyScript = new Draggy();
-bodyScript.elem = bodyScript.content = document.querySelector('#bodyScript');
-var BODY = newBlock = new Block('wrapper', 'body', {
-    hasAttrs: true,
-    hasQuickText: true,
-    scriptInputContent: null,
-    inPalette: false,
-    unmoveable: true
-  });
-bodyScript.insertChild(BODY, -1);
-topLevelBlocks.push(BODY);
+var BODY, bodyScript;
+function newHTMLFile() {
+  bodyScript = new Draggy();
+  bodyScript.elem = bodyScript.content = document.querySelector('#bodyScript');
+  BODY = newBlock = new Block('wrapper', 'body', {
+      hasAttrs: true,
+      hasQuickText: true,
+      scriptInputContent: null,
+      inPalette: false,
+      unmoveable: true
+    });
+  bodyScript.insertChild(BODY, -1);
+  topLevelBlocks.push(BODY);
+}
+newHTMLFile();
 
 function cleanse_contenteditable (ev) {
     if(ev.target.innerHTML != ev.target.textContent) {

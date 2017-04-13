@@ -215,7 +215,9 @@ function manuallyCreateFile() {
     var allowedExts = ['html', 'css'];
     if (allowedExts.indexOf(ext) > -1) {
         if (fileName && !fileData.hasOwnProperty(fileName)) {
-            generateFile(fileName, ext);
+            generateFile(fileName);
+        } else {
+          alert('A file with that name already exists.')
         }
     } else {
         throw 'File type "' + ext + '" not supported.';
@@ -238,7 +240,8 @@ function blocksToJSON(fileName) {
 }
 
 // I don't actually know what this function does but I took it apart anyway
-function generateFile_OLD(fileName, ext) {
+function generateFile(fileName) {
+    var ext = getExt(fileName);
     currentFile = fileName;
 
     var finalFile = $('.add-file')[0];
@@ -258,7 +261,8 @@ function generateFile_OLD(fileName, ext) {
     finalFile.parentNode.insertBefore(fileSelector, finalFile);
 
     if (ext == 'html') {
-        fileData[fileName] = blocksToJSON();
+        clearBlocks();
+        newHTMLFile();
     } else if (ext == 'css') {
         fileData[fileName] = {
             'children': {
@@ -275,16 +279,6 @@ function generateFile_OLD(fileName, ext) {
         throw 'File type "' + ext + '" not supported.';
     }
     blockArea = $('.scriptingArea')[0];
-
-    if (initial) {
-        blockArea.innerHtml = generateBlocks(initial);  // add shim later?
-    } else {
-        if (ext == 'css') {
-            blockArea.innerHTML = generateBlocks(fileData[fileName].children, ext);
-        } else {
-            generateBlocks([], ext);
-        }
-    }
 
     //clear preview window
     var previewWindow = document.getElementsByClassName('previewBody')[0];
