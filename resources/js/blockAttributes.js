@@ -9,7 +9,7 @@ function Attr(name, value) {
 	this.elem = document.createElement('span');
 	this.elem.classList.add('attr-holder');
 	
-	this.name = (name === undefined) ? '\u00A0' : attrName;
+	this.name = (name === undefined) ? '\u00A0' : name;
 	this.dropdown = document.createElement('span');
 	this.dropdown.classList.add('attr-dropdown')
 	this.dropdown.appendChild(document.createTextNode(this.name));

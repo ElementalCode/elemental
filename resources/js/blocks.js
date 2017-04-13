@@ -53,7 +53,8 @@ function Draggy() {
     block.removeFromParent();
     block.elem.parentElement.removeChild(block.elem);
     blocksDatabase[block.id] = null;
-    allBlocks[allBlocks.indexOf(block)] = null;
+    let index = allBlocks.indexOf(block);
+    if(index != -1) allBlocks[index] = null;
     if(topLevelBlocks.indexOf(block) != -1) topLevelBlocks[topLevelBlocks.indexOf(block)] = null;
   };
   this.getClosestBlock = function() {
@@ -62,11 +63,9 @@ function Draggy() {
           dx, dy,
           minDistance;
       blocks: for(let oblock of allBlocks) {
-        
         if (!oblock
          || oblock.type == 'draggy'
          || oblock.unmoveable) continue blocks;
-        
         // check for descendancy
         let pblock = block;
         while(pblock) {
@@ -457,7 +456,7 @@ function _move_elem(e) {
     removeDropArea();
     if (selected !== null) {
         var el = selected.getClosestBlock();
-        if (el !== null && !el.inPalette && (!el.parent || (el.parent && !el.parent.inPalette))) {
+        if (el !== null && !el.inPalette) {
             el.elem.classList.add('drop-area');
         }
         selected.elem.style.left = (x_pos - x_elem) + 'px';
@@ -558,25 +557,30 @@ function clearBlocks() {
   allBlocks = [];
   topLevelBlocks = [];
   let child;
-  SCRIPTING_AREA.innerHTML = `<ul class="script" id="bodyScript"><li class="hat">DOCTYPE html</li></ul>`;
+  BODY.deleteDraggy();
   BODY = bodyScript = undefined;
+  SCRIPTING_AREA.innerHTML = `<ul class="script" id="bodyScript"><li class="hat">DOCTYPE html</li></ul>`;
 }
 
 var BODY, bodyScript;
-function newHTMLFile() {
+function replaceBody(bodyBlock) {
   bodyScript = new Draggy();
   bodyScript.elem = bodyScript.content = document.querySelector('#bodyScript');
-  BODY = newBlock = new Block('wrapper', 'body', {
-      hasAttrs: true,
-      hasQuickText: true,
-      scriptInputContent: null,
-      inPalette: false,
-      unmoveable: true
-    });
+  if(bodyBlock) {
+    BODY = bodyBlock;
+  } else {
+    BODY = new Block('wrapper', 'body', {
+        hasAttrs: true,
+        hasQuickText: true,
+        scriptInputContent: null,
+        inPalette: false,
+        unmoveable: true
+      });
+  }
   bodyScript.insertChild(BODY, -1);
   topLevelBlocks.push(BODY);
 }
-newHTMLFile();
+replaceBody();
 
 function cleanse_contenteditable (ev) {
     if(ev.target.innerHTML != ev.target.textContent) {

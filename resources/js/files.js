@@ -153,10 +153,7 @@ function generateBlocks(jsonData, ext) {
               newBlock.elem.style.left = newBlock.x + 'px';
               newBlock.elem.style.top = newBlock.y + 'px';
             } else {
-              // should only be the body block
-              BODY.deleteDraggy();
-              BODY = newBlock;
-              bodyScript.insertChild(BODY, -1);
+              replaceBody(newBlock);
             }
           }
         }
@@ -200,10 +197,9 @@ function loadFile(filename, el) {
         el.parentNode.classList.add('selected');
     }
 
-    // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
-    console.log(fileData);
-    generateBlocks(fileJson, filename.split('.').pop());
+    clearBlocks();
+    generateBlocks(fileJson, getExt(filename));
     setFrameContent();
     setZebra();
 }
@@ -211,16 +207,20 @@ function loadFile(filename, el) {
 function manuallyCreateFile() {
     //we need something better than this
     var fileName = prompt('Enter a file name', '.html');
+    if(!fileName) {
+      alert('File name required.');
+      return;
+    }
     var ext = getExt(fileName);
     var allowedExts = ['html', 'css'];
-    if (allowedExts.indexOf(ext) > -1) {
-        if (fileName && !fileData.hasOwnProperty(fileName)) {
+    if (allowedExts.indexOf(ext) != -1) {
+        if (!fileData.hasOwnProperty(fileName)) {
             generateFile(fileName);
         } else {
           alert('A file with that name already exists.')
         }
     } else {
-        throw 'File type "' + ext + '" not supported.';
+        alert('File type "' + ext + '" not supported.');
     }
 }
 
@@ -262,7 +262,7 @@ function generateFile(fileName) {
 
     if (ext == 'html') {
         clearBlocks();
-        newHTMLFile();
+        replaceBody();
     } else if (ext == 'css') {
         fileData[fileName] = {
             'children': {
