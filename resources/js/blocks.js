@@ -280,8 +280,7 @@ function Block(type, name, opts) {
   
   block.elem.addEventListener('contextmenu', function(ev) {
       ev.preventDefault();
-      
-      if(opts.unmoveable) return;
+      if(block.inPalette || block.unmoveable) return false;
       
       SCRIPT_MENU.style.display = 'block';
       SCRIPT_MENU.style.top = ev.pageY + 'px';
