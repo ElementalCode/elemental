@@ -1,12 +1,3 @@
-//probably should put this in a local function on prod... fine for now tho
-
-if (!String.prototype.startsWith) {  // sweet polyfill
-  String.prototype.startsWith = function(searchString, position) {
-    position = position || 0;
-    return this.indexOf(searchString, position) === position;
-  };
-}
-
 function blockToCSS(blockList) {
   function blockToCSS_(block) {
     if(block.name == 'selector') {
@@ -82,8 +73,16 @@ function setFrameContent(ext) {
     blocksToJSON(currentFile);
 
 		var previewWindow = previewElement;
-		previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
-    while(previewWindow.document.firstChild) previewWindow.document.removeChild(previewWindow.document.firstChild);
+    if(previewElement.contentWindow) {
+      previewWindow = previewWindow.contentWindow;
+    } else if(previewElement.contentDocument.document) {
+      previewWindow = previewElement.contentDocument.document;
+    } else {
+      previewWindow = previewWindow.contentDocument
+    }
+    var previewDocument = previewWindow.document,
+      child;
+    while(child = previewDocument.firstChild) previewDocument.removeChild(child);
     previewWindow.document.appendChild(parsedHtml);
 	} else {
 		throw 'this should never be thrown though';
