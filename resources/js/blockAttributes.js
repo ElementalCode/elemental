@@ -1,5 +1,5 @@
 // both optional
-function Attr(name, value) {
+function BlockAttribute(name, value) {
 	this.elem = document.createElement('span');
 	this.elem.classList.add('attr-holder');
 	
@@ -37,7 +37,7 @@ function Attr(name, value) {
 }
 
 function add_attr(block, name, value) {
-		var attr = new Attr(name, value);
+		var attr = new BlockAttribute(name, value);
 		block.header.insertBefore(attr.elem, block.attrControls);
 		block.attrs.push(attr);
 }
