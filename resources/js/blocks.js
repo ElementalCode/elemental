@@ -263,7 +263,12 @@ function Block(type, name, opts) {
     if (opts.inputs.length == 1) { // text and selector
       (new BlockInput(opts.inputs[0])).attachToBlock(block);
     } else if (opts.inputs.length == 2) { // rule
-      (new BlockInput(opts.inputs[0])).attachToBlock(block);
+      let dropdown = new BlockInput(opts.inputs[0]);
+      dropdown.attachToBlock(block);
+      attachAttrSearch(dropdown.elem, cssAttrNames, function(value) {
+    		dropdown.elem.textContent = dropdown.value = value;
+    	})
+      
       this.header.appendChild(document.createTextNode(':\u00A0'));
       (new BlockInput(opts.inputs[1])).attachToBlock(block);
     }

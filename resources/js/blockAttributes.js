@@ -1,9 +1,3 @@
-var ATTRIBUTE_MENU = document.getElementById('blockAttributeDropdown');
-var ATTRIBUTE_SEARCH = document.getElementById('propSearch');
-var ATTRIBUTE_RESULTS = document.getElementById('attributeResults');
-
-var CLICKED_ATTR;
-
 // both optional
 function Attr(name, value) {
 	this.elem = document.createElement('span');
@@ -30,46 +24,9 @@ function Attr(name, value) {
 		attr.value = attr.input.textContent;
 	});
 	
-	this.dropdown.addEventListener('click', function(e) {
-		ATTRIBUTE_MENU.classList.remove('hidden');
-		ATTRIBUTE_MENU.style.top = attr.top() + attr.elem.offsetHeight + 'px';
-		ATTRIBUTE_MENU.style.left = attr.left() + 'px';
-		CLICKED_ATTR = attr;
-		
-		ATTRIBUTE_SEARCH.focus();
-		setTimeout(function() {
-			document.body.addEventListener('click', function dropdown_blur(e2) {
-				ATTRIBUTE_MENU.classList.add('hidden');
-				CLICKED_ATTR = null;
-				document.body.removeEventListener('click', dropdown_blur);
-				attr.name =  attr.dropdown.textContent;
-			});
-		}, 0);
-	});
-	
-	this.left = function() {
-    var elem = attr.elem;
-    var offsetLeft = 0;
-    do {
-        if ( !isNaN( elem.offsetLeft ) )
-        {
-            offsetLeft += elem.offsetLeft;
-        }
-    } while( elem = elem.offsetParent );
-    return offsetLeft;
-  };
-  
-  this.top = function() {
-    var elem = attr.elem;
-    var offsetTop = 0;
-    do {
-        if ( !isNaN( elem.offsetTop ) )
-        {
-            offsetTop += elem.offsetTop;
-        }
-    } while( elem = elem.offsetParent );
-    return offsetTop;
-  };
+	attachAttrSearch(attr.dropdown, htmlAttrNames, function(value) {
+		attr.name =  attr.dropdown.textContent = value;
+	})
 	
 	this.toStringable = function() {
 		return {
@@ -89,33 +46,61 @@ function remove_attr(block) {
 		block.header.removeChild(attr.elem);
 }
 
-// uses array called attrNames...
+function attachAttrSearch(elem, attrNames, callback) {
+	var ATTRIBUTE_MENU = document.getElementById('blockAttributeDropdown');
+	var ATTRIBUTE_SEARCH = document.getElementById('propSearch');
+	var ATTRIBUTE_RESULTS = document.getElementById('attributeResults');
+	
+	elem.addEventListener('click', function() {
+		ATTRIBUTE_MENU.classList.remove('hidden');
+		ATTRIBUTE_MENU.style.top = getOffset(elem).bottom + 'px';
+		ATTRIBUTE_MENU.style.left = getOffset(elem).left + 'px';
+		
+		ATTRIBUTE_SEARCH.focus();
+		
+		setTimeout(function() { // if the listener is added immediately it fires immediately
+			document.body.addEventListener('click', function(ev) {
+				if(ev.target.matches('.attrResult')) callback(ev.target.textContent);
+				
+				ATTRIBUTE_MENU.classList.add('hidden');
+				ATTRIBUTE_SEARCH.removeEventListener('keyup', attrSearch);
+				ATTRIBUTE_SEARCH.removeEventListener('paste', attrSearch);
+			}, {once: true});
+		}, 0)
+		
+		function attrSearch(ev) {
+			var searchString = (ev ? ev.target.value : '');
+			var validAttrs = attrNames.filter(function(attr) {
+				return attr.indexOf(searchString) > -1;
+			});
+			var newHtml = [];
+			for (var i = 0; i < validAttrs.length; i++) {
+				var attrName = validAttrs[i];
+				newHtml.push('<li class="attrResult">' + attrName + '</li>');
+			}
+			newHtml = newHtml.join('');
+			ATTRIBUTE_RESULTS.innerHTML = newHtml;
+		}
 
-function attrSearch(ev) {
-	var searchString = ev.target.value;
-	var validAttrs = attrNames.filter(function(attr) {
-		return attr.indexOf(searchString) > -1;
+		ATTRIBUTE_SEARCH.addEventListener('keyup', attrSearch);
+		ATTRIBUTE_SEARCH.addEventListener('paste', attrSearch);
+		attrSearch() // initialize list
 	});
-	var newHtml = [];
-	for (var i = 0; i < validAttrs.length; i++) {
-		var attrName = validAttrs[i];
-		newHtml.push('<li>' + attrName + '</li>');
-	}
-	newHtml = newHtml.join('');
-	ATTRIBUTE_RESULTS.innerHTML = newHtml;
 }
 
-ATTRIBUTE_SEARCH.addEventListener('keyup', attrSearch);
-ATTRIBUTE_SEARCH.addEventListener('paste', attrSearch);
-
-ATTRIBUTE_RESULTS.addEventListener('click', function(ev) {
-	var attr = ev.target.textContent;
-	CLICKED_ATTR.dropdown.textContent = attr;
-});
-
-// initialize the stuff in the menu
-var attrString = '';
-for (var i = 0; i < attrNames.length; i++) {
-    attrString += '<li>' + attrNames[i] + '</li>';
-}
-ATTRIBUTE_RESULTS.innerHTML = attrString;
+var htmlAttrNames = [
+    'class',
+    'for',
+    'form',
+    'href',
+    'id',
+    'rel',
+    'src',
+    'style',
+    'type'
+]; //add attrs
+var cssAttrNames = [
+    'background-color',
+    'height',
+    'width'
+]; //add attrs

@@ -56,23 +56,6 @@ var fileData = {};
 var fileNames = ['index.html']; // make this work later
 var currentFile = 'index.html';
 
-var attrNames = [
-    'class',
-    'for',
-    'form',
-    'href',
-    'id',
-    'rel',
-    'src',
-    'style',
-    'type'
-]; //add attrs
-var cssAttrNames = [
-    'background-color',
-    'height',
-    'width'
-]; //add attrs
-
 // All you have to do to do it right is be lazy -- liam
 // (just kidding)
 //var stackElements = ['e-img', 'e-text', 'e-CSS', 'e-style', ];
