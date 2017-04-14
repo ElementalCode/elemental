@@ -270,6 +270,25 @@ function generateFile(fileName) {
         clearBlocks(currentFile);
         replaceBody(new BlockWrapper());
         BODY.type = 'CSSStart';
+        
+        // add default blocks
+        let defaultSelector = new Block('cblock', 'selector', {
+            hasAttrs: false,
+            hasQuickText: false,
+            inputs: ['.selector'],
+            inPalette: true,
+            ftype: 'css'
+          });
+        mainScript.insertChild(defaultSelector, -1);
+        
+        let defaultRule = new Block('stack', 'rule', {
+            hasAttrs: false,
+            hasQuickText: false,
+            inputs: ['background-color', 'red'],
+            inPalette: true,
+            ftype: 'css'
+          });
+        defaultSelector.insertChild(defaultRule, -1);
     } else {
         throw 'File type "' + ext + '" not supported.';
     }
