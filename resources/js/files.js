@@ -238,7 +238,7 @@ function generateFile(fileName) {
             hasAttrs: false,
             hasQuickText: false,
             inputs: ['.selector'],
-            inPalette: true,
+            inPalette: false,
             ftype: 'css'
           });
         mainScript.insertChild(defaultSelector, -1);
@@ -247,7 +247,7 @@ function generateFile(fileName) {
             hasAttrs: false,
             hasQuickText: false,
             inputs: ['background-color', 'red'],
-            inPalette: true,
+            inPalette: false,
             ftype: 'css'
           });
         defaultSelector.insertChild(defaultRule, -1);
