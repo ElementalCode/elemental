@@ -13,10 +13,10 @@ replaceBody();
 
 // a more generic abstraction of a block
 // it can have children, so it can be a script
-function Draggy(inPalette) {
+function BlockWrapper(inPalette) {
   this.x = 0;
   this.y = 0;
-  this.type = 'draggy';
+  this.type = 'blockWrapper';
   this.id = blocksCount++;
   blocksDatabase[this.id] = this;
   this.parent = null;
@@ -53,7 +53,7 @@ function Draggy(inPalette) {
     block.parent.children.splice(block.parent.children.indexOf(block), 1);
     block.parent = null;
   };
-  this.deleteDraggy = function() {
+  this.deleteBlock = function() {
     block.removeFromParent();
     block.elem.parentElement.removeChild(block.elem);
     blocksDatabase[block.id] = null;
@@ -69,7 +69,7 @@ function Draggy(inPalette) {
           minDistance;
       blocks: for(let oblock of scriptBlocks) {
         if (!oblock
-         || oblock.type == 'draggy'
+         || oblock.type == 'blockWrapper'
          || oblock.unmoveable) continue blocks;
         // check for descendancy
         let pblock = block;
@@ -90,7 +90,7 @@ function Draggy(inPalette) {
         dy = oblock.bottom() - block.top();
         
         // move point inside c-blocks to the right
-        if(oblock.type == 'nullWrapperContent') {
+        if(oblock.type == 'cblockStart') {
           dx += oblock.content.style.paddingLeft;
         }
         
@@ -185,7 +185,7 @@ opts = {
 */
 function Block(type, name, opts) {
   if(!opts) opts = {};
-  Draggy.apply(this, [opts.inPalette]);
+  BlockWrapper.apply(this, [opts.inPalette]);
   this.type = type;
   this.name = name;
   this.ftype = opts.ftype || 'html';
@@ -194,7 +194,7 @@ function Block(type, name, opts) {
   this.inPalette = (opts.inPalette !== undefined) ? opts.inPalette : true;
   this.unmoveable = opts.unmoveable || false;
   var block = this;
-  if(type == 'wrapper') {
+  if(type == 'cblock') {
     this.elem = document.createElement('ul');
     this.elem.classList.add('c-wrapper');
     
@@ -202,11 +202,11 @@ function Block(type, name, opts) {
     this.header.classList.add('c-header');
     this.elem.appendChild(this.header);
     
-    // add a blank draggy inside wrapper
-    var nullWrapperContent = new Draggy(this.inPalette);
-    nullWrapperContent.type = 'nullWrapperContent';
-    this.insertChild(nullWrapperContent, -1);
-    nullWrapperContent.elem = nullWrapperContent.content = this.header;
+    // add a blank blockWrapper inside cblock
+    var cblockStart = new BlockWrapper(this.inPalette);
+    cblockStart.type = 'cblockStart';
+    this.insertChild(cblockStart, -1);
+    cblockStart.elem = cblockStart.content = this.header;
     
     this.content = document.createElement('ul');
     this.content.classList.add('c-content');
@@ -337,7 +337,7 @@ function Block(type, name, opts) {
   }
   
 }
-Block.prototype = Object.create(Draggy.prototype);
+Block.prototype = Object.create(BlockWrapper.prototype);
 Block.prototype.constructor = Block.constructor;
 
 function BlockInput(defaultValue) {
@@ -436,21 +436,21 @@ function _drag_init(block, ev) {
     var relativeX = ev.pageX - block.left();
     var relativeY = ev.pageY - block.top();
     // Store the object of the element which needs to be moved
-    var draggy = new Draggy()
-    SCRIPTING_AREA.insertBefore(draggy.elem, SCRIPTING_AREA.firstChild);
+    var blockWrapper = new BlockWrapper()
+    SCRIPTING_AREA.insertBefore(blockWrapper.elem, SCRIPTING_AREA.firstChild);
     var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
         curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
-    topLevelBlocks.push(draggy);
+    topLevelBlocks.push(blockWrapper);
     var parent = block.parent;
     var kids = parent.children.slice(block.getIndex());
     for(let child of kids) {
       child.removeFromParent();
-      draggy.insertChild(child, -1);
+      blockWrapper.insertChild(child, -1);
       child.elem.removeAttribute('style');
     }
-    if(parent.children.length == 0 && parent.type == 'draggy') parent.deleteDraggy();
-    draggy.setPosition(curX - relativeX, curY - relativeY);
-    selected = draggy;
+    if(parent.children.length == 0 && parent.type == 'blockWrapper') parent.deleteBlock();
+    blockWrapper.setPosition(curX - relativeX, curY - relativeY);
+    selected = blockWrapper;
     dragOffset.x = mousePos.x - selected.elem.offsetLeft;
     dragOffset.y = mousePos.y - selected.elem.offsetTop;
 }
@@ -464,16 +464,16 @@ function _palette_drag_init(block, ev) {
     var newElem = newBlock.elem;
     newElem.classList.remove('paletteBlock');
     // Store the object of the element which needs to be moved
-    var draggy = new Draggy();
-    topLevelBlocks.push(draggy);
-    SCRIPTING_AREA.insertBefore(draggy.elem, SCRIPTING_AREA.firstChild);
+    var blockWrapper = new BlockWrapper();
+    topLevelBlocks.push(blockWrapper);
+    SCRIPTING_AREA.insertBefore(blockWrapper.elem, SCRIPTING_AREA.firstChild);
     selected = newElem;
     selectedBlock = newBlock;
     var curX = ev.clientY - getOffset(SCRIPTING_AREA).left,
         curY = ev.clientY - getOffset(SCRIPTING_AREA).top;
-    draggy.insertChild(selectedBlock, -1);
-    draggy.setPosition(curX - relativeX, curY - relativeY);
-    selected = draggy;
+    blockWrapper.insertChild(selectedBlock, -1);
+    blockWrapper.setPosition(curX - relativeX, curY - relativeY);
+    selected = blockWrapper;
     dragOffset.x = mousePos.x - selected.elem.offsetLeft;
     dragOffset.y = mousePos.y - selected.elem.offsetTop;
 }
@@ -487,8 +487,8 @@ function _move_elem(e) {
     if (selected !== null) {
         var el = selected.getClosestBlock();
         if (el !== null) {
-            if(el.type == 'CSSNullWrapper') {
-              document.querySelector('#bodyScript > li.hat').classList.add('drop-area');
+            if(el.type == 'CSSStart') {
+              document.querySelector('#mainScript > li.hat').classList.add('drop-area');
             } else {
               el.elem.classList.add('drop-area');
             }
@@ -508,11 +508,11 @@ function _destroy(ev) {
         for(let child of kids) {
             child.removeFromParent();
             child.elem.removeAttribute('style');
-            if(topEl.type == 'nullWrapperContent') {
-                topEl.parent.insertChild(child, 1); // 0 is the null Draggy
+            if(topEl.type == 'cblockStart') {
+                topEl.parent.insertChild(child, 1); // 0 is the null BlockWrapper
             } else if(topEl.type == 'stack'
-                   || topEl.type == 'wrapper'
-                   || topEl.type == 'CSSNullWrapper') {
+                   || topEl.type == 'cblock'
+                   || topEl.type == 'CSSStart') {
                 topEl.parent.insertChild(child, topEl.getIndex() + 1);
             }
         }
@@ -593,27 +593,26 @@ function clearBlocks(hat) {
   scriptBlocks = [];
   topLevelBlocks = [];
   let child;
-  if(BODY) BODY.deleteDraggy();
-  BODY = bodyScript = undefined;
-  SCRIPTING_AREA.innerHTML = `<ul class="script" id="bodyScript"><li class="hat">${hat || 'DOCTYPE html'}</li></ul>`;
+  if(BODY) BODY.deleteBlock();
+  BODY = mainScript = undefined;
+  SCRIPTING_AREA.innerHTML = `<ul class="script" id="mainScript"><li class="hat">${hat || 'DOCTYPE html'}</li></ul>`;
 }
 
-var BODY, bodyScript;
+var BODY, mainScript;
 function replaceBody(bodyBlock) {
-  bodyScript = new Draggy();
-  bodyScript.elem = bodyScript.content = document.querySelector('#bodyScript');
+  mainScript = new BlockWrapper();
+  mainScript.elem = mainScript.content = document.querySelector('#mainScript');
   if(bodyBlock) {
     BODY = bodyBlock;
   } else {
-    BODY = new Block('wrapper', 'body', {
+    BODY = new Block('cblock', 'body', {
         hasAttrs: true,
         hasQuickText: true,
-        scriptInputContent: null,
         inPalette: false,
         unmoveable: true
       });
   }
-  bodyScript.insertChild(BODY, -1);
+  mainScript.insertChild(BODY, -1);
   topLevelBlocks.push(BODY);
 }
 
@@ -676,20 +675,19 @@ $('.context-menu.scripts .menu-item').on('click', function(ev) {
             case 'duplicate-script':
                 // do stuff with node... and get stuff beneath it too!
                 var target = RIGHT_CLICKED_SCRIPT;
-                var draggy = new Draggy();
-                SCRIPTING_AREA.insertBefore(draggy.elem, SCRIPTING_AREA.firstChild);
-                topLevelBlocks.push(draggy);
+                var blockWrapper = new BlockWrapper();
+                SCRIPTING_AREA.insertBefore(blockWrapper.elem, SCRIPTING_AREA.firstChild);
+                topLevelBlocks.push(blockWrapper);
                 for(let i = target.getIndex(); i < target.parent.children.length; i++) {
                   let child = target.parent.children[i];
-                  draggy.insertChild(child.clone(false), -1);
+                  blockWrapper.insertChild(child.clone(false), -1);
                 }
 
                 var relativeX = ev.pageX - target.left();
                 var relativeY = ev.pageY - target.top();
                 var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
                     curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
-                draggy.elem.style.left = curX - relativeX + 25 + 'px';
-                draggy.elem.style.top = curY - relativeY + 25 + 'px';
+                blockWrapper.setPosition(curX - relativeX + 25, curY - relativeY + 25)
 
                 setZebra();
                 RIGHT_CLICKED_SCRIPT = undefined;

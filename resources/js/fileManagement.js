@@ -3,12 +3,17 @@ document.getElementById('downloadButton').addEventListener('click', function() {
 	var jsonFiles = zip.folder('.elem');
 	for(let fileName in fileData) {
 		let ext = getExt(fileName);
-		let out = '';
+		let out;
 		if(ext == 'html') {
+			out = `<html>\n<head></head>`;
 			let body = fileData[fileName][0]; // first one should always be body
-			out = blockTreeToHTML(body).outerHTML;
+			out += blockToHTML(body).outerHTML;
+			out += '</html>';
 		} else if(ext == 'css') {
-			out = blockTreeToCSS(fileData[fileName]);
+			out = blockToCSS(fileData[fileName]);
+		} else {
+			console.log('Can\'t export files of type ' + ext);
+			continue;
 		}
 		zip.file(fileName, out);
 	}

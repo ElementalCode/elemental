@@ -7,12 +7,12 @@ if (!String.prototype.startsWith) {  // sweet polyfill
   };
 }
 
-function blockTreeToCSS(blockList) {
-  function blockToCSS(block) {
+function blockToCSS(blockList) {
+  function blockToCSS_(block) {
     if(block.name == 'selector') {
       let out = '';
       for(let child of block.children) {
-        out += blockToCSS(child);
+        out += blockToCSS_(child);
       }
       return `${block.inputs[0]} {\n${out}}\n`
     } else if(block.name == 'rule') {
@@ -20,20 +20,20 @@ function blockTreeToCSS(blockList) {
     } else {
       let out = '';
       for(let child of block.children) {
-        out += blockToCSS(child);
+        out += blockToCSS_(child);
       }
       return out;
     }
   }
   var css = '';
   for(let block of blockList) {
-    css += blockToCSS(block);
+    css += blockToCSS_(block);
   }
   return css;
 }
 
-function blockTreeToHTML(block) {
-  if(block.type !== 'stack' && block.type !== 'wrapper') {
+function blockToHTML(block) {
+  if(block.type !== 'stack' && block.type !== 'cblock') {
     return null;
   } else if(block.name == 'text') {
     return document.createTextNode(block.inputs[0].value);
@@ -43,7 +43,7 @@ function blockTreeToHTML(block) {
       if(attr.name.trim() && attr.value.trim()) element.setAttribute(attr.name, attr.value);
     }
     for(let child of block.children) {
-      let parsedChild = blockTreeToHTML(child);
+      let parsedChild = blockToHTML(child);
       if(parsedChild) element.appendChild(parsedChild);
     }
     return element;
@@ -57,7 +57,7 @@ function setFrameContent(ext) {
 	if (ext == 'css') {
 		blocksToJSON(currentFile);
 	} else if (ext == 'html') {
-		var parsedHtml = blockTreeToHTML(BODY);
+		var parsedHtml = blockToHTML(BODY);
     blocksToJSON(currentFile);
 
 		var previewWindow = previewElement;

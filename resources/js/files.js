@@ -80,7 +80,7 @@ var cssAttrNames = [
 var stackElements = [];
 var wrapperElements = [];
 filter.blocks.forEach(function(block) {
-    if (block.type === 'wrapper') {
+    if (block.type === 'cblock') {
         wrapperElements.push('e-' + block.name);
     } else if (block.type === 'stack') {
         stackElements.push('e-' + block.name);
@@ -107,11 +107,11 @@ function generateBlocks(jsonData, ext) {
   function generateBlock(block) {
     if(!block.type) return null;
     let newBlock;
-    if(block.type == 'draggy') {
-      newBlock = new Draggy();
+    if(block.type == 'blockWrapper') {
+      newBlock = new BlockWrapper();
       topLevelBlocks.push(newBlock)
     } else if( block.type == 'stack'
-            || block.type == 'wrapper') {
+            || block.type == 'cblock') {
               newBlock = new Block(block.type, block.name, {
                   hasAttrs: block.hasAttrs,
                   hasQuickText: block.hasQuickText,
@@ -135,14 +135,14 @@ function generateBlocks(jsonData, ext) {
   }
   if(ext == 'css') {
     clearBlocks(currentFile);
-    replaceBody(new Draggy());
-    BODY.type = 'CSSNullWrapper';
+    replaceBody(new BlockWrapper());
+    BODY.type = 'CSSStart';
     
     let newBodyScript = jsonData[0];
     for(let block of newBodyScript.children) {
       let newBlock = generateBlock(block);
       if(newBlock) {
-        bodyScript.insertChild(newBlock, -1)
+        mainScript.insertChild(newBlock, -1)
       }
     }
     
@@ -232,14 +232,14 @@ function blocksToJSON(fileName) {
     fileData[fileName] = expArray;
   } else if (ext == 'css') {
     // yeah I know I'm ignoring loose blocks
-    var expArray = [bodyScript.toStringable()];
+    var expArray = [mainScript.toStringable()];
     for(let block of topLevelBlocks) {
-      if(block != BODY && block.type != 'CSSNullWrapper') {
+      if(block != BODY && block.type != 'CSSStart') {
         expArray.push(block.toStringable());
       }
     }
     fileData[fileName] = expArray;
-    // fileData[fileName] = [bodyScript.toStringable()];
+    // fileData[fileName] = [mainScript.toStringable()];
   }
 }
 
@@ -268,8 +268,8 @@ function generateFile(fileName) {
         replaceBody();
     } else if (ext == 'css') {
         clearBlocks(currentFile);
-        replaceBody(new Draggy());
-        BODY.type = 'CSSNullWrapper';
+        replaceBody(new BlockWrapper());
+        BODY.type = 'CSSStart';
     } else {
         throw 'File type "' + ext + '" not supported.';
     }
