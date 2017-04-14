@@ -109,6 +109,7 @@ function generateBlocks(jsonData, ext) {
     let newBlock;
     if(block.type == 'draggy') {
       newBlock = new Draggy();
+      topLevelBlocks.push(newBlock)
     } else if( block.type == 'stack'
             || block.type == 'wrapper') {
               newBlock = new Block(block.type, block.name, {
@@ -125,8 +126,7 @@ function generateBlocks(jsonData, ext) {
     } else {
       return null; // other types of Draggies are generated in block constructors
     }
-    newBlock.x = block.x;
-    newBlock.y = block.y;
+    newBlock.setPosition(block.x, block.y);
     for(let child of block.children) {
       let newChild = generateBlock(child);
       if(newChild) newBlock.insertChild(newChild, -1);
@@ -137,10 +137,20 @@ function generateBlocks(jsonData, ext) {
     clearBlocks(currentFile);
     replaceBody(new Draggy());
     BODY.type = 'CSSNullWrapper';
-    for(let block of jsonData) {
+    
+    let newBodyScript = jsonData[0];
+    for(let block of newBodyScript.children) {
       let newBlock = generateBlock(block);
       if(newBlock) {
         bodyScript.insertChild(newBlock, -1)
+      }
+    }
+    
+    for(let i = 1, block; i < jsonData.length; i++) {
+      block = jsonData[i];
+      let newBlock = generateBlock(block);
+      if(newBlock) {
+        SCRIPTING_AREA.insertBefore(newBlock.elem, SCRIPTING_AREA.firstChild);
       }
     }
   } else if(ext == 'html') {
@@ -159,8 +169,6 @@ function generateBlocks(jsonData, ext) {
         let newBlock = generateBlock(block);
         if(newBlock) {
           SCRIPTING_AREA.insertBefore(newBlock.elem, SCRIPTING_AREA.firstChild);
-          newBlock.elem.style.left = newBlock.x + 'px';
-          newBlock.elem.style.top = newBlock.y + 'px';
         }
       }
     }
@@ -224,9 +232,9 @@ function blocksToJSON(fileName) {
     fileData[fileName] = expArray;
   } else if (ext == 'css') {
     // yeah I know I'm ignoring loose blocks
-    var expArray = [];
-    for(let block of bodyScript.children) {
-      if(block.type != 'CSSNullWrapper') {
+    var expArray = [bodyScript.toStringable()];
+    for(let block of topLevelBlocks) {
+      if(block != BODY && block.type != 'CSSNullWrapper') {
         expArray.push(block.toStringable());
       }
     }
