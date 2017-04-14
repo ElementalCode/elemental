@@ -205,27 +205,6 @@ function getExt(fileName) {
   return fileName.match(/\w+$/)[0];
 }
 
-function blocksToJSON(fileName) {
-  var ext = getExt(fileName);
-  if (ext == 'html') {
-    var expArray = [];
-    for(let block of topLevelBlocks) {
-      if(block) expArray.push(block.toStringable());
-    }
-    fileData[fileName] = expArray;
-  } else if (ext == 'css') {
-    // yeah I know I'm ignoring loose blocks
-    var expArray = [mainScript.toStringable()];
-    for(let block of topLevelBlocks) {
-      if(block != BODY && block.type != 'CSSStart') {
-        expArray.push(block.toStringable());
-      }
-    }
-    fileData[fileName] = expArray;
-    // fileData[fileName] = [mainScript.toStringable()];
-  }
-}
-
 function generateFile(fileName) {
     var ext = getExt(fileName);
     currentFile = fileName;
