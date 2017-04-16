@@ -725,19 +725,18 @@ document.getElementById('trashCan2').addEventListener('mouseout', function(ev) {
 });
 
 // zebra stuff
-function zebra(parent, nestcount) {
-    var children = parent.children;
-    for (var i = 0; i < children.length; i++) {
-        if(children[i].className.indexOf('c-wrapper') != -1) {
-            children[i].classList.remove('zebra')
-            if((nestcount % 2) == 1) {children[i].classList.add('zebra');}
-            zebra(children[i].children[1], nestcount + 1);
-        }
-    }
-}
-
 function setZebra() {
-    for(i = 0; i < document.querySelectorAll('.script, .draggy').length; i++) {
-        zebra(document.querySelectorAll('.script, .draggy')[i], 0);
+  function zebra(block, nestcount) {
+    if(block.type == 'cblock') {
+      block.elem.classList.remove('zebra');
+      if((nestcount % 2) == 1) block.elem.classList.add('zebra');
     }
+    for(let child of block.children) {
+      zebra(child, nestcount + 1);
+    }
+  }
+  
+  for(let block of topLevelBlocks) {
+    if(block) zebra(block, block.type == 'blockWrapper' ? 1 : 0);
+  }
 }
