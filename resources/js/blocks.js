@@ -619,6 +619,7 @@ function replaceBody(bodyBlock) {
   }
   mainScript.insertChild(BODY, -1);
   topLevelBlocks.push(BODY);
+  setZebra();
 }
 
 function cleanse_contenteditable (ev) {
@@ -704,9 +705,6 @@ $('.context-menu.scripts .menu-item').on('click', function(ev) {
         }
     }
 });
-
-
-setZebra();
 
 document.getElementById('trashCan').addEventListener('mouseover', function(ev) {
     this.classList.add('hovering');
