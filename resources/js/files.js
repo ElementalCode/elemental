@@ -63,9 +63,9 @@ var currentFile = 'index.html';
 var stackElements = [];
 var wrapperElements = [];
 filter.blocks.forEach(function(block) {
-    if (block.type === 'cblock') {
+    if (block.type === BLOCK_TYPES.cblock) {
         wrapperElements.push('e-' + block.name);
-    } else if (block.type === 'stack') {
+    } else if (block.type === BLOCK_TYPES.stack) {
         stackElements.push('e-' + block.name);
     } else {
         console.warn('Invalid block type "' + block.type + '" for element ' + block.name);
@@ -90,11 +90,11 @@ function generateBlocks(jsonData, ext) {
   function generateBlock(block) {
     if(!block.type) return null;
     let newBlock;
-    if(block.type == 'blockWrapper') {
+    if(block.type == BLOCK_TYPES.blockWrapper) {
       newBlock = new BlockWrapper();
       topLevelBlocks.push(newBlock)
-    } else if( block.type == 'stack'
-            || block.type == 'cblock') {
+    } else if( block.type == BLOCK_TYPES.stack
+            || block.type == BLOCK_TYPES.cblock) {
               newBlock = new Block(block.type, block.name, {
                   hasAttrs: block.hasAttrs,
                   hasQuickText: block.hasQuickText,
@@ -119,7 +119,7 @@ function generateBlocks(jsonData, ext) {
   if(ext == 'css') {
     clearBlocks(currentFile);
     replaceBody(new BlockWrapper());
-    BODY.type = 'CSSStart';
+    BODY.type = BLOCK_TYPES.CSSStart;
     
     let newBodyScript = jsonData[0];
     for(let block of newBodyScript.children) {
@@ -231,10 +231,10 @@ function generateFile(fileName) {
     } else if (ext == 'css') {
         clearBlocks(currentFile);
         replaceBody(new BlockWrapper());
-        BODY.type = 'CSSStart';
+        BODY.type = BLOCK_TYPES.CSSStart;
         
         // add default blocks
-        let defaultSelector = new Block('cblock', 'selector', {
+        let defaultSelector = new Block(BLOCK_TYPES.cblock, 'selector', {
             hasAttrs: false,
             hasQuickText: false,
             inputs: ['.selector'],
@@ -243,7 +243,7 @@ function generateFile(fileName) {
           });
         mainScript.insertChild(defaultSelector, -1);
         
-        let defaultRule = new Block('stack', 'rule', {
+        let defaultRule = new Block(BLOCK_TYPES.stack, 'rule', {
             hasAttrs: false,
             hasQuickText: false,
             inputs: ['background-color', 'red'],

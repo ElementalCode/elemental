@@ -6,8 +6,8 @@ var selected = null, // Object of the element to be moved
 var blocksDatabase, // all blocks by ID. Not an array in case we decide to use md5's or something later
     scriptBlocks,
     topLevelBlocks,
-    blocksCount = 0; // not a real bumber of blocks. This value should never be
-                     // decrememnted because it's used to generate a blocks' unique ID
+    blocksCount = 0; // not a real number of blocks. This value should never be
+                     // decrememnted because it's used to generate a block's unique ID
 clearBlocks();
 replaceBody();
 
@@ -16,7 +16,7 @@ replaceBody();
 function BlockWrapper(inPalette) {
   this.x = 0;
   this.y = 0;
-  this.type = 'blockWrapper';
+  this.type = BLOCK_TYPES.blockWrapper;
   this.id = blocksCount++;
   blocksDatabase[this.id] = this;
   this.parent = null;
@@ -69,7 +69,7 @@ function BlockWrapper(inPalette) {
           minDistance;
       blocks: for(let oblock of scriptBlocks) {
         if (!oblock
-         || oblock.type == 'blockWrapper'
+         || oblock.type == BLOCK_TYPES.blockWrapper
          || oblock.unmoveable) continue blocks;
         // check for descendancy
         let pblock = block;
@@ -90,7 +90,7 @@ function BlockWrapper(inPalette) {
         dy = oblock.bottom() - block.top();
         
         // move point inside c-blocks to the right
-        if(oblock.type == 'cblockStart') {
+        if(oblock.type == BLOCK_TYPES.cblockStart) {
           dx += oblock.content.style.paddingLeft;
         }
         
@@ -194,7 +194,7 @@ function Block(type, name, opts) {
   this.inPalette = (opts.inPalette !== undefined) ? opts.inPalette : true;
   this.unmoveable = opts.unmoveable || false;
   var block = this;
-  if(type == 'cblock') {
+  if(type == BLOCK_TYPES.cblock) {
     this.elem = document.createElement('ul');
     this.elem.classList.add('c-wrapper');
     
@@ -204,7 +204,7 @@ function Block(type, name, opts) {
     
     // add a blank blockWrapper inside cblock
     var cblockStart = new BlockWrapper(this.inPalette);
-    cblockStart.type = 'cblockStart';
+    cblockStart.type = BLOCK_TYPES.cblockStart;
     this.insertChild(cblockStart, -1);
     cblockStart.elem = cblockStart.content = this.header;
     
@@ -223,7 +223,7 @@ function Block(type, name, opts) {
       footer.appendChild(this.quickText);
       
       this.quickText.addEventListener('click', function(ev) {
-        var newBlock = new Block('stack', 'text', {
+        var newBlock = new Block(BLOCK_TYPES.stack, 'text', {
             hasAttrs: false,
             hasQuickText: false,
             inputs: [DEFAULT_TEXT],
@@ -233,7 +233,7 @@ function Block(type, name, opts) {
         setFrameContent();
       });
     }
-  } else if(type == 'stack') {
+  } else if(type == BLOCK_TYPES.stack) {
     this.elem = document.createElement('li');
     this.elem.classList.add('stack');
     this.header = this.elem;
@@ -453,7 +453,7 @@ function _drag_init(block, ev) {
       blockWrapper.insertChild(child, -1);
       child.elem.removeAttribute('style');
     }
-    if(parent.children.length == 0 && parent.type == 'blockWrapper') parent.deleteBlock();
+    if(parent.children.length == 0 && parent.type == BLOCK_TYPES.blockWrapper) parent.deleteBlock();
     blockWrapper.setPosition(curX - relativeX, curY - relativeY);
     selected = blockWrapper;
     dragOffset.x = mousePos.x - selected.elem.offsetLeft;
@@ -492,7 +492,7 @@ function _move_elem(e) {
     if (selected !== null) {
         var el = selected.getClosestBlock();
         if (el !== null) {
-            if(el.type == 'CSSStart') {
+            if(el.type == BLOCK_TYPES.CSSStart) {
               document.querySelector('#mainScript > li.hat').classList.add('drop-area');
             } else {
               el.elem.classList.add('drop-area');
@@ -513,11 +513,11 @@ function _destroy(ev) {
         for(let child of kids) {
             child.removeFromParent();
             child.elem.removeAttribute('style');
-            if(topEl.type == 'cblockStart') {
+            if(topEl.type == BLOCK_TYPES.cblockStart) {
                 topEl.parent.insertChild(child, 1); // 0 is the null BlockWrapper
-            } else if(topEl.type == 'stack'
-                   || topEl.type == 'cblock'
-                   || topEl.type == 'CSSStart') {
+            } else if(topEl.type == BLOCK_TYPES.stack
+                   || topEl.type == BLOCK_TYPES.cblock
+                   || topEl.type == BLOCK_TYPES.CSSStart) {
                 topEl.parent.insertChild(child, topEl.getIndex() + 1);
             }
         }
@@ -610,7 +610,7 @@ function replaceBody(bodyBlock) {
   if(bodyBlock) {
     BODY = bodyBlock;
   } else {
-    BODY = new Block('cblock', 'body', {
+    BODY = new Block(BLOCK_TYPES.cblock, 'body', {
         hasAttrs: true,
         hasQuickText: true,
         inPalette: false,
@@ -725,7 +725,7 @@ document.getElementById('trashCan2').addEventListener('mouseout', function(ev) {
 // zebra stuff
 function setZebra() {
   function zebra(block, nestcount) {
-    if(block.type == 'cblock') {
+    if(block.type == BLOCK_TYPES.cblock) {
       block.elem.classList.remove('zebra');
       if((nestcount % 2) == 1) block.elem.classList.add('zebra');
     }
@@ -735,6 +735,6 @@ function setZebra() {
   }
   
   for(let block of topLevelBlocks) {
-    if(block) zebra(block, block.type == 'blockWrapper' ? 1 : 0);
+    if(block) zebra(block, block.type == BLOCK_TYPES.blockWrapper ? 1 : 0);
   }
 }

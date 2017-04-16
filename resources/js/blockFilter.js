@@ -1,3 +1,12 @@
+// this is defined here instead of in blocks.js because this loads first.
+var BLOCK_TYPES = {
+  stack: 0,
+  cblock: 1,
+  blockWrapper: 2,
+  cblockStart: 3,
+  CSSStart: 4
+};
+
 var filter = {
   type: 'search', // 'palette' or 'search'
   selectedPalette: 1,
@@ -35,7 +44,7 @@ var filter = {
       for(x = 0; x < blocksToDisplay.length; x++) {
         var block = filter.blocks[blocksToDisplay[x]];
         var newBlock;
-        if (block.type == 'cblock') {
+        if (block.type == BLOCK_TYPES.cblock) {
           if (!block.ftype || block.ftype == 'html') {
             newBlock = new Block(block.type, block.name, {
                 hasAttrs: true,
@@ -73,7 +82,7 @@ var filter = {
                 });;
             }
           } else {
-            newBlock = new Block('stack', 'text', {
+            newBlock = new Block(BLOCK_TYPES.stack, 'text', {
                 hasAttrs: false,
                 hasQuickText: false,
                 inputs: [DEFAULT_TEXT],
@@ -101,151 +110,151 @@ var filter = {
     {
       // Moved text node to top because it is basically the most used block
       name: 'text',
-      type: 'stack',
+      type: BLOCK_TYPES.stack,
       tags: ['text'],
       palette: 0
     },
     {
       name: 'h1',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['heading', 'h1'],
       palette: 0
     },
     {
       name: 'h2',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['heading', 'h2'],
       palette: 0
     },
     {
       name: 'h3',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['heading', 'h3'],
       palette: 0
     },
     {
       name: 'p',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['p', 'paragraph'],
       palette: 0
     },
     {
       name: 'span',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['span'],
       palette: 0
     },
     {
       name: 'pre',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['pre', 'code'],
       palette: 0
     },
     {
       name: 'code',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['code'],
       palette: 0
     },
     {
       name: 'a',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['link', 'a'],
       palette: 0
     },
     {
       name: 'abbr',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['abbrevation', 'abbr'],
       palette: 0
     },
     {
       name: 'b',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['bold', 'b'],
       palette: 0
     },
     {
       name: 'i',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['italics', 'i'],
       palette: 0
     },
     {
       name: 'strong',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['strong'],
       palette: 0
     },
     {
       name: 'em',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['em', 'emphasis'],
       palette: 0
     },
     {
       name: 'mark',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['marker', 'mark', 'highlighted'],
       palette: 0
     },
     {
       name: 'del',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['deleted', 'del', 'update', 'edit'],
       palette: 0
     },
     {
       name: 'ins',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['inserted', 'ins', 'update', 'edit'],
       palette: 0
     },
     {
       name: 'sub',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['subtext', 'sub'],
       palette: 0
     },
     {
       name: 'sup',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['supertext', 'sup'],
       palette: 0
     },
     {
       name: 'kbd',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['keyboard', 'input', 'kbd'],
       palette: 0
     },
     {
       name: 'samp',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['sample', 'output', 'samp'],
       palette: 0
     },
     {
       name: 'var',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['variable', 'var'],
       palette: 0
     },
     {
       name: 'ol',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['lists', 'ordered list', 'ol'],
       palette: 0
     },
     {
       name: 'ul',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['lists', 'unordered list', 'ul'],
       palette: 0
     },
     {
       name: 'li',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['lists', 'list item', 'li'],
       palette: 0
     },
@@ -253,49 +262,49 @@ var filter = {
     /* Blocks for palette 1 - Media */ 
     {
       name: 'img',
-      type: 'stack',
+      type: BLOCK_TYPES.stack,
       tags: ['image', 'img', 'picture'],
       palette: 1
     },
     {
       name: 'CSS',
-      type: 'stack',
+      type: BLOCK_TYPES.stack,
       tags: ['css', 'style', 'link'],
       palette: 1
     },
     {
       name: 'audio',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['audio'],
       palette: 1
     },
     {
       name: 'video',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['video'],
       palette: 1
     },
     {
       name: 'object',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['object', 'flash', 'plugin'],
       palette: 1
     },
     {
       name: 'track',
-      type: 'stack',
+      type: BLOCK_TYPES.stack,
       tags: ['audio', 'track'],
       palette: 1
     },
     {
       name: 'source',
-      type: 'stack',
+      type: BLOCK_TYPES.stack,
       tags: ['audio', 'video', 'source'],
       palette: 1
     },
     {
       name: 'param',
-      type: 'stack',
+      type: BLOCK_TYPES.stack,
       tags: ['object', 'flash', 'plugin', 'paramater', 'param'],
       palette: 1
     },
@@ -303,25 +312,25 @@ var filter = {
     /* Blocks for palette 2 - Sections */
     {
       name: 'div',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['div', 'divider', 'separator'],
       palette: 2
     },
     {
       name: 'navigation',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['nav', 'navigation'],
       palette: 2
     },
     {
       name: 'footer',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['footer', 'foot' /* can i addz feet plz?*/],
       palette: 2
     },
     {
       name: 'article',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['article'],
       palette: 2
     },
@@ -329,61 +338,61 @@ var filter = {
     /* Blocks for palette 3 - Tables */
     {
       name: 'table',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['table'],
       palette: 3
     },
     {
       name: 'caption',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['table', 'caption', 'title'],
       palette: 3
     },
     {
       name: 'tbody',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['table', 'body', 'tbody'],
       palette: 3
     },
     {
       name: 'thead',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['table', 'head', 'header', 'thead'],
       palette: 3
     },
     {
       name: 'tfoot',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['table', 'foot', 'footer', 'tfoot'],
       palette: 3
     },
     {
       name: 'tr',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['table', 'row', 'tr'],
       palette: 3
     },
     {
       name: 'td',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['table', 'cell', 'td'],
       palette: 3
     },
     {
       name: 'th',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['table', 'cell', 'th', 'head', 'header'],
       palette: 3
     },
     {
       name: 'col',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['table', 'column', 'col'],
       palette: 3
     },
     {
       name: 'colgroup',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['table', 'column', 'colgroup'],
       palette: 3
     },
@@ -391,55 +400,55 @@ var filter = {
     /* Blocks for palette 4 - forms */
     {
       name: 'form',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['forms', 'form'],
       palette: 4
     },
     {
       name: 'input',
-      type: 'stack',
+      type: BLOCK_TYPES.stack,
       tags: ['forms', 'input'],
       palette: 4
     },
     {
       name: 'output',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['forms', 'output'],
       palette: 4
     },
     {
       name: 'button',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['forms', 'button'],
       palette: 4
     },
     {
       name: 'select',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['forms', 'options', 'select'],
       palette: 4
     },
     {
       name: 'option',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['forms', 'options', 'option'],
       palette: 4
     },
     {
       name: 'datalist',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['forms', 'options', 'datalist'],
       palette: 4
     },
     {
       name: 'fieldset',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['forms', 'fieldset', 'fields'],
       palette: 4
     },
     {
       name: 'legend',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['forms', 'fields', 'legend'],
       palette: 4
     },
@@ -447,14 +456,14 @@ var filter = {
     /* Blocks for CSS */
     {
       name: 'selector',
-      type: 'cblock',
+      type: BLOCK_TYPES.cblock,
       tags: ['selection', 'selector'],
       palette: 7,
       ftype: 'css'
     },
     {
       name: 'rule',
-      type: 'stack',
+      type: BLOCK_TYPES.stack,
       tags: ['rule'],
       palette: 7,
       ftype: 'css'

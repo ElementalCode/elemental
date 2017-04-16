@@ -24,7 +24,7 @@ function blockToCSS(blockList) {
 }
 
 function blockToHTML(block) {
-  if(block.type !== 'stack' && block.type !== 'cblock') {
+  if(block.type !== BLOCK_TYPES.stack && block.type !== BLOCK_TYPES.cblock) {
     return null;
   } else if(block.name == 'text') {
     return document.createTextNode(block.inputs[0].value);
@@ -53,7 +53,7 @@ function blocksToJSON(fileName) {
     // yeah I know I'm ignoring loose blocks
     var expArray = [mainScript.toStringable()];
     for(let block of topLevelBlocks) {
-      if(block && block != BODY && block.type != 'CSSStart') {
+      if(block && block != BODY && block.type != BLOCK_TYPES.CSSStart) {
         expArray.push(block.toStringable());
       }
     }
