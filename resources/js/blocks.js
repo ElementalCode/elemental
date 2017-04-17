@@ -320,6 +320,21 @@ function Block(type, name, opts) {
       return false;
     }
     
+    this.elem.addEventListener('mouseover', function(ev) {
+      if(block.htmlElem) {
+        block.htmlElem.style.outline = '3px solid gold';
+      } else if(block.name == 'text' && block.parent && block.parent.htmlElem) {
+        block.parent.htmlElem.style.outline = '3px solid gold';
+      }
+    });
+    this.elem.addEventListener('mouseout', function(ev) {
+      if(block.htmlElem) {
+        block.htmlElem.style.outline = '';
+      } else if(block.name == 'text' && block.parent && block.parent.htmlElem) {
+        block.parent.htmlElem.style.outline = '';
+      }
+    });
+    
     this.elem.addEventListener('mousedown', function(ev) {
       if (ev.which == 3
       || testBlockContents(ev.target)) return;

@@ -24,21 +24,31 @@ function blockToCSS(blockList) {
 }
 
 function blockToHTML(block) {
+  var out = null;
   if(block.type !== BLOCK_TYPES.stack && block.type !== BLOCK_TYPES.cblock) {
-    return null;
+    out = null;
   } else if(block.name == 'text') {
-    return document.createTextNode(block.inputs[0].value);
+    out = document.createTextNode(block.inputs[0].value);
   } else {
-    var element = document.createElement(block.name);
+    out = document.createElement(block.name);
     for(let attr of block.attrs) {
-      if(attr.name.trim() && attr.value.trim()) element.setAttribute(attr.name, attr.value);
+      if(attr.name.trim() && attr.value.trim()) out.setAttribute(attr.name, attr.value);
     }
     for(let child of block.children) {
       let parsedChild = blockToHTML(child);
-      if(parsedChild) element.appendChild(parsedChild);
+      if(parsedChild) out.appendChild(parsedChild);
     }
-    return element;
+    block.htmlElem = out;
   }
+  if(out) {
+    out.addEventListener('mouseover', function() {
+      block.elem.style.outline = '3px solid gold';
+    });
+    out.addEventListener('mouseout', function() {
+      block.elem.style.outline = '';
+    });
+  }
+  return out;
 }
 
 function blocksToJSON(fileName) {
