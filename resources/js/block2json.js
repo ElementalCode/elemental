@@ -50,7 +50,6 @@ function blocksToJSON(fileName) {
     }
     fileData[fileName] = expArray;
   } else if (ext == 'css') {
-    // yeah I know I'm ignoring loose blocks
     var expArray = [mainScript.toStringable()];
     for(let block of topLevelBlocks) {
       if(block && block != BODY && block.type != BLOCK_TYPES.CSSStart) {
@@ -58,7 +57,6 @@ function blocksToJSON(fileName) {
       }
     }
     fileData[fileName] = expArray;
-    // fileData[fileName] = [mainScript.toStringable()];
   }
 }
 

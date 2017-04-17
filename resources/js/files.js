@@ -77,18 +77,9 @@ var unnamedWrapperElements = wrapperElements.map(function(item) {
 });
 var textInput = 'text';
 
-function getCSSAttributesHTML(attributes) {
-    var pushedHtml = [];
-    for (attr in attributes) {
-        var attrValue = attributes[attr];
-        pushedHtml.push('<li class="stack e-rule">rule <span class="script-input css-attr-dropdown" contenteditable="true">' + attr + '</span>: <span class="script-input" contenteditable="true">' + attrValue + '</span></li>');
-    }
-    return pushedHtml.join('');
-}
-
 function generateBlocks(jsonData, ext) {
   function generateBlock(block) {
-    if(!block.type) return null;
+    if(block.type == undefined) return null;
     let newBlock;
     if(block.type == BLOCK_TYPES.blockWrapper) {
       newBlock = new BlockWrapper();
@@ -107,7 +98,7 @@ function generateBlocks(jsonData, ext) {
                 add_attr(newBlock, attr.name, attr.value);
               }
     } else {
-      return null; // other types of Draggies are generated in block constructors
+      return null; // other types of blocks are generated in block constructors
     }
     newBlock.setPosition(block.x, block.y);
     for(let child of block.children) {
