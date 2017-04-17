@@ -62,7 +62,17 @@ function blocksToJSON(fileName) {
 
 function setFrameContent(ext) {
 	ext = ext || getExt(currentFile);
-	var previewElement = document.getElementsByClassName('previewBody')[0];
+	var previewElement = document.querySelector('.previewBody');
+  if(previewElement.contentWindow) {
+    previewWindow = previewElement.contentWindow;
+  } else if(previewElement.contentDocument.document) {
+    previewWindow = previewElement.contentDocument.document;
+  } else {
+    previewWindow = previewWindow.contentDocument;
+  }
+  var previewDocument = previewWindow.document,
+    child;
+  while(child = previewDocument.firstChild) previewDocument.removeChild(child);
 
 	if (ext == 'css') {
 		blocksToJSON(currentFile);
@@ -70,17 +80,6 @@ function setFrameContent(ext) {
 		var parsedHtml = blockToHTML(BODY);
     blocksToJSON(currentFile);
 
-		var previewWindow = previewElement;
-    if(previewElement.contentWindow) {
-      previewWindow = previewWindow.contentWindow;
-    } else if(previewElement.contentDocument.document) {
-      previewWindow = previewElement.contentDocument.document;
-    } else {
-      previewWindow = previewWindow.contentDocument;
-    }
-    var previewDocument = previewWindow.document,
-      child;
-    while(child = previewDocument.firstChild) previewDocument.removeChild(child);
     previewWindow.document.appendChild(parsedHtml);
 	} else {
 		throw 'this should never be thrown though';

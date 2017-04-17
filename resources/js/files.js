@@ -166,7 +166,6 @@ function loadFile(filename, el) {
         el.parentNode.classList.add('selected');
     }
 
-    blockArea = $('.scriptingArea')[0];
     generateBlocks(fileJson, getExt(filename));
     setFrameContent();
     setZebra();
@@ -245,15 +244,8 @@ function generateFile(fileName) {
     } else {
         throw 'File type "' + ext + '" not supported.';
     }
-    blockArea = $('.scriptingArea')[0];
 
-    //clear preview window
-    var previewWindow = document.getElementsByClassName('previewBody')[0];
-    previewWindow = (previewWindow.contentWindow) ? previewWindow.contentWindow : (previewWindow.contentDocument.document) ? previewWindow.contentDocument.document : previewWindow.contentDocument;
-
-    previewWindow.document.open();
-    previewWindow.document.write('');
-    previewWindow.document.close();
+    setFrameContent(ext);
 }
 
 var FILE_MENU = document.querySelector('.context-menu.files');
