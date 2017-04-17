@@ -128,14 +128,8 @@ function generateBlocks(jsonData, ext) {
       }
     }
   } else if(ext == 'html') {
-    let body;
-    for(let block of jsonData) {
-      if (block.name == 'body') {
-        body = block;
-        break;
-      }
-    }
     clearBlocks();
+    let body = jsonData[0];
     let newBody = generateBlock(body);
     replaceBody(newBody);
     for(let block of jsonData) {
