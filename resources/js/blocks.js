@@ -368,17 +368,6 @@ function BlockInput(defaultValue) {
   };
 }
 
-function isDescendant(parent, child) {
-     var node = child.parentNode;
-     while (node != null) {
-         if (node == parent) {
-             return true;
-         }
-         node = node.parentNode;
-     }
-     return false;
-}
-
 function removeDropArea() {
   let dropArea;
   while(dropArea = document.querySelector('.drop-area')) {
@@ -417,24 +406,6 @@ function getOffset( elem ) {
     
 }
 
-// ancestor has parent
-function parentHasClass(element, className) {
-    var regex = new RegExp('\\b' + className + '\\b');
-    do {
-        if (element.classList !== undefined) {
-            if (element.classList.contains(className)) {
-                return true;
-            }
-        } else {
-            if (regex.exec(element.className)) {
-                return true;
-            }
-        }
-        element = element.parentNode;
-    } while (element);
-    return false;
-}
-
 // Will be called when user starts dragging an element
 function _drag_init(block, ev) {
     var elem = block.elem;
@@ -451,7 +422,7 @@ function _drag_init(block, ev) {
     for(let child of kids) {
       child.removeFromParent();
       blockWrapper.insertChild(child, -1);
-      child.elem.removeAttribute('style');
+      child.setPosition(0,0);
     }
     if(parent.children.length == 0 && parent.type == BLOCK_TYPES.blockWrapper) parent.deleteBlock();
     blockWrapper.setPosition(curX - relativeX, curY - relativeY);
@@ -512,7 +483,7 @@ function _destroy(ev) {
         var kids = selected.children.slice().reverse();
         for(let child of kids) {
             child.removeFromParent();
-            child.elem.removeAttribute('style');
+            child.setPosition(0,0)
             if(topEl.type == BLOCK_TYPES.cblockStart) {
                 topEl.parent.insertChild(child, 1); // 0 is the null BlockWrapper
             } else if(topEl.type == BLOCK_TYPES.stack
@@ -536,62 +507,8 @@ function _destroy(ev) {
     selected = null;
 }
 
-function _delete(ev) {
-    var SNAP_CLASSES = currentFile.split('.').pop() == 'css' ? CSS_SNAP_CLASSES : HTML_SNAP_CLASSES;
-    $(SNAP_CLASSES).each(function(item) {
-         if (item.classList.contains('drop-area')) {
-             item.classList.remove('drop-area');
-         }
-    });
-    if (selected) { // TODO: make this not ugly
-        selected.elem.parentNode.removeChild(selected.elem);
-    }
-    selected = null;
-}
-
-var HTML_SNAP_CLASSES = [
-    '.stack',
-    '.c-header',
-    ':not(.e-body) > .c-footer'
-].join(', ');
-var CSS_SNAP_CLASSES = [
-    '.stack',
-    '.hat',
-    '.c-header',
-    ':not(.e-body) > .c-footer'
-].join(', ');
 var MIN_DISTANCE = 50;
 var BLOCK_PALETTE = $('.blockArea')[0];
-
-var DRAGGABLE_ELEMENTS = ([
-    '.c-wrapper:not(.e-body)',
-    '.stack',
-]).map(function(item) {
-    return '.scriptingArea ' + item;
-}).join(', ');
-
-var C_ELEMENTS = ([
-    '.c-header',
-    '.c-content',
-    ':not(.e-body) > .c-footer'
-]).map(function(item) {
-    return '.scriptingArea ' + item;
-}).join(', ');
-
-var DRAGGABLE_PALETTE_ELEMENTS = ([
-    '.c-wrapper',
-    '.stack',
-]).map(function(item) {
-    return '.blockArea ' + item;
-}).join(', ');
-
-var C_PALETTE_ELEMENTS = ([
-    '.c-header',
-    '.c-content',
-    '.c-footer'
-]).map(function(item) {
-    return '.blockArea ' + item;
-}).join(', ');
 
 function clearBlocks(hat) {
   blocksDatabase = {};
@@ -654,57 +571,65 @@ function cleanse_contenteditable (ev) {
 var SCRIPT_MENU = document.querySelector('.context-menu.scripts');
 var RIGHT_CLICKED_SCRIPT = undefined;
 
-$('body').on('mousemove', _move_elem)
+$('body')
+    .on('mousemove', _move_elem)
     .on('mouseup', function(ev) {
-        if (/* ev.target == BLOCK_PALETTE || parentHasClass(ev.target, 'blockArea') || */ ev.target.className.split(' ').indexOf('trashCan') > -1 || ev.target.className.split(' ').indexOf('trashCan2') > -1) {
+        if (ev.target.classList.contains('trashCan') || ev.target.classList.contains('trashCan2')) {
             trashCan = document.getElementById('trashCan');
             trashCan.classList.remove('showing');
-            _delete(ev);
+            removeDropArea();
+            if (selected) {
+              selected.deleteBlock()
+            }
+            selected = null;
 	      } else {
       	    if (ev.target == BLOCK_PALETTE) {
-                      trashCan = document.getElementById('trashCan');
-                      trashCan.classList.remove('showing');
+                trashCan = document.getElementById('trashCan');
+                trashCan.classList.remove('showing');
       	    }
             _destroy(ev);
         }
-        if (!(ev.target.classList.contains('file') || parentHasClass(ev.target, 'file'))) {
+        if (!(ev.target.classList.contains('file')
+              || ev.target.classList.contains('file-name'))) {
             setFrameContent();
         }
         setZebra();
-    }).on('input', function(ev) {
+    })
+    .on('input', function(ev) {
         setFrameContent();
     });
 
-$('.context-menu.scripts .menu-item').on('click', function(ev) {
-    if (RIGHT_CLICKED_SCRIPT) {
-        switch (this.dataset.action) {
-            case 'duplicate-script':
-                // do stuff with node... and get stuff beneath it too!
-                var target = RIGHT_CLICKED_SCRIPT;
-                var blockWrapper = new BlockWrapper();
-                SCRIPTING_AREA.insertBefore(blockWrapper.elem, SCRIPTING_AREA.firstChild);
-                topLevelBlocks.push(blockWrapper);
-                for(let i = target.getIndex(); i < target.parent.children.length; i++) {
-                  let child = target.parent.children[i];
-                  blockWrapper.insertChild(child.clone(false), -1);
-                }
+$('.context-menu.scripts .menu-item')
+    .on('click', function(ev) {
+        if (RIGHT_CLICKED_SCRIPT) {
+            switch (this.dataset.action) {
+                case 'duplicate-script':
+                    // do stuff with node... and get stuff beneath it too!
+                    var target = RIGHT_CLICKED_SCRIPT;
+                    var blockWrapper = new BlockWrapper();
+                    SCRIPTING_AREA.insertBefore(blockWrapper.elem, SCRIPTING_AREA.firstChild);
+                    topLevelBlocks.push(blockWrapper);
+                    for(let i = target.getIndex(); i < target.parent.children.length; i++) {
+                      let child = target.parent.children[i];
+                      blockWrapper.insertChild(child.clone(false), -1);
+                    }
 
-                var relativeX = ev.pageX - target.left();
-                var relativeY = ev.pageY - target.top();
-                var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
-                    curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
-                blockWrapper.setPosition(curX - relativeX + 25, curY - relativeY + 25)
+                    var relativeX = ev.pageX - target.left();
+                    var relativeY = ev.pageY - target.top();
+                    var curX = ev.pageX - getOffset(SCRIPTING_AREA).left,
+                        curY = ev.pageY - getOffset(SCRIPTING_AREA).top;
+                    blockWrapper.setPosition(curX - relativeX + 25, curY - relativeY + 25)
 
-                setZebra();
-                RIGHT_CLICKED_SCRIPT = undefined;
-                SCRIPT_MENU.style.display = 'none';
-                break;
+                    setZebra();
+                    RIGHT_CLICKED_SCRIPT = undefined;
+                    SCRIPT_MENU.style.display = 'none';
+                    break;
 
-            default:
-                //nothing
+                default:
+                    //nothing
+            }
         }
-    }
-});
+    });
 
 document.getElementById('trashCan').addEventListener('mouseover', function(ev) {
     this.classList.add('hovering');

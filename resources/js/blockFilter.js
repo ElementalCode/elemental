@@ -495,7 +495,7 @@ function blockFilterOnload() { // ew multiple onloads
   var paletteButtons = document.getElementsByClassName("paletteOptionWrap");
   for(var i = 0; i < paletteButtons.length; i++) {
       var buttonElem = paletteButtons[i];
-      buttonElem.onclick = handlePaletteClick;
+      buttonElem.addEventListener('click', handlePaletteClick);
   }
   handlePaletteClick();
 };

@@ -76,7 +76,7 @@ function setFrameContent(ext) {
     } else if(previewElement.contentDocument.document) {
       previewWindow = previewElement.contentDocument.document;
     } else {
-      previewWindow = previewWindow.contentDocument
+      previewWindow = previewWindow.contentDocument;
     }
     var previewDocument = previewWindow.document,
       child;

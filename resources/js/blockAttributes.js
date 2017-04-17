@@ -1,4 +1,4 @@
-// both optional
+// both inputs are optional
 function BlockAttribute(name, value) {
 	this.elem = document.createElement('span');
 	this.elem.classList.add('attr-holder');
