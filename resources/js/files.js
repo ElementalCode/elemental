@@ -96,7 +96,7 @@ function generateBlocks(jsonData, ext) {
                 });
               for(let attr of block.attrs) {
                 var newAttr = new BlockAttribute(attr.name, attr.value);
-            		newBlock.header.insertBefore(newAttr.elem, mewBlock.attrControls);
+            		newBlock.header.insertBefore(newAttr.elem, newBlock.attrControls);
             		newBlock.attrs.push(newAttr);
               }
     } else {
