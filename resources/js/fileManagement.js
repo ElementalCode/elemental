@@ -1,13 +1,24 @@
 document.getElementById('downloadButton').addEventListener('click', function() {
 	var zip = new JSZip();
 	var jsonFiles = zip.folder('.elem');
-
-	for (fileName in fileData) {
-		zip.file(fileName, json2html(fileData[fileName]));
-		// jsonFiles.file(fileName.split('.')[0] + '.json', JSON.stringify(fileData[fileName]));
+	for(let fileName in fileData) {
+		let ext = getExt(fileName);
+		let out;
+		if(ext == 'html') {
+			out = `<html>\n<head></head>`;
+			let body = fileData[fileName][0]; // first one should always be body
+			out += blockToHTML(body).outerHTML;
+			out += '</html>';
+		} else if(ext == 'css') {
+			out = blockToCSS(fileData[fileName]);
+		} else {
+			console.log('Can\'t export files of type ' + ext);
+			continue;
+		}
+		zip.file(fileName, out);
 	}
-
-	jsonFiles.file('project.json', JSON.stringify(fileData));
+	
+	jsonFiles.file('project.json', JSON.stringify(fileData, null, 1));
 
 	var content = zip.generate({type: 'blob'});
 	saveAs(content, 'project.zip');
