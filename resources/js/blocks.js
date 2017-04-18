@@ -96,13 +96,13 @@ function BlockWrapper(inPalette) {
         let pblock = block;
         while(pblock) {
           if (pblock == oblock
-           || pblock.children.indexOf(oblock) != -1) continue blocks;
+           || (pblock.children && pblock.children.indexOf(oblock) != -1)) continue blocks;
           pblock = pblock.parent;
         }
         pblock = oblock;
         while(pblock) {
           if (pblock == block
-           || pblock.children.indexOf(block) != -1) continue blocks;
+           || (pblock.children && pblock.children.indexOf(block) != -1)) continue blocks;
           pblock = pblock.parent;
         }
         
