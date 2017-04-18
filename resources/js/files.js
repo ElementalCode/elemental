@@ -95,7 +95,9 @@ function generateBlocks(jsonData, ext) {
                   ftype: block.ftype
                 });
               for(let attr of block.attrs) {
-                add_attr(newBlock, attr.name, attr.value);
+                var newAttr = new BlockAttribute(attr.name, attr.value);
+            		newBlock.header.insertBefore(newAttr.elem, mewBlock.attrControls);
+            		newBlock.attrs.push(newAttr);
               }
     } else {
       return null; // other types of blocks are generated in block constructors

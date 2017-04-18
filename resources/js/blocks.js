@@ -69,6 +69,8 @@ function BlockWrapper(inPalette) {
       if(block.block_mouse_down) block.elem.removeEventListener('mousedown', block.block_mouse_down);
       if(block.block_mouse_up) block.elem.removeEventListener('mouseup', block.block_mouse_up);
       if(block.add_quicktext) block.quickText.removeEventListener('click', block.add_quicktext);
+      if(block.add_attr_ev) block.addAttr.removeEventListener('click', block.add_attr_ev);
+      if(block.remove_attr_ev) block.removeAttr.removeEventListener('click', block.remove_attr_ev);
     }
     
     blocksDatabase[block.id] = null;
@@ -261,15 +263,22 @@ function Block(type, name, opts) {
     this.attrControls = document.createElement('span');
     this.attrControls.classList.add('attr-controls');
     
-    let removeAttr = document.createElement('span');
-    removeAttr.classList.add('remove-attr');
-    this.attrControls.appendChild(removeAttr);
-    removeAttr.addEventListener('click', function(e) {remove_attr(block)});
+    this.removeAttr = document.createElement('span');
+    this.removeAttr.classList.add('remove-attr');
+    this.attrControls.appendChild(this.removeAttr);
+    this.removeAttr.addEventListener('click', block.remove_attr_ev = function(e) {
+      var attr = block.attr.pop();
+  		block.header.removeChild(attr.elem);
+    });
     
-    let addAttr = document.createElement('span');
-    addAttr.classList.add('add-attr');
-    this.attrControls.appendChild(addAttr);
-    addAttr.addEventListener('click', function(e) {add_attr(block)});
+    this.addAttr = document.createElement('span');
+    this.addAttr.classList.add('add-attr');
+    this.attrControls.appendChild(this.addAttr);
+    this.addAttr.addEventListener('click', block.add_attr_ev = function(e) {
+      var attr = new BlockAttribute();
+  		block.header.insertBefore(attr.elem, block.attrControls);
+  		block.attrs.push(attr);
+    });
     
     this.header.appendChild(this.attrControls);
   }
@@ -382,6 +391,7 @@ function BlockInput(defaultValue) {
   };
   this.deleteInput = function() {
     this.elem.removeEventListener('input', input.on_input);
+    this.elem.parent.removeChild(this.elem);
   }
 }
 

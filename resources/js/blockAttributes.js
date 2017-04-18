@@ -37,17 +37,8 @@ function BlockAttribute(name, value) {
 	
 	this.deleteAttr = function() {
 		attr.elem.removeEventListener('input', attr.on_input);
+		attr.elem.parent.removeChild(attr.elem);
 	}
-}
-
-function add_attr(block, name, value) {
-		var attr = new BlockAttribute(name, value);
-		block.header.insertBefore(attr.elem, block.attrControls);
-		block.attrs.push(attr);
-}
-function remove_attr(block) {
-		var attrs = block.attr.pop();
-		block.header.removeChild(attr.elem);
 }
 
 function attachAttrSearch(elem, attrNames, callback) {
