@@ -37,7 +37,7 @@ function BlockAttribute(name, value) {
 	
 	this.deleteAttr = function() {
 		attr.elem.removeEventListener('input', attr.on_input);
-		attr.elem.parent.removeChild(attr.elem);
+		if(attr.elem.parent) attr.elem.parent.removeChild(attr.elem);
 	}
 }
 

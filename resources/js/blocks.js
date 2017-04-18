@@ -78,6 +78,9 @@ function BlockWrapper(inPalette) {
     if(index1 != -1) scriptBlocks[index1] = null;
     let index2 = topLevelBlocks.indexOf(block);
     if(index2 != -1) topLevelBlocks[index2] = null;
+    
+    let keys = Object.keys(block).slice();
+    for(let key of keys) delete block[key];
   };
   this.getClosestBlock = function() {
       var el = null,
@@ -391,7 +394,7 @@ function BlockInput(defaultValue) {
   };
   this.deleteInput = function() {
     this.elem.removeEventListener('input', input.on_input);
-    this.elem.parent.removeChild(this.elem);
+    if(this.elem.parent) this.elem.parent.removeChild(this.elem);
   }
 }
 
