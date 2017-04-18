@@ -20,7 +20,7 @@ function BlockAttribute(name, value) {
 	this.input.addEventListener('input', cleanse_contenteditable);
 	
 	var attr = this;
-	this.input.addEventListener('input', function(e) {
+	this.input.addEventListener('input', attr.on_input = function(e) {
 		attr.value = attr.input.textContent;
 	});
 	
@@ -33,6 +33,10 @@ function BlockAttribute(name, value) {
 			name: attr.name,
 			value: attr.value
 		};
+	}
+	
+	this.deleteAttr = function() {
+		attr.elem.removeEventListener('input', attr.on_input);
 	}
 }
 
@@ -51,10 +55,10 @@ function attachAttrSearch(elem, attrNames, callback) {
 	var ATTRIBUTE_SEARCH = document.getElementById('propSearch');
 	var ATTRIBUTE_RESULTS = document.getElementById('attributeResults');
 	
-	elem.addEventListener('click', function() {
+	elem.addEventListener('click', function(e) {
 		ATTRIBUTE_MENU.classList.remove('hidden');
-		ATTRIBUTE_MENU.style.top = getOffset(elem).bottom + 'px';
-		ATTRIBUTE_MENU.style.left = getOffset(elem).left + 'px';
+		ATTRIBUTE_MENU.style.top = getOffset(e.target).bottom + 'px';
+		ATTRIBUTE_MENU.style.left = getOffset(e.target).left + 'px';
 		
 		ATTRIBUTE_SEARCH.focus();
 		

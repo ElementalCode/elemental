@@ -56,6 +56,21 @@ function BlockWrapper(inPalette) {
   this.deleteBlock = function() {
     block.removeFromParent();
     block.elem.parentElement.removeChild(block.elem);
+    let child;
+    while(child = block.children.pop()) child.deleteBlock();
+    let attr;
+    while(attr = block.attrs.pop()) attr.deleteAttr();
+    let input;
+    while(input = block.inputs.pop()) input.deleteInput();
+    
+    if(block.type == BLOCK_TYPES.stack
+    || block.type == BLOCK_TYPES.cblock) {
+      if(block.block_context_menu) block.elem.removeEventListener('contextmenu', block.block_context_menu);
+      if(block.block_mouse_down) block.elem.removeEventListener('mousedown', block.block_mouse_down);
+      if(block.block_mouse_up) block.elem.removeEventListener('mouseup', block.block_mouse_up);
+      if(block.add_quicktext) block.quickText.removeEventListener('click', block.add_quicktext);
+    }
+    
     blocksDatabase[block.id] = null;
     let index1 = scriptBlocks.indexOf(block);
     if(index1 != -1) scriptBlocks[index1] = null;
@@ -222,7 +237,7 @@ function Block(type, name, opts) {
       this.quickText.appendChild(document.createTextNode('Aa'))
       footer.appendChild(this.quickText);
       
-      this.quickText.addEventListener('click', function(ev) {
+      this.quickText.addEventListener('click', block.add_quicktext = function(ev) {
         var newBlock = new Block(BLOCK_TYPES.stack, 'text', {
             hasAttrs: false,
             hasQuickText: false,
@@ -283,7 +298,7 @@ function Block(type, name, opts) {
     });
   };
   
-  block.elem.addEventListener('contextmenu', function(ev) {
+  block.elem.addEventListener('contextmenu', block.block_context_menu = function(ev) {
       ev.preventDefault();
       if(block.inPalette || block.unmoveable) return false;
       
@@ -293,11 +308,10 @@ function Block(type, name, opts) {
       RIGHT_CLICKED_SCRIPT = block;
       
       setTimeout(function() {
-  			document.body.addEventListener('click', function context_blur(e2) {
+  			document.body.addEventListener('click', function() {
           SCRIPT_MENU.style.display = 'none';
           RIGHT_CLICKED_SCRIPT = undefined;
-  				document.body.removeEventListener('click', context_blur);
-  			});
+  			}, {once: true});
   		}, 0);
       
   });
@@ -320,7 +334,7 @@ function Block(type, name, opts) {
       return false;
     }
     
-    this.elem.addEventListener('mousedown', function(ev) {
+    this.elem.addEventListener('mousedown', block.block_mouse_down = function(ev) {
       if (ev.which == 3
       || testBlockContents(ev.target)) return;
       ev.stopPropagation();
@@ -335,7 +349,7 @@ function Block(type, name, opts) {
       setFrameContent();
     });
     
-    this.elem.addEventListener('mouseup', function(ev) {
+    this.elem.addEventListener('mouseup', block.block_mouse_up = function(ev) {
       trashCan = document.getElementById('trashCan');
       trashCan.classList.remove('showing');
     });
@@ -358,7 +372,7 @@ function BlockInput(defaultValue) {
   this.elem.addEventListener('input', cleanse_contenteditable);
   
   var input = this;
-  this.elem.addEventListener('input', function(e) {
+  this.elem.addEventListener('input', input.on_input = function(e) {
     input.value = input.elem.textContent;
   });
   
@@ -366,6 +380,9 @@ function BlockInput(defaultValue) {
     block.header.appendChild(input.elem);
     block.inputs.push(input);
   };
+  this.deleteInput = function() {
+    this.elem.removeEventListener('input', input.on_input);
+  }
 }
 
 function removeDropArea() {
