@@ -81,6 +81,7 @@ function BlockWrapper(inPalette) {
     
     let keys = Object.keys(block).slice();
     for(let key of keys) delete block[key];
+    block = null;
   };
   this.getClosestBlock = function() {
       var el = null,
@@ -395,6 +396,10 @@ function BlockInput(defaultValue) {
   this.deleteInput = function() {
     this.elem.removeEventListener('input', input.on_input);
     if(this.elem.parent) this.elem.parent.removeChild(this.elem);
+    
+    let keys = Object.keys(input).slice();
+    for(let key of keys) delete input[key];
+    input = null;
   }
 }
 

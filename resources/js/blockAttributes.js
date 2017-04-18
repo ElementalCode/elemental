@@ -38,6 +38,10 @@ function BlockAttribute(name, value) {
 	this.deleteAttr = function() {
 		attr.elem.removeEventListener('input', attr.on_input);
 		if(attr.elem.parent) attr.elem.parent.removeChild(attr.elem);
+		
+		let keys = Object.keys(attr).slice();
+    for(let key of keys) delete attr[key];
+    attr = null;
 	}
 }
 
