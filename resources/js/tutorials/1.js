@@ -1,4 +1,5 @@
 //this actually consists of several intro's because the element has to exist before the intro starts.
+
 function Intro1(){
   var intro1 = introJs();
   
@@ -21,7 +22,7 @@ function Intro1(){
     ]
   });
   intro1.start();
-  
+  setOffSet();
   intro1.onbeforechange(function(e) {
     if (e.classList.contains('paletteOptionWrap')) {
       
