@@ -53,24 +53,8 @@ function arrContainsFromArr(arr1, arr2) {
 }
 
 var fileData = {};
+var fileNames = ['index.html']; // make this work later
 var currentFile = 'index.html';
-
-var attrNames = [
-    'class',
-    'for',
-    'form',
-    'href',
-    'id',
-    'rel',
-    'src',
-    'style',
-    'type'
-]; //add attrs
-var cssAttrNames = [
-    'background-color',
-    'height',
-    'width'
-]; //add attrs
 
 // All you have to do to do it right is be lazy -- liam
 // (just kidding)
@@ -79,7 +63,7 @@ var cssAttrNames = [
 var stackElements = [];
 var wrapperElements = [];
 filter.blocks.forEach(function(block) {
-    if (block.type === 'wrapper') {
+    if (block.type === 'cblock') {
         wrapperElements.push('e-' + block.name);
     } else if (block.type === 'stack') {
         stackElements.push('e-' + block.name);
@@ -93,89 +77,6 @@ var unnamedWrapperElements = wrapperElements.map(function(item) {
 });
 var textInput = 'text';
 
-function getBlockHtml(el) {
-    console.log('el: ', el);
-    var name;
-    if (el.tag == 'style') {
-        el.tag = 'CSS';
-    }
-    if (el.tag) {
-        name = filter.blocks.filter(function(item) {
-            return item.name == el.tag;
-        })[0].name;
-    } else {
-        name = '';
-    }
-
-    var parsedHtml;
-
-    var attrInputs = [];
-    for (attr in el.attr) {
-        attrInputs.push([
-            '<span class="attr-holder">',
-                '<span class="attr-dropdown">' + attr + '</span>',
-                '=',
-                '<span class="attr-input" contenteditable="true">' + el.attr[attr] + '</span>',
-            '</span>'
-        ].join(''));
-        console.log(attr);
-    }
-    attrInputs = attrInputs.join('');
-
-    if (el.tag === "") {
-        parsedHtml = [
-            '<li class="stack e-text">',
-                '<span contenteditable="true" class="script-input text">' + el.text + '</span>',
-            '</li>'
-        ].join('');
-    } else {
-        parsedHtml = [
-            '<li class="stack e-' + name + '">',
-                name,
-                attrInputs,
-                "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>",
-            '</li>'
-        ].join('');
-    }
-
-    return parsedHtml;
-}
-
-function generateWrapperBlocks(jsonData) {
-    var attrInputs = [];
-    for (attr in jsonData.attr) {
-        attrInputs.push([
-            '<span class="attr-holder">',
-                '<span class="attr-dropdown">' + attr + '</span>',
-                '=',
-                '<span class="attr-input" contenteditable="true">' + jsonData.attr[attr] + '</span>',
-            '</span>'
-        ].join(''));
-    }
-    attrInputs = attrInputs.join('');
-    var wrapperHtml = [
-        '<ul class="c-wrapper e-' + jsonData.tag + '">',
-            '<li class="c-header">' + jsonData.tag + attrInputs + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
-            '<ul class="c-content">',
-    ];
-    for (var i = 0; i < jsonData.child.length; i++) {
-        var curEl = jsonData.child[i];
-        if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
-            wrapperHtml.push(getBlockHtml(curEl));
-        }
-        if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
-            // repeat down tree...
-            wrapperHtml.push(generateWrapperBlocks(curEl));
-        }
-    }
-
-    wrapperHtml.push(
-        '</ul><ul class="c-footer"><li class="c-quicktext">Aa</li></ul></ul>'
-    );
-
-    return wrapperHtml.join('');
-}
-
 function getCSSAttributesHTML(attributes) {
     var pushedHtml = [];
     for (attr in attributes) {
@@ -186,52 +87,75 @@ function getCSSAttributesHTML(attributes) {
 }
 
 function generateBlocks(jsonData, ext) {
-    if (ext == 'html') {
-        jsonData = jsonData.child;
-        var baseHtml = [
-            '<ul class="script">',
-                '<li class="hat">&lt;!DOCTYPE html&gt;</li>',
-                '<ul class="c-wrapper e-body">',
-                    '<li class="c-header">&lt;body&gt;</li>',
-                    '<ul class="c-content">',
-        ];
-
-        console.log(jsonData);
-        for (var i = 0; i < jsonData.length; i++) {
-            var curEl = jsonData[i];
-            console.log(curEl.tag);
-            if (stackElements.indexOf('e-' + curEl.tag) > -1 || curEl.tag === '') {  // if it's a stack or plain text
-                baseHtml.push(getBlockHtml(curEl));
-            }
-            if (unnamedWrapperElements.indexOf(curEl.tag) > -1) {
-                // repeat down tree...
-                baseHtml.push(generateWrapperBlocks(curEl));
-            }
-        }
-
-        
-        baseHtml.push('</ul><li class="c-footer">&lt;/body&gt;</li></ul></ul>');
-        return baseHtml.join('');
-    } else if (ext == 'css') {
-        var baseHtml = [
-            '<ul class="script">',
-                '<li class="hat">' + currentFile + '</li>',
-        ];
-        for (curSelector in jsonData) {
-            var selectorHtml = [
-                '<ul class="c-wrapper e-selector">',
-                    '<li class="c-header">selector <span class="script-input" contenteditable="true">' + curSelector + '</span></li>',
-                    '<ul class="c-content">'
-            ];
-            selectorHtml.push(getCSSAttributesHTML(jsonData[curSelector].attributes));
-            selectorHtml.push('</ul><li class="c-footer">&nbsp;</li></ul>');
-            baseHtml.push(selectorHtml.join(''));
-        }
-        baseHtml.push('</ul>');
-        return baseHtml.join('');
+  function generateBlock(block) {
+    if(!block.type) return null;
+    let newBlock;
+    if(block.type == 'blockWrapper') {
+      newBlock = new BlockWrapper();
+      topLevelBlocks.push(newBlock)
+    } else if( block.type == 'stack'
+            || block.type == 'cblock') {
+              newBlock = new Block(block.type, block.name, {
+                  hasAttrs: block.hasAttrs,
+                  hasQuickText: block.hasQuickText,
+                  inputs: block.inputs,
+                  inPalette: false,
+                  unmoveable: block.unmoveable,
+                  ftype: block.ftype
+                });
+              for(let attr of block.attrs) {
+                add_attr(newBlock, attr.name, attr.value);
+              }
     } else {
-        throw 'the world is going to be destroyed due to your foolishness, mortal!1111!  ' + ext + '';
+      return null; // other types of Draggies are generated in block constructors
     }
+    newBlock.setPosition(block.x, block.y);
+    for(let child of block.children) {
+      let newChild = generateBlock(child);
+      if(newChild) newBlock.insertChild(newChild, -1);
+    }
+    return newBlock;
+  }
+  if(ext == 'css') {
+    clearBlocks(currentFile);
+    replaceBody(new BlockWrapper());
+    BODY.type = 'CSSStart';
+    
+    let newBodyScript = jsonData[0];
+    for(let block of newBodyScript.children) {
+      let newBlock = generateBlock(block);
+      if(newBlock) {
+        mainScript.insertChild(newBlock, -1)
+      }
+    }
+    
+    for(let i = 1, block; i < jsonData.length; i++) {
+      block = jsonData[i];
+      let newBlock = generateBlock(block);
+      if(newBlock) {
+        SCRIPTING_AREA.insertBefore(newBlock.elem, SCRIPTING_AREA.firstChild);
+      }
+    }
+  } else if(ext == 'html') {
+    let body;
+    for(let block of jsonData) {
+      if (block.name == 'body') {
+        body = block;
+        break;
+      }
+    }
+    clearBlocks();
+    let newBody = generateBlock(body);
+    replaceBody(newBody);
+    for(let block of jsonData) {
+      if(block != body) {
+        let newBlock = generateBlock(block);
+        if(newBlock) {
+          SCRIPTING_AREA.insertBefore(newBlock.elem, SCRIPTING_AREA.firstChild);
+        }
+      }
+    }
+  }
 }
 
 function loadFile(filename, el) {
@@ -240,7 +164,6 @@ function loadFile(filename, el) {
     }
 
     currentFile = filename;
-
     var fileJson = fileData[filename];
 
     if (el) {
@@ -252,10 +175,8 @@ function loadFile(filename, el) {
         el.parentNode.classList.add('selected');
     }
 
-    // render the HTML somehow from the blocks
     blockArea = $('.scriptingArea')[0];
-    console.log(fileData);
-    blockArea.innerHTML = generateBlocks(fileJson, filename.split('.').pop());
+    generateBlocks(fileJson, getExt(filename));
     setFrameContent();
     setZebra();
 }
@@ -263,19 +184,29 @@ function loadFile(filename, el) {
 function manuallyCreateFile() {
     //we need something better than this
     var fileName = prompt('Enter a file name', '.html');
-    var ext = fileName.split('.');
-    ext = ext[ext.length - 1];
+    if(!fileName) {
+      alert('File name required.');
+      return;
+    }
+    var ext = getExt(fileName);
     var allowedExts = ['html', 'css'];
-    if (allowedExts.indexOf(ext) > -1) {
-        if (fileName && !fileData.hasOwnProperty(fileName)) {
-            generateFile(fileName, ext);
+    if (allowedExts.indexOf(ext) != -1) {
+        if (!fileData.hasOwnProperty(fileName)) {
+            generateFile(fileName);
+        } else {
+          alert('A file with that name already exists.')
         }
     } else {
-        throw 'File type "' + ext + '" not supported.';
+        alert('File type "' + ext + '" not supported.');
     }
 }
 
-function generateFile(fileName, ext, initial) {
+function getExt(fileName) {
+  return fileName.match(/\w+$/)[0];
+}
+
+function generateFile(fileName) {
+    var ext = getExt(fileName);
     currentFile = fileName;
 
     var finalFile = $('.add-file')[0];
@@ -294,43 +225,36 @@ function generateFile(fileName, ext, initial) {
         '</div>'].join('');
     finalFile.parentNode.insertBefore(fileSelector, finalFile);
 
-    // set the fileData for it to be basic...
-    if (initial) {
-        fileData[fileName] = initial;
+    if (ext == 'html') {
+        clearBlocks();
+        replaceBody();
+    } else if (ext == 'css') {
+        clearBlocks(currentFile);
+        replaceBody(new BlockWrapper());
+        BODY.type = 'CSSStart';
+        
+        // add default blocks
+        let defaultSelector = new Block('cblock', 'selector', {
+            hasAttrs: false,
+            hasQuickText: false,
+            inputs: ['.selector'],
+            inPalette: false,
+            ftype: 'css'
+          });
+        mainScript.insertChild(defaultSelector, -1);
+        
+        let defaultRule = new Block('stack', 'rule', {
+            hasAttrs: false,
+            hasQuickText: false,
+            inputs: ['background-color', 'red'],
+            inPalette: false,
+            ftype: 'css'
+          });
+        defaultSelector.insertChild(defaultRule, -1);
     } else {
-        if (ext == 'html') {
-            fileData[fileName] = {
-                "tag": "body",
-                "attr": {},
-                "child": []
-            };
-        } else if (ext == 'css') {
-            fileData[fileName] = {
-                'children': {
-                    '.selector': { // should I initialize this?  probably not, maybe?  idk post comments on it
-                        'children': {},
-                        'attributes': {
-                            'background-color': 'red',
-                        }
-                    }
-                },
-                'attributes': {}
-            };
-        } else {
-            throw 'File type "' + ext + '" not supported.';
-        }
+        throw 'File type "' + ext + '" not supported.';
     }
     blockArea = $('.scriptingArea')[0];
-
-    if (initial) {
-        blockArea.innerHtml = generateBlocks(initial);  // add shim later?
-    } else {
-        if (ext == 'css') {
-            blockArea.innerHTML = generateBlocks(fileData[fileName].children, ext);
-        } else {
-            blockArea.innerHTML = generateBlocks([], ext);
-        }
-    }
 
     //clear preview window
     var previewWindow = document.getElementsByClassName('previewBody')[0];
