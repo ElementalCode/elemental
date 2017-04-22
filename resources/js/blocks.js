@@ -56,11 +56,32 @@ function BlockWrapper(inPalette) {
   this.deleteBlock = function() {
     block.removeFromParent();
     block.elem.parentElement.removeChild(block.elem);
+    let child;
+    while(child = block.children.pop()) child.deleteBlock();
+    let attr;
+    while(attr = block.attrs.pop()) attr.deleteAttr();
+    let input;
+    while(input = block.inputs.pop()) input.deleteInput();
+    
+    if(block.type == BLOCK_TYPES.stack
+    || block.type == BLOCK_TYPES.cblock) {
+      if(block.block_context_menu) block.elem.removeEventListener('contextmenu', block.block_context_menu);
+      if(block.block_mouse_down) block.elem.removeEventListener('mousedown', block.block_mouse_down);
+      if(block.block_mouse_up) block.elem.removeEventListener('mouseup', block.block_mouse_up);
+      if(block.add_quicktext) block.quickText.removeEventListener('click', block.add_quicktext);
+      if(block.add_attr_ev) block.addAttr.removeEventListener('click', block.add_attr_ev);
+      if(block.remove_attr_ev) block.removeAttr.removeEventListener('click', block.remove_attr_ev);
+    }
+    
     blocksDatabase[block.id] = null;
     let index1 = scriptBlocks.indexOf(block);
     if(index1 != -1) scriptBlocks[index1] = null;
     let index2 = topLevelBlocks.indexOf(block);
     if(index2 != -1) topLevelBlocks[index2] = null;
+    
+    let keys = Object.keys(block).slice();
+    for(let key of keys) delete block[key];
+    block = null;
   };
   this.getClosestBlock = function() {
       var el = null,
@@ -75,13 +96,13 @@ function BlockWrapper(inPalette) {
         let pblock = block;
         while(pblock) {
           if (pblock == oblock
-           || pblock.children.indexOf(oblock) != -1) continue blocks;
+           || (pblock.children && pblock.children.indexOf(oblock) != -1)) continue blocks;
           pblock = pblock.parent;
         }
         pblock = oblock;
         while(pblock) {
           if (pblock == block
-           || pblock.children.indexOf(block) != -1) continue blocks;
+           || (pblock.children && pblock.children.indexOf(block) != -1)) continue blocks;
           pblock = pblock.parent;
         }
         
@@ -222,7 +243,7 @@ function Block(type, name, opts) {
       this.quickText.appendChild(document.createTextNode('Aa'))
       footer.appendChild(this.quickText);
       
-      this.quickText.addEventListener('click', function(ev) {
+      this.quickText.addEventListener('click', block.add_quicktext = function(ev) {
         var newBlock = new Block(BLOCK_TYPES.stack, 'text', {
             hasAttrs: false,
             hasQuickText: false,
@@ -246,15 +267,22 @@ function Block(type, name, opts) {
     this.attrControls = document.createElement('span');
     this.attrControls.classList.add('attr-controls');
     
-    let removeAttr = document.createElement('span');
-    removeAttr.classList.add('remove-attr');
-    this.attrControls.appendChild(removeAttr);
-    removeAttr.addEventListener('click', function(e) {remove_attr(block)});
+    this.removeAttr = document.createElement('span');
+    this.removeAttr.classList.add('remove-attr');
+    this.attrControls.appendChild(this.removeAttr);
+    this.removeAttr.addEventListener('click', block.remove_attr_ev = function(e) {
+      var attr = block.attr.pop();
+  		block.header.removeChild(attr.elem);
+    });
     
-    let addAttr = document.createElement('span');
-    addAttr.classList.add('add-attr');
-    this.attrControls.appendChild(addAttr);
-    addAttr.addEventListener('click', function(e) {add_attr(block)});
+    this.addAttr = document.createElement('span');
+    this.addAttr.classList.add('add-attr');
+    this.attrControls.appendChild(this.addAttr);
+    this.addAttr.addEventListener('click', block.add_attr_ev = function(e) {
+      var attr = new BlockAttribute();
+  		block.header.insertBefore(attr.elem, block.attrControls);
+  		block.attrs.push(attr);
+    });
     
     this.header.appendChild(this.attrControls);
   }
@@ -283,7 +311,7 @@ function Block(type, name, opts) {
     });
   };
   
-  block.elem.addEventListener('contextmenu', function(ev) {
+  block.elem.addEventListener('contextmenu', block.block_context_menu = function(ev) {
       ev.preventDefault();
       if(block.inPalette || block.unmoveable) return false;
       
@@ -293,11 +321,10 @@ function Block(type, name, opts) {
       RIGHT_CLICKED_SCRIPT = block;
       
       setTimeout(function() {
-  			document.body.addEventListener('click', function context_blur(e2) {
+  			document.body.addEventListener('click', function() {
           SCRIPT_MENU.style.display = 'none';
           RIGHT_CLICKED_SCRIPT = undefined;
-  				document.body.removeEventListener('click', context_blur);
-  			});
+  			}, {once: true});
   		}, 0);
       
   });
@@ -335,7 +362,7 @@ function Block(type, name, opts) {
       }
     });
     
-    this.elem.addEventListener('mousedown', function(ev) {
+    this.elem.addEventListener('mousedown', block.block_mouse_down = function(ev) {
       if (ev.which == 3
       || testBlockContents(ev.target)) return;
       ev.stopPropagation();
@@ -350,7 +377,7 @@ function Block(type, name, opts) {
       setFrameContent();
     });
     
-    this.elem.addEventListener('mouseup', function(ev) {
+    this.elem.addEventListener('mouseup', block.block_mouse_up = function(ev) {
       trashCan = document.getElementById('trashCan');
       trashCan.classList.remove('showing');
     });
@@ -373,7 +400,7 @@ function BlockInput(defaultValue) {
   this.elem.addEventListener('input', cleanse_contenteditable);
   
   var input = this;
-  this.elem.addEventListener('input', function(e) {
+  this.elem.addEventListener('input', input.on_input = function(e) {
     input.value = input.elem.textContent;
   });
   
@@ -381,6 +408,14 @@ function BlockInput(defaultValue) {
     block.header.appendChild(input.elem);
     block.inputs.push(input);
   };
+  this.deleteInput = function() {
+    this.elem.removeEventListener('input', input.on_input);
+    if(this.elem.parent) this.elem.parent.removeChild(this.elem);
+    
+    let keys = Object.keys(input).slice();
+    for(let key of keys) delete input[key];
+    input = null;
+  }
 }
 
 function removeDropArea() {

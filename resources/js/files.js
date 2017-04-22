@@ -95,7 +95,9 @@ function generateBlocks(jsonData, ext) {
                   ftype: block.ftype
                 });
               for(let attr of block.attrs) {
-                add_attr(newBlock, attr.name, attr.value);
+                var newAttr = new BlockAttribute(attr.name, attr.value);
+            		newBlock.header.insertBefore(newAttr.elem, newBlock.attrControls);
+            		newBlock.attrs.push(newAttr);
               }
     } else {
       return null; // other types of blocks are generated in block constructors
@@ -128,14 +130,8 @@ function generateBlocks(jsonData, ext) {
       }
     }
   } else if(ext == 'html') {
-    let body;
-    for(let block of jsonData) {
-      if (block.name == 'body') {
-        body = block;
-        break;
-      }
-    }
     clearBlocks();
+    let body = jsonData[0];
     let newBody = generateBlock(body);
     replaceBody(newBody);
     for(let block of jsonData) {

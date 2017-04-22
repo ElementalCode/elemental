@@ -20,7 +20,7 @@ function BlockAttribute(name, value) {
 	this.input.addEventListener('input', cleanse_contenteditable);
 	
 	var attr = this;
-	this.input.addEventListener('input', function(e) {
+	this.input.addEventListener('input', attr.on_input = function(e) {
 		attr.value = attr.input.textContent;
 	});
 	
@@ -34,16 +34,15 @@ function BlockAttribute(name, value) {
 			value: attr.value
 		};
 	}
-}
-
-function add_attr(block, name, value) {
-		var attr = new BlockAttribute(name, value);
-		block.header.insertBefore(attr.elem, block.attrControls);
-		block.attrs.push(attr);
-}
-function remove_attr(block) {
-		var attrs = block.attr.pop();
-		block.header.removeChild(attr.elem);
+	
+	this.deleteAttr = function() {
+		attr.elem.removeEventListener('input', attr.on_input);
+		if(attr.elem.parent) attr.elem.parent.removeChild(attr.elem);
+		
+		let keys = Object.keys(attr).slice();
+    for(let key of keys) delete attr[key];
+    attr = null;
+	}
 }
 
 function attachAttrSearch(elem, attrNames, callback) {
@@ -51,10 +50,10 @@ function attachAttrSearch(elem, attrNames, callback) {
 	var ATTRIBUTE_SEARCH = document.getElementById('propSearch');
 	var ATTRIBUTE_RESULTS = document.getElementById('attributeResults');
 	
-	elem.addEventListener('click', function() {
+	elem.addEventListener('click', function(e) {
 		ATTRIBUTE_MENU.classList.remove('hidden');
-		ATTRIBUTE_MENU.style.top = getOffset(elem).bottom + 'px';
-		ATTRIBUTE_MENU.style.left = getOffset(elem).left + 'px';
+		ATTRIBUTE_MENU.style.top = getOffset(e.target).bottom + 'px';
+		ATTRIBUTE_MENU.style.left = getOffset(e.target).left + 'px';
 		
 		ATTRIBUTE_SEARCH.focus();
 		
