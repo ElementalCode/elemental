@@ -1,5 +1,6 @@
 //hijack the file open script so I don't have to walk user through the basics again
-fileData = {"index.html":{"tag":"body","child":[{"tag":"h1","attr":{},"child":[{"tag":"","attr":{},"text":"My Awesome Website"}]},{"tag":"","attr":{},"text":DEFAULT_TEXT}]}};
+fileData = {"index.html": [{"x": 0,"y": 0,"type": "wrapper","id": 1,"inputs": [],"inPalette": false,"name": "body","ftype": "html","hasAttrs": true,"hasQuickText": true,"unmoveable": true,"attrs": [],"children": [{"x": 0,"y": 0,"type": "nullWrapperContent","id": 2,"inputs": [],"inPalette": false,"attrs": [],"children": []},{"x": 0,"y": 0,"type": "wrapper","id": 53,"inputs": [],"inPalette": false,"name": "h1","ftype": "html","hasAttrs": true,"hasQuickText": true,"unmoveable": false,"attrs": [],"children": [{"x": 0,"y": 0,"type": "nullWrapperContent","id": 54,"inputs": [],"inPalette": false,"attrs": [],"children": []},{"x": 0,"y": 0,"type": "stack","id": 56,"inputs": ["My Awesome Website"],"inPalette": false,"name": "text","ftype": "html","hasAttrs": false,"hasQuickText": false,"unmoveable": false,"attrs": [],"children": []}]},{"x": 0,"y": 0,"type": "stack","id": 52,"inputs": ["breadfish"],"inPalette": false,"name": "text","ftype": "html","hasAttrs": false,"hasQuickText": false,"unmoveable": false,"attrs": [],"children": []}]},{"x": 324,"y": -128,"type": "draggy","id": 55,"inputs": [],"inPalette": false,"attrs": [],"children": []}]
+}
 $('.filePane')[0].innerHTML = '<div class="file selected"><div class="file-name" data-file="index.html">index.html</div></div><div class="add-file"><div class="file-name">+</div></div>';
 loadFile("index.html");
 
@@ -69,8 +70,11 @@ function Intro3() {
   				;});
   intro3.onafterchange(function(e) {
     if (e.classList.contains('add-attr')) {
-    	introObserve(document.querySelector('.e-body .e-a .add-attr'), "click",
-  								intro3, document.querySelector('.e-body .e-a'), '.e-body .e-a .add-attr', Intro4);
+    	introObserve(false, "=",
+  								false, document.querySelector('.e-body'), '.e-body .e-a .add-attr', function() {
+                    intro3.exit();
+                    Intro4()
+                  });
     }
   });
 }
@@ -112,19 +116,10 @@ function Intro4() {
 }
 function Intro5() {
 	//prefill img url, using code stolen from blockAttributes.js
-	var el = document.querySelector('.e-body .e-img .add-attr')
-	var newAttrString = [
-			'<span class="attr-holder">',
-				'<span class="attr-dropdown">src</span>',
-				'=',
-				'<span class="attr-input" contenteditable="true">https://33.media.tumblr.com/tumblr_lm7kcfDP2g1qbkjkd.gif</span>',
-			'</span>'
-		].join('');
-		var newAttr = stringToHtml(newAttrString);
-		el.parentNode.parentNode.insertBefore(newAttr, el.parentNode);
-
-
-
+	var el = document.querySelector('.e-body .e-img');
+  var id = el.getAttribute('data-id');
+  var block = blocksDatabase[id];
+  add_attr(block, 'src', 'https://33.media.tumblr.com/tumblr_lm7kcfDP2g1qbkjkd.gif');
 
 	var intro5 = introJs();
 

@@ -34,49 +34,55 @@ var filter = {
       blockArea.innerHTML = '';
       for(x = 0; x < blocksToDisplay.length; x++) {
         var block = filter.blocks[blocksToDisplay[x]];
-        var blockString;
-        if (block.type == 'wrapper') {
+        var newBlock;
+        if (block.type == 'cblock') {
           if (!block.ftype || block.ftype == 'html') {
-            blockString = [
-              '<ul class="c-wrapper e-' + block.name + '">',
-                '<li class="c-header">' + block.name + ' <span class="attr-controls"><span class="remove-attr"></span><span class="add-attr"></span></span></li>',
-                '<ul class="c-content">',
-                '</ul>',
-                '<ul class="c-footer"><li class="c-quicktext">Aa</li></ul>',
-              '</ul>'
-            ].join('');
-          } else {
-            blockString = [
-              '<ul class="c-wrapper e-' + block.name + '">',
-                '<li class="c-header">' + block.name + ' <span class="script-input" contenteditable="true">&nbsp;</span></li>',
-                '<ul class="c-content">',
-                '</ul>',
-                '<ul class="c-footer"></ul>',
-              '</ul>'
-            ].join('');
+            newBlock = new Block(block.type, block.name, {
+                hasAttrs: true,
+                hasQuickText: true,
+                inputs: [],
+                inPalette: true,
+                ftype: 'html'
+              });
+          } else { // selector
+            newBlock = new Block(block.type, block.name, {
+                hasAttrs: false,
+                hasQuickText: false,
+                inputs: [''], // \u00A0
+                inPalette: true,
+                ftype: 'css'
+              });
           }
-        } else {
+        } else { // block.type == 'stack'
           if (block.name != 'text') {
             if (!block.ftype || block.ftype == 'html') {
-              blockString = [
-                '<li class="stack e-' + block.name + '">',
-                  block.name,
-                  "<span class='attr-controls'><span class='remove-attr'></span><span class='add-attr'></span></span>",
-                '</li>'
-              ].join('');
-            } else {
-              blockString = [
-                '<li class="stack e-' + block.name + '">',
-                  block.name,
-                  ' <span class="script-input css-attr-dropdown" contenteditable="true"></span>: <span class="script-input" contenteditable="true"></span>',
-                '</li>'
-              ].join('');
+              newBlock = new Block(block.type, block.name, {
+                  hasAttrs: true,
+                  hasQuickText: false,
+                  inputs: [],
+                  inPalette: true,
+                  ftype: 'html'
+                });
+            } else { // rule
+              newBlock = new Block(block.type, block.name, {
+                  hasAttrs: false,
+                  hasQuickText: false,
+                  inputs: ['', ''], // \u00A0
+                  inPalette: true,
+                  ftype: 'css'
+                });;
             }
           } else {
-            blockString = '<li class="stack e-text"><span contenteditable="true" class="script-input text">' + DEFAULT_TEXT + '</span></li>';
+            newBlock = new Block('stack', 'text', {
+                hasAttrs: false,
+                hasQuickText: false,
+                inputs: [DEFAULT_TEXT],
+                inPalette: true,
+                ftype: 'html  '
+              });
           }
         }
-        blockArea.innerHTML += blockString;
+        blockArea.appendChild(newBlock.elem);
       }
     } else {
       blockArea.innerHTML = "<span class='infoText'>No blocks were found.</span>";
@@ -101,145 +107,145 @@ var filter = {
     },
     {
       name: 'h1',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['heading', 'h1'],
       palette: 0
     },
     {
       name: 'h2',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['heading', 'h2'],
       palette: 0
     },
     {
       name: 'h3',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['heading', 'h3'],
       palette: 0
     },
     {
       name: 'p',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['p', 'paragraph'],
       palette: 0
     },
     {
       name: 'span',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['span'],
       palette: 0
     },
     {
       name: 'pre',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['pre', 'code'],
       palette: 0
     },
     {
       name: 'code',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['code'],
       palette: 0
     },
     {
       name: 'a',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['link', 'a'],
       palette: 0
     },
     {
       name: 'abbr',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['abbrevation', 'abbr'],
       palette: 0
     },
     {
       name: 'b',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['bold', 'b'],
       palette: 0
     },
     {
       name: 'i',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['italics', 'i'],
       palette: 0
     },
     {
       name: 'strong',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['strong'],
       palette: 0
     },
     {
       name: 'em',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['em', 'emphasis'],
       palette: 0
     },
     {
       name: 'mark',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['marker', 'mark', 'highlighted'],
       palette: 0
     },
     {
       name: 'del',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['deleted', 'del', 'update', 'edit'],
       palette: 0
     },
     {
       name: 'ins',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['inserted', 'ins', 'update', 'edit'],
       palette: 0
     },
     {
       name: 'sub',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['subtext', 'sub'],
       palette: 0
     },
     {
       name: 'sup',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['supertext', 'sup'],
       palette: 0
     },
     {
       name: 'kbd',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['keyboard', 'input', 'kbd'],
       palette: 0
     },
     {
       name: 'samp',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['sample', 'output', 'samp'],
       palette: 0
     },
     {
       name: 'var',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['variable', 'var'],
       palette: 0
     },
     {
       name: 'ol',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['lists', 'ordered list', 'ol'],
       palette: 0
     },
     {
       name: 'ul',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['lists', 'unordered list', 'ul'],
       palette: 0
     },
     {
       name: 'li',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['lists', 'list item', 'li'],
       palette: 0
     },
@@ -259,19 +265,19 @@ var filter = {
     },
     {
       name: 'audio',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['audio'],
       palette: 1
     },
     {
       name: 'video',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['video'],
       palette: 1
     },
     {
       name: 'object',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['object', 'flash', 'plugin'],
       palette: 1
     },
@@ -297,25 +303,25 @@ var filter = {
     /* Blocks for palette 2 - Sections */
     {
       name: 'div',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['div', 'divider', 'separator'],
       palette: 2
     },
     {
       name: 'navigation',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['nav', 'navigation'],
       palette: 2
     },
     {
       name: 'footer',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['footer', 'foot' /* can i addz feet plz?*/],
       palette: 2
     },
     {
       name: 'article',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['article'],
       palette: 2
     },
@@ -323,61 +329,61 @@ var filter = {
     /* Blocks for palette 3 - Tables */
     {
       name: 'table',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['table'],
       palette: 3
     },
     {
       name: 'caption',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['table', 'caption', 'title'],
       palette: 3
     },
     {
       name: 'tbody',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['table', 'body', 'tbody'],
       palette: 3
     },
     {
       name: 'thead',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['table', 'head', 'header', 'thead'],
       palette: 3
     },
     {
       name: 'tfoot',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['table', 'foot', 'footer', 'tfoot'],
       palette: 3
     },
     {
       name: 'tr',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['table', 'row', 'tr'],
       palette: 3
     },
     {
       name: 'td',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['table', 'cell', 'td'],
       palette: 3
     },
     {
       name: 'th',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['table', 'cell', 'th', 'head', 'header'],
       palette: 3
     },
     {
       name: 'col',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['table', 'column', 'col'],
       palette: 3
     },
     {
       name: 'colgroup',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['table', 'column', 'colgroup'],
       palette: 3
     },
@@ -385,7 +391,7 @@ var filter = {
     /* Blocks for palette 4 - forms */
     {
       name: 'form',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['forms', 'form'],
       palette: 4
     },
@@ -397,43 +403,43 @@ var filter = {
     },
     {
       name: 'output',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['forms', 'output'],
       palette: 4
     },
     {
       name: 'button',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['forms', 'button'],
       palette: 4
     },
     {
       name: 'select',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['forms', 'options', 'select'],
       palette: 4
     },
     {
       name: 'option',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['forms', 'options', 'option'],
       palette: 4
     },
     {
       name: 'datalist',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['forms', 'options', 'datalist'],
       palette: 4
     },
     {
       name: 'fieldset',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['forms', 'fieldset', 'fields'],
       palette: 4
     },
     {
       name: 'legend',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['forms', 'fields', 'legend'],
       palette: 4
     },
@@ -441,7 +447,7 @@ var filter = {
     /* Blocks for CSS */
     {
       name: 'selector',
-      type: 'wrapper',
+      type: 'cblock',
       tags: ['selection', 'selector'],
       palette: 7,
       ftype: 'css'
