@@ -165,7 +165,7 @@ body {
   background-color: orange;
   border-radius: 10px;
   box-sizing: border-box;
-  display: inline-block;
+  display: inline-flex;
   padding: 3px;
   margin-right: 6px; }
   .attr-holder .attr-dropdown,
@@ -187,5 +187,3 @@ body {
     background-color: white;
     color: black;
     cursor: text; }
-
-/*# sourceMappingURL=blocks.css.map */
