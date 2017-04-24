@@ -79,15 +79,12 @@ function setOffSet() {
   var topBar = document.getElementsByClassName("topBar")[0];
   var offset = document.getElementById("offset");
   var helperLayer = document.getElementsByClassName("introjs-helperLayer")[0];
-  var check = function() { // Taken from http://stackoverflow.com/a/7557433 and modified
-    var rect = topBar.getBoundingClientRect();
-    if (rect.top < -1) { // For some reason, rect.top = -1
-      offset.style.height = -1 * rect.top;
-      offset.style.display = "";
-    } else if (rect.top != -1) { // See above
-      offset.style.display = "none";
+  var old_top = topBar.getBoundingClientRect().top;
+  var check = function() {
+    if (old_top != topBar.getBoundingClientRect().top) { // Detect changes in top
+      offset.style.height = (-1 * topBar.getBoundingClientRect().top).toString() + "px";
     }
+    old_top = topBar.getBoundingClientRect().top;
   }
-  
   window.setInterval(check, 100);
 }
