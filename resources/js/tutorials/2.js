@@ -22,7 +22,7 @@ function Intro1(){
     ]
   });
   intro1.start();
-
+  setOffSet();
   introObserve(document.querySelector('#searchBar'), "click",
   				intro1, document.querySelector('#filteredBlocksArea'), '.e-a:first-child', Intro2);
 }

@@ -74,3 +74,17 @@ if(window.location.search.match(/tutorial=\d*/i)) {
     console.error("Tutorial %s does not exist.", tutnum);
   }
 }
+// Code to work-around the bug in which all elements are shifted upwards
+function setOffSet() {
+  var topBar = document.getElementsByClassName("topBar")[0];
+  var offset = document.getElementById("offset");
+  var helperLayer = document.getElementsByClassName("introjs-helperLayer")[0];
+  var old_top = topBar.getBoundingClientRect().top;
+  var check = function() {
+    if (old_top != topBar.getBoundingClientRect().top) { // Detect changes in top
+      offset.style.height = (-1 * topBar.getBoundingClientRect().top).toString() + "px";
+    }
+    old_top = topBar.getBoundingClientRect().top;
+  }
+  window.setInterval(check, 100);
+}
