@@ -278,8 +278,8 @@ function Block(type, name, opts) {
     this.addAttr = document.createElement('span');
     this.addAttr.classList.add('add-attr');
     this.attrControls.appendChild(this.addAttr);
-    this.addAttr.addEventListener('click', block.add_attr_ev = function(e) {
-      var attr = new BlockAttribute();
+    this.addAttr.addEventListener('click', block.add_attr_ev = function(e, name, value) {
+      var attr = new BlockAttribute(name, value);
   		block.header.insertBefore(attr.elem, block.attrControls);
   		block.attrs.push(attr);
     });
