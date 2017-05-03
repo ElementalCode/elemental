@@ -142,6 +142,22 @@ body {
 .c-wrapper.zebra > li, .c-wrapper.zebra > ul {
   background: #F45D5D; }
 
+.highlightBlock {
+  position: relative;
+  z-index: 1; }
+
+.highlightBlock::after {
+  content: "";
+  display: block;
+  background: gold;
+  border-radius: 5px;
+  position: absolute;
+  top: -3px;
+  right: -3px;
+  bottom: -3px;
+  left: -3px;
+  z-index: -1; }
+
 .remove-attr {
   display: inline-block;
   width: 0px;
@@ -612,3 +628,5 @@ html, body {
 @media (max-width: 450px) {
   .advanceWrap {
     display: none; } }
+
+/*# sourceMappingURL=style.css.map */

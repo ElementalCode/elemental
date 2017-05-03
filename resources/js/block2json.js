@@ -25,6 +25,15 @@ function blockToCSS(blockList) {
 
 function blockToHTML(block) {
   var out = null;
+  
+  // attempt at garbage collection
+  if(block.htmlElem) {
+    block.htmlElem.removeEventListener('mouseover', block.block_mouse_over);
+    block.htmlElem.removeEventListener('mouseout', block.block_mouse_out);
+    if(block.htmlElem.parentNode) block.htmlElem.parentNode.removeChild(block.htmlElem);
+    block.htmlElem = null;
+  }
+  
   if(block.type !== BLOCK_TYPES.stack && block.type !== BLOCK_TYPES.cblock) {
     out = null;
   } else if(block.name == 'text') {
@@ -39,14 +48,9 @@ function blockToHTML(block) {
       if(parsedChild) out.appendChild(parsedChild);
     }
     block.htmlElem = out;
-  }
-  if(out) {
-    out.addEventListener('mouseover', function() {
-      block.elem.style.outline = '3px solid gold';
-    });
-    out.addEventListener('mouseout', function() {
-      block.elem.style.outline = '';
-    });
+    
+    out.addEventListener('mouseover', block.block_mouse_over);
+    out.addEventListener('mouseout', block.block_mouse_out);
   }
   return out;
 }

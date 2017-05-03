@@ -67,6 +67,8 @@ function BlockWrapper(inPalette) {
     || block.type == BLOCK_TYPES.cblock) {
       if(block.block_context_menu) block.elem.removeEventListener('contextmenu', block.block_context_menu);
       if(block.block_mouse_down) block.elem.removeEventListener('mousedown', block.block_mouse_down);
+      if(block.block_mouse_over) block.elem.removeEventListener('mouseover', block.block_mouse_over);
+      if(block.block_mouse_out) block.elem.removeEventListener('mouseout', block.block_mouse_out);
       if(block.block_mouse_up) block.elem.removeEventListener('mouseup', block.block_mouse_up);
       if(block.add_quicktext) block.quickText.removeEventListener('click', block.add_quicktext);
       if(block.add_attr_ev) block.addAttr.removeEventListener('click', block.add_attr_ev);
@@ -347,18 +349,17 @@ function Block(type, name, opts) {
       return false;
     }
     
-    this.elem.addEventListener('mouseover', function(ev) {
+    this.elem.addEventListener('mouseover', block.block_mouse_over = function(ev) {
       if(block.htmlElem) {
+        ev.stopPropagation();
+        block.elem.classList.add('highlightBlock');
         block.htmlElem.style.outline = '3px solid gold';
-      } else if(block.name == 'text' && block.parent && block.parent.htmlElem) {
-        block.parent.htmlElem.style.outline = '3px solid gold';
       }
     });
-    this.elem.addEventListener('mouseout', function(ev) {
+    this.elem.addEventListener('mouseout', block.block_mouse_out = function(ev) {
       if(block.htmlElem) {
+        block.elem.classList.remove('highlightBlock');
         block.htmlElem.style.outline = '';
-      } else if(block.name == 'text' && block.parent && block.parent.htmlElem) {
-        block.parent.htmlElem.style.outline = '';
       }
     });
     
