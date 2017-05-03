@@ -64,6 +64,7 @@ function Intro3() {
     ]
   });
   intro3.start();
+  setScroll();
   introObserve(false, "", //this time I may be pushing it, I rewrote part of the function to make this work lol
   				false, document.querySelector('.e-body'), '.e-a .e-text', function() {
   					intro3.nextStep();
@@ -103,6 +104,7 @@ function Intro4() {
   intro4.start();
   document.body.classList.add("intro-hideoverlay");
   intro4.onafterchange(function(e) {
+    setScroll();
     if (e.classList.contains('pagePreview')) {
     	document.body.classList.remove("intro-hideoverlay");
     } else if (e.classList.contains('rightSide')) {
@@ -119,9 +121,11 @@ function Intro5() {
 	var el = document.querySelector('.e-body .e-img');
   var id = el.getAttribute('data-id');
   var block = blocksDatabase[id];
-  add_attr(block, 'src', 'https://33.media.tumblr.com/tumblr_lm7kcfDP2g1qbkjkd.gif');
+  block.add_attr_ev(null, 'src', 'https://33.media.tumblr.com/tumblr_lm7kcfDP2g1qbkjkd.gif');
 
 	var intro5 = introJs();
+  
+  intro5.onafterchange(setScroll);
 
   intro5.setOptions({
     steps: [
@@ -132,7 +136,7 @@ function Intro5() {
       },
       {
       	tooltipClass: "intro-showskip intro-hideNextPrev",
-      	intro: "Viola! Your beautiful website now has a link and an image. That's it for this tutorial, see you next time!",
+      	intro: "Voila! Your beautiful website now has a link and an image. That's it for this tutorial, see you next time!",
       	element: document.querySelector('.pagePreview'),
       	position: "right"
       },

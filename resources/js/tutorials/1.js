@@ -118,6 +118,7 @@ function Intro4() {
   intro4.start();
   
   intro4.onafterchange(function(e) { // hide the buttons for step 2
+    setScroll();
     if (e.classList.contains('rightSide')) {
       introObserve(false, "",
                   false, document.querySelector('.e-body'), '.e-body .e-h1 + .e-text:last-child', function() { // I am a selectors 1337h4x0r
