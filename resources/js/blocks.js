@@ -1,6 +1,7 @@
 var selected = null, // Object of the element to be moved
     mousePos = {x: 0, y: 0}, // Stores x & y coordinates of the mouse pointer
     dragOffset = {x: 0, y: 0}, // Stores offset between dragged element and mouse
+    highlight = true;
     DEFAULT_TEXT = 'breadfish',
     SCRIPTING_AREA = $('.scriptingArea')[0];
 var blocksDatabase, // all blocks by ID. Not an array in case we decide to use md5's or something later
@@ -350,20 +351,22 @@ function Block(type, name, opts) {
     }
     
     this.elem.addEventListener('mouseover', block.block_mouse_over = function(ev) {
-      if(block.htmlElem) {
+      if(highlight && block.htmlElem) {
         ev.stopPropagation();
         block.elem.classList.add('highlightBlock');
         block.htmlElem.style.outline = '3px solid gold';
       }
     });
     this.elem.addEventListener('mouseout', block.block_mouse_out = function(ev) {
+      block.elem.classList.remove('highlightBlock');
       if(block.htmlElem) {
-        block.elem.classList.remove('highlightBlock');
         block.htmlElem.style.outline = '';
       }
     });
     
     this.elem.addEventListener('mousedown', block.block_mouse_down = function(ev) {
+      block.block_mouse_out();
+      detachHtmlElem(block)
       if (ev.which == 3
       || testBlockContents(ev.target)) return;
       ev.stopPropagation();

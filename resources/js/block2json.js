@@ -23,9 +23,7 @@ function blockToCSS(blockList) {
   return css;
 }
 
-function blockToHTML(block) {
-  var out = null;
-  
+function detachHtmlElem(block) {
   // attempt at garbage collection
   if(block.htmlElem) {
     block.htmlElem.removeEventListener('mouseover', block.block_mouse_over);
@@ -33,6 +31,11 @@ function blockToHTML(block) {
     if(block.htmlElem.parentNode) block.htmlElem.parentNode.removeChild(block.htmlElem);
     block.htmlElem = null;
   }
+}
+
+function blockToHTML(block) {
+  var out = null;
+  detachHtmlElem(block)
   
   if(block.type !== BLOCK_TYPES.stack && block.type !== BLOCK_TYPES.cblock) {
     out = null;
