@@ -172,7 +172,7 @@ body {
   .attr-holder .attr-input {
     border-radius: 10px;
     min-width: 30px;
-    display: inline-block;
+    display: inline-flex;
     margin: 0px 3px;
     padding: 0px 4px;
     outline: none; }

@@ -166,7 +166,7 @@ body {
   background-color: orange;
   border-radius: 10px;
   box-sizing: border-box;
-  display: inline-block;
+  display: inline-flex;
   padding: 3px;
   margin-right: 6px; }
   .attr-holder .attr-dropdown,
@@ -550,7 +550,8 @@ html, body {
   width: 0px;
   padding-right: 4px;
   opacity: 0.7;
-  transition: width 0.2s, padding 0.2s; }
+  transition: width 0.2s, padding 0.2s;
+  z-index: 1; }
 
 #searchBar:hover, #searchBar:focus {
   opacity: 1; }
@@ -611,5 +612,3 @@ html, body {
 @media (max-width: 450px) {
   .advanceWrap {
     display: none; } }
-
-/*# sourceMappingURL=style.css.map */

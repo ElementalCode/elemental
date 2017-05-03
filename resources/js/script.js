@@ -65,3 +65,9 @@ window.onload = function() {
   blockFilterOnload();
   // attrOnload();
 }
+
+function setScroll() {
+  document.body ? document.body.scrollTop = 0 : '';
+}
+setScroll();
+window.addEventListener('resize', setScroll);
