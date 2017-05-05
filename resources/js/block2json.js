@@ -23,24 +23,6 @@ function blockToCSS(blockList) {
   return css;
 }
 
-function blockToHTML(block) {
-  if(block.type !== BLOCK_TYPES.stack && block.type !== BLOCK_TYPES.cblock) {
-    return null;
-  } else if(block.name == 'text') {
-    return document.createTextNode(block.inputs[0].value);
-  } else {
-    var element = document.createElement(block.name);
-    for(let attr of block.attrs) {
-      if(attr.name.trim() && attr.value.trim()) element.setAttribute(attr.name, attr.value);
-    }
-    for(let child of block.children) {
-      let parsedChild = blockToHTML(child);
-      if(parsedChild) element.appendChild(parsedChild);
-    }
-    return element;
-  }
-}
-
 function detachHtmlElem(block) {
   // attempt at garbage collection
   if(block.htmlElem) {
@@ -74,6 +56,25 @@ function blockToHTML(block) {
     out.addEventListener('mouseout', block.block_mouse_out);
   }
   return out;
+}
+
+function blocksToJSON(fileName) {
+  var ext = getExt(fileName);
+  if (ext == 'html') {
+    var expArray = [];
+    for(let block of topLevelBlocks) {
+      if(block) expArray.push(block.toStringable());
+    }
+    fileData[fileName] = expArray;
+  } else if (ext == 'css') {
+    var expArray = [mainScript.toStringable()];
+    for(let block of topLevelBlocks) {
+      if(block && block != BODY && block.type != BLOCK_TYPES.CSSStart) {
+        expArray.push(block.toStringable());
+      }
+    }
+    fileData[fileName] = expArray;
+  }
 }
 
 function setFrameContent(ext) {
