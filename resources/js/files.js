@@ -167,26 +167,6 @@ function loadFile(filename, el) {
     setZebra();
 }
 
-function manuallyCreateFile() {
-    //we need something better than this
-    var fileName = prompt('Enter a file name', '.html');
-    if(!fileName) {
-      alert('File name required.');
-      return;
-    }
-    var ext = getExt(fileName);
-    var allowedExts = ['html', 'css'];
-    if (allowedExts.indexOf(ext) != -1) {
-        if (!fileData.hasOwnProperty(fileName)) {
-            generateFile(fileName);
-        } else {
-          alert('A file with that name already exists.')
-        }
-    } else {
-        alert('File type "' + ext + '" not supported.');
-    }
-}
-
 function getExt(fileName) {
   return fileName.match(/\w+$/)[0];
 }
@@ -247,6 +227,9 @@ function generateFile(fileName) {
 var FILE_MENU = document.querySelector('.context-menu.files');
 var RIGHT_CLICKED;
 
+// placeholder
+var openNewFilePopup = function() {};
+
 $('.filePane').on('click', function(ev) {
     var el = ev.target;
     if (el.classList.contains('file') || parentHasClass(el, 'file')) { 
@@ -257,7 +240,7 @@ $('.filePane').on('click', function(ev) {
         }
         ev.stopPropagation();
     } else if (el.classList.contains('add-file') || parentHasClass(el, 'add-file')) {
-        manuallyCreateFile();
+        openNewFilePopup()
         ev.stopPropagation();
     }
     FILE_MENU.style.display = 'none';

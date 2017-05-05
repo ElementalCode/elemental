@@ -63,6 +63,35 @@
         <div class="downArrow"></div>
       </div>
     </div>
+    
+    <!-- NEW FILE POPUP -->
+    <div id="newFilePopup">
+      <h2>
+        New file
+      </h2>
+      <div class="content">
+        <div id="fileNameContainer">
+            <span id="fileName" contenteditable="true"></span><span id="fileExtension"></span>
+        </div>
+        <div class="fileTypeButtons">
+          <div class="fileTypeButton checked" data-ext=".html">HTML</div>
+          <div class="fileTypeButton" data-ext=".css">CSS</div>
+          <div class="fileTypeButton disabled" data-ext=".js">JavaScript</div>
+        </div>
+        <div class="errorBox">
+        The file name has one of the following issues:
+          <ul>
+            <li>Length is not between 1-255</li>
+            <li>Contains an invaild character</li>
+            <li>A file with that name already exists</li>
+          </ul>
+        </div>
+      </div>
+      <div class = "newFileFooter">
+        <div class="newFileFooter-button" id="closeFileName">Close</div>
+        <div class="newFileFooter-button" id="createFileName">Create</div>
+      </div>
+    </div>
 
     <div class="topBar">
       <div class="left">

@@ -283,6 +283,115 @@ body {
 .hidden {
   display: none; }
 
+#newFilePopup {
+  width: 450px;
+  position: fixed;
+  top: calc( 50% - ( 350px / 2 ) );
+  left: calc( 50% - ( 450px / 2 ) );
+  border: 1px solid #42ba92;
+  border-radius: 5px;
+  padding: 10px;
+  background-color: #42ba92;
+  color: white;
+  text-align: center;
+  display: none;
+  font-family: "Source Sans Pro", sans-serif;
+  z-index: 4; }
+  #newFilePopup .content {
+    margin-bottom: 10px;
+    padding: 0 25px; }
+  #newFilePopup.error #fileNameContainer {
+    border-color: #F45; }
+  #newFilePopup.error #createFileName {
+    background: #aaa !important;
+    border-color: #aaa;
+    color: #ddd;
+    cursor: default; }
+  #newFilePopup.error .errorBox {
+    opacity: 1;
+    max-height: 500px; }
+
+.errorBox {
+  margin: 0;
+  text-align: left;
+  font-size: 70%;
+  color: #A00;
+  display: inline-block;
+  overflow: hidden;
+  opacity: 0;
+  max-height: 1px;
+  transition: .4s all; }
+
+#fileNameContainer {
+  display: inline-block;
+  width: 100%;
+  padding: 5px 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  text-align: center;
+  font-family: "Source Sans Pro", sans-serif;
+  font-size: 16pt;
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 5px;
+  white-space: nowrap;
+  border: 1px solid transparent;
+  transition: .4s border-color; }
+
+#fileName {
+  min-width: 10px;
+  display: inline-block;
+  color: white;
+  outline: none !important; }
+
+#fileExtension {
+  color: #FA8; }
+
+.fileTypeButtons {
+  display: flex;
+  justify-content: space-between;
+  align-content: center; }
+
+.fileTypeButton {
+  display: inline-block;
+  width: 100px;
+  height: 100px;
+  margin: 10px 0;
+  padding: 10px;
+  border: 1px solid coral;
+  border-radius: 5px;
+  font-size: 16px;
+  line-height: 100px;
+  text-align: center;
+  background-color: coral;
+  cursor: pointer; }
+  .fileTypeButton:hover {
+    background: #FA8; }
+  .fileTypeButton.checked {
+    box-shadow: inset 0 0 0 5px white; }
+  .fileTypeButton.disabled {
+    background: #aaa !important;
+    border-color: #aaa;
+    color: #ddd;
+    cursor: default; }
+
+.newFileFooter {
+  background: rgba(0, 0, 0, 0.1);
+  padding: 5px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px; }
+
+.newFileFooter-button {
+  border: 1px solid coral;
+  border-radius: 5px;
+  display: inline-block;
+  background-color: coral;
+  padding: 5px 10px;
+  margin: 0 2px;
+  cursor: pointer;
+  transition: all .4s; }
+  .newFileFooter-button:hover {
+    background: #FA8; }
+
 body {
   margin: 0px;
   overflow: hidden; }
@@ -612,3 +721,5 @@ html, body {
 @media (max-width: 450px) {
   .advanceWrap {
     display: none; } }
+
+/*# sourceMappingURL=style.css.map */
