@@ -41,23 +41,39 @@ function blockToHTML(block) {
   }
 }
 
-function blocksToJSON(fileName) {
-  var ext = getExt(fileName);
-  if (ext == 'html') {
-    var expArray = [];
-    for(let block of topLevelBlocks) {
-      if(block) expArray.push(block.toStringable());
-    }
-    fileData[fileName] = expArray;
-  } else if (ext == 'css') {
-    var expArray = [mainScript.toStringable()];
-    for(let block of topLevelBlocks) {
-      if(block && block != BODY && block.type != BLOCK_TYPES.CSSStart) {
-        expArray.push(block.toStringable());
-      }
-    }
-    fileData[fileName] = expArray;
+function detachHtmlElem(block) {
+  // attempt at garbage collection
+  if(block.htmlElem) {
+    block.htmlElem.removeEventListener('mouseover', block.block_mouse_over);
+    block.htmlElem.removeEventListener('mouseout', block.block_mouse_out);
+    if(block.htmlElem.parentNode) block.htmlElem.parentNode.removeChild(block.htmlElem);
+    block.htmlElem = null;
   }
+}
+
+function blockToHTML(block) {
+  var out = null;
+  detachHtmlElem(block)
+  
+  if(block.type !== BLOCK_TYPES.stack && block.type !== BLOCK_TYPES.cblock) {
+    out = null;
+  } else if(block.name == 'text') {
+    out = document.createTextNode(block.inputs[0].value);
+  } else {
+    out = document.createElement(block.name);
+    for(let attr of block.attrs) {
+      if(attr.name.trim() && attr.value.trim()) out.setAttribute(attr.name, attr.value);
+    }
+    for(let child of block.children) {
+      let parsedChild = blockToHTML(child);
+      if(parsedChild) out.appendChild(parsedChild);
+    }
+    block.htmlElem = out;
+    
+    out.addEventListener('mouseover', block.block_mouse_over);
+    out.addEventListener('mouseout', block.block_mouse_out);
+  }
+  return out;
 }
 
 function setFrameContent(ext) {
