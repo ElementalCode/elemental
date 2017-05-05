@@ -106,7 +106,11 @@ for(let i = 0; i < fileTypeButtons.length; i++) {
 
 document.getElementById("fileName").addEventListener("input", function(e) {
 	var popup = document.getElementById("newFilePopup");
-	if(!fileData.hasOwnProperty(fileName) && e.target.innerHTML.match(/^[\w,\s-]{1,255}$/)) {
+	var name = getFileName();
+	var valid = true;
+	if(!name.match(/^[\w,\s-]{1,255}.(html|css|js)$/)) valid = false;
+	if(fileData.hasOwnProperty(name)) valid = false;
+	if(valid) {
   	popup.classList.remove("error");
   } else {
   	popup.classList.add("error");
