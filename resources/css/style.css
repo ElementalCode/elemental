@@ -308,7 +308,7 @@ body {
     cursor: default; }
 
 .green, .filePane, #newFilePopup {
-  background-color: #42ba92;
+  background-color: #42BA92;
   font-family: 'Source Sans Pro', sans-serif;
   color: white; }
 
@@ -316,7 +316,7 @@ body {
 .filePane {
   height: 200px;
   box-sizing: border-box;
-  border-top: 5px solid #BFBFBF;
+  border-top: 5px solid #252E35;
   padding: 3px;
   overflow-y: scroll; }
   .filePane .squareButton {
