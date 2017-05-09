@@ -69,16 +69,29 @@ function setFileExtension(filetype) {
   dot.innerHTML = filetype;
   document.getElementById("fileNameContainer").style.paddingLeft = dot.offsetWidth + "px";
   
-  var checked = document.querySelector(".fileTypeButton.checked")
+  var checked = document.querySelector(".fileTypeButton.selected")
   if(checked) {
-    checked.classList.remove("checked");
+    checked.classList.remove("selected");
   }
-  document.querySelector(".fileTypeButton[data-ext=\"" + filetype + "\"]").classList.add("checked");
+  document.querySelector(".fileTypeButton[data-ext=\"" + filetype + "\"]").classList.add("selected");
 }
 function getFileName() {
 	var filename = document.getElementById("fileName").textContent;
-	var filetype = document.querySelector(".fileTypeButton.checked").getAttribute("data-ext");
+	var filetype = document.querySelector(".fileTypeButton.selected").getAttribute("data-ext");
   return filename + filetype;
+}
+
+function validateFileName() {
+	var popup = document.getElementById("newFilePopup");
+	var name = getFileName();
+	var valid = true;
+	if(!name.match(/^[\w,\s-]{1,255}.(html|css|js)$/)) valid = false;
+	if(fileData.hasOwnProperty(name)) valid = false;
+	if(valid) {
+  	popup.classList.remove("error");
+  } else {
+  	popup.classList.add("error");
+  }
 }
 
 openNewFilePopup = function() {
@@ -92,6 +105,7 @@ openNewFilePopup = function() {
   selection.removeAllRanges();
   selection.addRange(range);
   setFileExtension(".html");
+	validateFileName();
 };
 
 
@@ -100,22 +114,12 @@ for(let i = 0; i < fileTypeButtons.length; i++) {
 	fileTypeButtons[i].addEventListener("click", function(e) {
   	if(!e.target.classList.contains("disabled") && e.target.getAttribute("data-ext")) {
     	setFileExtension(e.target.getAttribute("data-ext"));
+			validateFileName();
     }
   });
 }
 
-document.getElementById("fileName").addEventListener("input", function(e) {
-	var popup = document.getElementById("newFilePopup");
-	var name = getFileName();
-	var valid = true;
-	if(!name.match(/^[\w,\s-]{1,255}.(html|css|js)$/)) valid = false;
-	if(fileData.hasOwnProperty(name)) valid = false;
-	if(valid) {
-  	popup.classList.remove("error");
-  } else {
-  	popup.classList.add("error");
-  }
-});
+document.getElementById("fileName").addEventListener("input", validateFileName);
 
 document.getElementById("closeFileName").addEventListener("click", function() {
 	document.getElementById("newFilePopup").style.display = "none";

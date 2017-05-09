@@ -13,7 +13,7 @@ $search_icon_url: "../img/nav-search-glass.png";
 @import "blocks";
 @import "menus";
 @import "helpers";
-@import "newfile";
+@import "files";
 
 @import url(http://fonts.googleapis.com/css?family=Source+Sans+Pro:400,700);
 
@@ -170,37 +170,6 @@ html, body {
             height: 100%;
             width: 100%;
             border: none;
-        }
-    }
-    .filePane {
-        height: 200px;
-        background-color: white;
-        box-sizing: border-box;
-        border-top: 5px solid #BFBFBF;
-        padding: 5px;
-        overflow-y: scroll;
-        .file,
-        .add-file {
-            width: 100px;
-            height: 100px;
-            border: 4px solid #BFBFBF;
-            border-radius: 3px;
-            display: inline-block;
-            text-align: center;
-            margin: 0px;
-            margin-right: 10px;
-            margin-bottom: 10px;
-        }
-        .file {
-            &-name {
-                position: relative;
-                top: 50%;
-                transform: translateY(-50%);
-                font-family: 'Source Sans Pro', sans-serif;
-            }
-            &.selected {
-                border-color:#989898;
-            }
         }
     }
 }

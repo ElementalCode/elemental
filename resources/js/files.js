@@ -159,7 +159,7 @@ function loadFile(filename, el) {
             elem.classList.remove('selected');
         });
         // select this one...
-        el.parentNode.classList.add('selected');
+        el.classList.add('selected');
     }
 
     generateBlocks(fileJson, getExt(filename));
@@ -184,11 +184,9 @@ function generateFile(fileName) {
 
     // then insert the new file selector...
     var fileSelector = document.createElement('div');
-    fileSelector.className = 'file selected';
-    fileSelector.innerHTML = [
-        '<div class="file-name" data-file="' + fileName + '">',
-            fileName,
-        '</div>'].join('');
+    fileSelector.className = 'squareButton file selected';
+    fileSelector.dataset.file = fileName
+    fileSelector.innerHTML = fileName;
     finalFile.parentNode.insertBefore(fileSelector, finalFile);
 
     if (ext == 'html') {
@@ -232,14 +230,10 @@ var openNewFilePopup = function() {};
 
 $('.filePane').on('click', function(ev) {
     var el = ev.target;
-    if (el.classList.contains('file') || parentHasClass(el, 'file')) { 
-        if (el.classList && el.classList.contains('file')) {
-            loadFile(el.children[0].dataset.file, el.children[0]);
-        } else if (parentHasClass(el, 'file')) {
-            loadFile(el.dataset.file, el);
-        }
+    if (el.classList.contains('file')) {
+        loadFile(el.dataset.file, el);
         ev.stopPropagation();
-    } else if (el.classList.contains('add-file') || parentHasClass(el, 'add-file')) {
+    } else if (el.classList.contains('add-file')) {
         openNewFilePopup()
         ev.stopPropagation();
     }
