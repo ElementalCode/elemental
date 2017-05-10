@@ -1,6 +1,7 @@
 var selected = null, // Object of the element to be moved
     mousePos = {x: 0, y: 0}, // Stores x & y coordinates of the mouse pointer
     dragOffset = {x: 0, y: 0}, // Stores offset between dragged element and mouse
+    highlight = true,
     DEFAULT_TEXT = 'breadfish',
     SCRIPTING_AREA = $('.scriptingArea')[0];
 var blocksDatabase, // all blocks by ID. Not an array in case we decide to use md5's or something later
@@ -68,6 +69,8 @@ function BlockWrapper(inPalette) {
       if(block.block_context_menu) block.elem.removeEventListener('contextmenu', block.block_context_menu);
       if(block.block_mouse_down) block.elem.removeEventListener('mousedown', block.block_mouse_down);
       if(block.block_mouse_up) block.elem.removeEventListener('mouseup', block.block_mouse_up);
+      if(block.block_mouse_over) block.elem.removeEventListener('mouseover', block.block_mouse_over);
+      if(block.block_mouse_out) block.elem.removeEventListener('mouseout', block.block_mouse_out);
       if(block.add_quicktext) block.quickText.removeEventListener('click', block.add_quicktext);
       if(block.add_attr_ev) block.addAttr.removeEventListener('click', block.add_attr_ev);
       if(block.remove_attr_ev) block.removeAttr.removeEventListener('click', block.remove_attr_ev);
@@ -278,8 +281,8 @@ function Block(type, name, opts) {
     this.addAttr = document.createElement('span');
     this.addAttr.classList.add('add-attr');
     this.attrControls.appendChild(this.addAttr);
-    this.addAttr.addEventListener('click', block.add_attr_ev = function(e, name, value) {
-      var attr = new BlockAttribute(name, value);
+    this.addAttr.addEventListener('click', block.add_attr_ev = function(e) {
+      var attr = new BlockAttribute();
   		block.header.insertBefore(attr.elem, block.attrControls);
   		block.attrs.push(attr);
     });
@@ -347,7 +350,23 @@ function Block(type, name, opts) {
       return false;
     }
     
+    this.elem.addEventListener('mouseover', block.block_mouse_over = function(ev) {
+      if(highlight && block.htmlElem) {
+        ev.stopPropagation();
+        block.elem.classList.add('highlightBlock');
+        block.htmlElem.style.outline = '3px solid gold';
+      }
+    });
+    this.elem.addEventListener('mouseout', block.block_mouse_out = function(ev) {
+      block.elem.classList.remove('highlightBlock');
+      if(block.htmlElem) {
+        block.htmlElem.style.outline = '';
+      }
+    });
+    
     this.elem.addEventListener('mousedown', block.block_mouse_down = function(ev) {
+      block.block_mouse_out();
+      detachHtmlElem(block)
       if (ev.which == 3
       || testBlockContents(ev.target)) return;
       ev.stopPropagation();
