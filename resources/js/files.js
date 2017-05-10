@@ -159,32 +159,12 @@ function loadFile(filename, el) {
             elem.classList.remove('selected');
         });
         // select this one...
-        el.parentNode.classList.add('selected');
+        el.classList.add('selected');
     }
 
     generateBlocks(fileJson, getExt(filename));
     setFrameContent();
     setZebra();
-}
-
-function manuallyCreateFile() {
-    //we need something better than this
-    var fileName = prompt('Enter a file name', '.html');
-    if(!fileName) {
-      alert('File name required.');
-      return;
-    }
-    var ext = getExt(fileName);
-    var allowedExts = ['html', 'css'];
-    if (allowedExts.indexOf(ext) != -1) {
-        if (!fileData.hasOwnProperty(fileName)) {
-            generateFile(fileName);
-        } else {
-          alert('A file with that name already exists.')
-        }
-    } else {
-        alert('File type "' + ext + '" not supported.');
-    }
 }
 
 function getExt(fileName) {
@@ -204,11 +184,9 @@ function generateFile(fileName) {
 
     // then insert the new file selector...
     var fileSelector = document.createElement('div');
-    fileSelector.className = 'file selected';
-    fileSelector.innerHTML = [
-        '<div class="file-name" data-file="' + fileName + '">',
-            fileName,
-        '</div>'].join('');
+    fileSelector.className = 'squareButton file selected';
+    fileSelector.dataset.file = fileName
+    fileSelector.innerHTML = fileName;
     finalFile.parentNode.insertBefore(fileSelector, finalFile);
 
     if (ext == 'html') {
@@ -247,17 +225,16 @@ function generateFile(fileName) {
 var FILE_MENU = document.querySelector('.context-menu.files');
 var RIGHT_CLICKED;
 
+// placeholder
+var openNewFilePopup = function() {};
+
 $('.filePane').on('click', function(ev) {
     var el = ev.target;
-    if (el.classList.contains('file') || parentHasClass(el, 'file')) { 
-        if (el.classList && el.classList.contains('file')) {
-            loadFile(el.children[0].dataset.file, el.children[0]);
-        } else if (parentHasClass(el, 'file')) {
-            loadFile(el.dataset.file, el);
-        }
+    if (el.classList.contains('file')) {
+        loadFile(el.dataset.file, el);
         ev.stopPropagation();
-    } else if (el.classList.contains('add-file') || parentHasClass(el, 'add-file')) {
-        manuallyCreateFile();
+    } else if (el.classList.contains('add-file')) {
+        openNewFilePopup()
         ev.stopPropagation();
     }
     FILE_MENU.style.display = 'none';

@@ -62,3 +62,72 @@ document.getElementById('projectOpen').addEventListener('change', function() {
 
 	document.getElementById('projectOpen').value = null;  // clear value
 });
+
+// new file popup
+function setFileExtension(filetype) {
+  var dot = document.getElementById("fileExtension");
+  dot.innerHTML = filetype;
+  document.getElementById("fileNameContainer").style.paddingLeft = dot.offsetWidth + "px";
+  
+  var checked = document.querySelector(".fileTypeButton.selected")
+  if(checked) {
+    checked.classList.remove("selected");
+  }
+  document.querySelector(".fileTypeButton[data-ext=\"" + filetype + "\"]").classList.add("selected");
+}
+function getFileName() {
+	var filename = document.getElementById("fileName").textContent;
+	var filetype = document.querySelector(".fileTypeButton.selected").getAttribute("data-ext");
+  return filename + filetype;
+}
+
+function validateFileName() {
+	var popup = document.getElementById("newFilePopup");
+	var name = getFileName();
+	var valid = true;
+	if(!name.match(/^[\w,\s-]{1,255}.(html|css|js)$/)) valid = false;
+	if(fileData.hasOwnProperty(name)) valid = false;
+	if(valid) {
+  	popup.classList.remove("error");
+  } else {
+  	popup.classList.add("error");
+  }
+}
+
+openNewFilePopup = function() {
+  document.getElementById("newFilePopup").style.display = "block";
+  var fn = document.getElementById("fileName");
+  fn.innerHTML = "untitled";
+  fn.focus();
+  var selection = window.getSelection();        
+  var range = document.createRange();
+  range.selectNodeContents(fn);
+  selection.removeAllRanges();
+  selection.addRange(range);
+  setFileExtension(".html");
+	validateFileName();
+};
+
+
+var fileTypeButtons = document.getElementsByClassName("fileTypeButton");
+for(let i = 0; i < fileTypeButtons.length; i++) {
+	fileTypeButtons[i].addEventListener("click", function(e) {
+  	if(!e.target.classList.contains("disabled") && e.target.getAttribute("data-ext")) {
+    	setFileExtension(e.target.getAttribute("data-ext"));
+			validateFileName();
+    }
+  });
+}
+
+document.getElementById("fileName").addEventListener("input", validateFileName);
+
+document.getElementById("closeFileName").addEventListener("click", function() {
+	document.getElementById("newFilePopup").style.display = "none";
+});
+document.getElementById("createFileName").addEventListener("click", function() {
+	if(document.getElementById("newFilePopup").classList.contains("error")) {
+  	return;
+  }
+	document.getElementById("newFilePopup").style.display = "none";
+	generateFile(getFileName());
+});
